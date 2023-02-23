@@ -89,18 +89,14 @@ void dae::GameEngine::Run(const std::function<void()>& load)
 	auto& input = InputManager::GetInstance();
 	auto& time = Time::GetInstance();
 
-	// todo: this update loop could use some work.
 	float lag = 0.f;
 	bool doContinue = true;
 
-	GameObject object{};
-
-	object.AddComponent<RenderComponent>(new RenderComponent{});
+	sceneManager.Initialize();
 
 	while (doContinue)
 	{
-
-		object.GetComponent<RenderComponent>();
+		//const auto start = std::chrono::high_resolution_clock::now();
 
 		time.Update(); //calculate deltatime, totaltime...
 
@@ -117,5 +113,9 @@ void dae::GameEngine::Run(const std::function<void()>& load)
 
 		//INPUT
 		doContinue = input.ProcessInput();
+
+		/*const int msPerFrame = 1'000 / 100;
+		const auto sleepTime = start + std::chrono::milliseconds(msPerFrame) - std::chrono::high_resolution_clock::now();
+		std::this_thread::sleep_for(sleepTime);*/
 	}
 }

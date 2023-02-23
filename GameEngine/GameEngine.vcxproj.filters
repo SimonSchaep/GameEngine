@@ -28,7 +28,7 @@
     <ClCompile Include="SceneManager.cpp">
       <Filter>Engine</Filter>
     </ClCompile>
-    <ClCompile Include="TextObject.cpp">
+    <ClCompile Include="TextRenderComponent.cpp">
       <Filter>Engine</Filter>
     </ClCompile>
     <ClCompile Include="Texture2D.cpp">
@@ -45,6 +45,9 @@
     </ClCompile>
     <ClCompile Include="RenderComponent.cpp">
       <Filter>Engine</Filter>
+    </ClCompile>
+    <ClCompile Include="FPSCounter.cpp">
+      <Filter>CustomComponents</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -75,7 +78,7 @@
     <ClInclude Include="Singleton.h">
       <Filter>Engine</Filter>
     </ClInclude>
-    <ClInclude Include="TextObject.h">
+    <ClInclude Include="TextRenderComponent.h">
       <Filter>Engine</Filter>
     </ClInclude>
     <ClInclude Include="Texture2D.h">
@@ -93,10 +96,16 @@
     <ClInclude Include="RenderComponent.h">
       <Filter>Engine</Filter>
     </ClInclude>
+    <ClInclude Include="FPSCounter.h">
+      <Filter>CustomComponents</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Engine">
       <UniqueIdentifier>{37b107d8-5b5a-4207-88ad-0be3311b784c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="CustomComponents">
+      <UniqueIdentifier>{6aabea10-7cc4-413c-b120-afdfce10e67c}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

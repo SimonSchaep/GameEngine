@@ -21,6 +21,8 @@ namespace dae
 		float GetDeltaTime()const { return m_DeltaTime; };
 		float GetTotalTime()const { return m_TotalTime; };
 	private:
+		void HighResSleep(float sleepTime);
+
 		float m_DeltaTime{};
 		float m_TotalTime{};
 		float m_FixedTimeStep{ 1/60.f };

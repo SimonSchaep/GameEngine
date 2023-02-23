@@ -13,24 +13,26 @@ namespace dae
 	{
 	public:
 
-		virtual void Update();
-		virtual void Render() const;
+		void Initialize();
+		void Update();
+		void Render() const;
 
-		//void SetTexture(const std::string& filename);
 		void SetPosition(float x, float y);
+		const Transform& GetTransform()const { return m_transform; };
 
 		//returns the first component of the specified type
 		template<typename T>
-		T* GetComponent();
+		std::shared_ptr<T> GetComponent()const;
+
+		//returns all component of the specified type
+		template<typename T>
+		std::vector<std::shared_ptr<T>> GetAllComponents()const;
 
 		template<typename T>
-		void AddComponent(T* component);
-
-		template<typename T>
-		void RemoveComponent(T* component);
+		void AddComponent(std::shared_ptr<T> component);
 
 		GameObject() = default;
-		virtual ~GameObject();
+		~GameObject();
 		GameObject(const GameObject& other) = delete;
 		GameObject(GameObject&& other) = delete;
 		GameObject& operator=(const GameObject& other) = delete;
@@ -45,12 +47,12 @@ namespace dae
 	};
 
 	template<typename T>
-	T* GameObject::GetComponent()
+	std::shared_ptr<T> GameObject::GetComponent()const
 	{
-		T* returnComponent{};
+		std::shared_ptr<T> returnComponent{};
 		for (auto& c : m_Components)
 		{
-			returnComponent = dynamic_cast<T*>(c.get());
+			returnComponent = std::dynamic_pointer_cast<T>(c);
 			if (returnComponent)
 			{
 				return returnComponent;
@@ -61,8 +63,25 @@ namespace dae
 	}
 
 	template<typename T>
-	void GameObject::AddComponent(T* component)
+	std::vector<std::shared_ptr<T>> GameObject::GetAllComponents()const
 	{
-		m_Components.push_back(std::make_shared<T>(component));
+		std::vector<std::shared_ptr<T>> returnComponents{};
+		
+		for (auto& c : m_Components)
+		{
+			std::shared_ptr<T> component{ std::dynamic_pointer_cast<T>(c) };
+			if (component)
+			{
+				returnComponents.push_back(component);
+			}
+		}
+		return returnComponents;
+	}
+
+	template<typename T>
+	void GameObject::AddComponent(std::shared_ptr<T> component)
+	{
+		component->SetGameObject(this);
+		m_Components.push_back(std::move(component));		
 	}
 }

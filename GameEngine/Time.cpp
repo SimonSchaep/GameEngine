@@ -2,25 +2,36 @@
 #include <chrono>
 #include <iostream>
 
+//https://stackoverflow.com/questions/13397571/precise-thread-sleep-needed-max-1ms-error
+void dae::Time::HighResSleep(float sleepTime)
+{
+	std::chrono::duration<float> MinSleepDuration(0);
+	const auto start = std::chrono::high_resolution_clock::now();
+	while (std::chrono::duration<float>(std::chrono::high_resolution_clock::now() - start).count() < sleepTime)
+	{
+		std::this_thread::sleep_for(MinSleepDuration);
+	}
+}
+
 void dae::Time::Update()
 {
-	static auto startTime{ std::chrono::high_resolution_clock::now() };
-	static auto lastTime{ std::chrono::high_resolution_clock::now() };
+	static auto firstFrameStart{ std::chrono::high_resolution_clock::now() };
+	static auto previousFrameStart{ std::chrono::high_resolution_clock::now() };
 
-	const auto currentTime = std::chrono::high_resolution_clock::now();
-	m_DeltaTime = std::chrono::duration<float>(currentTime - lastTime).count();
-	m_DeltaTime *= m_TimeScale;
-	m_TotalTime += m_DeltaTime;
-	lastTime = currentTime;
-
-	//Sleep to prevent going over framerate cap
+	//Sleep until enough time has passed to not get more fps than the cap
 	if (m_FrameRateCap > 0)
 	{
-		const int msPerFrame = 1'000 / m_FrameRateCap;
-		const auto sleepTime = lastTime + std::chrono::milliseconds(msPerFrame) - currentTime;
-		std::this_thread::sleep_for(sleepTime);
-	}	
+		const int microSecPerFrame = 1'000'000 / m_FrameRateCap;
+		const auto timeElapsedSoFar = std::chrono::high_resolution_clock::now() - previousFrameStart;
+		const auto sleepTime = std::chrono::microseconds(microSecPerFrame) - timeElapsedSoFar;
 
-	//std::cout << GetTotalTime() << '\n';
-	//std::cout << std::chrono::duration<float>(currentTime - startTime).count() << '\n';
+		HighResSleep(std::chrono::duration<float>(sleepTime).count());
+	}
+
+	const auto currentFrameStart = std::chrono::high_resolution_clock::now();
+	m_DeltaTime = std::chrono::duration<float>(currentFrameStart - previousFrameStart).count();
+	m_DeltaTime *= m_TimeScale;
+	m_TotalTime += m_DeltaTime;
+
+	previousFrameStart = currentFrameStart;
 }

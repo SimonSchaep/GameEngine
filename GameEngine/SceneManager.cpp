@@ -1,8 +1,18 @@
 #include "SceneManager.h"
 #include "Scene.h"
 
+void dae::SceneManager::Initialize()
+{
+	//prob shouldn't do this with all scenes
+	for (auto& scene : m_scenes)
+	{
+		scene->Initialize();
+	}
+}
+
 void dae::SceneManager::Update()
 {
+	//prob shouldn't do this with all scenes
 	for(auto& scene : m_scenes)
 	{
 		scene->Update();
@@ -11,6 +21,7 @@ void dae::SceneManager::Update()
 
 void dae::SceneManager::Render()
 {
+	//prob shouldn't do this with all scenes
 	for (const auto& scene : m_scenes)
 	{
 		scene->Render();

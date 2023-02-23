@@ -10,6 +10,9 @@
 #include "Renderer.h"
 #include "ResourceManager.h"
 #include "Time.h"
+#include "GameObject.h"
+#include "RenderComponent.h"
+#include <iostream>
 #include <chrono>
 
 SDL_Window* g_window{};
@@ -79,34 +82,40 @@ dae::GameEngine::~GameEngine()
 
 void dae::GameEngine::Run(const std::function<void()>& load)
 {
-	const float fixedTimeStep = 1/60.f;
-
 	load();
 
 	auto& renderer = Renderer::GetInstance();
 	auto& sceneManager = SceneManager::GetInstance();
 	auto& input = InputManager::GetInstance();
+	auto& time = Time::GetInstance();
 
 	// todo: this update loop could use some work.
-	auto lastTime = std::chrono::high_resolution_clock::now();
 	float lag = 0.f;
 	bool doContinue = true;
+
+	GameObject object{};
+
+	object.AddComponent<RenderComponent>(new RenderComponent{});
+
 	while (doContinue)
 	{
-		const auto currentTime = std::chrono::high_resolution_clock::now();
-		const float deltaTime = std::chrono::duration<float>(currentTime - lastTime).count();
-		Time::GetInstance()->GetDeltaTime();
-		lastTime = currentTime;
-		lag += deltaTime;
 
-		doContinue = input.ProcessInput();
-		while (lag >= fixedTimeStep)
+		object.GetComponent<RenderComponent>();
+
+		time.Update(); //calculate deltatime, totaltime...
+
+		lag += time.GetDeltaTime();		
+		while (lag >= time.GetFixedTimeStep())
 		{
 			//Todo: Implement FixedUpdate here
-			lag -= fixedTimeStep;
+			//physics.FixedUpdate();
+			lag -= time.GetFixedTimeStep();
 		}
 		
 		sceneManager.Update();
 		renderer.Render();
+
+		//INPUT
+		doContinue = input.ProcessInput();
 	}
 }

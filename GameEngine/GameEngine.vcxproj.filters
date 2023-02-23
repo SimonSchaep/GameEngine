@@ -40,6 +40,12 @@
     <ClCompile Include="Time.cpp">
       <Filter>Engine</Filter>
     </ClCompile>
+    <ClCompile Include="BaseComponent.cpp">
+      <Filter>Engine</Filter>
+    </ClCompile>
+    <ClCompile Include="RenderComponent.cpp">
+      <Filter>Engine</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Font.h">
@@ -79,6 +85,12 @@
       <Filter>Engine</Filter>
     </ClInclude>
     <ClInclude Include="Time.h">
+      <Filter>Engine</Filter>
+    </ClInclude>
+    <ClInclude Include="BaseComponent.h">
+      <Filter>Engine</Filter>
+    </ClInclude>
+    <ClInclude Include="RenderComponent.h">
       <Filter>Engine</Filter>
     </ClInclude>
   </ItemGroup>

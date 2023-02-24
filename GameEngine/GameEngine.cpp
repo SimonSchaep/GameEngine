@@ -96,8 +96,6 @@ void dae::GameEngine::Run(const std::function<void()>& load)
 
 	while (doContinue)
 	{
-		//const auto start = std::chrono::high_resolution_clock::now();
-
 		time.Update(); //calculate deltatime, totaltime...
 
 		lag += time.GetDeltaTime();		
@@ -113,9 +111,5 @@ void dae::GameEngine::Run(const std::function<void()>& load)
 
 		//INPUT
 		doContinue = input.ProcessInput();
-
-		/*const int msPerFrame = 1'000 / 100;
-		const auto sleepTime = start + std::chrono::milliseconds(msPerFrame) - std::chrono::high_resolution_clock::now();
-		std::this_thread::sleep_for(sleepTime);*/
 	}
 }

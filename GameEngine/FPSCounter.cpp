@@ -10,6 +10,12 @@ void dae::FPSCounter::Initialize()
 
 void dae::FPSCounter::Update()
 {
-	std::string text{"FPS: " + std::to_string(1.f / Time::GetInstance().GetDeltaTime())};
+	const std::string text{ "FPS: " + std::to_string(int(glm::round(1.f / Time::GetInstance().GetDeltaTime()))) };
 	m_TextRenderComponent->SetText(text);
+
+	//to test removal of components
+	/*if (Time::GetInstance().GetTotalTime() > 5)
+	{
+		m_GameObject->RemoveComponent<FPSCounter>();
+	}*/
 }

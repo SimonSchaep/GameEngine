@@ -27,6 +27,6 @@ namespace dae
 		float m_TotalTime{};
 		float m_FixedTimeStep{ 1/60.f };
 		float m_TimeScale{ 1 };
-		int m_FrameRateCap{ -1 };
+		int m_FrameRateCap{ -1 }; //-1 for no cap
 	};
 }

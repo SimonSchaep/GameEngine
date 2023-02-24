@@ -17,9 +17,18 @@ void dae::GameObject::Initialize()
 
 void dae::GameObject::Update()
 {
-	for (auto& c : m_Components)
+	std::vector<size_t> m_ToDeleteIndexes{};
+	for (size_t i{}; i < m_Components.size(); ++i)
 	{
-		c->Update();
+		m_Components[i]->Update();
+		if (m_Components[i]->IsMarkedForDeletion())
+		{
+			m_ToDeleteIndexes.push_back(i);
+		}
+	}
+	for (int i{ int(m_ToDeleteIndexes.size() - 1) }; i >= 0; --i)
+	{
+		m_Components.erase(std::remove(m_Components.begin(), m_Components.end(), m_Components[m_ToDeleteIndexes[i]]));
 	}
 }
 

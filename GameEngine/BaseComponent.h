@@ -15,6 +15,7 @@ namespace dae
 		BaseComponent& operator=(BaseComponent&& other) = delete;
 
 		void MarkForDeletion() { m_ToBeDeleted = true; };
+		bool IsMarkedForDeletion() { return m_ToBeDeleted; };
 		void SetGameObject(GameObject* gameObject) { m_GameObject = gameObject; };
 
 		virtual void Initialize() = 0;

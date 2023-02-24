@@ -12,7 +12,6 @@ namespace dae
 	class GameObject final
 	{
 	public:
-
 		void Initialize();
 		void Update();
 		void Render() const;
@@ -30,6 +29,14 @@ namespace dae
 
 		template<typename T>
 		void AddComponent(std::shared_ptr<T> component);
+
+		//removes the first component of the specified type
+		template<typename T>
+		void RemoveComponent();
+
+		//removes all components of the specified type
+		template<typename T>
+		void RemoveAllComponents();
 
 		GameObject() = default;
 		~GameObject();
@@ -83,5 +90,30 @@ namespace dae
 	{
 		component->SetGameObject(this);
 		m_Components.push_back(std::move(component));		
+	}
+
+	template<typename T>
+	void GameObject::RemoveComponent()
+	{
+		for (auto& c : m_Components)
+		{
+			if (std::dynamic_pointer_cast<T>(c))
+			{
+				c->MarkForDeletion();
+				return;
+			}
+		}
+	}
+
+	template<typename T>
+	void GameObject::RemoveAllComponents()
+	{
+		for (auto& c : m_Components)
+		{
+			if (std::dynamic_pointer_cast<T>(c))
+			{
+				c->MarkForDeletion();
+			}
+		}
 	}
 }

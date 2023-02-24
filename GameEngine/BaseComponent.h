@@ -25,7 +25,7 @@ namespace dae
 	protected:
 		BaseComponent() = default;
 
-		GameObject* m_GameObject{}; //baseComponent is not the owner of the gameobject, this could be a replacement for the raw pointer: https://en.cppreference.com/w/cpp/experimental/observer_ptr 
+		GameObject* m_GameObject{}; //baseComponent is not the owner of the gameobject. This could be a replacement for the raw pointer: https://en.cppreference.com/w/cpp/experimental/observer_ptr 
 
 	private:
 		bool m_ToBeDeleted{};

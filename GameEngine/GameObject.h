@@ -25,7 +25,7 @@ namespace dae
 
 		//returns all component of the specified type
 		template<typename T>
-		std::vector<std::shared_ptr<T>> GetAllComponents()const;
+		std::vector<std::shared_ptr<T>> GetAllComponentsOfType()const;
 
 		template<typename T>
 		void AddComponent(std::shared_ptr<T> component);
@@ -36,7 +36,7 @@ namespace dae
 
 		//removes all components of the specified type
 		template<typename T>
-		void RemoveAllComponents();
+		void RemoveAllComponentsOfType();
 
 		GameObject() = default;
 		~GameObject();
@@ -70,7 +70,7 @@ namespace dae
 	}
 
 	template<typename T>
-	std::vector<std::shared_ptr<T>> GameObject::GetAllComponents()const
+	std::vector<std::shared_ptr<T>> GameObject::GetAllComponentsOfType()const
 	{
 		std::vector<std::shared_ptr<T>> returnComponents{};
 		
@@ -106,7 +106,7 @@ namespace dae
 	}
 
 	template<typename T>
-	void GameObject::RemoveAllComponents()
+	void GameObject::RemoveAllComponentsOfType()
 	{
 		for (auto& c : m_Components)
 		{

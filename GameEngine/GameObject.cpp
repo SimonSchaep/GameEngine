@@ -34,7 +34,7 @@ void dae::GameObject::Update()
 
 void dae::GameObject::Render() const
 {
-	for (auto& renderer : GetAllComponents<RenderComponent>())
+	for (auto& renderer : GetAllComponentsOfType<RenderComponent>())
 	{
 		renderer->Render();
 	}

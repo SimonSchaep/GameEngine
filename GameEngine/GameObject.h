@@ -19,6 +19,9 @@ namespace dae
 		void SetPosition(float x, float y);
 		const Transform& GetTransform()const { return m_Transform; };
 
+		void MarkForDeletion() { m_IsMarkedForDeletion = true; };
+		bool IsMarkedForDeletion() { return m_IsMarkedForDeletion; };
+
 		//returns the first component of the specified type
 		template<typename T>
 		T* GetComponent()const;
@@ -37,9 +40,6 @@ namespace dae
 		//removes all components of the specified type
 		template<typename T>
 		void RemoveAllComponentsOfType();
-
-		void MarkForDeletion() { m_IsMarkedForDeletion = true; };
-		bool IsMarkedForDeletion() { return m_IsMarkedForDeletion; };
 
 		GameObject() = default;
 		~GameObject();
@@ -94,7 +94,7 @@ namespace dae
 	template<typename T>
 	void GameObject::AddComponent(std::unique_ptr<T> component)
 	{
-		m_Components.push_back(std::move(component));		
+		m_Components.push_back(std::move(component));
 	}
 
 	template<typename T>

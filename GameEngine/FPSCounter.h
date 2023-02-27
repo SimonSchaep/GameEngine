@@ -2,20 +2,17 @@
 #include "BaseComponent.h"
 #include <memory>
 
-namespace dae
+class TextRenderComponent;
+
+class FPSCounter : public BaseComponent
 {
-	class TextRenderComponent;
+public:
+	FPSCounter(GameObject* pGameObject) :BaseComponent(pGameObject) {};
+	virtual ~FPSCounter() = default;
 
-	class FPSCounter : public BaseComponent
-	{
-	public:
-		FPSCounter(GameObject* pGameObject) :BaseComponent(pGameObject) {};
-		virtual ~FPSCounter() = default;
+	virtual void Initialize() override;
+	virtual void Update() override;
 
-		virtual void Initialize() override;
-		virtual void Update() override;
-
-	private:
-		TextRenderComponent* m_pTextRenderComponent{};
-	};
-}
+private:
+	TextRenderComponent* m_pTextRenderComponent{};
+};

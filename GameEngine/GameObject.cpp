@@ -5,9 +5,9 @@
 #include "BaseComponent.h"
 #include "RenderComponent.h"
 
-dae::GameObject::~GameObject() = default;
+GameObject::~GameObject() = default;
 
-void dae::GameObject::Initialize()
+void GameObject::Initialize()
 {
 	for (auto& c : m_Components)
 	{
@@ -15,7 +15,7 @@ void dae::GameObject::Initialize()
 	}
 }
 
-void dae::GameObject::Update()
+void GameObject::Update()
 {
 	for (size_t i{}; i < m_Components.size(); ++i)
 	{
@@ -34,7 +34,7 @@ void dae::GameObject::Update()
 	m_ToDeleteIndexes.clear();
 }
 
-void dae::GameObject::Render() const
+void GameObject::Render() const
 {
 	for (auto& renderer : GetAllComponentsOfType<RenderComponent>())
 	{
@@ -42,7 +42,55 @@ void dae::GameObject::Render() const
 	}
 }
 
-void dae::GameObject::SetPosition(float x, float y)
+const glm::vec3& GameObject::GetWorldPosition()
 {
-	m_Transform.SetPosition(x, y, 0.0f);
+	if (m_IsPositionDirty)
+	{
+		if (m_Parent)
+		{
+			m_WorldTransform.SetPosition(m_Parent->GetWorldPosition() + m_LocalTransform.GetPosition());
+		}
+		else
+		{
+			m_WorldTransform.SetPosition(m_LocalTransform.GetPosition());
+		}
+	}
+	return m_WorldTransform.GetPosition();
+}
+
+void GameObject::SetLocalPosition(float x, float y)
+{
+	m_LocalTransform.SetPosition(x, y, 0.0f);
+	m_IsPositionDirty = true;
+}
+
+void GameObject::SetLocalPosition(const glm::vec3& pos)
+{
+	m_LocalTransform.SetPosition(pos);
+	m_IsPositionDirty = true;
+}
+
+void GameObject::SetParent(GameObject* pParent, bool keepWorldPosition)
+{
+	if (!m_Parent)
+	{
+		m_LocalTransform.SetPosition(GetWorldPosition());
+	}
+	else
+	{
+		m_IsPositionDirty = true;
+		if (keepWorldPosition)
+		{
+			m_LocalTransform.SetPosition(GetLocalPosition() - pParent->GetWorldPosition());
+		}
+	}
+	if (m_Parent)
+	{
+		m_Parent->RemoveChild(this);
+	}
+	m_Parent = pParent;
+	if (m_Parent)
+	{
+		m_Parent->AddChild(this);
+	}
 }

@@ -6,11 +6,11 @@
 #include "Texture2D.h"
 #include "GameObject.h"
 
-dae::TextRenderComponent::TextRenderComponent(GameObject* pGameObject, const std::string& text, std::shared_ptr<Font> font) 
+TextRenderComponent::TextRenderComponent(GameObject* pGameObject, const std::string& text, std::shared_ptr<Font> font) 
 	: m_needsUpdate(true), m_text(text), m_font(std::move(font)), RenderComponent(pGameObject)
 { }
 
-void dae::TextRenderComponent::Update()
+void TextRenderComponent::Update()
 {
 	if (m_needsUpdate)
 	{
@@ -26,22 +26,22 @@ void dae::TextRenderComponent::Update()
 			throw std::runtime_error(std::string("Create text texture from surface failed: ") + SDL_GetError());
 		}
 		SDL_FreeSurface(surf);
-		m_texture = std::make_shared<Texture2D>(texture);
+		SetTexture(std::make_shared<Texture2D>(texture));
 		m_needsUpdate = false;
 	}
 }
 
-void dae::TextRenderComponent::Render() const
+void TextRenderComponent::Render() const
 {
-	if (m_texture != nullptr)
+	if (GetTexture() != nullptr)
 	{
-		const auto& pos = m_pGameObject->GetTransform().GetPosition();
-		Renderer::GetInstance().RenderTexture(*m_texture, pos.x, pos.y);
+		const auto& pos = GetGameObject()->GetWorldPosition();
+		Renderer::GetInstance().RenderTexture(*GetTexture(), pos.x, pos.y);
 	}
 }
 
 // This implementation uses the "dirty flag" pattern
-void dae::TextRenderComponent::SetText(const std::string& text)
+void TextRenderComponent::SetText(const std::string& text)
 {
 	m_text = text;
 	m_needsUpdate = true;

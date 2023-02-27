@@ -2,7 +2,7 @@
 #include <chrono>
 #include <iostream>
 
-void dae::Time::Update()
+void Time::Update()
 {
 	static auto firstFrameStart{ std::chrono::high_resolution_clock::now() };
 	static auto previousFrameStart{ std::chrono::high_resolution_clock::now() };
@@ -28,7 +28,7 @@ void dae::Time::Update()
 
 //Adapted from:
 //https://stackoverflow.com/questions/13397571/precise-thread-sleep-needed-max-1ms-error
-void dae::Time::HighResSleep(float sleepTime)
+void Time::HighResSleep(float sleepTime)
 {
 	std::chrono::duration<float> MinSleepDuration(0);
 	const auto start = std::chrono::high_resolution_clock::now();

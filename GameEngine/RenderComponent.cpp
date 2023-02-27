@@ -4,21 +4,21 @@
 #include "Renderer.h"
 #include "GameObject.h"
 
-void dae::RenderComponent::SetTexture(const std::string& filename)
+void RenderComponent::SetTexture(const std::string& filename)
 {
 	m_texture = ResourceManager::GetInstance().LoadTexture(filename);
 }
 
-void dae::RenderComponent::Initialize()
+void RenderComponent::Initialize()
 {
 }
 
-void dae::RenderComponent::Update()
+void RenderComponent::Update()
 {
 }
 
-void dae::RenderComponent::Render() const
+void RenderComponent::Render() const
 {
-	const auto& pos = m_pGameObject->GetTransform().GetPosition();
+	const auto& pos = GetGameObject()->GetWorldPosition();
 	Renderer::GetInstance().RenderTexture(*m_texture, pos.x, pos.y);
 }

@@ -10,31 +10,16 @@
     <ClCompile Include="GameObject.cpp">
       <Filter>Engine</Filter>
     </ClCompile>
-    <ClCompile Include="InputManager.cpp">
-      <Filter>Engine</Filter>
-    </ClCompile>
     <ClCompile Include="Main.cpp">
       <Filter>Engine</Filter>
     </ClCompile>
-    <ClCompile Include="Renderer.cpp">
-      <Filter>Engine</Filter>
-    </ClCompile>
-    <ClCompile Include="ResourceManager.cpp">
-      <Filter>Engine</Filter>
-    </ClCompile>
     <ClCompile Include="Scene.cpp">
-      <Filter>Engine</Filter>
-    </ClCompile>
-    <ClCompile Include="SceneManager.cpp">
       <Filter>Engine</Filter>
     </ClCompile>
     <ClCompile Include="Texture2D.cpp">
       <Filter>Engine</Filter>
     </ClCompile>
     <ClCompile Include="Transform.cpp">
-      <Filter>Engine</Filter>
-    </ClCompile>
-    <ClCompile Include="Time.cpp">
       <Filter>Engine</Filter>
     </ClCompile>
     <ClCompile Include="FPSCounter.cpp">
@@ -49,6 +34,24 @@
     <ClCompile Include="TextRenderComponent.cpp">
       <Filter>Engine\Components</Filter>
     </ClCompile>
+    <ClCompile Include="Time.cpp">
+      <Filter>Engine\Singletons</Filter>
+    </ClCompile>
+    <ClCompile Include="SceneManager.cpp">
+      <Filter>Engine\Singletons</Filter>
+    </ClCompile>
+    <ClCompile Include="ResourceManager.cpp">
+      <Filter>Engine\Singletons</Filter>
+    </ClCompile>
+    <ClCompile Include="InputManager.cpp">
+      <Filter>Engine\Singletons</Filter>
+    </ClCompile>
+    <ClCompile Include="Renderer.cpp">
+      <Filter>Engine\Singletons</Filter>
+    </ClCompile>
+    <ClCompile Include="MoveComponent.cpp">
+      <Filter>CustomComponents</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Font.h">
@@ -60,31 +63,13 @@
     <ClInclude Include="GameObject.h">
       <Filter>Engine</Filter>
     </ClInclude>
-    <ClInclude Include="InputManager.h">
-      <Filter>Engine</Filter>
-    </ClInclude>
-    <ClInclude Include="Renderer.h">
-      <Filter>Engine</Filter>
-    </ClInclude>
-    <ClInclude Include="ResourceManager.h">
-      <Filter>Engine</Filter>
-    </ClInclude>
     <ClInclude Include="Scene.h">
-      <Filter>Engine</Filter>
-    </ClInclude>
-    <ClInclude Include="SceneManager.h">
-      <Filter>Engine</Filter>
-    </ClInclude>
-    <ClInclude Include="Singleton.h">
       <Filter>Engine</Filter>
     </ClInclude>
     <ClInclude Include="Texture2D.h">
       <Filter>Engine</Filter>
     </ClInclude>
     <ClInclude Include="Transform.h">
-      <Filter>Engine</Filter>
-    </ClInclude>
-    <ClInclude Include="Time.h">
       <Filter>Engine</Filter>
     </ClInclude>
     <ClInclude Include="FPSCounter.h">
@@ -99,6 +84,27 @@
     <ClInclude Include="TextRenderComponent.h">
       <Filter>Engine\Components</Filter>
     </ClInclude>
+    <ClInclude Include="Time.h">
+      <Filter>Engine\Singletons</Filter>
+    </ClInclude>
+    <ClInclude Include="Singleton.h">
+      <Filter>Engine\Singletons</Filter>
+    </ClInclude>
+    <ClInclude Include="SceneManager.h">
+      <Filter>Engine\Singletons</Filter>
+    </ClInclude>
+    <ClInclude Include="ResourceManager.h">
+      <Filter>Engine\Singletons</Filter>
+    </ClInclude>
+    <ClInclude Include="InputManager.h">
+      <Filter>Engine\Singletons</Filter>
+    </ClInclude>
+    <ClInclude Include="Renderer.h">
+      <Filter>Engine\Singletons</Filter>
+    </ClInclude>
+    <ClInclude Include="MoveComponent.h">
+      <Filter>CustomComponents</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Engine">
@@ -109,6 +115,9 @@
     </Filter>
     <Filter Include="Engine\Components">
       <UniqueIdentifier>{fc3ce4ca-7a05-4a4c-83eb-27a5b41fd626}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\Singletons">
+      <UniqueIdentifier>{2620f2e7-360e-465f-b8ae-52c58b3c50e0}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

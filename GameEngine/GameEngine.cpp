@@ -45,7 +45,7 @@ void PrintSDLVersion()
 		version.major, version.minor, version.patch);
 }
 
-dae::GameEngine::GameEngine(const std::string &dataPath)
+GameEngine::GameEngine(const std::string &dataPath)
 {
 	PrintSDLVersion();
 	
@@ -72,7 +72,7 @@ dae::GameEngine::GameEngine(const std::string &dataPath)
 	ResourceManager::GetInstance().Init(dataPath);
 }
 
-dae::GameEngine::~GameEngine()
+GameEngine::~GameEngine()
 {
 	Renderer::GetInstance().Destroy();
 	SDL_DestroyWindow(g_window);
@@ -80,7 +80,7 @@ dae::GameEngine::~GameEngine()
 	SDL_Quit();
 }
 
-void dae::GameEngine::Run(const std::function<void()>& load)
+void GameEngine::Run(const std::function<void()>& load)
 {
 	load();
 

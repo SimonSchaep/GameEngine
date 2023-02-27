@@ -96,8 +96,10 @@ void dae::GameEngine::Run(const std::function<void()>& load)
 
 	while (doContinue)
 	{
-		time.Update(); //calculate deltatime, totaltime...
+		//TIME
+		time.Update(); //calculate deltatime, totaltime..., will sleep to cap fps when a cap is set
 
+		//FIXED UPDATE
 		lag += time.GetDeltaTime();		
 		while (lag >= time.GetFixedTimeStep())
 		{
@@ -106,6 +108,7 @@ void dae::GameEngine::Run(const std::function<void()>& load)
 			lag -= time.GetFixedTimeStep();
 		}
 		
+		//UPDATE + RENDER
 		sceneManager.Update();
 		renderer.Render();
 

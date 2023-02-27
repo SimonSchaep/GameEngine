@@ -17,6 +17,7 @@ void dae::Time::Update()
 		HighResSleep(std::chrono::duration<float>(sleepTime).count());
 	}
 
+	//DELTA TIME
 	const auto currentFrameStart = std::chrono::high_resolution_clock::now();
 	m_DeltaTime = std::chrono::duration<float>(currentFrameStart - previousFrameStart).count();
 	m_DeltaTime *= m_TimeScale;
@@ -25,6 +26,7 @@ void dae::Time::Update()
 	previousFrameStart = currentFrameStart;
 }
 
+//Adapted from:
 //https://stackoverflow.com/questions/13397571/precise-thread-sleep-needed-max-1ms-error
 void dae::Time::HighResSleep(float sleepTime)
 {

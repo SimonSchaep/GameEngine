@@ -19,6 +19,6 @@ void dae::RenderComponent::Update()
 
 void dae::RenderComponent::Render() const
 {
-	const auto& pos = m_GameObject->GetTransform().GetPosition();
+	const auto& pos = m_pGameObject->GetTransform().GetPosition();
 	Renderer::GetInstance().RenderTexture(*m_texture, pos.x, pos.y);
 }

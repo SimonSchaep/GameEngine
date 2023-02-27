@@ -6,8 +6,8 @@
 #include "Texture2D.h"
 #include "GameObject.h"
 
-dae::TextRenderComponent::TextRenderComponent(const std::string& text, std::shared_ptr<Font> font) 
-	: m_needsUpdate(true), m_text(text), m_font(std::move(font)), RenderComponent()
+dae::TextRenderComponent::TextRenderComponent(GameObject* pGameObject, const std::string& text, std::shared_ptr<Font> font) 
+	: m_needsUpdate(true), m_text(text), m_font(std::move(font)), RenderComponent(pGameObject)
 { }
 
 void dae::TextRenderComponent::Update()
@@ -35,7 +35,7 @@ void dae::TextRenderComponent::Render() const
 {
 	if (m_texture != nullptr)
 	{
-		const auto& pos = m_GameObject->GetTransform().GetPosition();
+		const auto& pos = m_pGameObject->GetTransform().GetPosition();
 		Renderer::GetInstance().RenderTexture(*m_texture, pos.x, pos.y);
 	}
 }

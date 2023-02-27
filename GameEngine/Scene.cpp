@@ -1,5 +1,4 @@
 #include "Scene.h"
-#include "GameObject.h"
 
 using namespace dae;
 
@@ -9,12 +8,12 @@ Scene::Scene(const std::string& name) : m_name(name) {}
 
 Scene::~Scene() = default;
 
-void Scene::Add(std::shared_ptr<GameObject> object)
+void Scene::Add(std::unique_ptr<GameObject> object)
 {
 	m_objects.emplace_back(std::move(object));
 }
 
-void Scene::Remove(std::shared_ptr<GameObject> object)
+void Scene::Remove(std::unique_ptr<GameObject> object)
 {
 	m_objects.erase(std::remove(m_objects.begin(), m_objects.end(), object), m_objects.end());
 }
@@ -34,10 +33,21 @@ void Scene::Initialize()
 
 void Scene::Update()
 {
-	for(auto& object : m_objects)
+	for (size_t i{}; i < m_objects.size(); ++i)
 	{
-		object->Update();
+		m_objects[i]->Update();
+		if (m_objects[i]->IsMarkedForDeletion())
+		{
+			m_ToDeleteIndexes.push_back(i);
+		}
 	}
+
+	//Delete objects
+	for (size_t i : m_ToDeleteIndexes)
+	{
+		m_objects.erase(std::remove(m_objects.begin(), m_objects.end(), m_objects[i]));
+	}
+	m_ToDeleteIndexes.clear();
 }
 
 void Scene::Render() const

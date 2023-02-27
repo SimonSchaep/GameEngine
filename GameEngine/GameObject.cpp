@@ -17,7 +17,6 @@ void dae::GameObject::Initialize()
 
 void dae::GameObject::Update()
 {
-	std::vector<size_t> m_ToDeleteIndexes{};
 	for (size_t i{}; i < m_Components.size(); ++i)
 	{
 		m_Components[i]->Update();
@@ -26,10 +25,13 @@ void dae::GameObject::Update()
 			m_ToDeleteIndexes.push_back(i);
 		}
 	}
-	for (int i{ int(m_ToDeleteIndexes.size() - 1) }; i >= 0; --i)
+
+	//Delete Components
+	for (size_t i : m_ToDeleteIndexes)
 	{
-		m_Components.erase(std::remove(m_Components.begin(), m_Components.end(), m_Components[m_ToDeleteIndexes[i]]));
+		m_Components.erase(std::remove(m_Components.begin(), m_Components.end(), m_Components[i]));
 	}
+	m_ToDeleteIndexes.clear();
 }
 
 void dae::GameObject::Render() const
@@ -42,5 +44,5 @@ void dae::GameObject::Render() const
 
 void dae::GameObject::SetPosition(float x, float y)
 {
-	m_transform.SetPosition(x, y, 0.0f);
+	m_Transform.SetPosition(x, y, 0.0f);
 }

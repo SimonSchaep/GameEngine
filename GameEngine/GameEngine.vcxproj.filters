@@ -28,9 +28,6 @@
     <ClCompile Include="SceneManager.cpp">
       <Filter>Engine</Filter>
     </ClCompile>
-    <ClCompile Include="TextRenderComponent.cpp">
-      <Filter>Engine</Filter>
-    </ClCompile>
     <ClCompile Include="Texture2D.cpp">
       <Filter>Engine</Filter>
     </ClCompile>
@@ -40,14 +37,17 @@
     <ClCompile Include="Time.cpp">
       <Filter>Engine</Filter>
     </ClCompile>
-    <ClCompile Include="BaseComponent.cpp">
-      <Filter>Engine</Filter>
-    </ClCompile>
-    <ClCompile Include="RenderComponent.cpp">
-      <Filter>Engine</Filter>
-    </ClCompile>
     <ClCompile Include="FPSCounter.cpp">
       <Filter>CustomComponents</Filter>
+    </ClCompile>
+    <ClCompile Include="BaseComponent.cpp">
+      <Filter>Engine\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="RenderComponent.cpp">
+      <Filter>Engine\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="TextRenderComponent.cpp">
+      <Filter>Engine\Components</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -78,9 +78,6 @@
     <ClInclude Include="Singleton.h">
       <Filter>Engine</Filter>
     </ClInclude>
-    <ClInclude Include="TextRenderComponent.h">
-      <Filter>Engine</Filter>
-    </ClInclude>
     <ClInclude Include="Texture2D.h">
       <Filter>Engine</Filter>
     </ClInclude>
@@ -90,14 +87,17 @@
     <ClInclude Include="Time.h">
       <Filter>Engine</Filter>
     </ClInclude>
-    <ClInclude Include="BaseComponent.h">
-      <Filter>Engine</Filter>
-    </ClInclude>
-    <ClInclude Include="RenderComponent.h">
-      <Filter>Engine</Filter>
-    </ClInclude>
     <ClInclude Include="FPSCounter.h">
       <Filter>CustomComponents</Filter>
+    </ClInclude>
+    <ClInclude Include="BaseComponent.h">
+      <Filter>Engine\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="RenderComponent.h">
+      <Filter>Engine\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="TextRenderComponent.h">
+      <Filter>Engine\Components</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -106,6 +106,9 @@
     </Filter>
     <Filter Include="CustomComponents">
       <UniqueIdentifier>{6aabea10-7cc4-413c-b120-afdfce10e67c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\Components">
+      <UniqueIdentifier>{fc3ce4ca-7a05-4a4c-83eb-27a5b41fd626}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

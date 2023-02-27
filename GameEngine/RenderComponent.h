@@ -10,7 +10,7 @@ namespace dae
 	class RenderComponent : public BaseComponent
 	{
 	public:
-		RenderComponent() = default;
+		RenderComponent(GameObject* pGameObject) :BaseComponent(pGameObject){};
 		virtual ~RenderComponent() = default;
 
 		void SetTexture(const std::string& filename);

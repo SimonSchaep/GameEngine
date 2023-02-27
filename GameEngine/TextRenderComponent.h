@@ -16,15 +16,15 @@ namespace dae
 
 		void SetText(const std::string& text);
 
-		TextRenderComponent(const std::string& text, std::shared_ptr<Font> font);
+		TextRenderComponent(GameObject* pGameObject, const std::string& text, std::shared_ptr<Font> font);
 		virtual ~TextRenderComponent() = default;
 		TextRenderComponent(const TextRenderComponent& other) = delete;
 		TextRenderComponent(TextRenderComponent&& other) = delete;
 		TextRenderComponent& operator=(const TextRenderComponent& other) = delete;
 		TextRenderComponent& operator=(TextRenderComponent&& other) = delete;
 	private:
-		bool m_needsUpdate;
-		std::string m_text;
-		std::shared_ptr<Font> m_font;
+		bool m_needsUpdate{};
+		std::string m_text{};
+		std::shared_ptr<Font> m_font{};
 	};
 }

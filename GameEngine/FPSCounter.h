@@ -9,13 +9,13 @@ namespace dae
 	class FPSCounter : public BaseComponent
 	{
 	public:
-		FPSCounter() = default;
+		FPSCounter(GameObject* pGameObject) :BaseComponent(pGameObject) {};
 		virtual ~FPSCounter() = default;
 
 		virtual void Initialize() override;
 		virtual void Update() override;
 
 	private:
-		std::shared_ptr<TextRenderComponent> m_TextRenderComponent{};
+		TextRenderComponent* m_pTextRenderComponent{};
 	};
 }

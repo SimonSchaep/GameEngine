@@ -17,18 +17,18 @@ namespace dae
 		void Render() const;
 
 		void SetPosition(float x, float y);
-		const Transform& GetTransform()const { return m_transform; };
+		const Transform& GetTransform()const { return m_Transform; };
 
 		//returns the first component of the specified type
 		template<typename T>
-		std::shared_ptr<T> GetComponent()const;
+		T* GetComponent()const;
 
 		//returns all component of the specified type
 		template<typename T>
-		std::vector<std::shared_ptr<T>> GetAllComponentsOfType()const;
+		std::vector<T*> GetAllComponentsOfType()const;
 
 		template<typename T>
-		void AddComponent(std::shared_ptr<T> component);
+		void AddComponent(std::unique_ptr<T> component);
 
 		//removes the first component of the specified type
 		template<typename T>
@@ -38,6 +38,9 @@ namespace dae
 		template<typename T>
 		void RemoveAllComponentsOfType();
 
+		void MarkForDeletion() { m_IsMarkedForDeletion = true; };
+		bool IsMarkedForDeletion() { return m_IsMarkedForDeletion; };
+
 		GameObject() = default;
 		~GameObject();
 		GameObject(const GameObject& other) = delete;
@@ -46,20 +49,23 @@ namespace dae
 		GameObject& operator=(GameObject&& other) = delete;
 
 	private:
-		Transform m_transform{};
+		Transform m_Transform{};
+		bool m_IsMarkedForDeletion{};
 
-		std::vector<std::shared_ptr<BaseComponent>> m_Components;
+		std::vector<size_t> m_ToDeleteIndexes{};
+
+		std::vector<std::unique_ptr<BaseComponent>> m_Components;
 		//this could be interesting if getcomponent is too slow:
 		//https://stackoverflow.com/questions/9859390/use-data-type-class-type-as-key-in-a-map
 	};
 
 	template<typename T>
-	std::shared_ptr<T> GameObject::GetComponent()const
+	T* GameObject::GetComponent()const
 	{
-		std::shared_ptr<T> returnComponent{};
+		T* returnComponent{};
 		for (auto& c : m_Components)
 		{
-			returnComponent = std::dynamic_pointer_cast<T>(c);
+			returnComponent = dynamic_cast<T*>(c.get());
 			if (returnComponent)
 			{
 				return returnComponent;
@@ -70,13 +76,13 @@ namespace dae
 	}
 
 	template<typename T>
-	std::vector<std::shared_ptr<T>> GameObject::GetAllComponentsOfType()const
+	std::vector<T*> GameObject::GetAllComponentsOfType()const
 	{
-		std::vector<std::shared_ptr<T>> returnComponents{};
+		std::vector<T*> returnComponents{};
 		
 		for (auto& c : m_Components)
 		{
-			std::shared_ptr<T> component{ std::dynamic_pointer_cast<T>(c) };
+			T* component{ dynamic_cast<T*>(c.get()) };
 			if (component)
 			{
 				returnComponents.push_back(component);
@@ -86,9 +92,8 @@ namespace dae
 	}
 
 	template<typename T>
-	void GameObject::AddComponent(std::shared_ptr<T> component)
+	void GameObject::AddComponent(std::unique_ptr<T> component)
 	{
-		component->SetGameObject(this);
 		m_Components.push_back(std::move(component));		
 	}
 
@@ -97,7 +102,7 @@ namespace dae
 	{
 		for (auto& c : m_Components)
 		{
-			if (std::dynamic_pointer_cast<T>(c))
+			if (dynamic_cast<T*>(c.get()))
 			{
 				c->MarkForDeletion();
 				return;
@@ -110,7 +115,7 @@ namespace dae
 	{
 		for (auto& c : m_Components)
 		{
-			if (std::dynamic_pointer_cast<T>(c))
+			if (dynamic_cast<T*>(c.get()))
 			{
 				c->MarkForDeletion();
 			}

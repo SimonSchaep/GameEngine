@@ -52,6 +52,9 @@
     <ClCompile Include="MoveComponent.cpp">
       <Filter>CustomComponents</Filter>
     </ClCompile>
+    <ClCompile Include="RotateComponent.cpp">
+      <Filter>CustomComponents</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Font.h">
@@ -103,6 +106,9 @@
       <Filter>Engine\Singletons</Filter>
     </ClInclude>
     <ClInclude Include="MoveComponent.h">
+      <Filter>CustomComponents</Filter>
+    </ClInclude>
+    <ClInclude Include="RotateComponent.h">
       <Filter>CustomComponents</Filter>
     </ClInclude>
   </ItemGroup>

@@ -6,12 +6,17 @@
 #include "Texture2D.h"
 #include "GameObject.h"
 
-TextRenderComponent::TextRenderComponent(GameObject* pGameObject, const std::string& text, std::shared_ptr<Font> font) 
-	: m_needsUpdate(true), m_text(text), m_font(std::move(font)), RenderComponent(pGameObject)
+TextRenderComponent::TextRenderComponent(GameObject* pGameObject) 
+	: m_needsUpdate(true), m_text(""), RenderComponent(pGameObject)
 { }
 
 void TextRenderComponent::Update()
 {
+	if (!m_font)
+	{
+		return;
+	}
+
 	if (m_needsUpdate)
 	{
 		const SDL_Color color = { 255,255,255 }; // only white text is supported now
@@ -45,6 +50,11 @@ void TextRenderComponent::SetText(const std::string& text)
 {
 	m_text = text;
 	m_needsUpdate = true;
+}
+
+void TextRenderComponent::SetFont(std::shared_ptr<Font> font)
+{
+	m_font = std::move(font);
 }
 
 

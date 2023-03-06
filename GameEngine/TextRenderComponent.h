@@ -13,8 +13,9 @@ public:
 	virtual void Render() const override;
 
 	void SetText(const std::string& text);
+	void SetFont(std::shared_ptr<Font> font);
 
-	TextRenderComponent(GameObject* pGameObject, const std::string& text, std::shared_ptr<Font> font);
+	TextRenderComponent(GameObject* pGameObject);
 	virtual ~TextRenderComponent() = default;
 	TextRenderComponent(const TextRenderComponent& other) = delete;
 	TextRenderComponent(TextRenderComponent&& other) = delete;

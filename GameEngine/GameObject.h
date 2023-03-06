@@ -41,7 +41,7 @@ public:
 	std::vector<T*> GetAllComponentsOfType()const;
 
 	template<typename T>
-	void AddComponent(std::unique_ptr<T> component);
+	T* AddComponent();
 
 	//removes the first component of the specified type
 	template<typename T>
@@ -111,9 +111,12 @@ std::vector<T*> GameObject::GetAllComponentsOfType()const
 }
 
 template<typename T>
-void GameObject::AddComponent(std::unique_ptr<T> component)
+T* GameObject::AddComponent()
 {
-	m_Components.push_back(std::move(component));
+	auto pComponent = std::make_unique<T>(this);
+	T* pReturnValue = pComponent.get();
+	m_Components.push_back(std::move(pComponent));
+	return pReturnValue;
 }
 
 template<typename T>

@@ -19,7 +19,7 @@ public:
 	virtual void Update() = 0;
 
 protected:
-	BaseComponent(GameObject* gameObject) : m_pGameObject{ gameObject } {};
+	BaseComponent(GameObject* gameObject);
 	GameObject* GetGameObject()const { return m_pGameObject; };
 private:
 	GameObject* m_pGameObject{}; //baseComponent is not the owner of the gameobject. This could be a replacement for the raw pointer: https://en.cppreference.com/w/cpp/experimental/observer_ptr 

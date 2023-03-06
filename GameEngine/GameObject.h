@@ -71,7 +71,7 @@ private:
 	std::vector<size_t> m_ToDeleteIndexes{};
 
 	std::vector<GameObject*> m_Children;
-	GameObject* m_Parent;
+	GameObject* m_Parent{};
 
 	std::vector<std::unique_ptr<BaseComponent>> m_Components;
 	//this could be interesting if getcomponent is too slow:

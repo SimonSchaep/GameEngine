@@ -89,7 +89,7 @@ void GameEngine::Run(const std::function<void()>& load)
 	auto& input = InputManager::GetInstance();
 	auto& time = Time::GetInstance();
 
-	float lag = 0.f;
+	//float lag = 0.f;
 	bool doContinue = true;
 
 	sceneManager.Initialize();
@@ -100,13 +100,13 @@ void GameEngine::Run(const std::function<void()>& load)
 		time.Update(); //calculate deltatime, totaltime..., will sleep to cap fps when a cap is set
 
 		//FIXED UPDATE
-		lag += time.GetDeltaTime();		
-		while (lag >= time.GetFixedTimeStep())
-		{
-			//Todo: Implement FixedUpdate here
-			//physics.FixedUpdate();
-			lag -= time.GetFixedTimeStep();
-		}
+		//lag += time.GetDeltaTime();		
+		//while (lag >= time.GetFixedTimeStep())
+		//{
+		//	//Todo: Implement FixedUpdate here
+		//	//physics.FixedUpdate();
+		//	lag -= time.GetFixedTimeStep();
+		//}
 		
 		//UPDATE + RENDER
 		sceneManager.Update();

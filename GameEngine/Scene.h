@@ -6,7 +6,7 @@ class Scene final
 {
 	friend Scene& SceneManager::CreateScene(const std::string& name);
 public:
-	void Add(std::unique_ptr<GameObject> object);
+	GameObject* CreateAndAddGameObject();
 	void RemoveAll();
 
 	void Initialize();
@@ -20,12 +20,14 @@ public:
 	Scene& operator=(Scene&& other) = delete;
 
 private:
+	void RemoveGameObjectByIndex(size_t i);
+
 	explicit Scene(const std::string& name);
 
 	std::vector<size_t> m_ToDeleteIndexes{};
 
-	std::string m_name;
-	std::vector < std::unique_ptr<GameObject>> m_objects{};
+	std::string m_Name;
+	std::vector < std::unique_ptr<GameObject>> m_GameObjects{};
 
-	static unsigned int m_idCounter;
+	static unsigned int m_IdCounter;
 };

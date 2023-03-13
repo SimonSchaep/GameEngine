@@ -14,6 +14,7 @@ void TextRenderComponent::Update()
 {
 	if (!m_font)
 	{
+		throw std::runtime_error(std::string("No font assigned: ") + SDL_GetError());
 		return;
 	}
 
@@ -40,7 +41,7 @@ void TextRenderComponent::Render() const
 {
 	if (GetTexture() != nullptr)
 	{
-		const auto& pos = GetGameObject()->GetWorldPosition();
+		const auto& pos = GetGameObject()->GetTransform()->GetWorldPosition();
 		Renderer::GetInstance().RenderTexture(*GetTexture(), pos.x, pos.y);
 	}
 }

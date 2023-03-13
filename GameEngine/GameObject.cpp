@@ -4,6 +4,12 @@
 #include "Renderer.h"
 #include "BaseComponent.h"
 #include "RenderComponent.h"
+#include <iostream>
+
+GameObject::GameObject()
+	: m_Transform{std::make_unique<Transform>(this)}
+{
+}
 
 GameObject::~GameObject() = default;
 
@@ -42,47 +48,19 @@ void GameObject::Render() const
 	}
 }
 
-const glm::vec3& GameObject::GetWorldPosition()
-{
-	if (m_IsPositionDirty)
-	{
-		if (m_Parent)
-		{
-			m_WorldTransform.SetPosition(m_Parent->GetWorldPosition() + m_LocalTransform.GetPosition());
-		}
-		else
-		{
-			m_WorldTransform.SetPosition(m_LocalTransform.GetPosition());
-		}
-	}
-	return m_WorldTransform.GetPosition();
-}
-
-void GameObject::SetLocalPosition(float x, float y)
-{
-	m_LocalTransform.SetPosition(x, y, 0.0f);
-	m_IsPositionDirty = true;
-}
-
-void GameObject::SetLocalPosition(const glm::vec3& pos)
-{
-	m_LocalTransform.SetPosition(pos);
-	m_IsPositionDirty = true;
-}
-
 void GameObject::SetParent(GameObject* pParent, bool keepWorldPosition)
 {
 	if (!m_Parent)
 	{
-		m_LocalTransform.SetPosition(GetWorldPosition());
+		m_Transform->SetLocalPosition(m_Transform->GetWorldPosition());
 	}
 	else
 	{
-		m_IsPositionDirty = true;
 		if (keepWorldPosition)
 		{
-			m_LocalTransform.SetPosition(GetLocalPosition() - pParent->GetWorldPosition());
+			m_Transform->SetLocalPosition(m_Transform->GetLocalPosition() - pParent->GetTransform()->GetWorldPosition());
 		}
+		m_Transform->SetDirty(true);
 	}
 	if (m_Parent)
 	{

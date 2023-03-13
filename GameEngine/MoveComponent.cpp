@@ -12,7 +12,7 @@ void MoveComponent::Update()
 	const float ms{ 10 };
 	const float dt{ Time::GetInstance().GetDeltaTime() };
 
-	glm::vec3 pos{ GetGameObject()->GetLocalPosition() };
+	glm::vec3 pos{ GetGameObject()->GetTransform()->GetLocalPosition()};
 	pos.x += ms * dt;
-	GetGameObject()->SetLocalPosition(pos);
+	GetGameObject()->GetTransform()->SetLocalPosition(pos);
 }

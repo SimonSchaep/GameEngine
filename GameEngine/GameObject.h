@@ -14,11 +14,7 @@ public:
 	void Update();
 	void Render() const;
 
-	const glm::vec3& GetWorldPosition();
-	const glm::vec3& GetLocalPosition()const { return m_LocalTransform.GetPosition(); };
-
-	void SetLocalPosition(float x, float y);
-	void SetLocalPosition(const glm::vec3& pos);
+	Transform* GetTransform() { return m_Transform.get(); };
 
 	void MarkForDeletion() { m_IsMarkedForDeletion = true; };
 	bool IsMarkedForDeletion() { return m_IsMarkedForDeletion; };
@@ -41,7 +37,7 @@ public:
 	std::vector<T*> GetAllComponentsOfType()const;
 
 	template<typename T>
-	T* AddComponent();
+	T* CreateAndAddComponent();
 
 	//removes the first component of the specified type
 	template<typename T>
@@ -51,7 +47,7 @@ public:
 	template<typename T>
 	void RemoveAllComponentsOfType();
 
-	GameObject() = default;
+	GameObject();
 	~GameObject();
 	GameObject(const GameObject& other) = delete;
 	GameObject(GameObject&& other) = delete;
@@ -62,9 +58,7 @@ private:
 	void AddChild(GameObject* pGameObject) { m_Children.push_back(pGameObject); };
 	void RemoveChild(GameObject* pGameObject) { m_Children.erase(std::remove(m_Children.begin(), m_Children.end(), pGameObject)); };
 
-	Transform m_LocalTransform{};
-	Transform m_WorldTransform{};
-	bool m_IsPositionDirty{};
+	std::unique_ptr<Transform> m_Transform{};
 
 	bool m_IsMarkedForDeletion{};
 
@@ -111,11 +105,11 @@ std::vector<T*> GameObject::GetAllComponentsOfType()const
 }
 
 template<typename T>
-T* GameObject::AddComponent()
+T* GameObject::CreateAndAddComponent()
 {
-	auto pComponent = std::make_unique<T>(this);
-	T* pReturnValue = pComponent.get();
-	m_Components.push_back(std::move(pComponent));
+	auto component = std::make_unique<T>(this);
+	T* pReturnValue = component.get();
+	m_Components.push_back(std::move(component));
 	return pReturnValue;
 }
 

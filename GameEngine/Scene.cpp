@@ -1,24 +1,27 @@
 #include "Scene.h"
 
-unsigned int Scene::m_idCounter = 0;
+unsigned int Scene::m_IdCounter = 0;
 
-Scene::Scene(const std::string& name) : m_name(name) {}
+Scene::Scene(const std::string& name) : m_Name(name) {}
 
 Scene::~Scene() = default;
 
-void Scene::Add(std::unique_ptr<GameObject> object)
+GameObject* Scene::CreateAndAddGameObject()
 {
-	m_objects.emplace_back(std::move(object));
+	auto gameObject = std::make_unique<GameObject>();
+	GameObject* pReturnValue = gameObject.get();
+	m_GameObjects.emplace_back(std::move(gameObject));
+	return pReturnValue;
 }
 
 void Scene::RemoveAll()
 {
-	m_objects.clear();
+	m_GameObjects.clear();
 }
 
 void Scene::Initialize()
 {
-	for (auto& object : m_objects)
+	for (auto& object : m_GameObjects)
 	{
 		object->Initialize();
 	}
@@ -26,10 +29,10 @@ void Scene::Initialize()
 
 void Scene::Update()
 {
-	for (size_t i{}; i < m_objects.size(); ++i)
+	for (size_t i{}; i < m_GameObjects.size(); ++i)
 	{
-		m_objects[i]->Update();
-		if (m_objects[i]->IsMarkedForDeletion())
+		m_GameObjects[i]->Update();
+		if (m_GameObjects[i]->IsMarkedForDeletion())
 		{
 			m_ToDeleteIndexes.push_back(i);
 		}
@@ -38,16 +41,37 @@ void Scene::Update()
 	//Delete objects
 	for (size_t i : m_ToDeleteIndexes)
 	{
-		m_objects.erase(std::remove(m_objects.begin(), m_objects.end(), m_objects[i]));
+		RemoveGameObjectByIndex(i);
 	}
 	m_ToDeleteIndexes.clear();
 }
 
 void Scene::Render() const
 {
-	for (const auto& object : m_objects)
+	for (const auto& object : m_GameObjects)
 	{
 		object->Render();
 	}
+}
+
+void Scene::RemoveGameObjectByIndex(size_t i)
+{
+	GameObject* pGameObject{ m_GameObjects[i].get() };
+	//if has parent
+	if (pGameObject->GetParent())
+	{
+		//remove from parent
+		pGameObject->SetParent(nullptr, false);
+	}
+	//if has children
+	if (pGameObject->GetChildren().size() > 0)
+	{
+		//remove all children from parent
+		for (auto child : pGameObject->GetChildren())
+		{
+			child->SetParent(nullptr, false);
+		}
+	}
+	m_GameObjects.erase(std::remove(m_GameObjects.begin(), m_GameObjects.end(), m_GameObjects[i]));
 }
 

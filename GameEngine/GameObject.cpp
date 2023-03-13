@@ -23,6 +23,7 @@ void GameObject::Initialize()
 
 void GameObject::Update()
 {
+	//Update Components
 	for (size_t i{}; i < m_Components.size(); ++i)
 	{
 		m_Components[i]->Update();
@@ -48,9 +49,21 @@ void GameObject::Render() const
 	}
 }
 
+void GameObject::MarkForDeletion(bool includeChildren)
+{
+	m_IsMarkedForDeletion = true;
+	if (includeChildren)
+	{
+		for (auto pChild : m_Children)
+		{
+			pChild->MarkForDeletion(includeChildren);
+		}
+	}
+}
+
 void GameObject::SetParent(GameObject* pParent, bool keepWorldPosition)
 {
-	if (!m_Parent)
+	if (!pParent && keepWorldPosition)
 	{
 		m_Transform->SetLocalPosition(m_Transform->GetWorldPosition());
 	}
@@ -62,6 +75,7 @@ void GameObject::SetParent(GameObject* pParent, bool keepWorldPosition)
 		}
 		m_Transform->SetDirty(true);
 	}
+
 	if (m_Parent)
 	{
 		m_Parent->RemoveChild(this);

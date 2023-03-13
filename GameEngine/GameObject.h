@@ -16,7 +16,7 @@ public:
 
 	Transform* GetTransform() { return m_Transform.get(); };
 
-	void MarkForDeletion() { m_IsMarkedForDeletion = true; };
+	void MarkForDeletion(bool includeChildren);
 	bool IsMarkedForDeletion() { return m_IsMarkedForDeletion; };
 
 

@@ -2,6 +2,9 @@
 #include "BaseComponent.h"
 #include <memory>
 
+
+//todo: add delay to update
+
 class TextRenderComponent;
 
 class FPSCounter : public BaseComponent

@@ -55,6 +55,9 @@
     <ClCompile Include="RotateComponent.cpp">
       <Filter>CustomComponents</Filter>
     </ClCompile>
+    <ClCompile Include="DestroyComponent.cpp">
+      <Filter>CustomComponents</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Font.h">
@@ -109,6 +112,9 @@
       <Filter>CustomComponents</Filter>
     </ClInclude>
     <ClInclude Include="RotateComponent.h">
+      <Filter>CustomComponents</Filter>
+    </ClInclude>
+    <ClInclude Include="DestroyComponent.h">
       <Filter>CustomComponents</Filter>
     </ClInclude>
   </ItemGroup>

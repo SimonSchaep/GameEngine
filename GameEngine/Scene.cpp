@@ -29,6 +29,7 @@ void Scene::Initialize()
 
 void Scene::Update()
 {
+	//Update GameObjects
 	for (size_t i{}; i < m_GameObjects.size(); ++i)
 	{
 		m_GameObjects[i]->Update();
@@ -38,7 +39,7 @@ void Scene::Update()
 		}
 	}
 
-	//Delete objects
+	//Delete GameObjects
 	for (size_t i : m_ToDeleteIndexes)
 	{
 		RemoveGameObjectByIndex(i);

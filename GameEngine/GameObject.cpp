@@ -3,7 +3,7 @@
 #include "ResourceManager.h"
 #include "Renderer.h"
 #include "BaseComponent.h"
-#include "RenderComponent.h"
+#include "TextureRenderComponent.h"
 #include <iostream>
 
 GameObject::GameObject()

@@ -7,7 +7,7 @@
 #include "GameObject.h"
 
 TextRenderComponent::TextRenderComponent(GameObject* pGameObject) 
-	: m_needsUpdate(true), m_text(""), RenderComponent(pGameObject)
+	: m_needsUpdate(true), m_text(""), TextureRenderComponent(pGameObject)
 { }
 
 void TextRenderComponent::Update()

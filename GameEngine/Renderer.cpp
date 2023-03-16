@@ -3,6 +3,7 @@
 #include "SceneManager.h"
 #include "Texture2D.h"
 #include "imgui.h"
+#include "implot.h"
 #include "backends/imgui_impl_opengl2.h"
 #include "backends/imgui_impl_sdl2.h"
 
@@ -31,6 +32,7 @@ void Renderer::Init(SDL_Window* window)
 
 	IMGUI_CHECKVERSION();
 	ImGui::CreateContext();
+	ImPlot::CreateContext();
 	ImGui_ImplSDL2_InitForOpenGL(window, SDL_GL_GetCurrentContext());
 	ImGui_ImplOpenGL2_Init();
 }
@@ -41,11 +43,11 @@ void Renderer::Render() const
 	SDL_SetRenderDrawColor(m_Renderer, color.r, color.g, color.b, color.a);
 	SDL_RenderClear(m_Renderer);
 
-	SceneManager::GetInstance().Render();
-
 	ImGui_ImplOpenGL2_NewFrame();
 	ImGui_ImplSDL2_NewFrame(m_Window);
 	ImGui::NewFrame();
+
+	SceneManager::GetInstance().Render();	
 
 	if (m_ShowImGuiDemo)
 	{
@@ -61,7 +63,8 @@ void Renderer::Destroy()
 {
 	ImGui_ImplOpenGL2_Shutdown();
 	ImGui_ImplSDL2_Shutdown();
-	ImGui::DestroyContext();
+	ImPlot::DestroyContext();
+	ImGui::DestroyContext();	
 
 	if (m_Renderer != nullptr)
 	{

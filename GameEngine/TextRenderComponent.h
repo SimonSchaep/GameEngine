@@ -1,12 +1,12 @@
 #pragma once
 #include <string>
 #include <memory>
-#include "RenderComponent.h"
+#include "TextureRenderComponent.h"
 #include "Transform.h"
 
 class Font;
 class Texture2D;
-class TextRenderComponent : public RenderComponent
+class TextRenderComponent : public TextureRenderComponent
 {
 public:
 	void Update() override;

@@ -184,11 +184,15 @@
     <ClInclude Include="..\3rdParty\imgui\imconfig.h" />
     <ClInclude Include="..\3rdParty\imgui\imgui.h" />
     <ClInclude Include="..\3rdParty\imgui\imgui_internal.h" />
+    <ClInclude Include="..\3rdParty\imgui\implot.h" />
+    <ClInclude Include="..\3rdParty\imgui\implot_internal.h" />
     <ClInclude Include="..\3rdParty\imgui\imstb_rectpack.h" />
     <ClInclude Include="..\3rdParty\imgui\imstb_textedit.h" />
     <ClInclude Include="..\3rdParty\imgui\imstb_truetype.h" />
     <ClInclude Include="BaseComponent.h" />
     <ClInclude Include="DestroyComponent.h" />
+    <ClInclude Include="Exercise1Component.h" />
+    <ClInclude Include="Exercise2Component.h" />
     <ClInclude Include="Font.h" />
     <ClInclude Include="FPSCounter.h" />
     <ClInclude Include="GameEngine.h" />
@@ -196,6 +200,7 @@
     <ClInclude Include="InputManager.h" />
     <ClInclude Include="MoveComponent.h" />
     <ClInclude Include="RenderComponent.h" />
+    <ClInclude Include="TextureRenderComponent.h" />
     <ClInclude Include="Renderer.h" />
     <ClInclude Include="ResourceManager.h" />
     <ClInclude Include="RotateComponent.h" />
@@ -215,8 +220,13 @@
     <ClCompile Include="..\3rdParty\imgui\imgui_draw.cpp" />
     <ClCompile Include="..\3rdParty\imgui\imgui_tables.cpp" />
     <ClCompile Include="..\3rdParty\imgui\imgui_widgets.cpp" />
+    <ClCompile Include="..\3rdParty\imgui\implot.cpp" />
+    <ClCompile Include="..\3rdParty\imgui\implot_demo.cpp" />
+    <ClCompile Include="..\3rdParty\imgui\implot_items.cpp" />
     <ClCompile Include="BaseComponent.cpp" />
     <ClCompile Include="DestroyComponent.cpp" />
+    <ClCompile Include="Exercise1Component.cpp" />
+    <ClCompile Include="Exercise2Component.cpp" />
     <ClCompile Include="Font.cpp" />
     <ClCompile Include="FPSCounter.cpp" />
     <ClCompile Include="GameEngine.cpp" />
@@ -225,6 +235,7 @@
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="MoveComponent.cpp" />
     <ClCompile Include="RenderComponent.cpp" />
+    <ClCompile Include="TextureRenderComponent.cpp" />
     <ClCompile Include="Renderer.cpp" />
     <ClCompile Include="ResourceManager.cpp" />
     <ClCompile Include="RotateComponent.cpp" />

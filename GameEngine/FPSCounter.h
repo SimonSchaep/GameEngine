@@ -1,9 +1,8 @@
 #pragma once
 #include "BaseComponent.h"
-#include <memory>
 
 
-//todo: add delay to update
+//todo: add avg fps
 
 class TextRenderComponent;
 

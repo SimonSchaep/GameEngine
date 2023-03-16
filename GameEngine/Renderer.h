@@ -25,6 +25,6 @@ private:
 	SDL_Renderer* m_Renderer{};
 	SDL_Window* m_Window{};
 	SDL_Color m_ClearColor{};
-	bool m_ShowImGuiDemo{true};
+	bool m_ShowImGuiDemo{false};
 };
 

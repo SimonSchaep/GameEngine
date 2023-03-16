@@ -11,7 +11,7 @@
 #include "ResourceManager.h"
 #include "Time.h"
 #include "GameObject.h"
-#include "RenderComponent.h"
+#include "TextureRenderComponent.h"
 #include <iostream>
 #include <chrono>
 

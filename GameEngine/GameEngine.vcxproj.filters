@@ -28,7 +28,7 @@
     <ClCompile Include="BaseComponent.cpp">
       <Filter>Engine\Components</Filter>
     </ClCompile>
-    <ClCompile Include="RenderComponent.cpp">
+    <ClCompile Include="TextureRenderComponent.cpp">
       <Filter>Engine\Components</Filter>
     </ClCompile>
     <ClCompile Include="TextRenderComponent.cpp">
@@ -79,6 +79,24 @@
     <ClCompile Include="..\3rdParty\imgui\imgui_widgets.cpp">
       <Filter>imgui</Filter>
     </ClCompile>
+    <ClCompile Include="Exercise1Component.cpp">
+      <Filter>CustomComponents</Filter>
+    </ClCompile>
+    <ClCompile Include="Exercise2Component.cpp">
+      <Filter>CustomComponents</Filter>
+    </ClCompile>
+    <ClCompile Include="RenderComponent.cpp">
+      <Filter>Engine\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="..\3rdParty\imgui\implot.cpp">
+      <Filter>imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="..\3rdParty\imgui\implot_demo.cpp">
+      <Filter>imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="..\3rdParty\imgui\implot_items.cpp">
+      <Filter>imgui</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Font.h">
@@ -105,7 +123,7 @@
     <ClInclude Include="BaseComponent.h">
       <Filter>Engine\Components</Filter>
     </ClInclude>
-    <ClInclude Include="RenderComponent.h">
+    <ClInclude Include="TextureRenderComponent.h">
       <Filter>Engine\Components</Filter>
     </ClInclude>
     <ClInclude Include="TextRenderComponent.h">
@@ -160,6 +178,21 @@
       <Filter>imgui</Filter>
     </ClInclude>
     <ClInclude Include="..\3rdParty\imgui\imstb_truetype.h">
+      <Filter>imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="Exercise1Component.h">
+      <Filter>CustomComponents</Filter>
+    </ClInclude>
+    <ClInclude Include="Exercise2Component.h">
+      <Filter>CustomComponents</Filter>
+    </ClInclude>
+    <ClInclude Include="RenderComponent.h">
+      <Filter>Engine\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdParty\imgui\implot.h">
+      <Filter>imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdParty\imgui\implot_internal.h">
       <Filter>imgui</Filter>
     </ClInclude>
   </ItemGroup>

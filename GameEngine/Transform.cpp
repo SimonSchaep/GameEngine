@@ -28,6 +28,7 @@ const glm::vec3& Transform::GetWorldPosition()
 		{
 			m_Worldposition = m_LocalPosition;
 		}
+		m_IsDirty = false;
 	}
 	return m_Worldposition;
 }
@@ -37,7 +38,7 @@ void Transform::SetLocalPosition(const float x, const float y, const float z)
 	m_LocalPosition.x = x;
 	m_LocalPosition.y = y;
 	m_LocalPosition.z = z;
-
+	
 	SetDirty(true);
 }
 

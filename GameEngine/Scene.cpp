@@ -39,10 +39,11 @@ void Scene::Update()
 		}
 	}
 
-	//Delete GameObjects
-	for (size_t i : m_ToDeleteIndexes)
+	//Delete GameObjects - reverse order because it removes gameobjects by index
+	//If the gameobjects at idx 0 and 1 need to be deleted and the one at 0 is deleted first, the gameobject at idx 1 will be at 0 when we delete it
+	for (int i{ int(m_ToDeleteIndexes.size()) - 1}; i >= 0; --i)
 	{
-		RemoveGameObjectByIndex(i);
+		RemoveGameObjectByIndex(m_ToDeleteIndexes[i]);
 	}
 	m_ToDeleteIndexes.clear();
 }
@@ -62,7 +63,7 @@ void Scene::RemoveGameObjectByIndex(size_t i)
 	if (pGameObject->GetParent())
 	{
 		//remove from parent
-		pGameObject->SetParent(nullptr, false);
+		pGameObject->SetParent(nullptr, true);
 	}
 	//if has children
 	if (pGameObject->GetChildren().size() > 0)
@@ -70,7 +71,7 @@ void Scene::RemoveGameObjectByIndex(size_t i)
 		//remove all children from parent
 		for (auto child : pGameObject->GetChildren())
 		{
-			child->SetParent(nullptr, false);
+			child->SetParent(nullptr, true);
 		}
 	}
 	m_GameObjects.erase(std::remove(m_GameObjects.begin(), m_GameObjects.end(), m_GameObjects[i]));

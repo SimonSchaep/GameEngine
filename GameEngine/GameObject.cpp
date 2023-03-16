@@ -33,10 +33,11 @@ void GameObject::Update()
 		}
 	}
 
-	//Delete Components
-	for (size_t i : m_ToDeleteIndexes)
+	//Delete Components - reverse order because it removes Components by index
+	//If the Components at idx 0 and 1 need to be deleted and the one at 0 is deleted first, the Components at idx 1 will be at 0 when we delete it
+	for (int i{ int(m_ToDeleteIndexes.size()) - 1 }; i >= 0; --i)
 	{
-		m_Components.erase(std::remove(m_Components.begin(), m_Components.end(), m_Components[i]));
+		m_Components.erase(std::remove(m_Components.begin(), m_Components.end(), m_Components[m_ToDeleteIndexes[i]]));
 	}
 	m_ToDeleteIndexes.clear();
 }

@@ -37,7 +37,7 @@ void TextRenderComponent::Update()
 	}
 }
 
-void TextRenderComponent::Render() const
+void TextRenderComponent::Render()
 {
 	if (GetTexture() != nullptr)
 	{

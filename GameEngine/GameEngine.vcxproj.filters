@@ -79,10 +79,7 @@
     <ClCompile Include="..\3rdParty\imgui\imgui_widgets.cpp">
       <Filter>imgui</Filter>
     </ClCompile>
-    <ClCompile Include="Exercise1Component.cpp">
-      <Filter>CustomComponents</Filter>
-    </ClCompile>
-    <ClCompile Include="Exercise2Component.cpp">
+    <ClCompile Include="TrashTheCacheComponent.cpp">
       <Filter>CustomComponents</Filter>
     </ClCompile>
     <ClCompile Include="RenderComponent.cpp">
@@ -180,10 +177,7 @@
     <ClInclude Include="..\3rdParty\imgui\imstb_truetype.h">
       <Filter>imgui</Filter>
     </ClInclude>
-    <ClInclude Include="Exercise1Component.h">
-      <Filter>CustomComponents</Filter>
-    </ClInclude>
-    <ClInclude Include="Exercise2Component.h">
+    <ClInclude Include="TrashTheCacheComponent.h">
       <Filter>CustomComponents</Filter>
     </ClInclude>
     <ClInclude Include="RenderComponent.h">

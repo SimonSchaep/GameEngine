@@ -42,7 +42,7 @@ void GameObject::Update()
 	m_ToDeleteIndexes.clear();
 }
 
-void GameObject::Render() const
+void GameObject::Render()
 {
 	for (auto& renderer : GetAllComponentsOfType<RenderComponent>())
 	{

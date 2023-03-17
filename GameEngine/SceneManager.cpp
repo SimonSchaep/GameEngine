@@ -22,7 +22,7 @@ void SceneManager::Update()
 void SceneManager::Render()
 {
 	//prob shouldn't do this with all scenes
-	for (const auto& scene : m_scenes)
+	for (auto& scene : m_scenes)
 	{
 		scene->Render();
 	}

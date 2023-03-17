@@ -12,7 +12,7 @@ class GameObject final
 public:
 	void Initialize();
 	void Update();
-	void Render() const;
+	void Render();
 
 	Transform* GetTransform() { return m_Transform.get(); };
 

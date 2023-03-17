@@ -48,7 +48,7 @@ void Scene::Update()
 	m_ToDeleteIndexes.clear();
 }
 
-void Scene::Render() const
+void Scene::Render()
 {
 	for (const auto& object : m_GameObjects)
 	{

@@ -10,7 +10,7 @@ class TextRenderComponent : public TextureRenderComponent
 {
 public:
 	void Update() override;
-	virtual void Render() const override;
+	virtual void Render() override;
 
 	void SetText(const std::string& text);
 	void SetFont(std::shared_ptr<Font> font);

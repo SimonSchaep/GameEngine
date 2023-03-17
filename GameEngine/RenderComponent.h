@@ -11,6 +11,6 @@ public:
 
 	virtual void Update() override {};
 
-	virtual void Render()const {};
+	virtual void Render() {};
 };
 

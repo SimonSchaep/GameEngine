@@ -11,7 +11,7 @@ public:
 
 	void Initialize();
 	void Update();
-	void Render() const;
+	void Render();
 
 	~Scene();
 	Scene(const Scene& other) = delete;

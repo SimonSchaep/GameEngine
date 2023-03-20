@@ -1,8 +1,8 @@
 #pragma once
-#include "RenderComponent.h"
+#include "UIRenderComponent.h"
 #include <vector>
 
-class TrashTheCacheComponent : public RenderComponent
+class TrashTheCacheComponent : public UIRenderComponent
 {
 	struct Transform
 	{
@@ -29,12 +29,12 @@ class TrashTheCacheComponent : public RenderComponent
 	};
 
 public:
-	TrashTheCacheComponent(GameObject* pGameObject) :RenderComponent(pGameObject) {};
+	TrashTheCacheComponent(GameObject* pGameObject) :UIRenderComponent(pGameObject) {};
 	virtual ~TrashTheCacheComponent() = default;
 
 	virtual void Initialize() override;
 	virtual void Update() override;
-	virtual void Render() override;
+	virtual void RenderUI() override;
 
 private:
 	void MeasureExercise1(int count);

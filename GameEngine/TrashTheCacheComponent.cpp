@@ -5,6 +5,13 @@
 #include <numeric>
 #include <iostream>
 
+//feedback:
+//use vector instead of array
+//use std algorithms instead of manual taking avg
+//take avg of all elements except min and max
+//useful -> vector<int>{vector<int>(count,value)}
+
+
 
 void TrashTheCacheComponent::Initialize()
 {
@@ -15,7 +22,7 @@ void TrashTheCacheComponent::Update()
 
 }
 
-void TrashTheCacheComponent::Render()
+void TrashTheCacheComponent::RenderUI()
 {
     ImGui::Begin("Exercise 1");
     ImGui::SetWindowSize({280,300}, ImGuiCond_FirstUseEver);
@@ -163,7 +170,7 @@ void TrashTheCacheComponent::MeasureExercise1(int count)
         }
 
         if (firstMeasurent) m_Ex1Measurements.push_back(int(sum / measurementsGroup.size()));
-        else m_Ex1Measurements[i] = int(sum / measurementsGroup.size());        
+        else m_Ex1Measurements[i] = int(sum / measurementsGroup.size());
     }
 }
 

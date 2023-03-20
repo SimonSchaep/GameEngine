@@ -12,7 +12,8 @@ class GameObject final
 public:
 	void Initialize();
 	void Update();
-	void Render();
+	void Render()const;
+	void RenderUI();
 
 	Transform* GetTransform() { return m_Transform.get(); };
 

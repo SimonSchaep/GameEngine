@@ -11,7 +11,8 @@ public:
 
 	void Initialize();
 	void Update();
-	void Render();
+	void Render()const;
+	void RenderUI();
 
 	~Scene();
 	Scene(const Scene& other) = delete;
@@ -27,7 +28,7 @@ private:
 	std::vector<size_t> m_ToDeleteIndexes{};
 
 	std::string m_Name;
-	std::vector < std::unique_ptr<GameObject>> m_GameObjects{};
+	std::vector <std::unique_ptr<GameObject>> m_GameObjects{};
 
 	static unsigned int m_IdCounter;
 };

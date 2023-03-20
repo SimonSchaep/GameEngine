@@ -48,6 +48,7 @@ void Renderer::Render() const
 	ImGui::NewFrame();
 
 	SceneManager::GetInstance().Render();	
+	SceneManager::GetInstance().RenderUI();	
 
 	if (m_ShowImGuiDemo)
 	{

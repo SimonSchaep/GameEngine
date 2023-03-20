@@ -17,7 +17,7 @@ public:
 
 	virtual void Update() override;
 
-	virtual void Render() override;
+	virtual void Render()const override;
 
 protected:
 	Texture2D* GetTexture()const { return m_texture.get(); };

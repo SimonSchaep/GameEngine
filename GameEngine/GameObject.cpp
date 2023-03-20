@@ -3,7 +3,8 @@
 #include "ResourceManager.h"
 #include "Renderer.h"
 #include "BaseComponent.h"
-#include "TextureRenderComponent.h"
+#include "RenderComponent.h"
+#include "UIRenderComponent.h"
 #include <iostream>
 
 GameObject::GameObject()
@@ -42,7 +43,15 @@ void GameObject::Update()
 	m_ToDeleteIndexes.clear();
 }
 
-void GameObject::Render()
+void GameObject::RenderUI()
+{
+	for (auto& renderer : GetAllComponentsOfType<UIRenderComponent>())
+	{
+		renderer->RenderUI();
+	}
+}
+
+void GameObject::Render()const
 {
 	for (auto& renderer : GetAllComponentsOfType<RenderComponent>())
 	{
@@ -67,6 +76,7 @@ void GameObject::SetParent(GameObject* pParent, bool keepWorldPosition)
 	if (!pParent && keepWorldPosition)
 	{
 		m_Transform->SetLocalPosition(m_Transform->GetWorldPosition());
+		//no need to set dirty, since if there is no parent, dirty will set local = to world, which is the case right now
 	}
 	else
 	{

@@ -19,12 +19,20 @@ void SceneManager::Update()
 	}
 }
 
-void SceneManager::Render()
+void SceneManager::Render()const
 {
 	//prob shouldn't do this with all scenes
 	for (auto& scene : m_scenes)
 	{
 		scene->Render();
+	}
+}
+
+void SceneManager::RenderUI()
+{
+	for (auto& scene : m_scenes)
+	{
+		scene->RenderUI();
 	}
 }
 

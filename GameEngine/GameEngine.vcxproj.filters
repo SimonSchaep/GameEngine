@@ -94,6 +94,9 @@
     <ClCompile Include="..\3rdParty\imgui\implot_items.cpp">
       <Filter>imgui</Filter>
     </ClCompile>
+    <ClCompile Include="UIRenderComponent.cpp">
+      <Filter>Engine\Components</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Font.h">
@@ -188,6 +191,9 @@
     </ClInclude>
     <ClInclude Include="..\3rdParty\imgui\implot_internal.h">
       <Filter>imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="UIRenderComponent.h">
+      <Filter>Engine\Components</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

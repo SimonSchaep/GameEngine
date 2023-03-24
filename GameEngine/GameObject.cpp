@@ -7,8 +7,9 @@
 #include "UIRenderComponent.h"
 #include <iostream>
 
-GameObject::GameObject()
-	: m_Transform{std::make_unique<Transform>(this)}
+GameObject::GameObject(const std::string& name)
+	: m_Transform{ std::make_unique<Transform>(this) }
+	, m_Name{ name }
 {
 }
 

@@ -17,6 +17,8 @@ public:
 
 	Transform* GetTransform() { return m_Transform.get(); };
 
+	const std::string& GetName()const { return m_Name; };
+
 	void MarkForDeletion(bool includeChildren);
 	bool IsMarkedForDeletion() { return m_IsMarkedForDeletion; };
 
@@ -29,18 +31,18 @@ public:
 
 
 	//COMPONENTS
-	//returns the first component of the specified type
+	//returns the first m_pComponent of the specified type
 	template<typename T>
 	T* GetComponent()const;
 
-	//returns all component of the specified type
+	//returns all m_pComponent of the specified type
 	template<typename T>
 	std::vector<T*> GetAllComponentsOfType()const;
 
 	template<typename T>
 	T* CreateAndAddComponent();
 
-	//removes the first component of the specified type
+	//removes the first m_pComponent of the specified type
 	template<typename T>
 	void RemoveComponent();
 
@@ -48,7 +50,7 @@ public:
 	template<typename T>
 	void RemoveAllComponentsOfType();
 
-	GameObject();
+	GameObject(const std::string& name);
 	~GameObject();
 	GameObject(const GameObject& other) = delete;
 	GameObject(GameObject&& other) = delete;
@@ -60,6 +62,8 @@ private:
 	void RemoveChild(GameObject* pGameObject) { m_Children.erase(std::remove(m_Children.begin(), m_Children.end(), pGameObject)); };
 
 	std::unique_ptr<Transform> m_Transform{};
+
+	std::string m_Name{};
 
 	bool m_IsMarkedForDeletion{};
 
@@ -85,7 +89,7 @@ T* GameObject::GetComponent()const
 			return returnComponent;
 		}
 	}
-	//no component of specified type was found
+	//no m_pComponent of specified type was found
 	return nullptr;
 }
 

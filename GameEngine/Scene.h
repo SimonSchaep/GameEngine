@@ -4,10 +4,13 @@
 
 class Scene final
 {
-	friend Scene& SceneManager::CreateScene(const std::string& name);
 public:
-	GameObject* CreateAndAddGameObject();
-	void RemoveAll();
+	GameObject* CreateAndAddGameObject(const std::string& name = "DefaultName");
+	GameObject* FindGameObjectByName(const std::string& name);
+	void RemoveAllGameObjects();
+
+	const std::string& GetName()const { return m_Name; };
+	bool GetIsInitialized()const { return m_IsInitialized; };
 
 	void Initialize();
 	void Update();
@@ -15,6 +18,7 @@ public:
 	void RenderUI();
 
 	~Scene();
+	Scene(const std::string& name);
 	Scene(const Scene& other) = delete;
 	Scene(Scene&& other) = delete;
 	Scene& operator=(const Scene& other) = delete;
@@ -23,12 +27,12 @@ public:
 private:
 	void RemoveGameObjectByIndex(size_t i);
 
-	explicit Scene(const std::string& name);
-
 	std::vector<size_t> m_ToDeleteIndexes{};
 
 	std::string m_Name;
 	std::vector <std::unique_ptr<GameObject>> m_GameObjects{};
 
 	static unsigned int m_IdCounter;
+
+	bool m_IsInitialized{};
 };

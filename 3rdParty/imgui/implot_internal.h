@@ -1564,7 +1564,7 @@ IMPLOT_API tm* GetLocTime(const ImPlotTime& t, tm* ptm);
 // Make a timestamp from time components.
 // year[1970-3000], month[0-11], day[1-31], hour[0-23], min[0-59], sec[0-59], us[0,999999]
 IMPLOT_API ImPlotTime MakeTime(int year, int month = 0, int day = 1, int hour = 0, int min = 0, int sec = 0, int us = 0);
-// Get year component from timestamp [1970-3000]
+// Get year m_pComponent from timestamp [1970-3000]
 IMPLOT_API int GetYear(const ImPlotTime& t);
 
 // Adds or subtracts time from a timestamp. #count > 0 to add, < 0 to subtract.

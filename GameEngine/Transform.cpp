@@ -42,9 +42,32 @@ void Transform::SetLocalPosition(const float x, const float y, const float z)
 	SetDirty(true);
 }
 
+void Transform::SetLocalPosition(const glm::vec2& pos)
+{
+	glm::vec3 temp{ pos.x, pos.y, 0 };
+	m_LocalPosition = temp;
+
+	SetDirty(true);
+}
+
 void Transform::SetLocalPosition(const glm::vec3& pos)
 {
 	m_LocalPosition = pos;
+
+	SetDirty(true);
+}
+
+void Transform::Translate(const glm::vec2& offset)
+{
+	glm::vec3 temp{offset.x, offset.y, 0};
+	m_LocalPosition += temp;
+
+	SetDirty(true);
+}
+
+void Transform::Translate(const glm::vec3& offset)
+{
+	m_LocalPosition += offset;
 
 	SetDirty(true);
 }

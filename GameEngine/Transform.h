@@ -13,7 +13,10 @@ public:
 	const glm::vec3& GetLocalPosition() const { return m_LocalPosition; }
 	const glm::vec3& GetWorldPosition();
 	void SetLocalPosition(float x, float y, float z);
+	void SetLocalPosition(const glm::vec2& pos);
 	void SetLocalPosition(const glm::vec3& pos);
+	void Translate(const glm::vec2& offset);
+	void Translate(const glm::vec3& offset);
 	
 private:
 	GameObject* m_pGameObject{};

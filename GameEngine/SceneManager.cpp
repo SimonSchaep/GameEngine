@@ -3,42 +3,81 @@
 
 void SceneManager::Initialize()
 {
-	//prob shouldn't do this with all scenes
-	for (auto& scene : m_scenes)
+	if (m_pActiveScene)
 	{
-		scene->Initialize();
-	}
+		m_pActiveScene->Initialize();
+	}	
+	m_IsInitialized = true;
 }
 
 void SceneManager::Update()
 {
-	//prob shouldn't do this with all scenes
-	for(auto& scene : m_scenes)
+	if (m_pActiveScene)
 	{
-		scene->Update();
+		m_pActiveScene->Update();
 	}
 }
 
 void SceneManager::Render()const
 {
-	//prob shouldn't do this with all scenes
-	for (auto& scene : m_scenes)
+	if (m_pActiveScene)
 	{
-		scene->Render();
+		m_pActiveScene->Render();
 	}
 }
 
 void SceneManager::RenderUI()
 {
-	for (auto& scene : m_scenes)
+	if (m_pActiveScene)
 	{
-		scene->RenderUI();
+		m_pActiveScene->RenderUI();
 	}
 }
 
-Scene& SceneManager::CreateScene(const std::string& name)
+//needs to be here for the unique_ptr to incomplete type scene to compile
+SceneManager::~SceneManager() = default;
+SceneManager::SceneManager() = default;
+
+Scene* SceneManager::CreateScene(const std::string& name)
 {
-	const auto& scene = std::shared_ptr<Scene>(new Scene(name));
-	m_scenes.push_back(scene);
-	return *scene;
+	auto scene = std::make_unique<Scene>(name);
+	Scene* pReturnValue = scene.get();
+	m_scenes.push_back(std::move(scene));
+	if (!m_pActiveScene)
+	{
+		SetActiveSceneByPtr(pReturnValue);
+	}
+	return pReturnValue;
+}
+
+//todo: throw exception when pScene == nullptr
+void SceneManager::SetActiveSceneByPtr(Scene* pScene)
+{
+	m_pActiveScene = pScene;
+	if (m_IsInitialized && !m_pActiveScene->GetIsInitialized())
+	{
+		m_pActiveScene->Initialize();
+	}
+}
+
+//todo: throw exception when name not found
+void SceneManager::SetActiveSceneByName(const std::string& sceneName)
+{
+	for (auto& scene : m_scenes)
+	{
+		if (scene->GetName() == sceneName)
+		{
+			m_pActiveScene = scene.get();
+		}
+	}
+
+	if (m_IsInitialized && !m_pActiveScene->GetIsInitialized())
+	{
+		m_pActiveScene->Initialize();
+	}
+}
+
+Scene* SceneManager::GetActiveScene()
+{
+	return m_pActiveScene;
 }

@@ -6,25 +6,38 @@ Scene::Scene(const std::string& name) : m_Name(name) {}
 
 Scene::~Scene() = default;
 
-GameObject* Scene::CreateAndAddGameObject()
+GameObject* Scene::CreateAndAddGameObject(const std::string& name)
 {
-	auto gameObject = std::make_unique<GameObject>();
+	auto gameObject = std::make_unique<GameObject>(name);
 	GameObject* pReturnValue = gameObject.get();
 	m_GameObjects.emplace_back(std::move(gameObject));
 	return pReturnValue;
 }
 
-void Scene::RemoveAll()
+GameObject* Scene::FindGameObjectByName(const std::string& name)
+{
+	for (auto& gameObject : m_GameObjects)
+	{
+		if (gameObject->GetName() == name)
+		{
+			return gameObject.get();
+		}
+	}
+	return nullptr;
+}
+
+void Scene::RemoveAllGameObjects()
 {
 	m_GameObjects.clear();
 }
 
 void Scene::Initialize()
 {
-	for (auto& object : m_GameObjects)
+	for (auto& gameObject : m_GameObjects)
 	{
-		object->Initialize();
+		gameObject->Initialize();
 	}
+	m_IsInitialized = true;
 }
 
 void Scene::Update()
@@ -50,17 +63,17 @@ void Scene::Update()
 
 void Scene::RenderUI()
 {
-	for (const auto& object : m_GameObjects)
+	for (const auto& gameObject : m_GameObjects)
 	{
-		object->RenderUI();
+		gameObject->RenderUI();
 	}
 }
 
 void Scene::Render()const
 {
-	for (const auto& object : m_GameObjects)
+	for (const auto& gameObject : m_GameObjects)
 	{
-		object->Render();
+		gameObject->Render();
 	}
 }
 

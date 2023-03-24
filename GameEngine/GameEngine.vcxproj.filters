@@ -43,14 +43,8 @@
     <ClCompile Include="ResourceManager.cpp">
       <Filter>Engine\Singletons</Filter>
     </ClCompile>
-    <ClCompile Include="InputManager.cpp">
-      <Filter>Engine\Singletons</Filter>
-    </ClCompile>
     <ClCompile Include="Renderer.cpp">
       <Filter>Engine\Singletons</Filter>
-    </ClCompile>
-    <ClCompile Include="MoveComponent.cpp">
-      <Filter>CustomComponents</Filter>
     </ClCompile>
     <ClCompile Include="RotateComponent.cpp">
       <Filter>CustomComponents</Filter>
@@ -97,6 +91,24 @@
     <ClCompile Include="UIRenderComponent.cpp">
       <Filter>Engine\Components</Filter>
     </ClCompile>
+    <ClCompile Include="MovementComponent.cpp">
+      <Filter>CustomComponents</Filter>
+    </ClCompile>
+    <ClCompile Include="BaseCommand.cpp">
+      <Filter>Engine\Input</Filter>
+    </ClCompile>
+    <ClCompile Include="InputManager.cpp">
+      <Filter>Engine\Input</Filter>
+    </ClCompile>
+    <ClCompile Include="InputController.cpp">
+      <Filter>Engine\Input</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayerController.cpp">
+      <Filter>Engine\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayerMovementController.cpp">
+      <Filter>CustomComponents</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Font.h">
@@ -141,14 +153,8 @@
     <ClInclude Include="ResourceManager.h">
       <Filter>Engine\Singletons</Filter>
     </ClInclude>
-    <ClInclude Include="InputManager.h">
-      <Filter>Engine\Singletons</Filter>
-    </ClInclude>
     <ClInclude Include="Renderer.h">
       <Filter>Engine\Singletons</Filter>
-    </ClInclude>
-    <ClInclude Include="MoveComponent.h">
-      <Filter>CustomComponents</Filter>
     </ClInclude>
     <ClInclude Include="RotateComponent.h">
       <Filter>CustomComponents</Filter>
@@ -195,6 +201,30 @@
     <ClInclude Include="UIRenderComponent.h">
       <Filter>Engine\Components</Filter>
     </ClInclude>
+    <ClInclude Include="MovementComponent.h">
+      <Filter>CustomComponents</Filter>
+    </ClInclude>
+    <ClInclude Include="BaseCommand.h">
+      <Filter>Engine\Input</Filter>
+    </ClInclude>
+    <ClInclude Include="InputManager.h">
+      <Filter>Engine\Input</Filter>
+    </ClInclude>
+    <ClInclude Include="MoveCommands.h">
+      <Filter>CustomCommands</Filter>
+    </ClInclude>
+    <ClInclude Include="InputController.h">
+      <Filter>Engine\Input</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayerController.h">
+      <Filter>Engine\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayerMovementController.h">
+      <Filter>CustomComponents</Filter>
+    </ClInclude>
+    <ClInclude Include="SwitchCommand.h">
+      <Filter>CustomCommands</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Engine">
@@ -211,6 +241,12 @@
     </Filter>
     <Filter Include="imgui">
       <UniqueIdentifier>{a16c45c2-20b4-482a-ac96-414788a9bb2b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\Input">
+      <UniqueIdentifier>{87c6afe9-a13a-4f0b-ae83-2e2531cdc68a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="CustomCommands">
+      <UniqueIdentifier>{5a93645c-b76b-4758-84b4-ab302753d323}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

@@ -1488,7 +1488,7 @@ void ImGuiIO::AddMouseButtonEvent(int mouse_button, bool down)
     g.InputEventsQueue.push_back(e);
 }
 
-// Queue a mouse wheel event (some mouse/API may only have a Y component)
+// Queue a mouse wheel event (some mouse/API may only have a Y m_pComponent)
 void ImGuiIO::AddMouseWheelEvent(float wheel_x, float wheel_y)
 {
     IM_ASSERT(Ctx != NULL);

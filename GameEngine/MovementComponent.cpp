@@ -11,7 +11,11 @@ void MovementComponent::Update()
 {
 	if (m_Direction != glm::vec2{0, 0})
 	{
-		m_Direction = glm::normalize(m_Direction);
+		float magnitude = glm::length(m_Direction);
+		if (magnitude > 1)
+		{
+			m_Direction /= magnitude;
+		}
 
 		GetGameObject()->GetTransform()->Translate(m_Direction * m_MoveSpeed * Time::GetInstance().GetDeltaTime());
 

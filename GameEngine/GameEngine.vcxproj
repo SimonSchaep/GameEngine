@@ -189,8 +189,9 @@
     <ClInclude Include="..\3rdParty\imgui\imstb_rectpack.h" />
     <ClInclude Include="..\3rdParty\imgui\imstb_textedit.h" />
     <ClInclude Include="..\3rdParty\imgui\imstb_truetype.h" />
+    <ClInclude Include="BaseAxisCommand.h" />
     <ClInclude Include="BaseComponent.h" />
-    <ClInclude Include="BaseCommand.h" />
+    <ClInclude Include="BaseButtonCommand.h" />
     <ClInclude Include="DestroyComponent.h" />
     <ClInclude Include="InputController.h" />
     <ClInclude Include="MoveCommands.h" />
@@ -230,7 +231,6 @@
     <ClCompile Include="..\3rdParty\imgui\implot_demo.cpp" />
     <ClCompile Include="..\3rdParty\imgui\implot_items.cpp" />
     <ClCompile Include="BaseComponent.cpp" />
-    <ClCompile Include="BaseCommand.cpp" />
     <ClCompile Include="DestroyComponent.cpp" />
     <ClCompile Include="InputController.cpp" />
     <ClCompile Include="MovementComponent.cpp" />

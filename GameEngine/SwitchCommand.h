@@ -1,16 +1,19 @@
 #pragma once
-#include "BaseCommand.h"
+#include "BaseButtonCommand.h"
 #include "PlayerMovementController.h"
 
 class BaseComponent;
 
-class SwitchCommand : public BaseCommand
+class SwitchCommand : public BaseButtonCommand
 {
 public:
-	SwitchCommand(BaseComponent* pComponent) : BaseCommand(pComponent) {};
+	SwitchCommand(PlayerMovementController* pMovementController) : m_pMovementController{ pMovementController } {};
 
 	virtual void Execute() override
 	{
-		static_cast<PlayerMovementController*>(GetComponent())->SwitchControlledGameObjects();
+		m_pMovementController->SwitchControlledGameObjects();
 	}
+
+private:
+	PlayerMovementController* m_pMovementController{};
 };

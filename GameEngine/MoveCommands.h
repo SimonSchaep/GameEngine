@@ -1,50 +1,44 @@
 #pragma once
-#include "BaseCommand.h"
+#include "BaseButtonCommand.h"
+#include "BaseAxisCommand.h"
 #include "PlayerMovementController.h"
 
-class BaseComponent;
-
-class MoveLeftCommand : public BaseCommand
+class MoveCommand : public BaseButtonCommand
 {
 public:
-	MoveLeftCommand(BaseComponent* pComponent) : BaseCommand(pComponent) {};
+	MoveCommand(PlayerMovementController* pMovementController, const glm::vec2& direction)
+		: m_pMovementController{ pMovementController } 
+		, m_Direction{direction}
+	{}
+
+	virtual ~MoveCommand() = default;
 
 	virtual void Execute() override
 	{
-		static_cast<PlayerMovementController*>(GetComponent())->Move({ -1,0 });
+		m_pMovementController->Move(m_Direction);
 	}
+
+private:
+	PlayerMovementController* m_pMovementController{};
+	glm::vec2 m_Direction{};
 };
 
-class MoveRightCommand : public BaseCommand
+
+
+class MoveAxisCommand : public BaseAxisCommand
 {
 public:
-	MoveRightCommand(BaseComponent* pComponent) : BaseCommand(pComponent) {};
+	MoveAxisCommand(PlayerMovementController* pMovementController, const glm::vec2& direction)
+		: m_pMovementController{ pMovementController } 
+		, m_Direction{direction}
+	{}
 
-	virtual void Execute() override
+	virtual void Execute(float axisValue) override
 	{
-		static_cast<PlayerMovementController*>(GetComponent())->Move({ 1,0 });
+		m_pMovementController->Move(m_Direction * axisValue);
 	}
+
+private:
+	PlayerMovementController* m_pMovementController{};
+	glm::vec2 m_Direction{};
 };
-
-class MoveUpCommand : public BaseCommand
-{
-public:
-	MoveUpCommand(BaseComponent* pComponent) : BaseCommand(pComponent) {};
-
-	virtual void Execute() override
-	{
-		static_cast<PlayerMovementController*>(GetComponent())->Move({ 0,-1 });
-	}
-};
-
-class MoveDownCommand : public BaseCommand
-{
-public:
-	MoveDownCommand(BaseComponent* pComponent) : BaseCommand(pComponent) {};
-
-	virtual void Execute() override
-	{
-		static_cast<PlayerMovementController*>(GetComponent())->Move({ 0,1 });
-	}
-};
-

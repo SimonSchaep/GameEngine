@@ -94,9 +94,6 @@
     <ClCompile Include="MovementComponent.cpp">
       <Filter>CustomComponents</Filter>
     </ClCompile>
-    <ClCompile Include="BaseCommand.cpp">
-      <Filter>Engine\Input</Filter>
-    </ClCompile>
     <ClCompile Include="InputManager.cpp">
       <Filter>Engine\Input</Filter>
     </ClCompile>
@@ -204,7 +201,7 @@
     <ClInclude Include="MovementComponent.h">
       <Filter>CustomComponents</Filter>
     </ClInclude>
-    <ClInclude Include="BaseCommand.h">
+    <ClInclude Include="BaseButtonCommand.h">
       <Filter>Engine\Input</Filter>
     </ClInclude>
     <ClInclude Include="InputManager.h">
@@ -224,6 +221,9 @@
     </ClInclude>
     <ClInclude Include="SwitchCommand.h">
       <Filter>CustomCommands</Filter>
+    </ClInclude>
+    <ClInclude Include="BaseAxisCommand.h">
+      <Filter>Engine\Input</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

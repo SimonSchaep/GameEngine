@@ -1,8 +1,6 @@
 #pragma once
 #include <memory>
 
-//todo: add joystick support
-
 class InputController final
 {
 public:
@@ -24,11 +22,23 @@ public:
 		ButtonY = 0x8000,
 	};
 
+	enum class ControllerAxis
+	{
+		LeftTrigger,
+		RightTrigger,
+		ThumbLX,
+		ThumbLY,
+		ThumbRX,
+		ThumbRY,
+	};
+
 	void Update();
 
 	bool isDown(ControllerButton button)const;
 	bool isUp(ControllerButton button)const;
 	bool isPressed(ControllerButton button)const;
+
+	float GetAxis(ControllerAxis axis)const;
 
 	int GetControllerIndex()const;
 

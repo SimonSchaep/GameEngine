@@ -1,7 +1,7 @@
 #include "PlayerController.h"
 #include "InputController.h"
 
-void PlayerController::BindKeyboardButtonToCommand(SDL_Scancode scanCode, InputManager::KeyState keyState, std::unique_ptr<BaseCommand> command)
+void PlayerController::BindKeyboardButtonToCommand(SDL_Scancode scanCode, InputManager::KeyState keyState, std::unique_ptr<BaseButtonCommand> command)
 {
 	if (m_UseKeyboard)
 	{
@@ -9,11 +9,19 @@ void PlayerController::BindKeyboardButtonToCommand(SDL_Scancode scanCode, InputM
 	}
 }
 
-void PlayerController::BindControllerButtonToCommand(InputController::ControllerButton button, InputManager::KeyState keyState, std::unique_ptr<BaseCommand> command)
+void PlayerController::BindControllerButtonToCommand(InputController::ControllerButton button, InputManager::KeyState keyState, std::unique_ptr<BaseButtonCommand> command)
 {
 	if (m_ControllerIndex >= 0)
 	{
 		InputManager::GetInstance().BindControllerButtonToCommand(m_ControllerIndex, button, keyState, std::move(command));
+	}
+}
+
+void PlayerController::BindControllerAxisToCommand(InputController::ControllerAxis axis, std::unique_ptr<BaseAxisCommand> command)
+{
+	if (m_ControllerIndex >= 0)
+	{
+		InputManager::GetInstance().BindControllerAxisToCommand(m_ControllerIndex, axis, std::move(command));
 	}
 }
 

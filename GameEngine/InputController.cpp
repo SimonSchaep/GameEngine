@@ -28,6 +28,45 @@ public:
 	bool IsUpThisFrame(unsigned int button) const { return m_ButtonsReleasedThisFrame & button; };
 	bool IsPressed(unsigned int button) const { return m_CurrentState.Gamepad.wButtons & button; };
 
+	float GetAxis(ControllerAxis axis)const
+	{
+		float value{};
+
+		//todo: figure out better way to get these values
+		const float maxValueThumb{ 32768 };
+		const float maxValueTrigger{ 255 };
+
+		switch (axis)
+		{
+		case InputController::ControllerAxis::LeftTrigger:
+			value = m_CurrentState.Gamepad.bLeftTrigger / maxValueTrigger;
+			break;
+		case InputController::ControllerAxis::RightTrigger:
+			value = m_CurrentState.Gamepad.bRightTrigger / maxValueTrigger;
+			break;
+		case InputController::ControllerAxis::ThumbLX:
+			value = m_CurrentState.Gamepad.sThumbLX / maxValueThumb;
+			break;
+		case InputController::ControllerAxis::ThumbLY:
+			value = m_CurrentState.Gamepad.sThumbLY / maxValueThumb;
+			break;
+		case InputController::ControllerAxis::ThumbRX:
+			value = m_CurrentState.Gamepad.sThumbRX / maxValueThumb;
+			break;
+		case InputController::ControllerAxis::ThumbRY:
+			value = m_CurrentState.Gamepad.sThumbRY / maxValueThumb;
+			break;
+		}
+
+		const float deadZonePercentage = 0.05f;
+		if (abs(value) < deadZonePercentage)
+		{
+			value = 0;
+		}
+
+		return value;
+	}
+
 	int GetControllerIndex()const { return m_ControllerIndex; };
 
 private:
@@ -58,6 +97,11 @@ bool InputController::isUp(ControllerButton button) const
 bool InputController::isPressed(ControllerButton button) const
 {
 	return m_Impl->IsPressed(static_cast<unsigned int>(button));
+}
+
+float InputController::GetAxis(ControllerAxis axis) const
+{
+	return m_Impl->GetAxis(axis);
 }
 
 int InputController::GetControllerIndex() const

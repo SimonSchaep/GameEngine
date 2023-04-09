@@ -2,7 +2,7 @@
 #include <memory>
 #include <vector>
 #include <unordered_map>
-#include <typeindex>
+#include <string>
 #include "Transform.h"
 
 class BaseComponent;

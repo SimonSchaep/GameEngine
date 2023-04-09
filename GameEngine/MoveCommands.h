@@ -1,9 +1,9 @@
 #pragma once
-#include "BaseButtonCommand.h"
+#include "BaseCommand.h"
 #include "BaseAxisCommand.h"
 #include "PlayerMovementController.h"
 
-class MoveCommand : public BaseButtonCommand
+class MoveCommand : public BaseCommand
 {
 public:
 	MoveCommand(PlayerMovementController* pMovementController, const glm::vec2& direction)

@@ -22,7 +22,7 @@ void InputManager::RemoveController(int controllerIndex)
 	m_Controllers.erase(std::remove(m_Controllers.begin(), m_Controllers.end(), m_Controllers[controllerIndex]), m_Controllers.end());
 }
 
-void InputManager::BindKeyboardButtonToCommand(SDL_Scancode scanCode, KeyState keyState, std::unique_ptr<BaseButtonCommand> command)
+void InputManager::BindKeyboardButtonToCommand(SDL_Scancode scanCode, KeyState keyState, std::unique_ptr<BaseCommand> command)
 {
 	if (m_KeyboardInputBindings.find(std::pair(scanCode, keyState)) != m_KeyboardInputBindings.end())
 	{
@@ -30,13 +30,13 @@ void InputManager::BindKeyboardButtonToCommand(SDL_Scancode scanCode, KeyState k
 	}
 	else
 	{
-		std::vector<std::unique_ptr<BaseButtonCommand>> commandVec{};
+		std::vector<std::unique_ptr<BaseCommand>> commandVec{};
 		commandVec.push_back(std::move(command));
 		m_KeyboardInputBindings.emplace(std::pair(scanCode, keyState), std::move(commandVec));
 	}
 }
 
-void InputManager::BindControllerButtonToCommand(int controllerIndex, InputController::ControllerButton button, KeyState keyState, std::unique_ptr<BaseButtonCommand> command)
+void InputManager::BindControllerButtonToCommand(int controllerIndex, InputController::ControllerButton button, KeyState keyState, std::unique_ptr<BaseCommand> command)
 {
 	if (m_ControllerButtonBindings.find(std::pair(std::pair(controllerIndex, button), keyState)) != m_ControllerButtonBindings.end())
 	{
@@ -44,7 +44,7 @@ void InputManager::BindControllerButtonToCommand(int controllerIndex, InputContr
 	}
 	else
 	{
-		std::vector<std::unique_ptr<BaseButtonCommand>> commandVec{};
+		std::vector<std::unique_ptr<BaseCommand>> commandVec{};
 		commandVec.push_back(std::move(command));
 		m_ControllerButtonBindings.emplace(std::pair(std::pair(controllerIndex, button), keyState), std::move(commandVec));
 	}

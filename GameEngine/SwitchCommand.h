@@ -1,10 +1,10 @@
 #pragma once
-#include "BaseButtonCommand.h"
+#include "BaseCommand.h"
 #include "PlayerMovementController.h"
 
 class BaseComponent;
 
-class SwitchCommand : public BaseButtonCommand
+class SwitchCommand : public BaseCommand
 {
 public:
 	SwitchCommand(PlayerMovementController* pMovementController) : m_pMovementController{ pMovementController } {};

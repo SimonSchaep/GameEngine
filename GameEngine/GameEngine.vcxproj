@@ -191,8 +191,9 @@
     <ClInclude Include="..\3rdParty\imgui\imstb_truetype.h" />
     <ClInclude Include="BaseAxisCommand.h" />
     <ClInclude Include="BaseComponent.h" />
-    <ClInclude Include="BaseButtonCommand.h" />
+    <ClInclude Include="BaseCommand.h" />
     <ClInclude Include="DestroyComponent.h" />
+    <ClInclude Include="DieCommand.h" />
     <ClInclude Include="InputController.h" />
     <ClInclude Include="MoveCommands.h" />
     <ClInclude Include="MovementComponent.h" />

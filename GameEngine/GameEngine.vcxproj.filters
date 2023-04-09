@@ -201,7 +201,7 @@
     <ClInclude Include="MovementComponent.h">
       <Filter>CustomComponents</Filter>
     </ClInclude>
-    <ClInclude Include="BaseButtonCommand.h">
+    <ClInclude Include="BaseCommand.h">
       <Filter>Engine\Input</Filter>
     </ClInclude>
     <ClInclude Include="InputManager.h">
@@ -224,6 +224,9 @@
     </ClInclude>
     <ClInclude Include="BaseAxisCommand.h">
       <Filter>Engine\Input</Filter>
+    </ClInclude>
+    <ClInclude Include="DieCommand.h">
+      <Filter>CustomCommands</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -89,7 +89,7 @@ T* GameObject::GetComponent()const
 			return returnComponent;
 		}
 	}
-	//no m_pComponent of specified type was found
+	//no Component of specified type was found
 	return nullptr;
 }
 

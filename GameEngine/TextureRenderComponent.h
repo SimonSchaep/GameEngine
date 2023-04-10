@@ -12,10 +12,7 @@ public:
 	virtual ~TextureRenderComponent() = default;
 
 	void SetTexture(const std::string& filename);
-
-	virtual void Initialize() override;
-
-	virtual void Update() override;
+	void ClearTexture();
 
 	virtual void Render()const override;
 

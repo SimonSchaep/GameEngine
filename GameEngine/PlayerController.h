@@ -16,7 +16,7 @@ public:
 	void BindControllerAxisToCommand(InputController::ControllerAxis axis, std::unique_ptr<BaseAxisCommand> command);
 
 	//only works for bindings that are added after calling this function
-	void UseKeyboard(bool use); 
+	void UseKeyboard(bool useKeyboard); 
 	//set to -1 to no longer use controller
 	//only works for bindings that are added after calling this function
 	void UseController(int controllerIndex);

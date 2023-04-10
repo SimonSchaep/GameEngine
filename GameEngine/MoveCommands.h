@@ -1,12 +1,12 @@
 #pragma once
 #include "BaseCommand.h"
 #include "BaseAxisCommand.h"
-#include "PlayerMovementController.h"
+#include "MyPlayerController.h"
 
 class MoveCommand : public BaseCommand
 {
 public:
-	MoveCommand(PlayerMovementController* pMovementController, const glm::vec2& direction)
+	MoveCommand(MyPlayerController* pMovementController, const glm::vec2& direction)
 		: m_pMovementController{ pMovementController } 
 		, m_Direction{direction}
 	{}
@@ -19,7 +19,7 @@ public:
 	}
 
 private:
-	PlayerMovementController* m_pMovementController{};
+	MyPlayerController* m_pMovementController{};
 	glm::vec2 m_Direction{};
 };
 
@@ -28,7 +28,7 @@ private:
 class MoveAxisCommand : public BaseAxisCommand
 {
 public:
-	MoveAxisCommand(PlayerMovementController* pMovementController, const glm::vec2& direction)
+	MoveAxisCommand(MyPlayerController* pMovementController, const glm::vec2& direction)
 		: m_pMovementController{ pMovementController } 
 		, m_Direction{direction}
 	{}
@@ -39,6 +39,6 @@ public:
 	}
 
 private:
-	PlayerMovementController* m_pMovementController{};
+	MyPlayerController* m_pMovementController{};
 	glm::vec2 m_Direction{};
 };

@@ -1,22 +1,30 @@
 #pragma once
 #include "PlayerController.h"
-#include "MovementComponent.h"
 #include "glm/glm.hpp"
 
-class PlayerMovementController : public PlayerController
+class MovementComponent;
+class PlayerLives;
+class PlayerPoints;
+
+class MyPlayerController : public PlayerController
 {
 public:
-    PlayerMovementController(GameObject* pGameObject) :PlayerController(pGameObject) {};
+    MyPlayerController(GameObject* pGameObject) :PlayerController(pGameObject) {};
 
     virtual void Initialize() override;
 
     void Move(const glm::vec2& direction);
+    void Die();
+    void ResetLives();
+    void AddPoints(int amount);
 
     void SetControlChef(bool controlChef);
     void SwitchControlledGameObjects();
 
 private:
     MovementComponent* m_pControlledMovementComponent{};
+    PlayerLives* m_pControlledPlayerLivesComponent{};
+    PlayerPoints* m_pControlledPlayerPointsComponent{};
 
     GameObject* m_pChef{};
     GameObject* m_pBean{};

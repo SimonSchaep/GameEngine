@@ -103,7 +103,28 @@
     <ClCompile Include="PlayerController.cpp">
       <Filter>Engine\Components</Filter>
     </ClCompile>
-    <ClCompile Include="PlayerMovementController.cpp">
+    <ClCompile Include="MyPlayerController.cpp">
+      <Filter>CustomComponents</Filter>
+    </ClCompile>
+    <ClCompile Include="Observer.cpp">
+      <Filter>Engine\Observer</Filter>
+    </ClCompile>
+    <ClCompile Include="Event.cpp">
+      <Filter>Engine\Observer</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayerLives.cpp">
+      <Filter>CustomComponents</Filter>
+    </ClCompile>
+    <ClCompile Include="LivesDisplay.cpp">
+      <Filter>CustomComponents</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayerPoints.cpp">
+      <Filter>CustomComponents</Filter>
+    </ClCompile>
+    <ClCompile Include="PointsDisplay.cpp">
+      <Filter>CustomComponents</Filter>
+    </ClCompile>
+    <ClCompile Include="ControlsDisplay.cpp">
       <Filter>CustomComponents</Filter>
     </ClCompile>
   </ItemGroup>
@@ -216,7 +237,7 @@
     <ClInclude Include="PlayerController.h">
       <Filter>Engine\Components</Filter>
     </ClInclude>
-    <ClInclude Include="PlayerMovementController.h">
+    <ClInclude Include="MyPlayerController.h">
       <Filter>CustomComponents</Filter>
     </ClInclude>
     <ClInclude Include="SwitchCommand.h">
@@ -227,6 +248,36 @@
     </ClInclude>
     <ClInclude Include="DieCommand.h">
       <Filter>CustomCommands</Filter>
+    </ClInclude>
+    <ClInclude Include="Observer.h">
+      <Filter>Engine\Observer</Filter>
+    </ClInclude>
+    <ClInclude Include="Event.h">
+      <Filter>Engine\Observer</Filter>
+    </ClInclude>
+    <ClInclude Include="CustomEvents.h">
+      <Filter>CustomEvents</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayerLives.h">
+      <Filter>CustomComponents</Filter>
+    </ClInclude>
+    <ClInclude Include="ResetLivesCommand.h">
+      <Filter>CustomCommands</Filter>
+    </ClInclude>
+    <ClInclude Include="AddPointsCommand.h">
+      <Filter>CustomCommands</Filter>
+    </ClInclude>
+    <ClInclude Include="LivesDisplay.h">
+      <Filter>CustomComponents</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayerPoints.h">
+      <Filter>CustomComponents</Filter>
+    </ClInclude>
+    <ClInclude Include="PointsDisplay.h">
+      <Filter>CustomComponents</Filter>
+    </ClInclude>
+    <ClInclude Include="ControlsDisplay.h">
+      <Filter>CustomComponents</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -250,6 +301,12 @@
     </Filter>
     <Filter Include="CustomCommands">
       <UniqueIdentifier>{5a93645c-b76b-4758-84b4-ab302753d323}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\Observer">
+      <UniqueIdentifier>{31af50d0-a07c-4657-8ad2-fb0d849c9d4f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="CustomEvents">
+      <UniqueIdentifier>{278a5d88-effc-48c7-aad3-07686fa31062}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

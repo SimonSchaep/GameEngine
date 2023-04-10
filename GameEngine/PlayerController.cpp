@@ -25,9 +25,9 @@ void PlayerController::BindControllerAxisToCommand(InputController::ControllerAx
 	}
 }
 
-void PlayerController::UseKeyboard(bool use)
+void PlayerController::UseKeyboard(bool useKeyboard)
 {
-	m_UseKeyboard = use;
+	m_UseKeyboard = useKeyboard;
 }
 
 void PlayerController::UseController(int controllerIndex)

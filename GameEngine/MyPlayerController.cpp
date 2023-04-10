@@ -1,11 +1,17 @@
-#include "PlayerMovementController.h"
+#include "MyPlayerController.h"
 #include "MoveCommands.h"
 #include "SwitchCommand.h"
+#include "DieCommand.h"
+#include "ResetLivesCommand.h"
+#include "AddPointsCommand.h"
 #include "GameObject.h"
+#include "MovementComponent.h"
+#include "PlayerLives.h"
+#include "PlayerPoints.h"
 #include "SceneManager.h"
 #include "Scene.h"
 
-void PlayerMovementController::Initialize()
+void MyPlayerController::Initialize()
 {
 	auto pScene = SceneManager::GetInstance().GetActiveScene();
 	m_pChef = pScene->FindGameObjectByName("Chef");
@@ -31,6 +37,9 @@ void PlayerMovementController::Initialize()
 	BindControllerAxisToCommand(InputController::ControllerAxis::ThumbLY, std::make_unique<MoveAxisCommand>(this, glm::vec2{ 0,-1 }));
 
 	BindControllerButtonToCommand(InputController::ControllerButton::ButtonA, InputManager::KeyState::up, std::make_unique<SwitchCommand>(this));
+	BindControllerButtonToCommand(InputController::ControllerButton::ButtonB, InputManager::KeyState::up, std::make_unique<DieCommand>(this));
+	BindControllerButtonToCommand(InputController::ControllerButton::ButtonX, InputManager::KeyState::up, std::make_unique<ResetLivesCommand>(this));
+	BindControllerButtonToCommand(InputController::ControllerButton::ButtonY, InputManager::KeyState::up, std::make_unique<AddPointsCommand>(this, 50));
 
 	//keyboard
 	BindKeyboardButtonToCommand(SDL_SCANCODE_A, InputManager::KeyState::pressed, std::make_unique<MoveCommand>(this, glm::vec2{ -1,0 }));
@@ -43,31 +52,62 @@ void PlayerMovementController::Initialize()
 	BindKeyboardButtonToCommand(SDL_SCANCODE_DOWN, InputManager::KeyState::pressed, std::make_unique<MoveCommand>(this, glm::vec2{ 0,1 }));
 
 	BindKeyboardButtonToCommand(SDL_SCANCODE_SPACE, InputManager::KeyState::up, std::make_unique<SwitchCommand>(this));
+	BindKeyboardButtonToCommand(SDL_SCANCODE_1, InputManager::KeyState::up, std::make_unique<DieCommand>(this));
+	BindKeyboardButtonToCommand(SDL_SCANCODE_2, InputManager::KeyState::up, std::make_unique<ResetLivesCommand>(this));
+	BindKeyboardButtonToCommand(SDL_SCANCODE_3, InputManager::KeyState::up, std::make_unique<AddPointsCommand>(this, 50));
 }
 
-void PlayerMovementController::Move(const glm::vec2& direction)
+void MyPlayerController::Move(const glm::vec2& direction)
 {
 	if (m_pControlledMovementComponent)
 	{
 		m_pControlledMovementComponent->Move(direction);
-	}	
+	}
 }
 
-void PlayerMovementController::SetControlChef(bool controlChef)
+void MyPlayerController::Die()
+{
+	if (m_pControlledPlayerLivesComponent)
+	{
+		m_pControlledPlayerLivesComponent->Die();
+	}
+}
+
+void MyPlayerController::ResetLives()
+{
+	if (m_pControlledPlayerLivesComponent)
+	{
+		m_pControlledPlayerLivesComponent->ResetLives();
+	}
+}
+
+void MyPlayerController::AddPoints(int amount)
+{
+	if (m_pControlledPlayerPointsComponent)
+	{
+		m_pControlledPlayerPointsComponent->AddPoints(amount);
+	}
+}
+
+void MyPlayerController::SetControlChef(bool controlChef)
 {
 	m_ControlChef = controlChef;
 
 	if (m_pChef && m_ControlChef)
 	{
 		m_pControlledMovementComponent = m_pChef->GetComponent<MovementComponent>();
+		m_pControlledPlayerLivesComponent = m_pChef->GetComponent<PlayerLives>();
+		m_pControlledPlayerPointsComponent = m_pChef->GetComponent<PlayerPoints>();
 	}
 	else if (m_pBean && !m_ControlChef)
 	{
 		m_pControlledMovementComponent = m_pBean->GetComponent<MovementComponent>();
+		m_pControlledPlayerLivesComponent = m_pBean->GetComponent<PlayerLives>();
+		m_pControlledPlayerPointsComponent = m_pBean->GetComponent<PlayerPoints>();
 	}
 }
 
-void PlayerMovementController::SwitchControlledGameObjects()
+void MyPlayerController::SwitchControlledGameObjects()
 {
 	SetControlChef(!m_ControlChef);
 }

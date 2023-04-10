@@ -1,13 +1,13 @@
 #pragma once
 #include "BaseCommand.h"
-#include "PlayerMovementController.h"
+#include "MyPlayerController.h"
 
 class BaseComponent;
 
 class SwitchCommand : public BaseCommand
 {
 public:
-	SwitchCommand(PlayerMovementController* pMovementController) : m_pMovementController{ pMovementController } {};
+	SwitchCommand(MyPlayerController* pMovementController) : m_pMovementController{ pMovementController } {};
 
 	virtual void Execute() override
 	{
@@ -15,5 +15,5 @@ public:
 	}
 
 private:
-	PlayerMovementController* m_pMovementController{};
+	MyPlayerController* m_pMovementController{};
 };

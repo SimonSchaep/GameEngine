@@ -1,5 +1,4 @@
 #include <stdexcept>
-#include <SDL_ttf.h>
 #include "TextRenderComponent.h"
 #include "Renderer.h"
 #include "Font.h"
@@ -7,7 +6,7 @@
 #include "GameObject.h"
 
 TextRenderComponent::TextRenderComponent(GameObject* pGameObject) 
-	: m_needsUpdate(true), m_text(""), TextureRenderComponent(pGameObject)
+	: m_needsUpdate(true), m_text(""), m_Color{255,255,255,255}, TextureRenderComponent(pGameObject)
 { }
 
 void TextRenderComponent::Update()
@@ -20,8 +19,13 @@ void TextRenderComponent::Update()
 
 	if (m_needsUpdate)
 	{
-		const SDL_Color color = { 255,255,255 }; // only white text is supported now
-		const auto surf = TTF_RenderText_Blended(m_font->GetFont(), m_text.c_str(), color);
+		if (m_text == "")
+		{
+			ClearTexture();
+			return;
+		}
+
+		const auto surf = TTF_RenderText_Blended(m_font->GetFont(), m_text.c_str(), m_Color);
 		if (surf == nullptr) 
 		{
 			throw std::runtime_error(std::string("Render text failed: ") + SDL_GetError());
@@ -56,6 +60,13 @@ void TextRenderComponent::SetText(const std::string& text)
 void TextRenderComponent::SetFont(std::shared_ptr<Font> font)
 {
 	m_font = std::move(font);
+	m_needsUpdate = true;
+}
+
+void TextRenderComponent::SetColor(SDL_Color color)
+{
+	m_Color = color;
+	m_needsUpdate = true;
 }
 
 

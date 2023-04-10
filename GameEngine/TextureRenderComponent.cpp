@@ -9,16 +9,17 @@ void TextureRenderComponent::SetTexture(const std::string& filename)
 	m_texture = ResourceManager::GetInstance().LoadTexture(filename);
 }
 
-void TextureRenderComponent::Initialize()
+void TextureRenderComponent::ClearTexture()
 {
-}
-
-void TextureRenderComponent::Update()
-{
+	m_texture.reset();
 }
 
 void TextureRenderComponent::Render()const
 {
+	if (!m_texture)
+	{
+		return;
+	}
 	const auto& pos = GetGameObject()->GetTransform()->GetWorldPosition();
 	Renderer::GetInstance().RenderTexture(*m_texture, pos.x, pos.y);
 }

@@ -14,6 +14,7 @@
 #include "TextureRenderComponent.h"
 #include <iostream>
 #include <chrono>
+#include <steam_api.h>
 
 SDL_Window* g_window{};
 
@@ -98,6 +99,9 @@ void GameEngine::Run(const std::function<void()>& load)
 	{
 		//TIME
 		time.Update(); //calculate deltatime, totaltime..., will sleep to cap fps when a cap is set
+
+		//STEAM
+		SteamAPI_RunCallbacks();
 
 		//FIXED UPDATE
 		//lag += time.GetDeltaTime();		

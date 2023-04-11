@@ -17,14 +17,7 @@ void MyPlayerController::Initialize()
 	m_pChef = pScene->FindGameObjectByName("Chef");
 	m_pBean = pScene->FindGameObjectByName("Bean");
 
-	if (m_pChef && m_ControlChef)
-	{
-		m_pControlledMovementComponent = m_pChef->GetComponent<MovementComponent>();
-	}
-	else if (m_pBean && !m_ControlChef)
-	{
-		m_pControlledMovementComponent = m_pBean->GetComponent<MovementComponent>();
-	}
+	SetControlChef(m_ControlChef);
 
 
 	//controller

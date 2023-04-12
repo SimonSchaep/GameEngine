@@ -5,6 +5,7 @@
 #include "BaseComponent.h"
 #include "RenderComponent.h"
 #include "UIRenderComponent.h"
+#include "Scene.h"
 #include <iostream>
 
 GameObject::GameObject(const std::string& name)

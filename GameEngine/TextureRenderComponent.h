@@ -8,8 +8,8 @@ class Texture2D;
 class TextureRenderComponent : public RenderComponent
 {
 public:
-	TextureRenderComponent(GameObject* pGameObject) :RenderComponent(pGameObject) {};
-	virtual ~TextureRenderComponent() = default;
+	TextureRenderComponent(GameObject* pGameObject);
+	virtual ~TextureRenderComponent();
 
 	void SetTexture(const std::string& filename);
 	void ClearTexture();
@@ -17,10 +17,10 @@ public:
 	virtual void Render()const override;
 
 protected:
-	Texture2D* GetTexture()const { return m_texture.get(); };
-	void SetTexture(std::shared_ptr<Texture2D> texture) { m_texture = std::move(texture); };
+	Texture2D* GetTexture()const;
+	void SetTexture(std::unique_ptr<Texture2D> texture);
 
 private:
-	std::shared_ptr<Texture2D> m_texture{};
+	std::unique_ptr<Texture2D> m_Texture{};
 };
 

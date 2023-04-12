@@ -117,6 +117,8 @@
 xcopy $(SolutionDir)3rdParty\SDL2_image\lib\x86\SDL2_image.dll $(OutputPath) /R /Y
 xcopy $(SolutionDir)3rdParty\SDL2_ttf\lib\x86\SDL2_ttf.dll $(OutputPath) /R /Y
 xcopy $(SolutionDir)3rdParty\steamworks\redistributable_bin\steam_api.dll $(OutputPath) /Y
+xcopy $(SolutionDir)Data\ $(OutputPath)Data\ /Y
+xcopy $(SolutionDir)Data\ $(ProjectDir)Data\ /Y
 echo 480 &gt; $(OutputPath)\steam_appid.txt</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
@@ -143,7 +145,10 @@ echo 480 &gt; $(OutputPath)\steam_appid.txt</Command>
 xcopy $(SolutionDir)3rdParty\SDL2_image\lib\x64\SDL2_image.dll $(OutputPath) /R /Y
 xcopy $(SolutionDir)3rdParty\SDL2_ttf\lib\x64\SDL2_ttf.dll $(OutputPath) /R /Y
 xcopy $(SolutionDir)3rdParty\steamworks\redistributable_bin\win64\steam_api64.dll $(OutputPath) /Y
-echo 480 &gt; $(OutputPath)\steam_appid.txt</Command>
+xcopy $(SolutionDir)Data\ $(OutputPath)Data\ /Y
+xcopy $(SolutionDir)Data\ $(ProjectDir)Data\ /Y
+echo 480 &gt; $(OutputPath)\steam_appid.txt
+</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -173,6 +178,8 @@ echo 480 &gt; $(OutputPath)\steam_appid.txt</Command>
 xcopy $(SolutionDir)3rdParty\SDL2_image\lib\x86\SDL2_image.dll $(OutputPath) /R /Y
 xcopy $(SolutionDir)3rdParty\SDL2_ttf\lib\x86\SDL2_ttf.dll $(OutputPath) /R /Y
 xcopy $(SolutionDir)3rdParty\steamworks\redistributable_bin\steam_api.dll $(OutputPath) /Y
+xcopy $(SolutionDir)Data\ $(OutputPath)Data\ /Y
+xcopy $(SolutionDir)Data\ $(ProjectDir)Data\ /Y
 echo 480 &gt; $(OutputPath)\steam_appid.txt</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
@@ -203,7 +210,10 @@ echo 480 &gt; $(OutputPath)\steam_appid.txt</Command>
 xcopy $(SolutionDir)3rdParty\SDL2_image\lib\x64\SDL2_image.dll $(OutputPath) /R /Y
 xcopy $(SolutionDir)3rdParty\SDL2_ttf\lib\x64\SDL2_ttf.dll $(OutputPath) /R /Y
 xcopy $(SolutionDir)3rdParty\steamworks\redistributable_bin\win64\steam_api64.dll $(OutputPath) /Y
-echo 480 &gt; $(OutputPath)\steam_appid.txt</Command>
+xcopy $(SolutionDir)Data\ $(OutputPath)Data\ /Y
+xcopy $(SolutionDir)Data\ $(ProjectDir)Data\ /Y
+echo 480 &gt; $(OutputPath)\steam_appid.txt
+</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
@@ -217,6 +227,8 @@ echo 480 &gt; $(OutputPath)\steam_appid.txt</Command>
     <ClInclude Include="..\3rdParty\imgui\imstb_rectpack.h" />
     <ClInclude Include="..\3rdParty\imgui\imstb_textedit.h" />
     <ClInclude Include="..\3rdParty\imgui\imstb_truetype.h" />
+    <ClInclude Include="Achievement.h" />
+    <ClInclude Include="AchievementManager.h" />
     <ClInclude Include="AddPointsCommand.h" />
     <ClInclude Include="BaseAxisCommand.h" />
     <ClInclude Include="BaseComponent.h" />
@@ -237,6 +249,7 @@ echo 480 &gt; $(OutputPath)\steam_appid.txt</Command>
     <ClInclude Include="PlayerPoints.h" />
     <ClInclude Include="PointsDisplay.h" />
     <ClInclude Include="ResetLivesCommand.h" />
+    <ClInclude Include="SteamAchievements.h" />
     <ClInclude Include="SwitchCommand.h" />
     <ClInclude Include="TrashTheCacheComponent.h" />
     <ClInclude Include="Font.h" />
@@ -257,6 +270,7 @@ echo 480 &gt; $(OutputPath)\steam_appid.txt</Command>
     <ClInclude Include="Time.h" />
     <ClInclude Include="Transform.h" />
     <ClInclude Include="UIRenderComponent.h" />
+    <ClInclude Include="WinFirstGameAchievement.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\3rdParty\imgui\backends\imgui_impl_opengl2.cpp" />
@@ -269,6 +283,8 @@ echo 480 &gt; $(OutputPath)\steam_appid.txt</Command>
     <ClCompile Include="..\3rdParty\imgui\implot.cpp" />
     <ClCompile Include="..\3rdParty\imgui\implot_demo.cpp" />
     <ClCompile Include="..\3rdParty\imgui\implot_items.cpp" />
+    <ClCompile Include="Achievement.cpp" />
+    <ClCompile Include="AchievementManager.cpp" />
     <ClCompile Include="BaseComponent.cpp" />
     <ClCompile Include="ControlsDisplay.cpp" />
     <ClCompile Include="DestroyComponent.cpp" />
@@ -282,6 +298,7 @@ echo 480 &gt; $(OutputPath)\steam_appid.txt</Command>
     <ClCompile Include="MyPlayerController.cpp" />
     <ClCompile Include="PlayerPoints.cpp" />
     <ClCompile Include="PointsDisplay.cpp" />
+    <ClCompile Include="SteamAchievements.cpp" />
     <ClCompile Include="TrashTheCacheComponent.cpp" />
     <ClCompile Include="Font.cpp" />
     <ClCompile Include="FPSCounter.cpp" />
@@ -301,6 +318,7 @@ echo 480 &gt; $(OutputPath)\steam_appid.txt</Command>
     <ClCompile Include="Time.cpp" />
     <ClCompile Include="Transform.cpp" />
     <ClCompile Include="UIRenderComponent.cpp" />
+    <ClCompile Include="WinFirstGameAchievement.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

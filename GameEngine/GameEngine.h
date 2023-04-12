@@ -13,4 +13,7 @@ public:
 	GameEngine(GameEngine&& other) = delete;
 	GameEngine& operator=(const GameEngine& other) = delete;
 	GameEngine& operator=(GameEngine&& other) = delete;
+
+private:
+	bool m_InitSucces{};
 };

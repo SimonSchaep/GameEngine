@@ -1591,7 +1591,7 @@ static void ShowDemoWindowWidgets()
         {
             static ImVector<int> active_tabs;
             static int next_tab_id = 0;
-            if (next_tab_id == 0) // Initialize with some default tabs
+            if (next_tab_id == 0) // InitializeSteamAchievements with some default tabs
                 for (int i = 0; i < 3; i++)
                     active_tabs.push_back(next_tab_id++);
 

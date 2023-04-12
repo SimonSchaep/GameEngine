@@ -127,6 +127,18 @@
     <ClCompile Include="ControlsDisplay.cpp">
       <Filter>CustomComponents</Filter>
     </ClCompile>
+    <ClCompile Include="SteamAchievements.cpp">
+      <Filter>Engine\Achievements</Filter>
+    </ClCompile>
+    <ClCompile Include="AchievementManager.cpp">
+      <Filter>Engine\Achievements</Filter>
+    </ClCompile>
+    <ClCompile Include="Achievement.cpp">
+      <Filter>Engine\Achievements</Filter>
+    </ClCompile>
+    <ClCompile Include="WinFirstGameAchievement.cpp">
+      <Filter>CustomAchievements</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Font.h">
@@ -279,6 +291,18 @@
     <ClInclude Include="ControlsDisplay.h">
       <Filter>CustomComponents</Filter>
     </ClInclude>
+    <ClInclude Include="SteamAchievements.h">
+      <Filter>Engine\Achievements</Filter>
+    </ClInclude>
+    <ClInclude Include="AchievementManager.h">
+      <Filter>Engine\Achievements</Filter>
+    </ClInclude>
+    <ClInclude Include="Achievement.h">
+      <Filter>Engine\Achievements</Filter>
+    </ClInclude>
+    <ClInclude Include="WinFirstGameAchievement.h">
+      <Filter>CustomAchievements</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Engine">
@@ -307,6 +331,12 @@
     </Filter>
     <Filter Include="CustomEvents">
       <UniqueIdentifier>{278a5d88-effc-48c7-aad3-07686fa31062}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\Achievements">
+      <UniqueIdentifier>{bc52671a-6a7b-438f-89f7-f7885b35c83d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="CustomAchievements">
+      <UniqueIdentifier>{a5d118bb-66b9-49e5-af50-e3cf95e868e4}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

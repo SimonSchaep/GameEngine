@@ -68,14 +68,27 @@ GameEngine::GameEngine(const std::string &dataPath)
 		throw std::runtime_error(std::string("SDL_CreateWindow Error: ") + SDL_GetError());
 	}
 
+	if (!SteamAPI_Init())
+	{
+		std::cerr << "Fatal Error - Steam must be running to play this game (SteamAPI_Init() failed)." << std::endl;
+		return;
+	}
+	else
+	{
+		std::cout << "Successfully initialized steam." << std::endl;
+	}
+
 	Renderer::GetInstance().Init(g_window);
 
 	ResourceManager::GetInstance().Init(dataPath);
+
+	m_InitSucces = true;
 }
 
 GameEngine::~GameEngine()
 {
 	Renderer::GetInstance().Destroy();
+	SteamAPI_Shutdown();
 	SDL_DestroyWindow(g_window);
 	g_window = nullptr;
 	SDL_Quit();
@@ -83,6 +96,8 @@ GameEngine::~GameEngine()
 
 void GameEngine::Run(const std::function<void()>& load)
 {
+	if (!m_InitSucces) return;
+
 	load();
 
 	auto& renderer = Renderer::GetInstance();
@@ -94,6 +109,7 @@ void GameEngine::Run(const std::function<void()>& load)
 	bool doContinue = true;
 
 	sceneManager.Initialize();
+
 
 	while (doContinue)
 	{

@@ -50,7 +50,7 @@ public:
 	template<typename T>
 	void RemoveAllComponentsOfType();
 
-	GameObject(const std::string& name);
+	GameObject(const std::string& name); //only use this with scene.CreateAndAddGameObject()
 	~GameObject();
 	GameObject(const GameObject& other) = delete;
 	GameObject(GameObject&& other) = delete;

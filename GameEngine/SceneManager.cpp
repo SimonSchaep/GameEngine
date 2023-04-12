@@ -1,5 +1,6 @@
 #include "SceneManager.h"
 #include "Scene.h"
+#include <assert.h>
 
 void SceneManager::Initialize()
 {
@@ -50,9 +51,9 @@ Scene* SceneManager::CreateScene(const std::string& name)
 	return pReturnValue;
 }
 
-//todo: throw exception when pScene == nullptr
 void SceneManager::SetActiveSceneByPtr(Scene* pScene)
 {
+	assert(pScene);
 	m_pActiveScene = pScene;
 	if (m_IsInitialized && !m_pActiveScene->GetIsInitialized())
 	{
@@ -60,7 +61,6 @@ void SceneManager::SetActiveSceneByPtr(Scene* pScene)
 	}
 }
 
-//todo: throw exception when name not found
 void SceneManager::SetActiveSceneByName(const std::string& sceneName)
 {
 	for (auto& scene : m_scenes)
@@ -70,6 +70,9 @@ void SceneManager::SetActiveSceneByName(const std::string& sceneName)
 			m_pActiveScene = scene.get();
 		}
 	}
+
+	//ensure there is an active scene
+	assert(m_pActiveScene);
 
 	if (m_IsInitialized && !m_pActiveScene->GetIsInitialized())
 	{

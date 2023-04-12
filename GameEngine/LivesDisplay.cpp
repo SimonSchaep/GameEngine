@@ -24,10 +24,5 @@ void LivesDisplay::SetSubjectGameObject(GameObject* pGameObject)
 
 void LivesDisplay::Notify(Event*, GameObject*)
 {
-	if (!m_pPlayerLives)
-	{
-		std::cerr << "Call SetSubjectGameObject first\n";
-		return;
-	}
 	SetText("Lives: " + std::to_string(m_pPlayerLives->GetLives()));
 }

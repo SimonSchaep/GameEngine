@@ -22,10 +22,5 @@ void PointsDisplay::SetSubjectGameObject(GameObject* pGameObject)
 
 void PointsDisplay::Notify(Event*, GameObject*)
 {
-	if (!m_pPlayerPoints)
-	{
-		std::cerr << "Call SetSubjectGameObject first\n";
-		return;
-	}
 	SetText("Points: " + std::to_string(m_pPlayerPoints->GetPoints()));
 }

@@ -5,7 +5,7 @@
 class Scene final
 {
 public:
-	GameObject* CreateAndAddGameObject(const std::string& name = "DefaultName"); //todo: add option to attach to parent immidiately
+	GameObject* CreateAndAddGameObject(const std::string& name = "DefaultName"); //todo: add option to attach to parent immediately
 	GameObject* FindGameObjectByName(const std::string& name);
 	void RemoveAllGameObjects();
 

@@ -347,7 +347,7 @@ bool    ImGui::BeginTableEx(const char* name, ImGuiID id, int columns_count, ImG
     table->IsDefaultSizingPolicy = (flags & ImGuiTableFlags_SizingMask_) == 0;
     flags = TableFixFlags(flags, outer_window);
 
-    // Initialize
+    // InitializeSteamAchievements
     const int instance_no = (table->LastFrameActive != g.FrameCount) ? 0 : table->InstanceCurrent + 1;
     table->ID = id;
     table->Flags = flags;
@@ -517,7 +517,7 @@ bool    ImGui::BeginTableEx(const char* name, ImGuiID id, int columns_count, ImG
         TableResetSettings(table);
     if (table->IsInitializing)
     {
-        // Initialize
+        // InitializeSteamAchievements
         table->SettingsOffset = -1;
         table->IsSortSpecsDirty = true;
         table->InstanceInteracted = -1;
@@ -894,7 +894,7 @@ void ImGui::TableUpdateLayout(ImGuiTable* table)
         }
         else
         {
-            // Initialize stretch weight
+            // InitializeSteamAchievements stretch weight
             if (column->AutoFitQueue != 0x00 || column->StretchWeight < 0.0f || !column_is_resizable)
             {
                 if (column->InitStretchWeightOrWidth > 0.0f)
@@ -1471,7 +1471,7 @@ void ImGui::TableSetupColumn(const char* label, ImGuiTableColumnFlags flags, flo
     column->UserID = user_id;
     flags = column->Flags;
 
-    // Initialize defaults
+    // InitializeSteamAchievements defaults
     column->InitStretchWeightOrWidth = init_width_or_weight;
     if (table->IsInitializing)
     {
@@ -3923,7 +3923,7 @@ void ImGui::BeginColumns(const char* str_id, int columns_count, ImGuiOldColumnFl
     if (columns->Columns.Size != 0 && columns->Columns.Size != columns_count + 1)
         columns->Columns.resize(0);
 
-    // Initialize default widths
+    // InitializeSteamAchievements default widths
     columns->IsFirstFrame = (columns->Columns.Size == 0);
     if (columns->Columns.Size == 0)
     {

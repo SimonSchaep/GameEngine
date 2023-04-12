@@ -6,26 +6,28 @@
 #include "GameObject.h"
 
 TextRenderComponent::TextRenderComponent(GameObject* pGameObject) 
-	: m_needsUpdate(true), m_text(""), m_Color{255,255,255,255}, TextureRenderComponent(pGameObject)
+	: m_NeedsUpdate(true), m_Text(""), m_Color{255,255,255,255}, TextureRenderComponent(pGameObject)
 { }
+
+TextRenderComponent::~TextRenderComponent() = default;
 
 void TextRenderComponent::Update()
 {
-	if (!m_font)
+	if (!m_Font)
 	{
 		throw std::runtime_error(std::string("No font assigned: ") + SDL_GetError());
 		return;
 	}
 
-	if (m_needsUpdate)
+	if (m_NeedsUpdate)
 	{
-		if (m_text == "")
+		if (m_Text == "")
 		{
 			ClearTexture();
 			return;
 		}
 
-		const auto surf = TTF_RenderText_Blended(m_font->GetFont(), m_text.c_str(), m_Color);
+		const auto surf = TTF_RenderText_Blended(m_Font->GetFont(), m_Text.c_str(), m_Color);
 		if (surf == nullptr) 
 		{
 			throw std::runtime_error(std::string("Render text failed: ") + SDL_GetError());
@@ -36,8 +38,8 @@ void TextRenderComponent::Update()
 			throw std::runtime_error(std::string("Create text texture from surface failed: ") + SDL_GetError());
 		}
 		SDL_FreeSurface(surf);
-		SetTexture(std::make_shared<Texture2D>(texture));
-		m_needsUpdate = false;
+		SetTexture(std::make_unique<Texture2D>(texture));
+		m_NeedsUpdate = false;
 	}
 }
 
@@ -53,20 +55,20 @@ void TextRenderComponent::Render()const
 // This implementation uses the "dirty flag" pattern
 void TextRenderComponent::SetText(const std::string& text)
 {
-	m_text = text;
-	m_needsUpdate = true;
+	m_Text = text;
+	m_NeedsUpdate = true;
 }
 
-void TextRenderComponent::SetFont(std::shared_ptr<Font> font)
+void TextRenderComponent::SetFont(std::unique_ptr<Font> font)
 {
-	m_font = std::move(font);
-	m_needsUpdate = true;
+	m_Font = std::move(font);
+	m_NeedsUpdate = true;
 }
 
 void TextRenderComponent::SetColor(SDL_Color color)
 {
 	m_Color = color;
-	m_needsUpdate = true;
+	m_NeedsUpdate = true;
 }
 
 

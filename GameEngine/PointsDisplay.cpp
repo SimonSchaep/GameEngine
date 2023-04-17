@@ -17,10 +17,15 @@ void PointsDisplay::SetSubjectGameObject(GameObject* pGameObject)
 
 	assert(m_pPlayerPoints);
 
-	m_pPlayerPoints->GetAddPointsEvent()->AddObserver(this);
+	m_pPlayerPoints->GetKilledEnemyEvent()->AddObserver(this);
 }
 
-void PointsDisplay::Notify(Event*, GameObject*)
+void PointsDisplay::Notify(Event* pEvent, GameObject*)
 {
-	SetText("Points: " + std::to_string(m_pPlayerPoints->GetPoints()));
+	if (dynamic_cast<KilledEnemyEvent*>(pEvent))
+	{
+		m_Points += 50;
+	}
+
+	SetText("Points: " + m_Points);
 }

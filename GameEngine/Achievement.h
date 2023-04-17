@@ -23,10 +23,12 @@ public:
 	const std::string& GetIdName() { return m_IdName; }
 	const std::string& GetName() { return m_Name; }
 	const std::string& GetDescription() { return m_Description; }
+	bool IsAchieved() { return m_Achieved; };
 
 private:
 	void Unlock();
 
+	bool m_Achieved{};
 	int m_Id{};
 	std::string m_IdName{};
 	std::string m_Name{};

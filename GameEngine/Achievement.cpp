@@ -11,6 +11,8 @@ Achievement::Achievement(int id, const std::string& idName, const std::string& n
 
 void Achievement::Notify(Event* pEvent, GameObject* pGameObject)
 {
+	if (m_Achieved)return;
+
 	if (UnlockConditionMet(pEvent, pGameObject))
 	{
 		Unlock();
@@ -19,5 +21,8 @@ void Achievement::Notify(Event* pEvent, GameObject* pGameObject)
 
 void Achievement::Unlock()
 {
-	AchievementManager::GetInstance().UnlockAchievement(m_IdName);
+	if (AchievementManager::GetInstance().UnlockAchievement(m_IdName))
+	{
+		m_Achieved = true;
+	}
 }

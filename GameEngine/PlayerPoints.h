@@ -1,7 +1,10 @@
 #pragma once
 #include "BaseComponent.h"
 
-class AddPointsEvent;
+class KilledEnemyEvent;
+
+//this would be part of some other component in the game
+
 
 class PlayerPoints : public BaseComponent
 {
@@ -12,14 +15,11 @@ public:
 	virtual void Initialize() override {};
 	virtual void Update() override {};
 
-	int GetPoints() { return m_Points; }
+	void KilledEnemy();
 
-	void AddPoints(int amount);
-
-	AddPointsEvent* GetAddPointsEvent() { return m_AddPointsEvent.get(); }
+	KilledEnemyEvent* GetKilledEnemyEvent() { return m_KilledEnemyEvent.get(); }
 
 private:
-	int m_Points{};
-	std::unique_ptr<AddPointsEvent> m_AddPointsEvent{};
+	std::unique_ptr<KilledEnemyEvent> m_KilledEnemyEvent{};
 };
 

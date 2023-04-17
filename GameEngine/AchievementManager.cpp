@@ -2,12 +2,12 @@
 #include "Achievement.h"
 #include <assert.h>
 
-void AchievementManager::UnlockAchievement(const std::string& idName)
+bool AchievementManager::UnlockAchievement(const std::string& idName)
 {
 	//make sure InitializeSteamAchievements was called
 	assert(m_SteamAchievements.size() > 0);
 
-	m_CSteamAchievements->SetAchievement(idName.c_str());
+	return m_CSteamAchievements->SetAchievement(idName.c_str());
 }
 
 void AchievementManager::InitializeSteamAchievements()
@@ -29,7 +29,7 @@ void AchievementManager::InitializeSteamAchievements()
 		strcpy(name, achievement->GetName().c_str());
 		strcpy(name, achievement->GetDescription().c_str());
 		//description and name don't change anything right now, since it uses the name and desc from the game anyways, so no idea why this is even here
-		m_SteamAchievements.push_back({id, achievement->GetIdName().c_str(), *name, *description, 0, 0});
+		m_SteamAchievements.push_back({id, achievement->GetIdName().c_str(), *name, *description, achievement->IsAchieved(), 0});
 	}
 
 	m_CSteamAchievements = std::make_unique<CSteamAchievements>(m_SteamAchievements.data(), int(m_SteamAchievements.size()));

@@ -229,7 +229,7 @@ echo 480 &gt; "$(OutputPath)\steam_appid.txt"
     <ClInclude Include="..\3rdParty\imgui\imstb_truetype.h" />
     <ClInclude Include="Achievement.h" />
     <ClInclude Include="AchievementManager.h" />
-    <ClInclude Include="AddPointsCommand.h" />
+    <ClInclude Include="KilledEnemyCommand.h" />
     <ClInclude Include="BaseAxisCommand.h" />
     <ClInclude Include="BaseComponent.h" />
     <ClInclude Include="BaseCommand.h" />

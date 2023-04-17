@@ -13,7 +13,7 @@ public:
 	template<typename T>
 	T* CreateAndAddAchievement();
 
-	void UnlockAchievement(const std::string& idName);
+	bool UnlockAchievement(const std::string& idName);
 
 	//call this for steam achievements to work
 	void InitializeSteamAchievements();

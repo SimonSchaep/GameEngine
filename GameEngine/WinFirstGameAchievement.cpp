@@ -14,5 +14,5 @@ void WinFirstGameAchievement::AddSubjectGameObject(GameObject* pGameObject)
 
     assert(pPlayerPoints);
 
-    pPlayerPoints->GetAddPointsEvent()->AddObserver(this);
+    pPlayerPoints->GetKilledEnemyEvent()->AddObserver(this);
 }

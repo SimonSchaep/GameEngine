@@ -3,7 +3,7 @@
 #include "SwitchCommand.h"
 #include "DieCommand.h"
 #include "ResetLivesCommand.h"
-#include "AddPointsCommand.h"
+#include "KilledEnemyCommand.h"
 #include "GameObject.h"
 #include "MovementComponent.h"
 #include "PlayerLives.h"
@@ -32,7 +32,7 @@ void MyPlayerController::Initialize()
 	BindControllerButtonToCommand(InputController::ControllerButton::ButtonA, InputManager::KeyState::up, std::make_unique<SwitchCommand>(this));
 	BindControllerButtonToCommand(InputController::ControllerButton::ButtonB, InputManager::KeyState::up, std::make_unique<DieCommand>(this));
 	BindControllerButtonToCommand(InputController::ControllerButton::ButtonX, InputManager::KeyState::up, std::make_unique<ResetLivesCommand>(this));
-	BindControllerButtonToCommand(InputController::ControllerButton::ButtonY, InputManager::KeyState::up, std::make_unique<AddPointsCommand>(this, 50));
+	BindControllerButtonToCommand(InputController::ControllerButton::ButtonY, InputManager::KeyState::up, std::make_unique<KilledEnemyCommand>(this, 50));
 
 	//keyboard
 	BindKeyboardButtonToCommand(SDL_SCANCODE_A, InputManager::KeyState::pressed, std::make_unique<MoveCommand>(this, glm::vec2{ -1,0 }));
@@ -47,7 +47,7 @@ void MyPlayerController::Initialize()
 	BindKeyboardButtonToCommand(SDL_SCANCODE_SPACE, InputManager::KeyState::up, std::make_unique<SwitchCommand>(this));
 	BindKeyboardButtonToCommand(SDL_SCANCODE_1, InputManager::KeyState::up, std::make_unique<DieCommand>(this));
 	BindKeyboardButtonToCommand(SDL_SCANCODE_2, InputManager::KeyState::up, std::make_unique<ResetLivesCommand>(this));
-	BindKeyboardButtonToCommand(SDL_SCANCODE_3, InputManager::KeyState::up, std::make_unique<AddPointsCommand>(this, 50));
+	BindKeyboardButtonToCommand(SDL_SCANCODE_3, InputManager::KeyState::up, std::make_unique<KilledEnemyCommand>(this));
 }
 
 void MyPlayerController::Move(const glm::vec2& direction)
@@ -74,11 +74,11 @@ void MyPlayerController::ResetLives()
 	}
 }
 
-void MyPlayerController::AddPoints(int amount)
+void MyPlayerController::KilledEnemy()
 {
 	if (m_pControlledPlayerPointsComponent)
 	{
-		m_pControlledPlayerPointsComponent->AddPoints(amount);
+		m_pControlledPlayerPointsComponent->AddPoints();
 	}
 }
 

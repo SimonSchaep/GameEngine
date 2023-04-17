@@ -4,11 +4,10 @@
 PlayerPoints::PlayerPoints(GameObject* pGameObject)
 	:BaseComponent(pGameObject)
 {
-	m_AddPointsEvent = std::make_unique<AddPointsEvent>();
+	m_KilledEnemyEvent = std::make_unique<KilledEnemyEvent>();
 }
 
-void PlayerPoints::AddPoints(int amount)
+void PlayerPoints::KilledEnemy()
 {
-	m_Points += amount;
-	m_AddPointsEvent->NotifyObservers(GetGameObject());
+	m_KilledEnemyEvent->NotifyObservers(GetGameObject());
 }

@@ -276,7 +276,7 @@
     <ClInclude Include="ResetLivesCommand.h">
       <Filter>CustomCommands</Filter>
     </ClInclude>
-    <ClInclude Include="AddPointsCommand.h">
+    <ClInclude Include="KilledEnemyCommand.h">
       <Filter>CustomCommands</Filter>
     </ClInclude>
     <ClInclude Include="LivesDisplay.h">

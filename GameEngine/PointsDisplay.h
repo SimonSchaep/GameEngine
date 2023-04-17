@@ -20,5 +20,6 @@ public:
 
 private:
 	PlayerPoints* m_pPlayerPoints{};
+	int m_Points{};
 };
 

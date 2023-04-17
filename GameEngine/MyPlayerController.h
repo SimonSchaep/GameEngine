@@ -16,7 +16,7 @@ public:
     void Move(const glm::vec2& direction);
     void Die();
     void ResetLives();
-    void AddPoints(int amount);
+    void KilledEnemy();
 
     void SetControlChef(bool controlChef);
     void SwitchControlledGameObjects();

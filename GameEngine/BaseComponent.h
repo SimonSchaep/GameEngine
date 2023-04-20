@@ -1,31 +1,34 @@
 #pragma once
 #include <memory>
 
-class GameObject;
-
-class BaseComponent
+namespace engine
 {
-public:
-	virtual ~BaseComponent() = default;
-	BaseComponent(const BaseComponent& other) = delete;
-	BaseComponent(BaseComponent&& other) = delete;
-	BaseComponent& operator=(const BaseComponent& other) = delete;
-	BaseComponent& operator=(BaseComponent&& other) = delete;
+	class GameObject;
 
-	void MarkForDeletion() { m_IsMarkedForDeletion = true; };
-	bool IsMarkedForDeletion() { return m_IsMarkedForDeletion; };
+	class BaseComponent
+	{
+	public:
+		virtual ~BaseComponent() = default;
+		BaseComponent(const BaseComponent& other) = delete;
+		BaseComponent(BaseComponent&& other) = delete;
+		BaseComponent& operator=(const BaseComponent& other) = delete;
+		BaseComponent& operator=(BaseComponent&& other) = delete;
 
-	virtual void Initialize() = 0;
-	virtual void Update() = 0;
+		void MarkForDeletion() { m_IsMarkedForDeletion = true; };
+		bool IsMarkedForDeletion() { return m_IsMarkedForDeletion; };
 
-protected:
-	BaseComponent(GameObject* gameObject);
-	GameObject* GetGameObject()const { return m_pGameObject; };
-private:
-	GameObject* m_pGameObject{}; //baseComponent is not the owner of the gameobject. This could be a replacement for the raw pointer: https://en.cppreference.com/w/cpp/experimental/observer_ptr 
+		virtual void Initialize() = 0;
+		virtual void Update() = 0;
 
-	bool m_IsMarkedForDeletion{};
-};
+	protected:
+		BaseComponent(GameObject* gameObject);
+		GameObject* GetGameObject()const { return m_pGameObject; };
+	private:
+		GameObject* m_pGameObject{}; //baseComponent is not the owner of the gameobject. This could be a replacement for the raw pointer: https://en.cppreference.com/w/cpp/experimental/observer_ptr 
+
+		bool m_IsMarkedForDeletion{};
+	};
 
 
 
+}

@@ -813,7 +813,7 @@ void AddTicksCustom(const double* values, const char* const labels[], int n, ImP
 }
 
 //-----------------------------------------------------------------------------
-// Time Ticks and Utils
+// TimeManager Ticks and Utils
 //-----------------------------------------------------------------------------
 
 // this may not be thread safe?
@@ -1409,7 +1409,7 @@ void ShowAxisContextMenu(ImPlotAxis& axis, ImPlotAxis* equal_axis, bool /*time_a
     // EndDisabledControls(axis.IsTime() && time_allowed);
     // if (time_allowed) {
     //     BeginDisabledControls(axis.IsLog() || axis.IsSymLog());
-    //     ImGui::CheckboxFlags("Time",(unsigned int*)&axis.Flags, ImPlotAxisFlags_Time);
+    //     ImGui::CheckboxFlags("TimeManager",(unsigned int*)&axis.Flags, ImPlotAxisFlags_Time);
     //     EndDisabledControls(axis.IsLog() || axis.IsSymLog());
     // }
     ImGui::Separator();
@@ -1567,7 +1567,7 @@ static inline double RoundAxisValue(const ImPlotAxis& axis, double value) {
 
 void LabelAxisValue(const ImPlotAxis& axis, double value, char* buff, int size, bool round) {
     ImPlotContext& gp = *GImPlot;
-    // TODO: We shouldn't explicitly check that the axis is Time here. Ideally,
+    // TODO: We shouldn't explicitly check that the axis is TimeManager here. Ideally,
     // Formatter_Time would handle the formatting for us, but the code below
     // needs additional arguments which are not currently available in ImPlotFormatter
     if (axis.Locator == Locator_Time) {

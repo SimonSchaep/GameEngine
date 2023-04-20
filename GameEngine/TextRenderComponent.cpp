@@ -5,70 +5,75 @@
 #include "Texture2D.h"
 #include "GameObject.h"
 
-TextRenderComponent::TextRenderComponent(GameObject* pGameObject) 
-	: m_NeedsUpdate(true), m_Text(""), m_Color{255,255,255,255}, TextureRenderComponent(pGameObject)
-{ }
-
-TextRenderComponent::~TextRenderComponent() = default;
-
-void TextRenderComponent::Update()
+namespace engine
 {
-	if (!m_Font)
+
+	TextRenderComponent::TextRenderComponent(GameObject* pGameObject)
+		: m_NeedsUpdate(true), m_Text(""), m_Color{ 255,255,255,255 }, TextureRenderComponent(pGameObject)
 	{
-		throw std::runtime_error(std::string("No font assigned: ") + SDL_GetError());
-		return;
 	}
 
-	if (m_NeedsUpdate)
+	TextRenderComponent::~TextRenderComponent() = default;
+
+	void TextRenderComponent::Update()
 	{
-		if (m_Text == "")
+		if (!m_Font)
 		{
-			ClearTexture();
+			throw std::runtime_error(std::string("No font assigned: ") + SDL_GetError());
 			return;
 		}
 
-		const auto surf = TTF_RenderText_Blended(m_Font->GetFont(), m_Text.c_str(), m_Color);
-		if (surf == nullptr) 
+		if (m_NeedsUpdate)
 		{
-			throw std::runtime_error(std::string("Render text failed: ") + SDL_GetError());
-		}
-		auto texture = SDL_CreateTextureFromSurface(Renderer::GetInstance().GetSDLRenderer(), surf);
-		if (texture == nullptr) 
-		{
-			throw std::runtime_error(std::string("Create text texture from surface failed: ") + SDL_GetError());
-		}
-		SDL_FreeSurface(surf);
-		SetTexture(std::make_unique<Texture2D>(texture));
-		m_NeedsUpdate = false;
-	}
-}
+			if (m_Text == "")
+			{
+				ClearTexture();
+				return;
+			}
 
-void TextRenderComponent::Render()const
-{
-	if (GetTexture() != nullptr)
+			const auto surf = TTF_RenderText_Blended(m_Font->GetFont(), m_Text.c_str(), m_Color);
+			if (surf == nullptr)
+			{
+				throw std::runtime_error(std::string("Render text failed: ") + SDL_GetError());
+			}
+			auto texture = SDL_CreateTextureFromSurface(Renderer::GetInstance().GetSDLRenderer(), surf);
+			if (texture == nullptr)
+			{
+				throw std::runtime_error(std::string("Create text texture from surface failed: ") + SDL_GetError());
+			}
+			SDL_FreeSurface(surf);
+			SetTexture(std::make_unique<Texture2D>(texture));
+			m_NeedsUpdate = false;
+		}
+	}
+
+	void TextRenderComponent::Render()const
 	{
-		const auto& pos = GetGameObject()->GetTransform()->GetWorldPosition();
-		Renderer::GetInstance().RenderTexture(*GetTexture(), pos.x, pos.y);
+		if (GetTexture() != nullptr)
+		{
+			const auto& pos = GetGameObject()->GetTransform()->GetWorldPosition();
+			Renderer::GetInstance().RenderTexture(*GetTexture(), pos.x, pos.y);
+		}
 	}
+
+	// This implementation uses the "dirty flag" pattern
+	void TextRenderComponent::SetText(const std::string& text)
+	{
+		m_Text = text;
+		m_NeedsUpdate = true;
+	}
+
+	void TextRenderComponent::SetFont(std::unique_ptr<Font> font)
+	{
+		m_Font = std::move(font);
+		m_NeedsUpdate = true;
+	}
+
+	void TextRenderComponent::SetColor(SDL_Color color)
+	{
+		m_Color = color;
+		m_NeedsUpdate = true;
+	}
+
+
 }
-
-// This implementation uses the "dirty flag" pattern
-void TextRenderComponent::SetText(const std::string& text)
-{
-	m_Text = text;
-	m_NeedsUpdate = true;
-}
-
-void TextRenderComponent::SetFont(std::unique_ptr<Font> font)
-{
-	m_Font = std::move(font);
-	m_NeedsUpdate = true;
-}
-
-void TextRenderComponent::SetColor(SDL_Color color)
-{
-	m_Color = color;
-	m_NeedsUpdate = true;
-}
-
-

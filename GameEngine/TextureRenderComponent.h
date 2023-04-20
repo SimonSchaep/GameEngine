@@ -3,24 +3,28 @@
 #include <string>
 #include "RenderComponent.h"
 
-class Texture2D;
-
-class TextureRenderComponent : public RenderComponent
+namespace engine
 {
-public:
-	TextureRenderComponent(GameObject* pGameObject);
-	virtual ~TextureRenderComponent();
 
-	void SetTexture(const std::string& filename);
-	void ClearTexture();
+	class Texture2D;
 
-	virtual void Render()const override;
+	class TextureRenderComponent : public RenderComponent
+	{
+	public:
+		TextureRenderComponent(GameObject* pGameObject);
+		virtual ~TextureRenderComponent();
 
-protected:
-	Texture2D* GetTexture()const;
-	void SetTexture(std::unique_ptr<Texture2D> texture);
+		void SetTexture(const std::string& filename);
+		void ClearTexture();
 
-private:
-	std::unique_ptr<Texture2D> m_Texture{};
-};
+		virtual void Render()const override;
 
+	protected:
+		Texture2D* GetTexture()const;
+		void SetTexture(std::unique_ptr<Texture2D> texture);
+
+	private:
+		std::unique_ptr<Texture2D> m_Texture{};
+	};
+
+}

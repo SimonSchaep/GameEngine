@@ -8,94 +8,99 @@
 #include "Scene.h"
 #include <iostream>
 
-GameObject::GameObject(const std::string& name)
-	: m_Transform{ std::make_unique<Transform>(this) }
-	, m_Name{ name }
+namespace engine
 {
-}
 
-GameObject::~GameObject() = default;
-
-void GameObject::Initialize()
-{
-	for (auto& c : m_Components)
+	GameObject::GameObject(const std::string& name)
+		: m_Transform{ std::make_unique<Transform>(this) }
+		, m_Name{ name }
 	{
-		c->Initialize();
 	}
-}
 
-void GameObject::Update()
-{
-	//Update Components
-	for (size_t i{}; i < m_Components.size(); ++i)
+	GameObject::~GameObject() = default;
+
+	void GameObject::Initialize()
 	{
-		m_Components[i]->Update();
-		if (m_Components[i]->IsMarkedForDeletion())
+		for (auto& c : m_Components)
 		{
-			m_ToDeleteIndexes.push_back(i);
+			c->Initialize();
 		}
 	}
 
-	//Delete Components - reverse order because it removes Components by index
-	//If the Components at idx 0 and 1 need to be deleted and the one at 0 is deleted first, the Components at idx 1 will be at 0 when we delete it
-	for (int i{ int(m_ToDeleteIndexes.size()) - 1 }; i >= 0; --i)
+	void GameObject::Update()
 	{
-		m_Components.erase(std::remove(m_Components.begin(), m_Components.end(), m_Components[m_ToDeleteIndexes[i]]));
-	}
-	m_ToDeleteIndexes.clear();
-}
-
-void GameObject::RenderUI()
-{
-	for (auto& renderer : GetAllComponentsOfType<UIRenderComponent>())
-	{
-		renderer->RenderUI();
-	}
-}
-
-void GameObject::Render()const
-{
-	for (auto& renderer : GetAllComponentsOfType<RenderComponent>())
-	{
-		renderer->Render();
-	}
-}
-
-void GameObject::MarkForDeletion(bool includeChildren)
-{
-	m_IsMarkedForDeletion = true;
-	if (includeChildren)
-	{
-		for (auto pChild : m_Children)
+		//Update Components
+		for (size_t i{}; i < m_Components.size(); ++i)
 		{
-			pChild->MarkForDeletion(includeChildren);
+			m_Components[i]->Update();
+			if (m_Components[i]->IsMarkedForDeletion())
+			{
+				m_ToDeleteIndexes.push_back(i);
+			}
+		}
+
+		//Delete Components - reverse order because it removes Components by index
+		//If the Components at idx 0 and 1 need to be deleted and the one at 0 is deleted first, the Components at idx 1 will be at 0 when we delete it
+		for (int i{ int(m_ToDeleteIndexes.size()) - 1 }; i >= 0; --i)
+		{
+			m_Components.erase(std::remove(m_Components.begin(), m_Components.end(), m_Components[m_ToDeleteIndexes[i]]));
+		}
+		m_ToDeleteIndexes.clear();
+	}
+
+	void GameObject::RenderUI()
+	{
+		for (auto& renderer : GetAllComponentsOfType<UIRenderComponent>())
+		{
+			renderer->RenderUI();
 		}
 	}
-}
 
-void GameObject::SetParent(GameObject* pParent, bool keepWorldPosition)
-{
-	if (!pParent && keepWorldPosition)
+	void GameObject::Render()const
 	{
-		m_Transform->SetLocalPosition(m_Transform->GetWorldPosition());
-		//no need to set dirty, since if there is no parent, dirty will set local = to world, which is the case right now
-	}
-	else
-	{
-		if (keepWorldPosition)
+		for (auto& renderer : GetAllComponentsOfType<RenderComponent>())
 		{
-			m_Transform->SetLocalPosition(m_Transform->GetLocalPosition() - pParent->GetTransform()->GetWorldPosition());
+			renderer->Render();
 		}
-		m_Transform->SetDirty(true);
 	}
 
-	if (m_Parent)
+	void GameObject::MarkForDeletion(bool includeChildren)
 	{
-		m_Parent->RemoveChild(this);
+		m_IsMarkedForDeletion = true;
+		if (includeChildren)
+		{
+			for (auto pChild : m_Children)
+			{
+				pChild->MarkForDeletion(includeChildren);
+			}
+		}
 	}
-	m_Parent = pParent;
-	if (m_Parent)
+
+	void GameObject::SetParent(GameObject* pParent, bool keepWorldPosition)
 	{
-		m_Parent->AddChild(this);
+		if (!pParent && keepWorldPosition)
+		{
+			m_Transform->SetLocalPosition(m_Transform->GetWorldPosition());
+			//no need to set dirty, since if there is no parent, dirty will set local = to world, which is the case right now
+		}
+		else
+		{
+			if (keepWorldPosition)
+			{
+				m_Transform->SetLocalPosition(m_Transform->GetLocalPosition() - pParent->GetTransform()->GetWorldPosition());
+			}
+			m_Transform->SetDirty(true);
+		}
+
+		if (m_Parent)
+		{
+			m_Parent->RemoveChild(this);
+		}
+		m_Parent = pParent;
+		if (m_Parent)
+		{
+			m_Parent->AddChild(this);
+		}
 	}
+
 }

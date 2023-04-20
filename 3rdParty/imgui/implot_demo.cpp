@@ -160,7 +160,7 @@ struct RollingBuffer {
     }
 };
 
-// Huge data used by Time Formatting example (~500 MB allocation!)
+// Huge data used by TimeManager Formatting example (~500 MB allocation!)
 struct HugeTimeData {
     HugeTimeData(double min) {
         Ts = new double[Size];

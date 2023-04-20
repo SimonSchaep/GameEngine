@@ -1,15 +1,20 @@
 #pragma once
 #include "BaseComponent.h"
-class UIRenderComponent : public BaseComponent
+
+namespace engine
 {
-public:
-	UIRenderComponent(GameObject* pGameObject) :BaseComponent(pGameObject) {};
-	virtual ~UIRenderComponent() = default;
 
-	virtual void Initialize() override {};
+	class UIRenderComponent : public BaseComponent
+	{
+	public:
+		UIRenderComponent(GameObject* pGameObject) :BaseComponent(pGameObject) {};
+		virtual ~UIRenderComponent() = default;
 
-	virtual void Update() override {};
+		virtual void Initialize() override {};
 
-	virtual void RenderUI() {};
-};
+		virtual void Update() override {};
 
+		virtual void RenderUI() {};
+	};
+
+}

@@ -1,20 +1,28 @@
 #pragma once
 #include <vector>
-class Observer;
-class GameObject;
 
-class Event
+namespace engine
 {
-public:
-	Event() = default;
-	virtual ~Event() = default;
 
-	void AddObserver(Observer* pObserver);
-	void RemoveObserver(Observer* pObserver);
+	class Observer;
+	class GameObject;
 
-	void NotifyObservers(GameObject* pGameObject);
+	class Event final
+	{
+	public:
+		Event(int id) 
+			:m_Id{id}
+		{}
+		virtual ~Event() = default;
 
-private:
-	std::vector<Observer*> m_Observers;
-};
+		void AddObserver(Observer* pObserver);
+		void RemoveObserver(Observer* pObserver);
 
+		void NotifyObservers(GameObject* pGameObject);
+
+	private:
+		std::vector<Observer*> m_Observers;
+		int m_Id;
+	};
+
+}

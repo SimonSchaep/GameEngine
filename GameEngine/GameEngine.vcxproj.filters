@@ -10,9 +10,6 @@
     <ClCompile Include="GameObject.cpp">
       <Filter>Engine</Filter>
     </ClCompile>
-    <ClCompile Include="Main.cpp">
-      <Filter>Engine</Filter>
-    </ClCompile>
     <ClCompile Include="Scene.cpp">
       <Filter>Engine</Filter>
     </ClCompile>
@@ -21,9 +18,6 @@
     </ClCompile>
     <ClCompile Include="Transform.cpp">
       <Filter>Engine</Filter>
-    </ClCompile>
-    <ClCompile Include="FPSCounter.cpp">
-      <Filter>CustomComponents</Filter>
     </ClCompile>
     <ClCompile Include="BaseComponent.cpp">
       <Filter>Engine\Components</Filter>
@@ -34,7 +28,7 @@
     <ClCompile Include="TextRenderComponent.cpp">
       <Filter>Engine\Components</Filter>
     </ClCompile>
-    <ClCompile Include="Time.cpp">
+    <ClCompile Include="TimeManager.cpp">
       <Filter>Engine\Singletons</Filter>
     </ClCompile>
     <ClCompile Include="SceneManager.cpp">
@@ -45,12 +39,6 @@
     </ClCompile>
     <ClCompile Include="Renderer.cpp">
       <Filter>Engine\Singletons</Filter>
-    </ClCompile>
-    <ClCompile Include="RotateComponent.cpp">
-      <Filter>CustomComponents</Filter>
-    </ClCompile>
-    <ClCompile Include="DestroyComponent.cpp">
-      <Filter>CustomComponents</Filter>
     </ClCompile>
     <ClCompile Include="..\3rdParty\imgui\backends\imgui_impl_opengl2.cpp">
       <Filter>imgui</Filter>
@@ -73,9 +61,6 @@
     <ClCompile Include="..\3rdParty\imgui\imgui_widgets.cpp">
       <Filter>imgui</Filter>
     </ClCompile>
-    <ClCompile Include="TrashTheCacheComponent.cpp">
-      <Filter>CustomComponents</Filter>
-    </ClCompile>
     <ClCompile Include="RenderComponent.cpp">
       <Filter>Engine\Components</Filter>
     </ClCompile>
@@ -91,9 +76,6 @@
     <ClCompile Include="UIRenderComponent.cpp">
       <Filter>Engine\Components</Filter>
     </ClCompile>
-    <ClCompile Include="MovementComponent.cpp">
-      <Filter>CustomComponents</Filter>
-    </ClCompile>
     <ClCompile Include="InputManager.cpp">
       <Filter>Engine\Input</Filter>
     </ClCompile>
@@ -103,41 +85,11 @@
     <ClCompile Include="PlayerController.cpp">
       <Filter>Engine\Components</Filter>
     </ClCompile>
-    <ClCompile Include="MyPlayerController.cpp">
-      <Filter>CustomComponents</Filter>
-    </ClCompile>
     <ClCompile Include="Observer.cpp">
       <Filter>Engine\Observer</Filter>
     </ClCompile>
     <ClCompile Include="Event.cpp">
       <Filter>Engine\Observer</Filter>
-    </ClCompile>
-    <ClCompile Include="PlayerLives.cpp">
-      <Filter>CustomComponents</Filter>
-    </ClCompile>
-    <ClCompile Include="LivesDisplay.cpp">
-      <Filter>CustomComponents</Filter>
-    </ClCompile>
-    <ClCompile Include="PlayerPoints.cpp">
-      <Filter>CustomComponents</Filter>
-    </ClCompile>
-    <ClCompile Include="PointsDisplay.cpp">
-      <Filter>CustomComponents</Filter>
-    </ClCompile>
-    <ClCompile Include="ControlsDisplay.cpp">
-      <Filter>CustomComponents</Filter>
-    </ClCompile>
-    <ClCompile Include="SteamAchievements.cpp">
-      <Filter>Engine\Achievements</Filter>
-    </ClCompile>
-    <ClCompile Include="AchievementManager.cpp">
-      <Filter>Engine\Achievements</Filter>
-    </ClCompile>
-    <ClCompile Include="Achievement.cpp">
-      <Filter>Engine\Achievements</Filter>
-    </ClCompile>
-    <ClCompile Include="WinFirstGameAchievement.cpp">
-      <Filter>CustomAchievements</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -159,9 +111,6 @@
     <ClInclude Include="Transform.h">
       <Filter>Engine</Filter>
     </ClInclude>
-    <ClInclude Include="FPSCounter.h">
-      <Filter>CustomComponents</Filter>
-    </ClInclude>
     <ClInclude Include="BaseComponent.h">
       <Filter>Engine\Components</Filter>
     </ClInclude>
@@ -171,7 +120,7 @@
     <ClInclude Include="TextRenderComponent.h">
       <Filter>Engine\Components</Filter>
     </ClInclude>
-    <ClInclude Include="Time.h">
+    <ClInclude Include="TimeManager.h">
       <Filter>Engine\Singletons</Filter>
     </ClInclude>
     <ClInclude Include="Singleton.h">
@@ -185,12 +134,6 @@
     </ClInclude>
     <ClInclude Include="Renderer.h">
       <Filter>Engine\Singletons</Filter>
-    </ClInclude>
-    <ClInclude Include="RotateComponent.h">
-      <Filter>CustomComponents</Filter>
-    </ClInclude>
-    <ClInclude Include="DestroyComponent.h">
-      <Filter>CustomComponents</Filter>
     </ClInclude>
     <ClInclude Include="..\3rdParty\imgui\backends\imgui_impl_opengl2.h">
       <Filter>imgui</Filter>
@@ -216,9 +159,6 @@
     <ClInclude Include="..\3rdParty\imgui\imstb_truetype.h">
       <Filter>imgui</Filter>
     </ClInclude>
-    <ClInclude Include="TrashTheCacheComponent.h">
-      <Filter>CustomComponents</Filter>
-    </ClInclude>
     <ClInclude Include="RenderComponent.h">
       <Filter>Engine\Components</Filter>
     </ClInclude>
@@ -231,17 +171,11 @@
     <ClInclude Include="UIRenderComponent.h">
       <Filter>Engine\Components</Filter>
     </ClInclude>
-    <ClInclude Include="MovementComponent.h">
-      <Filter>CustomComponents</Filter>
-    </ClInclude>
     <ClInclude Include="BaseCommand.h">
       <Filter>Engine\Input</Filter>
     </ClInclude>
     <ClInclude Include="InputManager.h">
       <Filter>Engine\Input</Filter>
-    </ClInclude>
-    <ClInclude Include="MoveCommands.h">
-      <Filter>CustomCommands</Filter>
     </ClInclude>
     <ClInclude Include="InputController.h">
       <Filter>Engine\Input</Filter>
@@ -249,17 +183,8 @@
     <ClInclude Include="PlayerController.h">
       <Filter>Engine\Components</Filter>
     </ClInclude>
-    <ClInclude Include="MyPlayerController.h">
-      <Filter>CustomComponents</Filter>
-    </ClInclude>
-    <ClInclude Include="SwitchCommand.h">
-      <Filter>CustomCommands</Filter>
-    </ClInclude>
     <ClInclude Include="BaseAxisCommand.h">
       <Filter>Engine\Input</Filter>
-    </ClInclude>
-    <ClInclude Include="DieCommand.h">
-      <Filter>CustomCommands</Filter>
     </ClInclude>
     <ClInclude Include="Observer.h">
       <Filter>Engine\Observer</Filter>
@@ -267,49 +192,10 @@
     <ClInclude Include="Event.h">
       <Filter>Engine\Observer</Filter>
     </ClInclude>
-    <ClInclude Include="CustomEvents.h">
-      <Filter>CustomEvents</Filter>
-    </ClInclude>
-    <ClInclude Include="PlayerLives.h">
-      <Filter>CustomComponents</Filter>
-    </ClInclude>
-    <ClInclude Include="ResetLivesCommand.h">
-      <Filter>CustomCommands</Filter>
-    </ClInclude>
-    <ClInclude Include="KilledEnemyCommand.h">
-      <Filter>CustomCommands</Filter>
-    </ClInclude>
-    <ClInclude Include="LivesDisplay.h">
-      <Filter>CustomComponents</Filter>
-    </ClInclude>
-    <ClInclude Include="PlayerPoints.h">
-      <Filter>CustomComponents</Filter>
-    </ClInclude>
-    <ClInclude Include="PointsDisplay.h">
-      <Filter>CustomComponents</Filter>
-    </ClInclude>
-    <ClInclude Include="ControlsDisplay.h">
-      <Filter>CustomComponents</Filter>
-    </ClInclude>
-    <ClInclude Include="SteamAchievements.h">
-      <Filter>Engine\Achievements</Filter>
-    </ClInclude>
-    <ClInclude Include="AchievementManager.h">
-      <Filter>Engine\Achievements</Filter>
-    </ClInclude>
-    <ClInclude Include="Achievement.h">
-      <Filter>Engine\Achievements</Filter>
-    </ClInclude>
-    <ClInclude Include="WinFirstGameAchievement.h">
-      <Filter>CustomAchievements</Filter>
-    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Engine">
       <UniqueIdentifier>{37b107d8-5b5a-4207-88ad-0be3311b784c}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="CustomComponents">
-      <UniqueIdentifier>{6aabea10-7cc4-413c-b120-afdfce10e67c}</UniqueIdentifier>
     </Filter>
     <Filter Include="Engine\Components">
       <UniqueIdentifier>{fc3ce4ca-7a05-4a4c-83eb-27a5b41fd626}</UniqueIdentifier>
@@ -323,20 +209,8 @@
     <Filter Include="Engine\Input">
       <UniqueIdentifier>{87c6afe9-a13a-4f0b-ae83-2e2531cdc68a}</UniqueIdentifier>
     </Filter>
-    <Filter Include="CustomCommands">
-      <UniqueIdentifier>{5a93645c-b76b-4758-84b4-ab302753d323}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Engine\Observer">
       <UniqueIdentifier>{31af50d0-a07c-4657-8ad2-fb0d849c9d4f}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="CustomEvents">
-      <UniqueIdentifier>{278a5d88-effc-48c7-aad3-07686fa31062}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Engine\Achievements">
-      <UniqueIdentifier>{bc52671a-6a7b-438f-89f7-f7885b35c83d}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="CustomAchievements">
-      <UniqueIdentifier>{a5d118bb-66b9-49e5-af50-e3cf95e868e4}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

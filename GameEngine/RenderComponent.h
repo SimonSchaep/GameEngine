@@ -1,16 +1,20 @@
 #pragma once
 #include "BaseComponent.h"
 
-class RenderComponent : public BaseComponent
+namespace engine
 {
-public:
-	RenderComponent(GameObject* pGameObject) :BaseComponent(pGameObject) {};
-	virtual ~RenderComponent() = default;
 
-	virtual void Initialize() override {};
+	class RenderComponent : public BaseComponent
+	{
+	public:
+		RenderComponent(GameObject* pGameObject) :BaseComponent(pGameObject) {};
+		virtual ~RenderComponent() = default;
 
-	virtual void Update() override {};
+		virtual void Initialize() override {};
 
-	virtual void Render()const {};
-};
+		virtual void Update() override {};
 
+		virtual void Render()const {};
+	};
+
+}

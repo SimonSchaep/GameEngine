@@ -9,130 +9,119 @@
 #include "SceneManager.h"
 #include "Renderer.h"
 #include "ResourceManager.h"
-#include "Time.h"
+#include "TimeManager.h"
 #include "GameObject.h"
 #include "TextureRenderComponent.h"
 #include <iostream>
 #include <chrono>
-#include <steam_api.h>
 
-SDL_Window* g_window{};
-
-void PrintSDLVersion()
+namespace engine
 {
-	SDL_version version{};
-	SDL_VERSION(&version);
-	printf("We compiled against SDL version %u.%u.%u ...\n",
-		version.major, version.minor, version.patch);
 
-	SDL_GetVersion(&version);
-	printf("We are linking against SDL version %u.%u.%u.\n",
-		version.major, version.minor, version.patch);
+	SDL_Window* g_window{};
 
-	SDL_IMAGE_VERSION(&version);
-	printf("We compiled against SDL_image version %u.%u.%u ...\n",
-		version.major, version.minor, version.patch);
-
-	version = *IMG_Linked_Version();
-	printf("We are linking against SDL_image version %u.%u.%u.\n",
-		version.major, version.minor, version.patch);
-
-	SDL_TTF_VERSION(&version)
-	printf("We compiled against SDL_ttf version %u.%u.%u ...\n",
-		version.major, version.minor, version.patch);
-
-	version = *TTF_Linked_Version();
-	printf("We are linking against SDL_ttf version %u.%u.%u.\n",
-		version.major, version.minor, version.patch);
-}
-
-GameEngine::GameEngine(const std::string &dataPath)
-{
-	PrintSDLVersion();
-	
-	if (SDL_Init(SDL_INIT_VIDEO) != 0) 
+	void PrintSDLVersion()
 	{
-		throw std::runtime_error(std::string("SDL_Init Error: ") + SDL_GetError());
+		SDL_version version{};
+		SDL_VERSION(&version);
+		printf("We compiled against SDL version %u.%u.%u ...\n",
+			version.major, version.minor, version.patch);
+
+		SDL_GetVersion(&version);
+		printf("We are linking against SDL version %u.%u.%u.\n",
+			version.major, version.minor, version.patch);
+
+		SDL_IMAGE_VERSION(&version);
+		printf("We compiled against SDL_image version %u.%u.%u ...\n",
+			version.major, version.minor, version.patch);
+
+		version = *IMG_Linked_Version();
+		printf("We are linking against SDL_image version %u.%u.%u.\n",
+			version.major, version.minor, version.patch);
+
+		SDL_TTF_VERSION(&version)
+			printf("We compiled against SDL_ttf version %u.%u.%u ...\n",
+				version.major, version.minor, version.patch);
+
+		version = *TTF_Linked_Version();
+		printf("We are linking against SDL_ttf version %u.%u.%u.\n",
+			version.major, version.minor, version.patch);
 	}
 
-	g_window = SDL_CreateWindow(
-		"Programming 4 assignment",
-		SDL_WINDOWPOS_CENTERED,
-		SDL_WINDOWPOS_CENTERED,
-		640,
-		480,
-		SDL_WINDOW_OPENGL
-	);
-	if (g_window == nullptr) 
+	GameEngine::GameEngine(const std::string& dataPath)
 	{
-		throw std::runtime_error(std::string("SDL_CreateWindow Error: ") + SDL_GetError());
+		PrintSDLVersion();
+
+		if (SDL_Init(SDL_INIT_VIDEO) != 0)
+		{
+			throw std::runtime_error(std::string("SDL_Init Error: ") + SDL_GetError());
+		}
+
+		g_window = SDL_CreateWindow(
+			"Programming 4 assignment",
+			SDL_WINDOWPOS_CENTERED,
+			SDL_WINDOWPOS_CENTERED,
+			640,
+			480,
+			SDL_WINDOW_OPENGL
+		);
+		if (g_window == nullptr)
+		{
+			throw std::runtime_error(std::string("SDL_CreateWindow Error: ") + SDL_GetError());
+		}
+
+		Renderer::GetInstance().Init(g_window);
+
+		ResourceManager::GetInstance().Init(dataPath);
+
+		m_InitSucces = true;
 	}
 
-	if (!SteamAPI_Init())
+	GameEngine::~GameEngine()
 	{
-		std::cerr << "Fatal Error - Steam must be running to play this game (SteamAPI_Init() failed)." << std::endl;
-		return;
-	}
-	else
-	{
-		std::cout << "Successfully initialized steam." << std::endl;
+		Renderer::GetInstance().Destroy();
+		SDL_DestroyWindow(g_window);
+		g_window = nullptr;
+		SDL_Quit();
 	}
 
-	Renderer::GetInstance().Init(g_window);
-
-	ResourceManager::GetInstance().Init(dataPath);
-
-	m_InitSucces = true;
-}
-
-GameEngine::~GameEngine()
-{
-	Renderer::GetInstance().Destroy();
-	SteamAPI_Shutdown();
-	SDL_DestroyWindow(g_window);
-	g_window = nullptr;
-	SDL_Quit();
-}
-
-void GameEngine::Run(const std::function<void()>& load)
-{
-	if (!m_InitSucces) return;
-
-	load();
-
-	auto& renderer = Renderer::GetInstance();
-	auto& sceneManager = SceneManager::GetInstance();
-	auto& input = InputManager::GetInstance();
-	auto& time = Time::GetInstance();
-
-	//float lag = 0.f;
-	bool doContinue = true;
-
-	sceneManager.Initialize();
-
-
-	while (doContinue)
+	void GameEngine::Run(const std::function<void()>& load)
 	{
-		//TIME
-		time.Update(); //calculate deltatime, totaltime..., will sleep to cap fps when a cap is set
+		if (!m_InitSucces) return;
 
-		//STEAM
-		SteamAPI_RunCallbacks();
+		load();
 
-		//FIXED UPDATE
-		//lag += time.GetDeltaTime();		
-		//while (lag >= time.GetFixedTimeStep())
-		//{
-		//	//Todo: Implement FixedUpdate here
-		//	//physics.FixedUpdate();
-		//	lag -= time.GetFixedTimeStep();
-		//}
-		
-		//UPDATE + RENDER
-		sceneManager.Update();
-		renderer.Render();
+		auto& renderer = Renderer::GetInstance();
+		auto& sceneManager = SceneManager::GetInstance();
+		auto& input = InputManager::GetInstance();
+		auto& time = TimeManager::GetInstance();
 
-		//INPUT
-		doContinue = input.ProcessInput();
+		//float lag = 0.f;
+		bool doContinue = true;
+
+		sceneManager.Initialize();
+
+
+		while (doContinue)
+		{
+			//INPUT
+			doContinue = input.ProcessInput();
+
+			//TIME
+			time.Update(); //calculate deltatime, totaltime..., will sleep to cap fps when a cap is set
+
+			//FIXED UPDATE
+			//lag += time.GetDeltaTime();		
+			//while (lag >= time.GetFixedTimeStep())
+			//{
+			//	//Todo: Implement FixedUpdate here
+			//	//physics.FixedUpdate();
+			//	lag -= time.GetFixedTimeStep();
+			//}
+
+			//UPDATE + RENDER
+			sceneManager.Update();
+			renderer.Render();
+		}
 	}
 }

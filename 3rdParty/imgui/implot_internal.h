@@ -1225,7 +1225,7 @@ struct ImPlotContext {
     ImPlotColormapData          ColormapData;
     ImVector<ImPlotColormap>    ColormapModifiers;
 
-    // Time
+    // TimeManager
     tm Tm;
 
     // Temp data for general use
@@ -1535,7 +1535,7 @@ static inline void CalculateBins(const T* values, int count, ImPlotBin meth, con
 }
 
 //-----------------------------------------------------------------------------
-// Time Utils
+// TimeManager Utils
 //-----------------------------------------------------------------------------
 
 // Returns true if year is leap year (366 days long)

@@ -2,37 +2,41 @@
 #include "SceneManager.h"
 #include "GameObject.h"
 
-class Scene final
+namespace engine
 {
-public:
-	GameObject* CreateAndAddGameObject(const std::string& name = "DefaultName"); //todo: add option to attach to parent immediately
-	GameObject* FindGameObjectByName(const std::string& name);
-	void RemoveAllGameObjects();
 
-	const std::string& GetName()const { return m_Name; };
-	bool GetIsInitialized()const { return m_IsInitialized; };
+	class Scene final
+	{
+	public:
+		GameObject* CreateAndAddGameObject(const std::string& name = "DefaultName"); //todo: add option to attach to parent immediately
+		GameObject* FindGameObjectByName(const std::string& name);
+		void RemoveAllGameObjects();
 
-	void Initialize();
-	void Update();
-	void Render()const;
-	void RenderUI();
+		const std::string& GetName()const { return m_Name; };
+		bool GetIsInitialized()const { return m_IsInitialized; };
 
-	~Scene();
-	Scene(const std::string& name);
-	Scene(const Scene& other) = delete;
-	Scene(Scene&& other) = delete;
-	Scene& operator=(const Scene& other) = delete;
-	Scene& operator=(Scene&& other) = delete;
+		void Initialize();
+		void Update();
+		void Render()const;
+		void RenderUI();
 
-private:
-	void RemoveGameObjectByIndex(size_t i);
+		~Scene();
+		Scene(const std::string& name);
+		Scene(const Scene& other) = delete;
+		Scene(Scene&& other) = delete;
+		Scene& operator=(const Scene& other) = delete;
+		Scene& operator=(Scene&& other) = delete;
 
-	std::vector<size_t> m_ToDeleteIndexes{};
+	private:
+		void RemoveGameObjectByIndex(size_t i);
 
-	std::string m_Name;
-	std::vector <std::unique_ptr<GameObject>> m_GameObjects{};
+		std::vector<size_t> m_ToDeleteIndexes{};
 
-	static unsigned int m_IdCounter;
+		std::string m_Name;
+		std::vector <std::unique_ptr<GameObject>> m_GameObjects{};
 
-	bool m_IsInitialized{};
-};
+		static unsigned int m_IdCounter;
+
+		bool m_IsInitialized{};
+	};
+}

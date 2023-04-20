@@ -78,7 +78,7 @@ void MyPlayerController::KilledEnemy()
 {
 	if (m_pControlledPlayerPointsComponent)
 	{
-		m_pControlledPlayerPointsComponent->AddPoints();
+		m_pControlledPlayerPointsComponent->KilledEnemy();
 	}
 }
 

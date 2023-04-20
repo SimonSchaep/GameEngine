@@ -6,7 +6,7 @@ class KilledEnemyCommand : public BaseCommand
 {
 public:
 	KilledEnemyCommand(MyPlayerController* pMovementController)
-		: m_pMovementController{ pMovementController }
+		: m_pMyPlayerController{ pMovementController }
 	{
 	}
 

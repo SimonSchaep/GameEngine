@@ -2,16 +2,14 @@
 namespace engine
 {
 
-	class Event;
-	class GameObject;
-
+	template<typename... Args>
 	class Observer
 	{
 	public:
 		Observer() = default;
 		virtual ~Observer() = default;
 
-		virtual void Notify(Event* pEvent, GameObject* pGameObject) = 0;
+		virtual void Notify(Args... args) = 0;
 	};
 
 }

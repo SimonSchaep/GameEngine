@@ -1,12 +1,9 @@
 #pragma once
 #include "BaseComponent.h"
+#include "Event.h"
 
 
 
-namespace engine
-{
-	class Event;
-}
 
 using namespace engine;
 
@@ -24,9 +21,9 @@ public:
 
 	void KilledEnemy();
 
-	Event* GetKilledEnemyEvent() { return m_KilledEnemyEvent.get(); }
+	Event<>* GetKilledEnemyEvent() { return m_KilledEnemyEvent.get(); }
 
 private:
-	std::unique_ptr<Event> m_KilledEnemyEvent{};
+	std::unique_ptr<Event<>> m_KilledEnemyEvent{};
 };
 

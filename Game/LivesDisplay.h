@@ -6,7 +6,7 @@ using namespace engine;
 
 class PlayerLives;
 
-class LivesDisplay : public TextRenderComponent, Observer
+class LivesDisplay : public TextRenderComponent, Observer<>
 {
 public:
 	LivesDisplay(GameObject* pGameObject);
@@ -18,7 +18,7 @@ public:
 
 	void SetSubjectGameObject(GameObject* pGameObject);
 
-	virtual void Notify(Event* pEvent, GameObject* pGameObject) override;
+	void Notify() override;
 
 private:
 	PlayerLives* m_pPlayerLives{};

@@ -22,7 +22,7 @@ void LivesDisplay::SetSubjectGameObject(GameObject* pGameObject)
 	m_pPlayerLives->GetResetLivesEvent()->AddObserver(this);
 }
 
-void LivesDisplay::Notify(Event*, GameObject*)
+void LivesDisplay::Notify()
 {
 	SetText("Lives: " + std::to_string(m_pPlayerLives->GetLives()));
 }

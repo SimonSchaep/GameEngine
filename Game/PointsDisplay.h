@@ -6,7 +6,7 @@ using namespace engine;
 
 class PlayerPoints;
 
-class PointsDisplay : public TextRenderComponent, Observer
+class PointsDisplay : public TextRenderComponent, Observer<>
 {
 public:
 	PointsDisplay(GameObject* pGameObject);
@@ -18,7 +18,7 @@ public:
 
 	void SetSubjectGameObject(GameObject* pGameObject);
 
-	virtual void Notify(Event* pEvent, GameObject* pGameObject) override;
+	virtual void Notify() override;
 
 private:
 	PlayerPoints* m_pPlayerPoints{};

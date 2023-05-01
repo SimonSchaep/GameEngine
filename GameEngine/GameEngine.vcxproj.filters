@@ -91,6 +91,9 @@
     <ClCompile Include="Event.cpp">
       <Filter>Engine\Observer</Filter>
     </ClCompile>
+    <ClCompile Include="BoxCollider.cpp">
+      <Filter>Engine\Components</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Font.h">
@@ -191,6 +194,9 @@
     </ClInclude>
     <ClInclude Include="Event.h">
       <Filter>Engine\Observer</Filter>
+    </ClInclude>
+    <ClInclude Include="BoxCollider.h">
+      <Filter>Engine\Components</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

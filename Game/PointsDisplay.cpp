@@ -20,7 +20,7 @@ void PointsDisplay::SetSubjectGameObject(GameObject* pGameObject)
 	m_pPlayerPoints->GetKilledEnemyEvent()->AddObserver(this);
 }
 
-void PointsDisplay::Notify(Event*, GameObject*)
+void PointsDisplay::Notify()
 {
 	m_Points += 50;
 

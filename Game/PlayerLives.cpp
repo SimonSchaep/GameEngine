@@ -1,13 +1,12 @@
 #include "PlayerLives.h"
 #include "DieCommand.h"
 #include "Event.h"
-#include "EventId.h"
 
 PlayerLives::PlayerLives(GameObject* pGameObject)
 	:BaseComponent(pGameObject)
 {
-	m_DieEvent = std::make_unique<Event>(int(EventId::playerDied));
-	m_ResetLivesEvent = std::make_unique<Event>(int(EventId::playerResetLives));
+	m_DieEvent = std::make_unique<Event<>>();
+	m_ResetLivesEvent = std::make_unique<Event<>>();
 }
 
 void PlayerLives::Initialize()
@@ -18,11 +17,11 @@ void PlayerLives::Initialize()
 void PlayerLives::Die()
 {
 	m_Lives = 0;
-	m_DieEvent->NotifyObservers(GetGameObject());
+	m_DieEvent->NotifyObservers();
 }
 
 void PlayerLives::ResetLives()
 {
 	m_Lives = m_MaxLives;
-	m_ResetLivesEvent->NotifyObservers(GetGameObject());
+	m_ResetLivesEvent->NotifyObservers();
 }

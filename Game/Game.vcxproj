@@ -190,7 +190,6 @@ xcopy "$(SolutionDir)Data\" "$(ProjectDir)Data\" /Y</Command>
     <ClInclude Include="ControlsDisplay.h" />
     <ClInclude Include="DestroyComponent.h" />
     <ClInclude Include="DieCommand.h" />
-    <ClInclude Include="EventId.h" />
     <ClInclude Include="FoodItem.h" />
     <ClInclude Include="FoodItemPart.h" />
     <ClInclude Include="FPSCounter.h" />

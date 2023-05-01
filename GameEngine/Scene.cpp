@@ -72,6 +72,7 @@ namespace engine
 		}
 	}
 
+	//todo: add render priority
 	void Scene::Render()const
 	{
 		for (const auto& gameObject : m_GameObjects)

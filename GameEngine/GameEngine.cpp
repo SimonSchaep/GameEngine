@@ -58,11 +58,11 @@ namespace engine
 		}
 
 		g_window = SDL_CreateWindow(
-			"Programming 4 assignment",
+			"Programming 4 exam",
 			SDL_WINDOWPOS_CENTERED,
 			SDL_WINDOWPOS_CENTERED,
-			640,
-			480,
+			960,
+			720,
 			SDL_WINDOW_OPENGL
 		);
 		if (g_window == nullptr)

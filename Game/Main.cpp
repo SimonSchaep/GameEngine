@@ -28,6 +28,7 @@
 #include "PlayerPoints.h"
 #include "PointsDisplay.h"
 #include "ControlsDisplay.h"
+#include "LevelBuilder.h"
 
 using namespace engine;
 
@@ -35,29 +36,29 @@ void load()
 {
 	auto pScene = SceneManager::GetInstance().CreateScene("Demo");
 	//background
-	auto pGameObject = pScene->CreateAndAddGameObject("Background");
-	auto pRenderComponent = pGameObject->CreateAndAddComponent<TextureRenderComponent>();
-	pRenderComponent->SetTexture("background.tga");
+	//auto pGameObject = pScene->CreateAndAddGameObject("Background");
+	//auto pRenderComponent = pGameObject->CreateAndAddComponent<TextureRenderComponent>();
+	//pRenderComponent->SetTexture("background.tga");
 
 	//logo
-	pGameObject = pScene->CreateAndAddGameObject("Logo");
-	pRenderComponent = pGameObject->CreateAndAddComponent<TextureRenderComponent>();
-	pRenderComponent->SetTexture("logo.tga");
-	pGameObject->GetTransform()->SetLocalPosition(216, 180, 0);
+	//pGameObject = pScene->CreateAndAddGameObject("Logo");
+	//pRenderComponent = pGameObject->CreateAndAddComponent<TextureRenderComponent>();
+	//pRenderComponent->SetTexture("logo.tga");
+	//pGameObject->GetTransform()->SetLocalPosition(216, 180, 0);
 
 	//title
-	pGameObject = pScene->CreateAndAddGameObject("Title");
-	auto textRenderComponent = pGameObject->CreateAndAddComponent<TextRenderComponent>();
-	textRenderComponent->SetText("Programming 4 Assignment");
-	textRenderComponent->SetFont(ResourceManager::GetInstance().LoadFont("Lingua.otf", 36));
+	//pGameObject = pScene->CreateAndAddGameObject("Title");
+	//auto pTextRenderComponent = pGameObject->CreateAndAddComponent<TextRenderComponent>();
+	//pTextRenderComponent->SetText("Programming 4 Assignment");
+	//pTextRenderComponent->SetFont(ResourceManager::GetInstance().LoadFont("Lingua.otf", 36));
 
-	pGameObject->GetTransform()->SetLocalPosition(80, 20, 0);
+	//pGameObject->GetTransform()->SetLocalPosition(80, 20, 0);
 
 	//fps counter gameobject
-	pGameObject = pScene->CreateAndAddGameObject("Fps");
-	textRenderComponent = pGameObject->CreateAndAddComponent<TextRenderComponent>();
-	textRenderComponent->SetText("fps test");
-	textRenderComponent->SetFont(ResourceManager::GetInstance().LoadFont("Lingua.otf", 12));
+	auto pGameObject = pScene->CreateAndAddGameObject("Fps");
+	auto pTextRenderComponent = pGameObject->CreateAndAddComponent<TextRenderComponent>();
+	pTextRenderComponent->SetText("fps test");
+	pTextRenderComponent->SetFont(ResourceManager::GetInstance().LoadFont("Lingua.otf", 12));
 	pGameObject->CreateAndAddComponent<FPSCounter>();
 	pGameObject->GetTransform()->SetLocalPosition(20, 20, 0);
 
@@ -69,7 +70,7 @@ void load()
 	//chef gameobject
 	auto pChef = pScene->CreateAndAddGameObject("Chef");
 	pChef->GetTransform()->SetLocalPosition({ 100,100 });
-	pRenderComponent = pChef->CreateAndAddComponent<TextureRenderComponent>();
+	auto pRenderComponent = pChef->CreateAndAddComponent<TextureRenderComponent>();
 	pRenderComponent->SetTexture("chef.png");
 	auto pMovementComponent = pChef->CreateAndAddComponent<MovementComponent>();
 	pMovementComponent->SetMoveSpeed(50);
@@ -136,6 +137,18 @@ void load()
 	//Controls display
 	auto pControlsDisplay = pScene->CreateAndAddGameObject("ControlsDisplay");
 	pControlsDisplay->CreateAndAddComponent<ControlsDisplay>();
+
+
+
+	//Load level
+	try
+	{
+		LevelBuilder::BuildLevel(pScene, "Data/level2.csv");
+	}
+	catch (...)
+	{
+		std::cout << "error\n";
+	}
 
 }
 

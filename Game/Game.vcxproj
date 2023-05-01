@@ -173,6 +173,8 @@ xcopy "$(SolutionDir)Data\" "$(ProjectDir)Data\" /Y</Command>
   <ItemGroup>
     <ClCompile Include="ControlsDisplay.cpp" />
     <ClCompile Include="DestroyComponent.cpp" />
+    <ClCompile Include="FoodItem.cpp" />
+    <ClCompile Include="FoodItemPart.cpp" />
     <ClCompile Include="FPSCounter.cpp" />
     <ClCompile Include="LivesDisplay.cpp" />
     <ClCompile Include="Main.cpp" />
@@ -189,8 +191,12 @@ xcopy "$(SolutionDir)Data\" "$(ProjectDir)Data\" /Y</Command>
     <ClInclude Include="DestroyComponent.h" />
     <ClInclude Include="DieCommand.h" />
     <ClInclude Include="EventId.h" />
+    <ClInclude Include="FoodItem.h" />
+    <ClInclude Include="FoodItemPart.h" />
     <ClInclude Include="FPSCounter.h" />
     <ClInclude Include="KilledEnemyCommand.h" />
+    <ClInclude Include="LevelBuilder.h" />
+    <ClInclude Include="LevelParser.h" />
     <ClInclude Include="LivesDisplay.h" />
     <ClInclude Include="MoveCommands.h" />
     <ClInclude Include="MovementComponent.h" />

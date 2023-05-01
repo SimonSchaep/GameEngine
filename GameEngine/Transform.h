@@ -3,6 +3,7 @@
 
 namespace engine
 {
+	//todo: create setposition, calc local pos fromn given world pos
 
 	class GameObject;
 

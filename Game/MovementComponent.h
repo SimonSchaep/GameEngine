@@ -31,5 +31,7 @@ private:
 
 	float m_MoveSpeed{};
 	glm::vec2 m_Direction{};
+
+	int m_CenterMargin{ 1 };
 };
 

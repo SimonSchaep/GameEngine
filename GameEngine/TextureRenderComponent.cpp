@@ -31,7 +31,14 @@ namespace engine
 			return;
 		}
 		const auto& pos = GetGameObject()->GetTransform()->GetWorldPosition();
-		Renderer::GetInstance().RenderTexture(*m_Texture, pos.x, pos.y);
+		if (m_Size.x != 0 && m_Size.y != 0)
+		{
+			Renderer::GetInstance().RenderTexture(*m_Texture, pos.x, pos.y, m_Size.x, m_Size.y);
+		}
+		else
+		{
+			Renderer::GetInstance().RenderTexture(*m_Texture, pos.x, pos.y);
+		}
 	}
 
 	void TextureRenderComponent::SetTexture(std::unique_ptr<Texture2D> texture)

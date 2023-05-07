@@ -20,9 +20,10 @@ namespace engine
 		void InitializeComponent(); //calls Initialize
 		void UpdateComponent(); //calls Update
 
+		GameObject* GetGameObject()const { return m_pGameObject; };
+
 	protected:
 		BaseComponent(GameObject* gameObject);
-		GameObject* GetGameObject()const { return m_pGameObject; };
 
 		virtual void Initialize() = 0;
 		virtual void Update() = 0;

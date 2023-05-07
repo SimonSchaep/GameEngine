@@ -73,7 +73,7 @@ void load()
 
 	//chef gameobject
 	auto pChef = pScene->CreateAndAddGameObject("Chef");
-	pChef->GetTransform()->SetLocalPosition({ 80,80 });
+	pChef->GetTransform()->SetLocalPosition({ 120,400 });
 	auto pMovementComponent = pChef->CreateAndAddComponent<MovementComponent>();
 	pMovementComponent->SetMoveSpeed(50);
 	auto pPlayerLives = pChef->CreateAndAddComponent<PlayerLives>();
@@ -83,11 +83,11 @@ void load()
 	auto pChefVisuals = pScene->CreateAndAddGameObject("ChefVisuals", pChef);
 	auto pRenderComponent = pChefVisuals->CreateAndAddComponent<TextureRenderComponent>();
 	pRenderComponent->SetTexture("chef.png");
-	pChefVisuals->GetTransform()->SetLocalPosition({ -pRenderComponent->GetTexture()->GetSize().x / 2, -pRenderComponent->GetTexture()->GetSize().y / 2 });
+	pChefVisuals->GetTransform()->SetLocalPosition({ -pRenderComponent->GetTexture()->GetSize().x / 2, -pRenderComponent->GetTexture()->GetSize().y });
 
 	//bean gameobject
 	auto pBean = pScene->CreateAndAddGameObject("Bean");
-	pBean->GetTransform()->SetLocalPosition({ 80,80 });
+	pBean->GetTransform()->SetLocalPosition({ 120,400 });
 	pMovementComponent = pBean->CreateAndAddComponent<MovementComponent>();
 	pMovementComponent->SetMoveSpeed(100);
 	pPlayerLives = pBean->CreateAndAddComponent<PlayerLives>();
@@ -97,7 +97,7 @@ void load()
 	auto pBeanVisuals = pScene->CreateAndAddGameObject("BeanVisuals", pBean);
 	pRenderComponent = pBeanVisuals->CreateAndAddComponent<TextureRenderComponent>();
 	pRenderComponent->SetTexture("bean.png");
-	pBeanVisuals->GetTransform()->SetLocalPosition({ -pRenderComponent->GetTexture()->GetSize().x / 2, -pRenderComponent->GetTexture()->GetSize().y / 2 });
+	pBeanVisuals->GetTransform()->SetLocalPosition({ -pRenderComponent->GetTexture()->GetSize().x / 2, -pRenderComponent->GetTexture()->GetSize().y });
 
 	//player 1 controller gameobject
 	auto pPlayer1ControllerObject = pScene->CreateAndAddGameObject();

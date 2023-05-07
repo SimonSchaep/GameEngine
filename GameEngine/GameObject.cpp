@@ -17,7 +17,24 @@ namespace engine
 	{
 	}
 
-	GameObject::~GameObject() = default;
+	GameObject::~GameObject()
+	{
+		//if has parent
+		if (GetParent())
+		{
+			//remove from parent
+			SetParent(nullptr, true);
+		}
+		//if has children
+		if (GetChildren().size() > 0)
+		{
+			//remove all children from parent
+			for (auto child : GetChildren())
+			{
+				child->SetParent(nullptr, true);
+			}
+		}
+	}
 
 	void GameObject::Initialize()
 	{

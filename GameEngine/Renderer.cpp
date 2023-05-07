@@ -79,22 +79,38 @@ namespace engine
 
 	void Renderer::RenderTexture(const Texture2D& texture, const float x, const float y) const
 	{
+		int windowHeight{};
+		SDL_GetWindowSize(SDL_GL_GetCurrentWindow(), nullptr, &windowHeight);
+
 		SDL_Rect dst{};
 		dst.x = static_cast<int>(x);
 		dst.y = static_cast<int>(y);
+		dst.y = windowHeight - dst.y;
 		SDL_QueryTexture(texture.GetSDLTexture(), nullptr, nullptr, &dst.w, &dst.h);
 		SDL_RenderCopy(GetSDLRenderer(), texture.GetSDLTexture(), nullptr, &dst);
 	}
 
 	void Renderer::RenderTexture(const Texture2D& texture, const float x, const float y, const float width, const float height) const
 	{
+		int windowHeight{};
+		SDL_GetWindowSize(SDL_GL_GetCurrentWindow(), nullptr, &windowHeight);
+
 		SDL_Rect dst{};
 		dst.x = static_cast<int>(x);
 		dst.y = static_cast<int>(y);
+		dst.y = windowHeight - dst.y;
 		dst.w = static_cast<int>(width);
 		dst.h = static_cast<int>(height);
 		SDL_RenderCopy(GetSDLRenderer(), texture.GetSDLTexture(), nullptr, &dst);
 	}
 
 	inline SDL_Renderer* Renderer::GetSDLRenderer() const { return m_Renderer; }
+
+	glm::vec2 Renderer::GetWindowSize() const
+	{
+		int width{};
+		int height{};
+		SDL_GetWindowSize(SDL_GL_GetCurrentWindow(), &width, &height);
+		return glm::vec2(width, height);
+	}
 }

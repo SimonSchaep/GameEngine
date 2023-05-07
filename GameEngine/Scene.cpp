@@ -10,11 +10,18 @@ namespace engine
 
 	GameObject* Scene::CreateAndAddGameObject(const std::string& name, GameObject* pParent)
 	{
-		auto gameObject = std::make_unique<GameObject>(name, m_Index);
+		auto gameObject = std::make_shared<GameObject>(name, m_Index);
 		if (pParent)
 		{
 			gameObject->SetParent(pParent, false);
 		}
+		GameObject* pReturnValue = gameObject.get();
+		m_GameObjects.emplace_back(std::move(gameObject));
+		return pReturnValue;
+	}
+
+	GameObject* Scene::AddGameObject(std::shared_ptr<GameObject> gameObject)
+	{
 		GameObject* pReturnValue = gameObject.get();
 		m_GameObjects.emplace_back(std::move(gameObject));
 		return pReturnValue;
@@ -35,6 +42,18 @@ namespace engine
 	void Scene::RemoveAllGameObjects()
 	{
 		m_GameObjects.clear();
+	}
+
+	std::shared_ptr<GameObject> Scene::GetSharedPtrForGameObject(GameObject* pGameObject)
+	{
+		for (auto& gameObject : m_GameObjects)
+		{
+			if (gameObject.get() == pGameObject)
+			{
+				return gameObject;
+			}
+		}
+		return std::shared_ptr<GameObject>(nullptr);
 	}
 
 	void Scene::Initialize()
@@ -93,22 +112,6 @@ namespace engine
 
 	void Scene::RemoveGameObjectByIndex(size_t i)
 	{
-		GameObject* pGameObject{ m_GameObjects[i].get() };
-		//if has parent
-		if (pGameObject->GetParent())
-		{
-			//remove from parent
-			pGameObject->SetParent(nullptr, true);
-		}
-		//if has children
-		if (pGameObject->GetChildren().size() > 0)
-		{
-			//remove all children from parent
-			for (auto child : pGameObject->GetChildren())
-			{
-				child->SetParent(nullptr, true);
-			}
-		}
 		m_GameObjects.erase(std::remove(m_GameObjects.begin(), m_GameObjects.end(), m_GameObjects[i]));
 	}
 

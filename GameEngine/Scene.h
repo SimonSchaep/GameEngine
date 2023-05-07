@@ -9,9 +9,11 @@ namespace engine
 	class Scene final
 	{
 	public:
-		GameObject* CreateAndAddGameObject(const std::string& name = "DefaultName", GameObject* pParent = nullptr); //todo: add option to attach to parent immediately
+		GameObject* CreateAndAddGameObject(const std::string& name = "DefaultName", GameObject* pParent = nullptr);
+		GameObject* AddGameObject(std::shared_ptr<GameObject> gameObject);
 		GameObject* FindGameObjectByName(const std::string& name);
 		void RemoveAllGameObjects();
+		std::shared_ptr<GameObject> GetSharedPtrForGameObject(GameObject* pGameObject);
 
 		void AddRenderComponent(RenderComponent* pRenderComponent){m_RenderComponents.push_back(pRenderComponent);}
 
@@ -38,8 +40,8 @@ namespace engine
 
 		std::string m_Name;
 		int m_Index;
-		std::vector <std::unique_ptr<GameObject>> m_GameObjects{};
-		std::vector <RenderComponent*> m_RenderComponents{};
+		std::vector<std::shared_ptr<GameObject>> m_GameObjects{};
+		std::vector<RenderComponent*> m_RenderComponents{};
 
 		bool m_IsInitialized{};
 	};

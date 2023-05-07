@@ -2,6 +2,7 @@
 #include <SDL.h>
 #include "Singleton.h"
 #include <vector>
+#include "glm/glm.hpp"
 
 namespace engine
 {
@@ -24,6 +25,8 @@ namespace engine
 
 		const SDL_Color& GetBackgroundColor() const { return m_ClearColor; }
 		void SetBackgroundColor(const SDL_Color& color) { m_ClearColor = color; }
+
+		glm::vec2 GetWindowSize()const;
 
 	private:
 		SDL_Renderer* m_Renderer{};

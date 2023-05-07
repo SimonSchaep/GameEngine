@@ -10,7 +10,7 @@ void Level::BuildLevel(Scene* pScene, const std::string& fileName)
 {
 	auto start = std::chrono::high_resolution_clock::now();
 
-	const glm::vec2 foodOffset{0,2};
+	const glm::vec2 foodOffset{0,-2};
 
 	std::vector<LevelElement> levelElements;
 	
@@ -36,7 +36,7 @@ void Level::BuildLevel(Scene* pScene, const std::string& fileName)
 
 	std::vector<bool> hasFoodAbove{ std::vector<bool>(m_LevelWidth, false) }; //to make sure platforms below will be dark blue
 
-	for (int r{}; r < levelElements.size() / m_LevelWidth; ++r)
+	for (int r{}; r < m_LevelHeight; ++r)
 	{
 		for (int c{}; c < m_LevelWidth; ++c)
 		{
@@ -45,7 +45,7 @@ void Level::BuildLevel(Scene* pScene, const std::string& fileName)
 			if (levelElement.eLevelElement == ELevelElement::empty && !levelElement.hasLadder) continue;
 
 			glm::vec2 position{ m_LevelStartPos };
-			position += glm::vec2{ c * m_GridElementWidth, r * m_GridElementHeight };
+			position += glm::vec2{ c * m_GridElementWidth, (m_LevelHeight - 1 - r) * m_GridElementHeight };
 
 			GameObject* pLevelElementGameObject{};
 			TextureRenderComponent* pRenderComponent{};
@@ -392,19 +392,25 @@ void Level::GenerateNavigableAreas(const std::vector<LevelElement>& levelElement
 	m_PlayerNavigableArea.resize(levelElements.size());
 	m_EnemyNavigableArea.resize(levelElements.size());
 
-	for (size_t i{}; i < levelElements.size(); ++i)
+	for (int r{}; r < m_LevelHeight; ++r)
 	{
-		if (levelElements[i].hasLadder)
+		for (int c{}; c < m_LevelWidth; ++c)
 		{
-			m_PlayerNavigableArea[i] = true;
-			m_EnemyNavigableArea[i] = true;
-		}
-		else if(levelElements[i].eLevelElement != ELevelElement::empty)
-		{
-			m_EnemyNavigableArea[i] = true;
-			if (levelElements[i].eLevelElement != ELevelElement::plate && levelElements[i].eLevelElement != ELevelElement::enemyCheat)
+			//build navigation from bottom up, since that's how the level is built, levelelements are from bottom down, since that's how the file was read
+			int iLvl = GetLevelElementsIndex(m_LevelHeight - 1 - r, c);
+			int iNav = GetLevelElementsIndex(r, c);
+			if (levelElements[iLvl].hasLadder)
 			{
-				m_PlayerNavigableArea[i] = true;
+				m_PlayerNavigableArea[iNav] = true;
+				m_EnemyNavigableArea[iNav] = true;
+			}
+			else if (levelElements[iLvl].eLevelElement != ELevelElement::empty)
+			{
+				m_EnemyNavigableArea[iNav] = true;
+				if (levelElements[iLvl].eLevelElement != ELevelElement::plate && levelElements[iLvl].eLevelElement != ELevelElement::enemyCheat)
+				{
+					m_PlayerNavigableArea[iNav] = true;
+				}
 			}
 		}
 	}

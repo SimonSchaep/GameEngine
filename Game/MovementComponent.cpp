@@ -8,6 +8,7 @@
 #include "Level.h"
 #include <iostream>
 
+//todo: fix jittering when moving left/right when we can't
 
 
 void MovementComponent::Update()
@@ -64,7 +65,7 @@ void MovementComponent::CheckMoveX()
 		}
 		else
 		{
-			if (abs(m_Direction.y) <= epsilon) //if there is no y input -> try to move closer to center
+			if (abs(m_Direction.y) <= epsilon && !level.IsInCenterOfElementY(transform->GetWorldPosition(), m_CenterMargin)) //if there is no y input -> try to move closer to center
 			{
 				if (transform->GetWorldPosition().y > level.GetCenterOfCell(row, col).y)
 				{
@@ -74,8 +75,8 @@ void MovementComponent::CheckMoveX()
 				{
 					m_Direction.y = 1;
 				}
-				if ((m_Direction.y > epsilon && CanMoveDown()) ||
-					(m_Direction.y < -epsilon && CanMoveUp()))
+				if ((m_Direction.y > epsilon && CanMoveUp()) ||
+					(m_Direction.y < -epsilon && CanMoveDown()))
 				{
 					MoveAlongY();
 				}
@@ -98,14 +99,14 @@ void MovementComponent::CheckMoveY()
 	if (abs(m_Direction.y) > epsilon) //if there is y input
 	{
 		//try move y
-		if ((m_Direction.y > epsilon && CanMoveDown()) ||
-			(m_Direction.y < -epsilon && CanMoveUp()))
+		if ((m_Direction.y > epsilon && CanMoveUp()) ||
+			(m_Direction.y < -epsilon && CanMoveDown()))
 		{
 			MoveAlongY();
 		}
 		else
 		{
-			if (abs(m_Direction.x) <= epsilon) //if there is no x input -> try to move closer to center
+			if (abs(m_Direction.x) <= epsilon && !level.IsInCenterOfElementX(transform->GetWorldPosition(), m_CenterMargin)) //if there is no x input -> try to move closer to center
 			{
 				if (transform->GetWorldPosition().x > level.GetCenterOfCell(row, col).x)
 				{
@@ -134,13 +135,12 @@ bool MovementComponent::CanMoveUp()
 	int col{};
 	level.GetRowColOfPos(transform->GetWorldPosition(), row, col);
 
-	const int margin{ 1 };
-	if (transform->GetWorldPosition().y > level.GetCenterOfCell(row, col).y)
+	if (transform->GetWorldPosition().y < level.GetCenterOfCell(row, col).y)
 	{
 		return true;
 	}
-	return level.IsInCenterOfElementX(transform->GetWorldPosition(), margin)
-		&& level.IsNavigableByPlayer(row - 1, col);
+	return level.IsInCenterOfElementX(transform->GetWorldPosition(), m_CenterMargin)
+		&& level.IsNavigableByPlayer(row + 1, col);
 }
 
 bool MovementComponent::CanMoveDown()
@@ -152,13 +152,12 @@ bool MovementComponent::CanMoveDown()
 	int col{};
 	level.GetRowColOfPos(transform->GetWorldPosition(), row, col);
 
-	const int margin{ 1 };
-	if (transform->GetWorldPosition().y < level.GetCenterOfCell(row, col).y)
+	if (transform->GetWorldPosition().y > level.GetCenterOfCell(row, col).y)
 	{
 		return true;
 	}
-	return level.IsInCenterOfElementX(transform->GetWorldPosition(), margin)
-		&& level.IsNavigableByPlayer(row + 1, col);
+	return level.IsInCenterOfElementX(transform->GetWorldPosition(), m_CenterMargin)
+		&& level.IsNavigableByPlayer(row - 1, col);
 }
 
 bool MovementComponent::CanMoveRight()
@@ -170,12 +169,11 @@ bool MovementComponent::CanMoveRight()
 	int col{};
 	level.GetRowColOfPos(transform->GetWorldPosition(), row, col);
 
-	const int margin{ 1 };
 	if (transform->GetWorldPosition().x < level.GetCenterOfCell(row, col).x)
 	{
 		return true;
 	}
-	return level.IsInCenterOfElementY(transform->GetWorldPosition(), margin)
+	return level.IsInCenterOfElementY(transform->GetWorldPosition(), m_CenterMargin)
 		&& level.IsNavigableByPlayer(row, col + 1);
 }
 
@@ -188,12 +186,11 @@ bool MovementComponent::CanMoveLeft()
 	int col{};
 	level.GetRowColOfPos(transform->GetWorldPosition(), row, col);
 
-	const int margin{ 1 };
 	if (transform->GetWorldPosition().x > level.GetCenterOfCell(row, col).x)
 	{
 		return true;
 	}
-	return level.IsInCenterOfElementY(transform->GetWorldPosition(), margin)
+	return level.IsInCenterOfElementY(transform->GetWorldPosition(), m_CenterMargin)
 		&& level.IsNavigableByPlayer(row, col - 1);
 }
 

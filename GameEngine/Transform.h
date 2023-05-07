@@ -4,6 +4,7 @@
 namespace engine
 {
 	//todo: implement scaling
+	//todo: implement rotation
 
 	class GameObject;
 

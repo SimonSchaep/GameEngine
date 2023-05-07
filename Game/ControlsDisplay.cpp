@@ -21,7 +21,6 @@ void ControlsDisplay::RenderUI()
     ImGui::Text("Switch controlled character - Space");
     ImGui::Text("Die - 1");
     ImGui::Text("Reset lives - 2");
-    ImGui::Text("Add points - 3");
 
     ImGui::Spacing();
     ImGui::Spacing();
@@ -31,7 +30,6 @@ void ControlsDisplay::RenderUI()
     ImGui::Text("Switch controlled character - A");
     ImGui::Text("Die - B");
     ImGui::Text("Reset lives - X");
-    ImGui::Text("Add points - Y");
     
 
     ImGui::End();

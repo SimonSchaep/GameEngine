@@ -5,15 +5,15 @@
 #include "BaseComponent.h"
 #include "RenderComponent.h"
 #include "UIRenderComponent.h"
-#include "Scene.h"
 #include <iostream>
 
 namespace engine
 {
 
-	GameObject::GameObject(const std::string& name)
+	GameObject::GameObject(const std::string& name, int sceneIndex)
 		: m_Transform{ std::make_unique<Transform>(this) }
 		, m_Name{ name }
+		, m_SceneIndex{sceneIndex}
 	{
 	}
 
@@ -23,16 +23,22 @@ namespace engine
 	{
 		for (auto& c : m_Components)
 		{
-			c->Initialize();
+			c->InitializeComponent();
 		}
+		m_IsInitialized = true;
 	}
 
 	void GameObject::Update()
 	{
+		if (!m_IsInitialized)
+		{
+			Initialize();
+		}
+
 		//Update Components
 		for (size_t i{}; i < m_Components.size(); ++i)
 		{
-			m_Components[i]->Update();
+			m_Components[i]->UpdateComponent();
 			if (m_Components[i]->IsMarkedForDeletion())
 			{
 				m_ToDeleteIndexes.push_back(i);

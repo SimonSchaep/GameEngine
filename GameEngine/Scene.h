@@ -4,6 +4,7 @@
 
 namespace engine
 {
+	class RenderComponent;
 
 	class Scene final
 	{
@@ -12,7 +13,10 @@ namespace engine
 		GameObject* FindGameObjectByName(const std::string& name);
 		void RemoveAllGameObjects();
 
+		void AddRenderComponent(RenderComponent* pRenderComponent){m_RenderComponents.push_back(pRenderComponent);}
+
 		const std::string& GetName()const { return m_Name; };
+		int GetIndex()const { return m_Index; };
 		bool GetIsInitialized()const { return m_IsInitialized; };
 
 		void Initialize();
@@ -21,7 +25,7 @@ namespace engine
 		void RenderUI();
 
 		~Scene();
-		Scene(const std::string& name);
+		Scene(const std::string& name, int index);
 		Scene(const Scene& other) = delete;
 		Scene(Scene&& other) = delete;
 		Scene& operator=(const Scene& other) = delete;
@@ -33,9 +37,9 @@ namespace engine
 		std::vector<size_t> m_ToDeleteIndexes{};
 
 		std::string m_Name;
+		int m_Index;
 		std::vector <std::unique_ptr<GameObject>> m_GameObjects{};
-
-		static unsigned int m_IdCounter;
+		std::vector <RenderComponent*> m_RenderComponents{};
 
 		bool m_IsInitialized{};
 	};

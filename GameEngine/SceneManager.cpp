@@ -44,7 +44,7 @@ namespace engine
 
 	Scene* SceneManager::CreateScene(const std::string& name)
 	{
-		auto scene = std::make_unique<Scene>(name);
+		auto scene = std::make_unique<Scene>(name, int(m_scenes.size()));
 		Scene* pReturnValue = scene.get();
 		m_scenes.push_back(std::move(scene));
 		if (!m_pActiveScene)
@@ -83,9 +83,41 @@ namespace engine
 		}
 	}
 
+	void SceneManager::SetActiveSceneByIndex(int index)
+	{
+		assert(m_scenes.size() > index);
+		m_pActiveScene = m_scenes[index].get();
+
+		//ensure there is an active scene
+		assert(m_pActiveScene);
+
+		if (m_IsInitialized && !m_pActiveScene->GetIsInitialized())
+		{
+			m_pActiveScene->Initialize();
+		}
+	}
+
 	Scene* SceneManager::GetActiveScene()
 	{
 		return m_pActiveScene;
+	}
+
+	Scene* SceneManager::GetSceneByName(const std::string& sceneName)
+	{
+		for (auto& scene : m_scenes)
+		{
+			if (scene->GetName() == sceneName)
+			{
+				return scene.get();
+			}
+		}
+		return nullptr;
+	}
+
+	Scene* SceneManager::GetSceneByIndex(int index)
+	{
+		assert(m_scenes.size() > index);
+		return m_scenes[index].get();
 	}
 
 }

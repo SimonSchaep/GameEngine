@@ -1,17 +1,16 @@
 #include "Scene.h"
+#include "RenderComponent.h"
+#include <algorithm>
 
 namespace engine
 {
-
-	unsigned int Scene::m_IdCounter = 0;
-
-	Scene::Scene(const std::string& name) : m_Name(name) {}
+	Scene::Scene(const std::string& name, int index) : m_Name(name), m_Index{index} {}
 
 	Scene::~Scene() = default;
 
 	GameObject* Scene::CreateAndAddGameObject(const std::string& name, GameObject* pParent)
 	{
-		auto gameObject = std::make_unique<GameObject>(name);
+		auto gameObject = std::make_unique<GameObject>(name, m_Index);
 		if (pParent)
 		{
 			gameObject->SetParent(pParent, false);
@@ -66,6 +65,14 @@ namespace engine
 			RemoveGameObjectByIndex(m_ToDeleteIndexes[i]);
 		}
 		m_ToDeleteIndexes.clear();
+
+
+		//Sort rendercomponents
+		std::sort(m_RenderComponents.begin(), m_RenderComponents.end(),
+			[](RenderComponent* renderComp1, RenderComponent* renderComp2)
+			{
+				return (renderComp1->GetLayer() < renderComp2->GetLayer());
+			});
 	}
 
 	void Scene::RenderUI()
@@ -76,12 +83,11 @@ namespace engine
 		}
 	}
 
-	//todo: add render priority
 	void Scene::Render()const
 	{
-		for (const auto& gameObject : m_GameObjects)
+		for (const auto& renderComponent : m_RenderComponents)
 		{
-			gameObject->Render();
+			renderComponent->Render();
 		}
 	}
 

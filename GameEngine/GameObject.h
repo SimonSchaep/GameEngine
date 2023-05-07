@@ -7,7 +7,6 @@
 
 namespace engine
 {
-
 	class BaseComponent;
 
 	class GameObject final
@@ -21,6 +20,8 @@ namespace engine
 		Transform* GetTransform() { return m_Transform.get(); };
 
 		const std::string& GetName()const { return m_Name; };
+
+		int GetSceneIndex()const { return m_SceneIndex; };
 
 		void MarkForDeletion(bool includeChildren);
 		bool IsMarkedForDeletion() { return m_IsMarkedForDeletion; };
@@ -53,7 +54,7 @@ namespace engine
 		template<typename T>
 		void RemoveAllComponentsOfType();
 
-		GameObject(const std::string& name); //only use this with scene.CreateAndAddGameObject()
+		GameObject(const std::string& name, int sceneIndex); //only use this with scene.CreateAndAddGameObject()
 		~GameObject();
 		GameObject(const GameObject& other) = delete;
 		GameObject(GameObject&& other) = delete;
@@ -63,6 +64,10 @@ namespace engine
 	private:
 		void AddChild(GameObject* pGameObject) { m_Children.push_back(pGameObject); };
 		void RemoveChild(GameObject* pGameObject) { m_Children.erase(std::remove(m_Children.begin(), m_Children.end(), pGameObject)); };
+
+		bool m_IsInitialized{};
+
+		int m_SceneIndex{};
 
 		std::unique_ptr<Transform> m_Transform{};
 

@@ -15,7 +15,11 @@ namespace engine
 		Scene* CreateScene(const std::string& name);
 		void SetActiveSceneByPtr(Scene* pScene);
 		void SetActiveSceneByName(const std::string& sceneName);
+		void SetActiveSceneByIndex(int index);
+
 		Scene* GetActiveScene();
+		Scene* GetSceneByName(const std::string& sceneName);
+		Scene* GetSceneByIndex(int index);
 
 		void Initialize();
 		void Update();

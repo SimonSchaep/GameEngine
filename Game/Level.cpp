@@ -10,6 +10,8 @@ void Level::BuildLevel(Scene* pScene, const std::string& fileName)
 {
 	auto start = std::chrono::high_resolution_clock::now();
 
+	const glm::vec2 foodOffset{0,2};
+
 	std::vector<LevelElement> levelElements;
 	
 	try
@@ -44,11 +46,16 @@ void Level::BuildLevel(Scene* pScene, const std::string& fileName)
 
 			glm::vec2 position{ m_LevelStartPos };
 			position += glm::vec2{ c * m_GridElementWidth, r * m_GridElementHeight };
-			//std::cout << position.x << ", " << position.y << ", ";
 
-			auto pLevelElementGameObject = pScene->CreateAndAddGameObject();
-			pLevelElementGameObject->GetTransform()->SetLocalPosition(position);
-			auto pRenderComponent = pLevelElementGameObject->CreateAndAddComponent<TextureRenderComponent>();
+			GameObject* pLevelElementGameObject{};
+			TextureRenderComponent* pRenderComponent{};
+			if (levelElement.eLevelElement != ELevelElement::plate) //plate doesn't have gameobject underneath it
+			{
+				pLevelElementGameObject = pScene->CreateAndAddGameObject();
+				pLevelElementGameObject->GetTransform()->SetLocalPosition(position);
+				pRenderComponent = pLevelElementGameObject->CreateAndAddComponent<TextureRenderComponent>();
+				pRenderComponent->SetLayer(-1);
+			}
 
 			switch (levelElement.eLevelElement)
 			{
@@ -89,6 +96,10 @@ void Level::BuildLevel(Scene* pScene, const std::string& fileName)
 				{
 					pRenderComponent->SetTexture("platformdark.png");
 				}
+				if (c == 0 || levelElements[GetLevelElementsIndex(r, c - 1)].eLevelElement != ELevelElement::topbun) //if this is left most element
+				{
+					SpawnFood(position + foodOffset, pScene, levelElements, r, c, ELevelElement::topbun, "topbun");
+				}
 				break;
 			case ELevelElement::botbun:
 				hasFoodAbove[c] = true;
@@ -99,6 +110,10 @@ void Level::BuildLevel(Scene* pScene, const std::string& fileName)
 				else
 				{
 					pRenderComponent->SetTexture("platformdark.png");
+				}
+				if (c == 0 || levelElements[GetLevelElementsIndex(r, c - 1)].eLevelElement != ELevelElement::botbun) //if this is left most element
+				{
+					SpawnFood(position + foodOffset, pScene, levelElements, r, c, ELevelElement::botbun, "botbun");
 				}
 				break;
 			case ELevelElement::lettuce:
@@ -111,6 +126,10 @@ void Level::BuildLevel(Scene* pScene, const std::string& fileName)
 				{
 					pRenderComponent->SetTexture("platformdark.png");
 				}
+				if (c == 0 || levelElements[GetLevelElementsIndex(r, c - 1)].eLevelElement != ELevelElement::lettuce) //if this is left most element
+				{
+					SpawnFood(position + foodOffset, pScene, levelElements, r, c, ELevelElement::lettuce, "lettuce");
+				}
 				break;
 			case ELevelElement::meat:
 				hasFoodAbove[c] = true;
@@ -121,6 +140,10 @@ void Level::BuildLevel(Scene* pScene, const std::string& fileName)
 				else
 				{
 					pRenderComponent->SetTexture("platformdark.png");
+				}
+				if (c == 0 || levelElements[GetLevelElementsIndex(r, c - 1)].eLevelElement != ELevelElement::meat) //if this is left most element
+				{
+					SpawnFood(position + foodOffset, pScene, levelElements, r, c, ELevelElement::meat, "meat");
 				}
 				break;
 			case ELevelElement::cheese:
@@ -133,6 +156,10 @@ void Level::BuildLevel(Scene* pScene, const std::string& fileName)
 				{
 					pRenderComponent->SetTexture("platformdark.png");
 				}
+				if (c == 0 || levelElements[GetLevelElementsIndex(r, c - 1)].eLevelElement != ELevelElement::cheese) //if this is left most element
+				{
+					SpawnFood(position + foodOffset, pScene, levelElements, r, c, ELevelElement::cheese, "cheese");
+				}
 				break;
 			case ELevelElement::tomato:
 				hasFoodAbove[c] = true;
@@ -144,6 +171,10 @@ void Level::BuildLevel(Scene* pScene, const std::string& fileName)
 				{
 					pRenderComponent->SetTexture("platformdark.png");
 				}
+				if (c == 0 || levelElements[GetLevelElementsIndex(r, c - 1)].eLevelElement != ELevelElement::tomato) //if this is left most element
+				{
+					SpawnFood(position + foodOffset, pScene, levelElements, r, c, ELevelElement::tomato, "tomato");
+				}
 				break;
 			case ELevelElement::plate:
 				hasFoodAbove[c] = false;
@@ -151,8 +182,10 @@ void Level::BuildLevel(Scene* pScene, const std::string& fileName)
 				{
 					std::cout << "Plate shouldn't have ladder\n";
 				}
-				levelElements[GetLevelElementsIndex(r, c)]
-				//pRenderComponent->SetTexture("platemiddle.png");
+				if (c == 0 || levelElements[GetLevelElementsIndex(r, c - 1)].eLevelElement != ELevelElement::plate) //if this is left most element
+				{
+					SpawnPlate(position, pScene, levelElements, r, c);
+				}
 				break;
 			}
 		}
@@ -254,6 +287,104 @@ glm::vec2 Level::GetCenterOfCell(int row, int col) const
 int Level::GetLevelElementsIndex(int row, int col)
 {
 	return row * m_LevelWidth + col;
+}
+
+void Level::SpawnPlate(glm::vec2 pos, Scene* pScene, const std::vector<LevelElement>& levelElements, int row, int col)
+{
+
+	GameObject* pLevelElementGameObject{};
+	TextureRenderComponent* pRenderComponent{};
+	if (col == m_LevelWidth - 1 || levelElements[GetLevelElementsIndex(row, col + 1)].eLevelElement != ELevelElement::plate) //if this is right most element
+	{
+		//put left and 
+		pLevelElementGameObject = pScene->CreateAndAddGameObject();
+		pLevelElementGameObject->GetTransform()->SetWorldPosition(pos);
+		pRenderComponent = pLevelElementGameObject->CreateAndAddComponent<TextureRenderComponent>();
+		pRenderComponent->SetTexture("platesingle.png");
+	}
+	else
+	{
+		pLevelElementGameObject = pScene->CreateAndAddGameObject();
+		pLevelElementGameObject->GetTransform()->SetWorldPosition(pos);
+		pRenderComponent = pLevelElementGameObject->CreateAndAddComponent<TextureRenderComponent>();
+		pRenderComponent->SetTexture("plateleft.png");
+
+		while (!(col == m_LevelWidth - 2 || levelElements[GetLevelElementsIndex(row, col + 2)].eLevelElement != ELevelElement::plate)) //while next element is not right most element
+		{
+			++col;
+			pos.x += m_GridElementWidth;
+			pLevelElementGameObject = pScene->CreateAndAddGameObject();
+			pLevelElementGameObject->GetTransform()->SetWorldPosition(pos);
+			pRenderComponent = pLevelElementGameObject->CreateAndAddComponent<TextureRenderComponent>();
+			pRenderComponent->SetTexture("platemiddle.png");
+		}
+
+		pos.x += m_GridElementWidth;
+		pLevelElementGameObject = pScene->CreateAndAddGameObject();
+		pLevelElementGameObject->GetTransform()->SetWorldPosition(pos);
+		pRenderComponent = pLevelElementGameObject->CreateAndAddComponent<TextureRenderComponent>();
+		pRenderComponent->SetTexture("plateright.png");
+	}
+}
+
+void Level::SpawnFood(glm::vec2 pos, Scene* pScene, const std::vector<LevelElement>& levelElements, int row, int col, ELevelElement eLevelElement, const std::string& name)
+{
+	GameObject* pLevelElementGameObject{};
+	TextureRenderComponent* pRenderComponent{};
+	if (col == m_LevelWidth - 1 || levelElements[GetLevelElementsIndex(row, col + 1)].eLevelElement != eLevelElement) //if this is right most element
+	{
+		pLevelElementGameObject = pScene->CreateAndAddGameObject();
+		pLevelElementGameObject->GetTransform()->SetWorldPosition(pos);
+		pRenderComponent = pLevelElementGameObject->CreateAndAddComponent<TextureRenderComponent>();
+		pRenderComponent->SetTexture(name + "left1.png");
+
+		pos.x += m_GridElementWidth / 2;
+		pLevelElementGameObject = pScene->CreateAndAddGameObject();
+		pLevelElementGameObject->GetTransform()->SetWorldPosition(pos);
+		pRenderComponent = pLevelElementGameObject->CreateAndAddComponent<TextureRenderComponent>();
+		pRenderComponent->SetTexture(name + "right2.png");
+	}
+	else
+	{
+		pLevelElementGameObject = pScene->CreateAndAddGameObject();
+		pLevelElementGameObject->GetTransform()->SetWorldPosition(pos);
+		pRenderComponent = pLevelElementGameObject->CreateAndAddComponent<TextureRenderComponent>();
+		pRenderComponent->SetTexture(name + "left1.png");
+
+		pos.x += m_GridElementWidth / 2;
+		pLevelElementGameObject = pScene->CreateAndAddGameObject();
+		pLevelElementGameObject->GetTransform()->SetWorldPosition(pos);
+		pRenderComponent = pLevelElementGameObject->CreateAndAddComponent<TextureRenderComponent>();
+		pRenderComponent->SetTexture(name + "left2.png");
+
+		while (!(col == m_LevelWidth - 2 || levelElements[GetLevelElementsIndex(row, col + 2)].eLevelElement != eLevelElement)) //while next element is not right most element
+		{
+			++col;
+			pos.x += m_GridElementWidth / 2;
+			pLevelElementGameObject = pScene->CreateAndAddGameObject();
+			pLevelElementGameObject->GetTransform()->SetWorldPosition(pos);
+			pRenderComponent = pLevelElementGameObject->CreateAndAddComponent<TextureRenderComponent>();
+			pRenderComponent->SetTexture(name + "mid1.png");
+
+			pos.x += m_GridElementWidth / 2;
+			pLevelElementGameObject = pScene->CreateAndAddGameObject();
+			pLevelElementGameObject->GetTransform()->SetWorldPosition(pos);
+			pRenderComponent = pLevelElementGameObject->CreateAndAddComponent<TextureRenderComponent>();
+			pRenderComponent->SetTexture(name + "mid2.png");
+		}
+
+		pos.x += m_GridElementWidth / 2;
+		pLevelElementGameObject = pScene->CreateAndAddGameObject();
+		pLevelElementGameObject->GetTransform()->SetWorldPosition(pos);
+		pRenderComponent = pLevelElementGameObject->CreateAndAddComponent<TextureRenderComponent>();
+		pRenderComponent->SetTexture(name + "right1.png");
+
+		pos.x += m_GridElementWidth / 2;
+		pLevelElementGameObject = pScene->CreateAndAddGameObject();
+		pLevelElementGameObject->GetTransform()->SetWorldPosition(pos);
+		pRenderComponent = pLevelElementGameObject->CreateAndAddComponent<TextureRenderComponent>();
+		pRenderComponent->SetTexture(name + "right2.png");
+	}
 }
 
 void Level::GenerateNavigableAreas(const std::vector<LevelElement>& levelElements)

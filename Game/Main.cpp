@@ -65,7 +65,7 @@ void load()
 
 
 	//Load level
-	Level::GetInstance().BuildLevel(pScene, "Data/level2.csv");
+	Level::GetInstance().BuildLevel(pScene, "Data/level1.csv");
 
 	// separating gameobjects from controllers makes it possible to switch between controlled gameobjects
 	// input will first go to a controller, then the controller will send the input to a controlled gameobject

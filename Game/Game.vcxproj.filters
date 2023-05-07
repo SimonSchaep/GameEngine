@@ -11,18 +11,15 @@
     <Filter Include="Level">
       <UniqueIdentifier>{9017a30b-d577-4053-bf2d-bc58955101f8}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Components\Food">
+      <UniqueIdentifier>{3c800bc6-85a3-4c7b-b092-9ab81e6044f4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Components\Old">
+      <UniqueIdentifier>{1fcef0c9-3791-4e44-8c87-ad3ba8bbd515}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="ControlsDisplay.cpp">
-      <Filter>Components</Filter>
-    </ClCompile>
-    <ClCompile Include="DestroyComponent.cpp">
-      <Filter>Components</Filter>
-    </ClCompile>
     <ClCompile Include="FPSCounter.cpp">
-      <Filter>Components</Filter>
-    </ClCompile>
-    <ClCompile Include="LivesDisplay.cpp">
       <Filter>Components</Filter>
     </ClCompile>
     <ClCompile Include="MovementComponent.cpp">
@@ -31,30 +28,39 @@
     <ClCompile Include="MyPlayerController.cpp">
       <Filter>Components</Filter>
     </ClCompile>
-    <ClCompile Include="PlayerLives.cpp">
-      <Filter>Components</Filter>
-    </ClCompile>
-    <ClCompile Include="PlayerPoints.cpp">
-      <Filter>Components</Filter>
-    </ClCompile>
-    <ClCompile Include="PointsDisplay.cpp">
-      <Filter>Components</Filter>
-    </ClCompile>
-    <ClCompile Include="RotateComponent.cpp">
-      <Filter>Components</Filter>
-    </ClCompile>
-    <ClCompile Include="TrashTheCacheComponent.cpp">
-      <Filter>Components</Filter>
-    </ClCompile>
     <ClCompile Include="Main.cpp" />
-    <ClCompile Include="FoodItem.cpp">
-      <Filter>Components</Filter>
-    </ClCompile>
-    <ClCompile Include="FoodItemPart.cpp">
-      <Filter>Components</Filter>
-    </ClCompile>
     <ClCompile Include="Level.cpp">
       <Filter>Level</Filter>
+    </ClCompile>
+    <ClCompile Include="FoodParent.cpp">
+      <Filter>Components\Food</Filter>
+    </ClCompile>
+    <ClCompile Include="ControlsDisplay.cpp">
+      <Filter>Components\Old</Filter>
+    </ClCompile>
+    <ClCompile Include="DestroyComponent.cpp">
+      <Filter>Components\Old</Filter>
+    </ClCompile>
+    <ClCompile Include="LivesDisplay.cpp">
+      <Filter>Components\Old</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayerLives.cpp">
+      <Filter>Components\Old</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayerPoints.cpp">
+      <Filter>Components\Old</Filter>
+    </ClCompile>
+    <ClCompile Include="PointsDisplay.cpp">
+      <Filter>Components\Old</Filter>
+    </ClCompile>
+    <ClCompile Include="RotateComponent.cpp">
+      <Filter>Components\Old</Filter>
+    </ClCompile>
+    <ClCompile Include="TrashTheCacheComponent.cpp">
+      <Filter>Components\Old</Filter>
+    </ClCompile>
+    <ClCompile Include="FoodElement.cpp">
+      <Filter>Components\Food</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -73,16 +79,7 @@
     <ClInclude Include="SwitchCommand.h">
       <Filter>Commands</Filter>
     </ClInclude>
-    <ClInclude Include="ControlsDisplay.h">
-      <Filter>Components</Filter>
-    </ClInclude>
-    <ClInclude Include="DestroyComponent.h">
-      <Filter>Components</Filter>
-    </ClInclude>
     <ClInclude Include="FPSCounter.h">
-      <Filter>Components</Filter>
-    </ClInclude>
-    <ClInclude Include="LivesDisplay.h">
       <Filter>Components</Filter>
     </ClInclude>
     <ClInclude Include="MovementComponent.h">
@@ -91,32 +88,41 @@
     <ClInclude Include="MyPlayerController.h">
       <Filter>Components</Filter>
     </ClInclude>
-    <ClInclude Include="PlayerLives.h">
-      <Filter>Components</Filter>
-    </ClInclude>
-    <ClInclude Include="PlayerPoints.h">
-      <Filter>Components</Filter>
-    </ClInclude>
-    <ClInclude Include="PointsDisplay.h">
-      <Filter>Components</Filter>
-    </ClInclude>
-    <ClInclude Include="RotateComponent.h">
-      <Filter>Components</Filter>
-    </ClInclude>
-    <ClInclude Include="TrashTheCacheComponent.h">
-      <Filter>Components</Filter>
-    </ClInclude>
-    <ClInclude Include="FoodItem.h">
-      <Filter>Components</Filter>
-    </ClInclude>
-    <ClInclude Include="FoodItemPart.h">
-      <Filter>Components</Filter>
-    </ClInclude>
     <ClInclude Include="LevelParser.h">
       <Filter>Level</Filter>
     </ClInclude>
     <ClInclude Include="Level.h">
       <Filter>Level</Filter>
+    </ClInclude>
+    <ClInclude Include="FoodParent.h">
+      <Filter>Components\Food</Filter>
+    </ClInclude>
+    <ClInclude Include="ControlsDisplay.h">
+      <Filter>Components\Old</Filter>
+    </ClInclude>
+    <ClInclude Include="DestroyComponent.h">
+      <Filter>Components\Old</Filter>
+    </ClInclude>
+    <ClInclude Include="LivesDisplay.h">
+      <Filter>Components\Old</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayerLives.h">
+      <Filter>Components\Old</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayerPoints.h">
+      <Filter>Components\Old</Filter>
+    </ClInclude>
+    <ClInclude Include="PointsDisplay.h">
+      <Filter>Components\Old</Filter>
+    </ClInclude>
+    <ClInclude Include="RotateComponent.h">
+      <Filter>Components\Old</Filter>
+    </ClInclude>
+    <ClInclude Include="TrashTheCacheComponent.h">
+      <Filter>Components\Old</Filter>
+    </ClInclude>
+    <ClInclude Include="FoodElement.h">
+      <Filter>Components\Food</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

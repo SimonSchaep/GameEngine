@@ -13,6 +13,7 @@ namespace engine
 namespace levelParser
 {
 	struct LevelElement;
+	enum class ELevelElement;
 }
 
 using namespace engine;
@@ -34,6 +35,9 @@ public:
 
 private:
 	int GetLevelElementsIndex(int row, int col);
+	void SpawnPlate(glm::vec2 pos, Scene* pScene, const std::vector<LevelElement>& levelElements, int row, int col);
+	void SpawnFood(glm::vec2 pos, Scene* pScene, const std::vector<LevelElement>& levelElements, int row, int col, ELevelElement eLevelElement, const std::string& name);
+
 	void GenerateNavigableAreas(const std::vector<LevelElement>& levelElements);
 	std::vector<bool> m_PlayerNavigableArea{};
 	std::vector<bool> m_EnemyNavigableArea{};

@@ -8,7 +8,7 @@ namespace engine
 	class Scene final
 	{
 	public:
-		GameObject* CreateAndAddGameObject(const std::string& name = "DefaultName"); //todo: add option to attach to parent immediately
+		GameObject* CreateAndAddGameObject(const std::string& name = "DefaultName", GameObject* pParent = nullptr); //todo: add option to attach to parent immediately
 		GameObject* FindGameObjectByName(const std::string& name);
 		void RemoveAllGameObjects();
 

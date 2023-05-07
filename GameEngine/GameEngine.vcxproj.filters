@@ -198,6 +198,9 @@
     <ClInclude Include="BoxCollider.h">
       <Filter>Engine\Components</Filter>
     </ClInclude>
+    <ClInclude Include="Structs.h">
+      <Filter>Engine</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Engine">

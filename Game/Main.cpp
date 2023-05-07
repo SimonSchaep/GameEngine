@@ -28,7 +28,8 @@
 #include "PlayerPoints.h"
 #include "PointsDisplay.h"
 #include "ControlsDisplay.h"
-#include "LevelBuilder.h"
+#include "Level.h"
+#include "Texture2D.h"
 
 using namespace engine;
 
@@ -63,31 +64,40 @@ void load()
 	pGameObject->GetTransform()->SetLocalPosition(20, 20, 0);
 
 
+	//Load level
+	Level::GetInstance().BuildLevel(pScene, "Data/level2.csv");
+
 	// separating gameobjects from controllers makes it possible to switch between controlled gameobjects
 	// input will first go to a controller, then the controller will send the input to a controlled gameobject
 	// you could put the logic of the MyPlayerController in the movementcomponent, or put the MyPlayerController on the same gameobject if you don't need the switching
 
 	//chef gameobject
 	auto pChef = pScene->CreateAndAddGameObject("Chef");
-	pChef->GetTransform()->SetLocalPosition({ 100,100 });
-	auto pRenderComponent = pChef->CreateAndAddComponent<TextureRenderComponent>();
-	pRenderComponent->SetTexture("chef.png");
+	pChef->GetTransform()->SetLocalPosition({ 80,80 });
 	auto pMovementComponent = pChef->CreateAndAddComponent<MovementComponent>();
 	pMovementComponent->SetMoveSpeed(50);
 	auto pPlayerLives = pChef->CreateAndAddComponent<PlayerLives>();
 	pPlayerLives->SetMaxLives(5);
 	pChef->CreateAndAddComponent<PlayerPoints>();
 
+	auto pChefVisuals = pScene->CreateAndAddGameObject("ChefVisuals", pChef);
+	auto pRenderComponent = pChefVisuals->CreateAndAddComponent<TextureRenderComponent>();
+	pRenderComponent->SetTexture("chef.png");
+	pChefVisuals->GetTransform()->SetLocalPosition({ -pRenderComponent->GetTexture()->GetSize().x / 2, -pRenderComponent->GetTexture()->GetSize().y / 2 });
+
 	//bean gameobject
 	auto pBean = pScene->CreateAndAddGameObject("Bean");
-	pBean->GetTransform()->SetLocalPosition({ 100,100 });
-	pRenderComponent = pBean->CreateAndAddComponent<TextureRenderComponent>();
-	pRenderComponent->SetTexture("bean.png");
+	pBean->GetTransform()->SetLocalPosition({ 80,80 });
 	pMovementComponent = pBean->CreateAndAddComponent<MovementComponent>();
 	pMovementComponent->SetMoveSpeed(100);
 	pPlayerLives = pBean->CreateAndAddComponent<PlayerLives>();
 	pPlayerLives->SetMaxLives(5);
 	pBean->CreateAndAddComponent<PlayerPoints>();
+
+	auto pBeanVisuals = pScene->CreateAndAddGameObject("BeanVisuals", pBean);
+	pRenderComponent = pBeanVisuals->CreateAndAddComponent<TextureRenderComponent>();
+	pRenderComponent->SetTexture("bean.png");
+	pBeanVisuals->GetTransform()->SetLocalPosition({ -pRenderComponent->GetTexture()->GetSize().x / 2, -pRenderComponent->GetTexture()->GetSize().y / 2 });
 
 	//player 1 controller gameobject
 	auto pPlayer1ControllerObject = pScene->CreateAndAddGameObject();
@@ -140,15 +150,7 @@ void load()
 
 
 
-	//Load level
-	try
-	{
-		LevelBuilder::BuildLevel(pScene, "Data/level2.csv");
-	}
-	catch (...)
-	{
-		std::cout << "error\n";
-	}
+	
 
 }
 

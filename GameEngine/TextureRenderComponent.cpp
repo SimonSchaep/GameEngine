@@ -34,11 +34,6 @@ namespace engine
 		Renderer::GetInstance().RenderTexture(*m_Texture, pos.x, pos.y);
 	}
 
-	Texture2D* TextureRenderComponent::GetTexture() const
-	{
-		return m_Texture.get();
-	}
-
 	void TextureRenderComponent::SetTexture(std::unique_ptr<Texture2D> texture)
 	{
 		m_Texture = std::move(texture);

@@ -1,0 +1,16 @@
+' ' == empty
+'_' == enemy cheat space
+'P' == platform
+'TB' == top bun
+'BB' == bottom bun
+'LE' == lettuce
+'M' == meat
+'C' == cheese
+'T' == tomato
+'PT' == plate
+
+add L for ladder
+
+eg.
+'L' == ladder
+'PL' == platform with ladder

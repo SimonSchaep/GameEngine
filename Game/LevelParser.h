@@ -6,9 +6,9 @@
 #include <algorithm>
 #include <chrono>
 
-namespace LevelParser
+namespace levelParser
 {
-	class FileNameNotFound : std::exception
+	class FileNameNotFound : public std::exception
 	{
 		std::string m_Msg;
 	public:
@@ -20,7 +20,7 @@ namespace LevelParser
 		}
 	};
 
-	class InvalidLevelWidth : std::exception
+	class InvalidLevelWidth : public std::exception
 	{
 		std::string m_Msg;
 	public:
@@ -32,7 +32,7 @@ namespace LevelParser
 		}
 	};
 
-	class UnknownLevelElement : std::exception
+	class UnknownLevelElement : public std::exception
 	{
 		std::string m_Msg;
 	public:
@@ -54,7 +54,8 @@ namespace LevelParser
 		meat,
 		cheese,
 		tomato,
-		bucket,
+		plate,
+		enemyCheat,
 	};
 
 	struct LevelElement
@@ -79,7 +80,7 @@ namespace LevelParser
 		
 		levelWidth = 0;
 		levelHeight = 0;
-
+		//todo: remove spaces
 		while (std::getline(ifstream, line))
 		{
 			++levelHeight;
@@ -89,7 +90,7 @@ namespace LevelParser
 			while (std::getline(sstream, element, ','))
 			{
 				LevelElement levelElement{};
-				std::transform(element.begin(), element.end(), element.begin(), toupper);
+				std::transform(element.begin(), element.end(), element.begin(), [](char c) { return char(std::toupper(int(c))); });
 				if (element != "" && element.back() == 'L') //check for empty string cause then back() doesn't work
 				{
 					levelElement.hasLadder = true;
@@ -127,9 +128,13 @@ namespace LevelParser
 				{
 					levelElement.eLevelElement = ELevelElement::tomato;
 				}
-				else if (element == "B")
+				else if (element == "PT")
 				{
-					levelElement.eLevelElement = ELevelElement::bucket;
+					levelElement.eLevelElement = ELevelElement::plate;
+				}
+				else if (element == "_")
+				{
+					levelElement.eLevelElement = ELevelElement::enemyCheat;
 				}
 				else
 				{

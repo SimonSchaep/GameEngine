@@ -18,6 +18,17 @@ public:
 	void SetMoveSpeed(float moveSpeed) { m_MoveSpeed = moveSpeed; };
 
 private:
+	void CheckMoveX();
+	void CheckMoveY();
+
+	bool CanMoveUp();
+	bool CanMoveDown();
+	bool CanMoveRight();
+	bool CanMoveLeft();
+
+	void MoveAlongX();
+	void MoveAlongY();
+
 	float m_MoveSpeed{};
 	glm::vec2 m_Direction{};
 };

@@ -53,6 +53,9 @@
     <ClCompile Include="FoodItemPart.cpp">
       <Filter>Components</Filter>
     </ClCompile>
+    <ClCompile Include="Level.cpp">
+      <Filter>Level</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="DieCommand.h">
@@ -112,7 +115,7 @@
     <ClInclude Include="LevelParser.h">
       <Filter>Level</Filter>
     </ClInclude>
-    <ClInclude Include="LevelBuilder.h">
+    <ClInclude Include="Level.h">
       <Filter>Level</Filter>
     </ClInclude>
   </ItemGroup>

@@ -60,6 +60,44 @@ namespace engine
 		SetDirty(true);
 	}
 
+	void Transform::SetWorldPosition(float x, float y, float z)
+	{
+		if (m_pGameObject->GetParent())
+		{
+			SetLocalPosition(x - m_pGameObject->GetParent()->GetTransform()->GetWorldPosition().x,
+				y - m_pGameObject->GetParent()->GetTransform()->GetWorldPosition().y,
+				z - m_pGameObject->GetParent()->GetTransform()->GetWorldPosition().z);
+		}
+		else
+		{
+			SetLocalPosition(x, y, z);
+		}
+	}
+
+	void Transform::SetWorldPosition(const glm::vec2& pos)
+	{
+		if (m_pGameObject->GetParent())
+		{
+			SetLocalPosition(pos - glm::vec2(m_pGameObject->GetParent()->GetTransform()->GetWorldPosition()));
+		}
+		else
+		{
+			SetLocalPosition(pos);
+		}
+	}
+
+	void Transform::SetWorldPosition(const glm::vec3& pos)
+	{
+		if (m_pGameObject->GetParent())
+		{
+			SetLocalPosition(pos - m_pGameObject->GetParent()->GetTransform()->GetWorldPosition());
+		}
+		else
+		{
+			SetLocalPosition(pos);
+		}
+	}
+
 	void Transform::Translate(const glm::vec2& offset)
 	{
 		glm::vec3 temp{ offset.x, offset.y, 0 };

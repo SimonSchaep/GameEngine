@@ -9,9 +9,13 @@ namespace engine
 
 	Scene::~Scene() = default;
 
-	GameObject* Scene::CreateAndAddGameObject(const std::string& name)
+	GameObject* Scene::CreateAndAddGameObject(const std::string& name, GameObject* pParent)
 	{
 		auto gameObject = std::make_unique<GameObject>(name);
+		if (pParent)
+		{
+			gameObject->SetParent(pParent, false);
+		}
 		GameObject* pReturnValue = gameObject.get();
 		m_GameObjects.emplace_back(std::move(gameObject));
 		return pReturnValue;

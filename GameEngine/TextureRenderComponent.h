@@ -15,12 +15,12 @@ namespace engine
 		virtual ~TextureRenderComponent();
 
 		void SetTexture(const std::string& filename);
+		Texture2D* GetTexture()const { return m_Texture.get(); };
 		void ClearTexture();
 
 		virtual void Render()const override;
 
 	protected:
-		Texture2D* GetTexture()const;
 		void SetTexture(std::unique_ptr<Texture2D> texture);
 
 	private:

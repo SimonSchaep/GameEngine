@@ -2,9 +2,6 @@
 #include "BaseComponent.h"
 #include "Event.h"
 
-
-
-
 using namespace engine;
 
 //this would be part of some other component in the game

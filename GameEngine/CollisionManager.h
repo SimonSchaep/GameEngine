@@ -2,6 +2,7 @@
 #include "Singleton.h"
 #include <vector>
 
+//only does triggers for now
 //todo: Can be upgraded to physics manager in the future
 
 namespace engine
@@ -11,6 +12,9 @@ namespace engine
 	class CollisionManager final : public Singleton<CollisionManager>
 	{
 	public:
-		void CheckCollisions();
+		void CheckTriggers();
+	private:
+		friend class Singleton<CollisionManager>;
+		CollisionManager() = default;
 	};
 }

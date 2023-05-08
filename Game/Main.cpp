@@ -30,6 +30,7 @@
 #include "ControlsDisplay.h"
 #include "Level.h"
 #include "Texture2D.h"
+#include "BoxCollider.h"
 
 using namespace engine;
 
@@ -73,17 +74,25 @@ void load()
 
 	//chef gameobject
 	auto pChef = pScene->CreateAndAddGameObject("Chef");
+	pChef->AddTag("Chef");
 	pChef->GetTransform()->SetLocalPosition({ 120,400 });
 	auto pMovementComponent = pChef->CreateAndAddComponent<MovementComponent>();
 	pMovementComponent->SetMoveSpeed(50);
 	auto pPlayerLives = pChef->CreateAndAddComponent<PlayerLives>();
 	pPlayerLives->SetMaxLives(5);
-	pChef->CreateAndAddComponent<PlayerPoints>();
+	pChef->CreateAndAddComponent<PlayerPoints>();	
 
+	//visuals
 	auto pChefVisuals = pScene->CreateAndAddGameObject("ChefVisuals", pChef);
 	auto pRenderComponent = pChefVisuals->CreateAndAddComponent<TextureRenderComponent>();
 	pRenderComponent->SetTexture("chef.png");
-	pChefVisuals->GetTransform()->SetLocalPosition({ -pRenderComponent->GetTexture()->GetSize().x / 2, -pRenderComponent->GetTexture()->GetSize().y });
+	float width = float(pRenderComponent->GetTexture()->GetSize().x);
+	float height = float(pRenderComponent->GetTexture()->GetSize().y);
+	pChefVisuals->GetTransform()->SetLocalPosition({ -width / 2, -height });
+
+	//collider
+	auto pBoxCollider = pChef->CreateAndAddComponent<BoxCollider>();
+	pBoxCollider->SetShape({ -width / 2, -height, width, height });
 
 	//bean gameobject
 	auto pBean = pScene->CreateAndAddGameObject("Bean");
@@ -94,10 +103,17 @@ void load()
 	pPlayerLives->SetMaxLives(5);
 	pBean->CreateAndAddComponent<PlayerPoints>();
 
+	//visuals
 	auto pBeanVisuals = pScene->CreateAndAddGameObject("BeanVisuals", pBean);
 	pRenderComponent = pBeanVisuals->CreateAndAddComponent<TextureRenderComponent>();
 	pRenderComponent->SetTexture("bean.png");
-	pBeanVisuals->GetTransform()->SetLocalPosition({ -pRenderComponent->GetTexture()->GetSize().x / 2, -pRenderComponent->GetTexture()->GetSize().y });
+	width = float(pRenderComponent->GetTexture()->GetSize().x);
+	height = float(pRenderComponent->GetTexture()->GetSize().y);
+	pBeanVisuals->GetTransform()->SetLocalPosition({ -width / 2, -height });
+
+	//collider
+	pBoxCollider = pBean->CreateAndAddComponent<BoxCollider>();
+	pBoxCollider->SetShape({ -width / 2, -height, width, height });
 
 	//player 1 controller gameobject
 	auto pPlayer1ControllerObject = pScene->CreateAndAddGameObject();
@@ -147,8 +163,6 @@ void load()
 	//Controls display
 	auto pControlsDisplay = pScene->CreateAndAddGameObject("ControlsDisplay");
 	pControlsDisplay->CreateAndAddComponent<ControlsDisplay>();
-
-
 
 	
 

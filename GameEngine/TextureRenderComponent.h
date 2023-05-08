@@ -20,6 +20,7 @@ namespace engine
 		void ClearTexture();
 
 		void SetSize(const glm::vec2& size) { m_Size = size; }
+		glm::vec2 GetSize();
 
 		virtual void Render()const override;
 

@@ -2,47 +2,58 @@
 #include "GameObject.h"
 #include "FoodElement.h"
 #include "BoxCollider.h"
+#include <iostream>
 
 void FoodParent::Initialize()
 {
 	for (auto pChild : GetGameObject()->GetChildren())
 	{
-		bool isFoodElement = pChild->GetComponent<FoodElement>();
-		if (isFoodElement)
-		{
-			m_FoodElements.push_back(pChild);
-			m_FoodElementStates.push_back(false);
-			pChild->GetComponent<BoxCollider>()->GetOnCollisionEnterEvent()->AddObserver(this);
-		}
+		m_FoodElements.push_back(pChild);
+		m_FoodElementStates.push_back(false);
+		pChild->GetComponent<BoxCollider>()->GetOnTriggerEnterEvent()->AddObserver(this);
 	}
 }
 
-void FoodParent::Notify(Collider* pOriginCollider, Collider* /*pHitCollider*/)
+void FoodParent::Notify(Collider* pOriginCollider, Collider* pHitCollider)
 {
+	//make corresponding food part fall
+	if (!pHitCollider->GetGameObject()->HasTag("Chef"))
+	{
+		return;
+	}
 	auto it = std::find(m_FoodElements.begin(), m_FoodElements.end(), pOriginCollider->GetGameObject());
 	if (it != m_FoodElements.end())
 	{
 		int id = int(it - m_FoodElements.begin());
-		auto newPos = pOriginCollider->GetGameObject()->GetTransform()->GetWorldPosition();
-		newPos.y = GetLowestYPosOfNeighbors(id) - m_YLowerPerFoodDown;
-		pOriginCollider->GetGameObject()->GetTransform()->SetWorldPosition(newPos);
+		if (m_FoodElementStates[id]) //if element already dropped
+		{
+			return;
+		}
+
 		m_FoodElementStates[id] = true;
+
+		if (std::find(m_FoodElementStates.begin(), m_FoodElementStates.end(), false) == m_FoodElementStates.end()) //if all elements are dropped
+		{
+			Fall();
+		}
+
+		glm::vec3 newPos = pOriginCollider->GetGameObject()->GetTransform()->GetLocalPosition();
+		newPos.y = m_YPosForFoodDown;
+		pOriginCollider->GetGameObject()->GetTransform()->SetLocalPosition(newPos);
 	}
 }
 
-float FoodParent::GetLowestYPosOfNeighbors(int foodElementIndex)
+void FoodParent::Fall()
 {
-	if (foodElementIndex == 0) //if first
+	for (auto& foodElement : m_FoodElements)
 	{
-		return m_FoodElements[foodElementIndex + 1]->GetTransform()->GetWorldPosition().y;
+		auto newPos = foodElement->GetTransform()->GetLocalPosition();
+		newPos.y = 0;
+		foodElement->GetTransform()->SetLocalPosition(newPos);
 	}
-	else if (foodElementIndex == m_FoodElements.size() - 1) //if last
+	for (size_t i{}; i < m_FoodElementStates.size(); ++i)
 	{
-		return m_FoodElements[foodElementIndex - 1]->GetTransform()->GetWorldPosition().y;
+		m_FoodElementStates[i] = false;
 	}
-	else
-	{
-		return std::min(m_FoodElements[foodElementIndex + 1]->GetTransform()->GetWorldPosition().y,
-			m_FoodElements[foodElementIndex - 1]->GetTransform()->GetWorldPosition().y);
-	}
+	//fallcomponent.fall
 }

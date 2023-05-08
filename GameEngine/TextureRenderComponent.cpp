@@ -24,6 +24,12 @@ namespace engine
 		m_Texture.reset();
 	}
 
+	glm::vec2 TextureRenderComponent::GetSize()
+	{
+		if (m_Size != glm::vec2{ 0,0 }) return m_Size;
+		else return m_Texture->GetSize();
+	}
+
 	void TextureRenderComponent::Render()const
 	{
 		if (!m_Texture)

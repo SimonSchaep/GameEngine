@@ -2,6 +2,8 @@
 #include "Scene.h"
 #include "LevelParser.h"
 #include "TextureRenderComponent.h"
+#include "BoxCollider.h"
+#include "FoodParent.h"
 
 using namespace engine;
 using namespace levelParser;
@@ -329,61 +331,82 @@ void Level::SpawnPlate(glm::vec2 pos, Scene* pScene, const std::vector<LevelElem
 
 void Level::SpawnFood(glm::vec2 pos, Scene* pScene, const std::vector<LevelElement>& levelElements, int row, int col, ELevelElement eLevelElement, const std::string& name)
 {
+	GameObject* pFoodParentGameObject = pScene->CreateAndAddGameObject("FoodParent");
+	pFoodParentGameObject->GetTransform()->SetWorldPosition(pos);
+	pFoodParentGameObject->CreateAndAddComponent<FoodParent>();
+
 	GameObject* pLevelElementGameObject{};
 	TextureRenderComponent* pRenderComponent{};
+	BoxCollider* pBoxCollider{};
 	if (col == m_LevelWidth - 1 || levelElements[GetLevelElementsIndex(row, col + 1)].eLevelElement != eLevelElement) //if this is right most element
 	{
-		pLevelElementGameObject = pScene->CreateAndAddGameObject();
+		pLevelElementGameObject = pScene->CreateAndAddGameObject("", pFoodParentGameObject);
 		pLevelElementGameObject->GetTransform()->SetWorldPosition(pos);
 		pRenderComponent = pLevelElementGameObject->CreateAndAddComponent<TextureRenderComponent>();
 		pRenderComponent->SetTexture(name + "left1.png");
+		pBoxCollider = pLevelElementGameObject->CreateAndAddComponent<BoxCollider>();
+		pBoxCollider->SetShape({ 0,0,m_GridElementWidth/2, m_GridElementHeight });
 
 		pos.x += m_GridElementWidth / 2;
-		pLevelElementGameObject = pScene->CreateAndAddGameObject();
+		pLevelElementGameObject = pScene->CreateAndAddGameObject("", pFoodParentGameObject);
 		pLevelElementGameObject->GetTransform()->SetWorldPosition(pos);
 		pRenderComponent = pLevelElementGameObject->CreateAndAddComponent<TextureRenderComponent>();
 		pRenderComponent->SetTexture(name + "right2.png");
+		pBoxCollider = pLevelElementGameObject->CreateAndAddComponent<BoxCollider>();
+		pBoxCollider->SetShape({ 0,0,m_GridElementWidth / 2, m_GridElementHeight });
 	}
 	else
 	{
-		pLevelElementGameObject = pScene->CreateAndAddGameObject();
+		pLevelElementGameObject = pScene->CreateAndAddGameObject("", pFoodParentGameObject);
 		pLevelElementGameObject->GetTransform()->SetWorldPosition(pos);
 		pRenderComponent = pLevelElementGameObject->CreateAndAddComponent<TextureRenderComponent>();
 		pRenderComponent->SetTexture(name + "left1.png");
+		pBoxCollider = pLevelElementGameObject->CreateAndAddComponent<BoxCollider>();
+		pBoxCollider->SetShape({ 0,0,m_GridElementWidth / 2, m_GridElementHeight });
 
 		pos.x += m_GridElementWidth / 2;
-		pLevelElementGameObject = pScene->CreateAndAddGameObject();
+		pLevelElementGameObject = pScene->CreateAndAddGameObject("", pFoodParentGameObject);
 		pLevelElementGameObject->GetTransform()->SetWorldPosition(pos);
 		pRenderComponent = pLevelElementGameObject->CreateAndAddComponent<TextureRenderComponent>();
 		pRenderComponent->SetTexture(name + "left2.png");
+		pBoxCollider = pLevelElementGameObject->CreateAndAddComponent<BoxCollider>();
+		pBoxCollider->SetShape({ 0,0,m_GridElementWidth / 2, m_GridElementHeight });
 
 		while (!(col == m_LevelWidth - 2 || levelElements[GetLevelElementsIndex(row, col + 2)].eLevelElement != eLevelElement)) //while next element is not right most element
 		{
 			++col;
 			pos.x += m_GridElementWidth / 2;
-			pLevelElementGameObject = pScene->CreateAndAddGameObject();
+			pLevelElementGameObject = pScene->CreateAndAddGameObject("", pFoodParentGameObject);
 			pLevelElementGameObject->GetTransform()->SetWorldPosition(pos);
 			pRenderComponent = pLevelElementGameObject->CreateAndAddComponent<TextureRenderComponent>();
 			pRenderComponent->SetTexture(name + "mid1.png");
+			pBoxCollider = pLevelElementGameObject->CreateAndAddComponent<BoxCollider>();
+			pBoxCollider->SetShape({ 0,0,m_GridElementWidth / 2, m_GridElementHeight });
 
 			pos.x += m_GridElementWidth / 2;
-			pLevelElementGameObject = pScene->CreateAndAddGameObject();
+			pLevelElementGameObject = pScene->CreateAndAddGameObject("", pFoodParentGameObject);
 			pLevelElementGameObject->GetTransform()->SetWorldPosition(pos);
 			pRenderComponent = pLevelElementGameObject->CreateAndAddComponent<TextureRenderComponent>();
 			pRenderComponent->SetTexture(name + "mid2.png");
+			pBoxCollider = pLevelElementGameObject->CreateAndAddComponent<BoxCollider>();
+			pBoxCollider->SetShape({ 0,0,m_GridElementWidth / 2, m_GridElementHeight });
 		}
 
 		pos.x += m_GridElementWidth / 2;
-		pLevelElementGameObject = pScene->CreateAndAddGameObject();
+		pLevelElementGameObject = pScene->CreateAndAddGameObject("", pFoodParentGameObject);
 		pLevelElementGameObject->GetTransform()->SetWorldPosition(pos);
 		pRenderComponent = pLevelElementGameObject->CreateAndAddComponent<TextureRenderComponent>();
 		pRenderComponent->SetTexture(name + "right1.png");
+		pBoxCollider = pLevelElementGameObject->CreateAndAddComponent<BoxCollider>();
+		pBoxCollider->SetShape({ 0,0,m_GridElementWidth / 2, m_GridElementHeight });
 
 		pos.x += m_GridElementWidth / 2;
-		pLevelElementGameObject = pScene->CreateAndAddGameObject();
+		pLevelElementGameObject = pScene->CreateAndAddGameObject("", pFoodParentGameObject);
 		pLevelElementGameObject->GetTransform()->SetWorldPosition(pos);
 		pRenderComponent = pLevelElementGameObject->CreateAndAddComponent<TextureRenderComponent>();
 		pRenderComponent->SetTexture(name + "right2.png");
+		pBoxCollider = pLevelElementGameObject->CreateAndAddComponent<BoxCollider>();
+		pBoxCollider->SetShape({ 0,0,m_GridElementWidth / 2, m_GridElementHeight });
 	}
 }
 

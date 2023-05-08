@@ -7,7 +7,7 @@ namespace engine
 	class RenderComponent : public BaseComponent
 	{
 	public:
-		RenderComponent(GameObject* pGameObject) :BaseComponent(pGameObject) {};
+		RenderComponent(GameObject* pGameObject);
 		virtual ~RenderComponent() = default;
 
 		virtual void Initialize() override {};

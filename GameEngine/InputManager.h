@@ -31,6 +31,9 @@ namespace engine
 		void BindKeyboardButtonToCommand(SDL_Scancode scanCode, KeyState keyState, std::unique_ptr<BaseCommand> command);
 
 	private:
+		friend class Singleton<InputManager>;
+		InputManager() = default;
+
 		void ProcessControllerInput();
 		void ProcessKeyboardInput();
 		bool ProcessSDLEvents();

@@ -1,8 +1,12 @@
 #include "Collider.h"
+#include "GameObject.h"
 
 engine::Collider::Collider(GameObject* pGameObject)
 	:BaseComponent(pGameObject)
 {
-	m_OnCollisionEnter = std::make_unique<Event<Collider*, Collider*>>();
-	m_OnCollisionExit = std::make_unique<Event<Collider*, Collider*>>();
+	m_OnTriggerEnter = std::make_unique<Event<Collider*, Collider*>>();
+	m_OnTriggerStay = std::make_unique<Event<Collider*, Collider*>>();
+	m_OnTriggerExit = std::make_unique<Event<Collider*, Collider*>>();
+
+	pGameObject->RegisterCollider(this);
 }

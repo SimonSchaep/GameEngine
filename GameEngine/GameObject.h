@@ -4,11 +4,14 @@
 #include <unordered_map>
 #include <string>
 #include "Transform.h"
+#include "BaseComponent.h"
+//#include "Collider.h"
 
 namespace engine
 {
-	class BaseComponent;
 	class RenderComponent;
+	class UIRenderComponent;
+	class Collider;
 
 	class GameObject final
 	{
@@ -21,6 +24,8 @@ namespace engine
 		Transform* GetTransform() { return m_Transform.get(); }
 
 		const std::string& GetName()const { return m_Name; }
+		bool HasTag(const std::string& tag) { return std::find(m_Tags.begin(), m_Tags.end(), tag) != m_Tags.end(); }
+		void AddTag(const std::string& tag) { m_Tags.push_back(tag); }
 
 		void MarkForDeletion(bool includeChildren);
 		bool IsMarkedForDeletion() { return m_IsMarkedForDeletion; }
@@ -32,6 +37,14 @@ namespace engine
 
 		const std::vector<GameObject*>& GetChildren()const { return m_Children; }
 
+		void RegisterCollider(Collider* pCollider) { m_Colliders.push_back(pCollider); }
+		const std::vector<Collider*>& GetColliders()const { return m_Colliders; } //to make collisions not have to use GetAllComponentsOfType
+
+		void RegisterRenderComponent(RenderComponent* pRenderComponent) { m_RenderComponents.push_back(pRenderComponent); }
+		const std::vector<RenderComponent*>& GetRenderComponents()const { return m_RenderComponents; } //to make rendering not have to use GetAllComponentsOfType
+
+		void RegisterUIRenderComponent(UIRenderComponent* pUIRenderComponent) { m_UIRenderComponents.push_back(pUIRenderComponent); }
+		const std::vector<UIRenderComponent*>& GetUIRenderComponents()const { return m_UIRenderComponents; } //to make ui rendering not have to use GetAllComponentsOfType
 
 		//COMPONENTS
 		//returns the first m_pComponent of the specified type
@@ -62,13 +75,14 @@ namespace engine
 
 	private:
 		void AddChild(GameObject* pGameObject) { m_Children.push_back(pGameObject); };
-		void RemoveChild(GameObject* pGameObject) { m_Children.erase(std::remove(m_Children.begin(), m_Children.end(), pGameObject)); };
+		void RemoveChild(GameObject* pGameObject) { m_Children.erase(std::remove(m_Children.begin(), m_Children.end(), pGameObject)); }
 
 		bool m_IsInitialized{};
 
 		std::unique_ptr<Transform> m_Transform{};
 
 		std::string m_Name{};
+		std::vector<std::string> m_Tags{};
 
 		bool m_IsMarkedForDeletion{};
 
@@ -77,7 +91,11 @@ namespace engine
 		std::vector<GameObject*> m_Children;
 		GameObject* m_Parent{};
 
-		std::vector<std::unique_ptr<BaseComponent>> m_Components;
+		std::vector<Collider*> m_Colliders{};
+		std::vector<RenderComponent*> m_RenderComponents{};
+		std::vector<UIRenderComponent*> m_UIRenderComponents{};
+
+		std::vector<std::unique_ptr<BaseComponent>> m_Components{};
 		//this could be interesting if getcomponent is too slow:
 		//https://stackoverflow.com/questions/9859390/use-data-type-class-type-as-key-in-a-map
 	};
@@ -119,6 +137,7 @@ namespace engine
 	{
 		auto component = std::make_unique<T>(this);
 		T* pReturnValue = component.get();
+
 		m_Components.push_back(std::move(component));
 		return pReturnValue;
 	}

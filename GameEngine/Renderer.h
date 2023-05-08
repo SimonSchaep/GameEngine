@@ -29,6 +29,9 @@ namespace engine
 		glm::vec2 GetWindowSize()const;
 
 	private:
+		friend class Singleton<Renderer>;
+		Renderer() = default;
+
 		SDL_Renderer* m_Renderer{};
 		SDL_Window* m_Window{};
 		SDL_Color m_ClearColor{};

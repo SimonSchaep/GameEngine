@@ -7,7 +7,7 @@ namespace engine
 	class UIRenderComponent : public BaseComponent
 	{
 	public:
-		UIRenderComponent(GameObject* pGameObject) :BaseComponent(pGameObject) {};
+		UIRenderComponent(GameObject* pGameObject);
 		virtual ~UIRenderComponent() = default;
 
 		virtual void Initialize() override {};

@@ -22,6 +22,9 @@ namespace engine
 		float GetDeltaTime()const { return m_DeltaTime; };
 		float GetTotalTime()const { return m_TotalTime; };
 	private:
+		friend class Singleton<TimeManager>;
+		TimeManager() = default;
+
 		void HighResSleep(float sleepTime);
 
 		float m_DeltaTime{};

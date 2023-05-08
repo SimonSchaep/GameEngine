@@ -3,19 +3,25 @@
 #include "SceneManager.h"
 #include "Scene.h"
 
-void engine::CollisionManager::CheckCollisions()
+void engine::CollisionManager::CheckTriggers()
 {
-	/*auto pActiveScene = SceneManager::GetInstance().GetActiveScene();
+	auto pActiveScene = SceneManager::GetInstance().GetActiveScene();
+	const std::vector<std::shared_ptr<GameObject>>& gameObjects = pActiveScene->GetGameObjects();
 
-	for (auto& gameObject : pActiveScene->GetGameObjects())
+	//for every collider
+	for (auto& gameObject : gameObjects)
 	{
-		for (auto& collider : gameObject.get)
+		for (auto& collider : gameObject->GetColliders())
 		{
-			for (auto& otherCollider : m_Colliders)
+			//check triggers with every other collider
+			for (auto& otherGameObject : gameObjects)
 			{
-				collider->CheckCollision(otherCollider);
+				for (auto& otherCollider : otherGameObject->GetColliders())
+				{
+					collider->CheckTrigger(otherCollider);
+				}
 			}
 		}
-	}*/
+	}
 	
 }

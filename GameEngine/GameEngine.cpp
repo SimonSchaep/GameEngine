@@ -112,7 +112,7 @@ namespace engine
 
 			//UPDATE + RENDER
 			sceneManager.Update();
-			CollisionManager::GetInstance().CheckCollisions();
+			CollisionManager::GetInstance().CheckTriggers();
 			renderer.Render();
 		}
 	}

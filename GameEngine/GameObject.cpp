@@ -28,15 +28,16 @@ namespace engine
 		if (GetChildren().size() > 0)
 		{
 			//remove all children from parent
-			for (auto child : GetChildren())
+			for (int i{ int(GetChildren().size() - 1)}; i >= 0; --i) //reverse order cause removing items from array we are looping over
 			{
-				child->SetParent(nullptr, true);
+				GetChildren()[i]->SetParent(nullptr, true);
 			}
 		}
 	}
 
 	void GameObject::Initialize()
 	{
+		//std::cout << GetName() << "init\n";
 		for (auto& c : m_Components)
 		{
 			c->InitializeComponent();
@@ -72,7 +73,7 @@ namespace engine
 
 	void GameObject::RenderUI()
 	{
-		for (auto& renderer : GetAllComponentsOfType<UIRenderComponent>())
+		for (auto& renderer : m_UIRenderComponents)
 		{
 			renderer->RenderUI();
 		}
@@ -80,7 +81,7 @@ namespace engine
 
 	void GameObject::Render()const
 	{
-		for (auto& renderer : GetAllComponentsOfType<RenderComponent>())
+		for (auto& renderer : m_RenderComponents)
 		{
 			renderer->Render();
 		}

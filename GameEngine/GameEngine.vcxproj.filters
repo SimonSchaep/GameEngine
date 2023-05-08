@@ -204,14 +204,14 @@
     <ClInclude Include="BoxCollider.h">
       <Filter>Engine\Components</Filter>
     </ClInclude>
-    <ClInclude Include="Structs.h">
-      <Filter>Engine</Filter>
-    </ClInclude>
     <ClInclude Include="Collider.h">
       <Filter>Engine\Components</Filter>
     </ClInclude>
     <ClInclude Include="CollisionManager.h">
       <Filter>Engine\Singletons</Filter>
+    </ClInclude>
+    <ClInclude Include="Structs.h">
+      <Filter>Engine\Utility</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -232,6 +232,9 @@
     </Filter>
     <Filter Include="Engine\Observer">
       <UniqueIdentifier>{31af50d0-a07c-4657-8ad2-fb0d849c9d4f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\Utility">
+      <UniqueIdentifier>{aaeaed58-47fc-49cc-afc5-37be08da4ff3}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

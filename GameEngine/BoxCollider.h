@@ -16,6 +16,7 @@ namespace engine
 		virtual void CheckCollision(Collider* pCollider) override;
 
 	private:
+		structs::Rect GetShapeInWorld()const;
 		structs::Rect m_Shape{};
 	};
 }

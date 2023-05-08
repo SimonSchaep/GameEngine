@@ -10,10 +10,9 @@
 namespace engine
 {
 
-	GameObject::GameObject(const std::string& name, int sceneIndex)
+	GameObject::GameObject(const std::string& name)
 		: m_Transform{ std::make_unique<Transform>(this) }
 		, m_Name{ name }
-		, m_SceneIndex{sceneIndex}
 	{
 	}
 

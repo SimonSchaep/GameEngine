@@ -19,7 +19,7 @@ namespace levelParser
 using namespace engine;
 using namespace levelParser;
 
-class Level : public engine::Singleton<Level>
+class Level final : public engine::Singleton<Level>
 {
 public:
 	void BuildLevel(Scene* pScene, const std::string& fileName);

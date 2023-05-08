@@ -12,6 +12,7 @@
 #include "TimeManager.h"
 #include "GameObject.h"
 #include "TextureRenderComponent.h"
+#include "CollisionManager.h"
 #include <iostream>
 #include <chrono>
 
@@ -96,7 +97,6 @@ namespace engine
 		auto& input = InputManager::GetInstance();
 		auto& time = TimeManager::GetInstance();
 
-		//float lag = 0.f;
 		bool doContinue = true;
 
 		sceneManager.Initialize();
@@ -110,17 +110,9 @@ namespace engine
 			//TIME
 			time.Update(); //calculate deltatime, totaltime..., will sleep to cap fps when a cap is set
 
-			//FIXED UPDATE
-			//lag += time.GetDeltaTime();		
-			//while (lag >= time.GetFixedTimeStep())
-			//{
-			//	//Todo: Implement FixedUpdate here
-			//	//physics.FixedUpdate();
-			//	lag -= time.GetFixedTimeStep();
-			//}
-
 			//UPDATE + RENDER
 			sceneManager.Update();
+			CollisionManager::GetInstance().CheckCollisions();
 			renderer.Render();
 		}
 	}

@@ -1,13 +1,21 @@
 #include "CollisionManager.h"
 #include "Collider.h"
+#include "SceneManager.h"
+#include "Scene.h"
 
 void engine::CollisionManager::CheckCollisions()
 {
-	for (auto pCollider : m_Colliders)
+	/*auto pActiveScene = SceneManager::GetInstance().GetActiveScene();
+
+	for (auto& gameObject : pActiveScene->GetGameObjects())
 	{
-		for (auto pOtherCollider : m_Colliders)
+		for (auto& collider : gameObject.get)
 		{
-			pCollider->CheckCollision(pOtherCollider);
+			for (auto& otherCollider : m_Colliders)
+			{
+				collider->CheckCollision(otherCollider);
+			}
 		}
-	}
+	}*/
+	
 }

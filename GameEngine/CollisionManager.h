@@ -12,8 +12,5 @@ namespace engine
 	{
 	public:
 		void CheckCollisions();
-
-	private:
-		std::vector<Collider*> m_Colliders{};
 	};
 }

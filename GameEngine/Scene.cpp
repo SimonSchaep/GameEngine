@@ -10,7 +10,7 @@ namespace engine
 
 	GameObject* Scene::CreateAndAddGameObject(const std::string& name, GameObject* pParent)
 	{
-		auto gameObject = std::make_shared<GameObject>(name, m_Index);
+		auto gameObject = std::make_shared<GameObject>(name);
 		if (pParent)
 		{
 			gameObject->SetParent(pParent, false);
@@ -37,11 +37,6 @@ namespace engine
 			}
 		}
 		return nullptr;
-	}
-
-	void Scene::RemoveAllGameObjects()
-	{
-		m_GameObjects.clear();
 	}
 
 	std::shared_ptr<GameObject> Scene::GetSharedPtrForGameObject(GameObject* pGameObject)
@@ -85,13 +80,8 @@ namespace engine
 		}
 		m_ToDeleteIndexes.clear();
 
-
-		//Sort rendercomponents
-		std::sort(m_RenderComponents.begin(), m_RenderComponents.end(),
-			[](RenderComponent* renderComp1, RenderComponent* renderComp2)
-			{
-				return (renderComp1->GetLayer() < renderComp2->GetLayer());
-			});
+		//maybe shoudln't do this every frame, but should be able to change layer at runtime
+		SortGameObjectsByRenderLayer();
 	}
 
 	void Scene::RenderUI()
@@ -104,10 +94,32 @@ namespace engine
 
 	void Scene::Render()const
 	{
-		for (const auto& renderComponent : m_RenderComponents)
+		for (const auto& gameObject : m_GameObjects)
 		{
-			renderComponent->Render();
+			gameObject->Render();
 		}
+	}
+
+	void Scene::SortGameObjectsByRenderLayer()
+	{
+		//Sort gameObjects so render will be based on layer of first rendercomponent of each gameobject
+		std::sort(m_GameObjects.begin(), m_GameObjects.end(),
+			[](std::shared_ptr<GameObject> obj1, std::shared_ptr<GameObject> obj2)
+			{
+				int layer1{};
+				int layer2{};
+				RenderComponent* pRenderComponent{ obj1->GetComponent<RenderComponent>() };
+				if (pRenderComponent)
+				{
+					layer1 = pRenderComponent->GetLayer();
+				}
+				pRenderComponent = obj2->GetComponent<RenderComponent>();
+				if (pRenderComponent)
+				{
+					layer2 = pRenderComponent->GetLayer();
+				}
+				return (layer1 < layer2);
+			});
 	}
 
 	void Scene::RemoveGameObjectByIndex(size_t i)

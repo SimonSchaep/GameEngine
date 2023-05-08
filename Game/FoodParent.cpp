@@ -70,8 +70,11 @@ void FoodParent::HandleTriggerEnter(Collider* pOriginCollider, Collider* pHitCol
 				auto otherFoodParent = pHitCollider->GetGameObject()->GetComponent<FoodParent>();
 				if (!otherFoodParent->ReachedPlate())
 				{
-					otherFoodParent->StartFall();
-					ResetVelocity();
+					if (!otherFoodParent->IsFalling())
+					{
+						otherFoodParent->StartFall();
+						m_FallVelocity = m_BounceVelocity;
+					}					
 				}
 				else
 				{
@@ -128,14 +131,9 @@ void FoodParent::StopFall()
 	{
 		m_FoodElementStates[i] = false;
 	}
-	ResetVelocity();	
+	m_FallVelocity = 0;
 	m_FallEvent->NotifyObservers(GetGameObject(), false);
 	m_IsFalling = false;
-}
-
-void FoodParent::ResetVelocity()
-{
-	m_FallVelocity = 0;
 }
 
 void FoodParent::StartFall()

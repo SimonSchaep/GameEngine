@@ -21,10 +21,11 @@ namespace engine
 		return false;
 	}
 
+	//todo: optimize this function
 	void engine::BoxCollider::CheckTrigger(Collider* pCollider)
 	{
-		//std::cout << "triggercheck\n";
-		std::vector<Collider*>& currentTriggers = GetCurrentTriggers();
+		auto& currentTriggers = GetCurrentTriggers();
+		//this find is very inefficient
 		if (std::find(currentTriggers.begin(), currentTriggers.end(), pCollider) != currentTriggers.end()) //if we triggered previous frame
 		{
 			if (pCollider->IsRectInCollider(GetShapeInWorld())) //and we are still triggering

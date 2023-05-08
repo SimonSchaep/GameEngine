@@ -2,16 +2,34 @@
 #include "GameObject.h"
 #include "FoodElement.h"
 #include "BoxCollider.h"
+#include "TimeManager.h"
 #include <iostream>
+
+FoodParent::FoodParent(GameObject* pGameObject)
+	:BaseComponent(pGameObject)
+{
+	m_FallEvent = std::make_unique<Event<GameObject*, bool>>();
+}
 
 void FoodParent::Initialize()
 {
+	GetGameObject()->GetComponent<BoxCollider>()->GetOnTriggerEvent()->AddObserver(this);
+
 	for (auto pChild : GetGameObject()->GetChildren())
 	{
 		m_FoodElements.push_back(pChild);
 		m_FoodElementStates.push_back(false);
 		pChild->GetComponent<BoxCollider>()->GetOnTriggerEvent()->AddObserver(this);
 	}
+}
+
+void FoodParent::Update()
+{
+	if (m_IsFalling)
+	{
+		m_FallVelocity += m_FallAcceleration * TimeManager::GetInstance().GetDeltaTime();
+		GetGameObject()->GetTransform()->Translate(0, m_FallVelocity * TimeManager::GetInstance().GetDeltaTime(), 0);
+	}	
 }
 
 void FoodParent::Notify(Collider::TriggerType triggerType, Collider* pOriginCollider, Collider* pHitCollider)
@@ -30,14 +48,38 @@ void FoodParent::Notify(Collider::TriggerType triggerType, Collider* pOriginColl
 	default:
 		break;
 	}
-	
-	
 }
 
 void FoodParent::HandleTriggerEnter(Collider* pOriginCollider, Collider* pHitCollider)
 {
 	if (pOriginCollider->GetGameObject() == GetGameObject()) //hit food parent
 	{
+		if (IsFalling())
+		{
+			if (pHitCollider->GetGameObject()->HasTag("platform"))
+			{
+				StopFall();
+			}
+			else if (pHitCollider->GetGameObject()->HasTag("plate"))
+			{
+				m_ReachedPlate = true;
+				StopFall();
+			}
+			else if (pHitCollider->GetGameObject()->HasTag("foodparent"))
+			{
+				auto otherFoodParent = pHitCollider->GetGameObject()->GetComponent<FoodParent>();
+				if (!otherFoodParent->ReachedPlate())
+				{
+					otherFoodParent->StartFall();
+					ResetVelocity();
+				}
+				else
+				{
+					m_ReachedPlate = true;
+					StopFall();
+				}
+			}
+		}		
 		return;
 	}
 	if (!pHitCollider->GetGameObject()->HasTag("Chef"))
@@ -57,14 +99,18 @@ void FoodParent::HandleTriggerEnter(Collider* pOriginCollider, Collider* pHitCol
 
 		m_FoodElementStates[id] = true;
 
+		//std::cout << "drop\n";
+
 		if (std::find(m_FoodElementStates.begin(), m_FoodElementStates.end(), false) == m_FoodElementStates.end()) //if all elements are dropped
 		{
-			Fall();
+			StartFall();
 		}
-
-		glm::vec3 newPos = pOriginCollider->GetGameObject()->GetTransform()->GetLocalPosition();
-		newPos.y = m_YPosForFoodDown;
-		pOriginCollider->GetGameObject()->GetTransform()->SetLocalPosition(newPos);
+		else
+		{
+			glm::vec3 newPos = pOriginCollider->GetGameObject()->GetTransform()->GetLocalPosition();
+			newPos.y = m_YPosForFoodDown;
+			pOriginCollider->GetGameObject()->GetTransform()->SetLocalPosition(newPos);
+		}		
 	}
 }
 
@@ -76,7 +122,23 @@ void FoodParent::HandleTriggerStay(Collider* /*pOriginCollider*/, Collider* /*pH
 {
 }
 
-void FoodParent::Fall()
+void FoodParent::StopFall()
+{
+	for (size_t i{}; i < m_FoodElementStates.size(); ++i)
+	{
+		m_FoodElementStates[i] = false;
+	}
+	ResetVelocity();	
+	m_FallEvent->NotifyObservers(GetGameObject(), false);
+	m_IsFalling = false;
+}
+
+void FoodParent::ResetVelocity()
+{
+	m_FallVelocity = 0;
+}
+
+void FoodParent::StartFall()
 {
 	for (auto& foodElement : m_FoodElements)
 	{
@@ -84,9 +146,12 @@ void FoodParent::Fall()
 		newPos.y = 0;
 		foodElement->GetTransform()->SetLocalPosition(newPos);
 	}
+
 	for (size_t i{}; i < m_FoodElementStates.size(); ++i)
 	{
-		m_FoodElementStates[i] = false;
+		m_FoodElementStates[i] = true;
 	}
-	//fallcomponent.fall
+
+	m_FallEvent->NotifyObservers(GetGameObject(), true);
+	m_IsFalling = true;
 }

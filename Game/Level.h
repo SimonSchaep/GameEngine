@@ -10,6 +10,7 @@ namespace engine
 	class Scene;
 	class GameObject;
 	class BoxCollider;
+	class TextureRenderComponent;
 }
 
 namespace levelParser
@@ -37,6 +38,8 @@ public:
 
 private:
 	int GetLevelElementsIndex(int row, int col);
+
+	void CreateDarkPlatform(TextureRenderComponent* pRenderComponent, GameObject* pLevelElementGameObject, bool hasLadder);
 	void SpawnPlate(glm::vec2 pos, Scene* pScene, const std::vector<LevelElement>& levelElements, int row, int col);
 	void SpawnFood(glm::vec2 pos, Scene* pScene, const std::vector<LevelElement>& levelElements, int row, int col, ELevelElement eLevelElement, const std::string& name);
 	void CreateFoodElement(const glm::vec2 pos, Scene* pScene, const std::string& textureFileName, GameObject* pParent, BoxCollider* pParentCollider);

@@ -93,7 +93,7 @@ void load()
 
 	//collider
 	auto pBoxCollider = pChef->CreateAndAddComponent<BoxCollider>();
-	pBoxCollider->SetShape({ -width / 2, -height, width, height });
+	pBoxCollider->SetShape({ -width / 2, -4, width, height });
 
 	//bean gameobject
 	auto pBean = pScene->CreateAndAddGameObject("Bean");
@@ -115,7 +115,7 @@ void load()
 
 	//collider
 	pBoxCollider = pBean->CreateAndAddComponent<BoxCollider>();
-	pBoxCollider->SetShape({ -width / 2, -height, width, height });
+	pBoxCollider->SetShape({ -width / 2, -4, width, height });
 
 	//player 1 controller gameobject
 	auto pPlayer1ControllerObject = pScene->CreateAndAddGameObject();

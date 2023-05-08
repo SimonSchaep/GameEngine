@@ -67,14 +67,7 @@ void Level::BuildLevel(Scene* pScene, const std::string& fileName)
 			case ELevelElement::platform:
 				if (hasFoodAbove[c])
 				{
-					if (levelElement.hasLadder)
-					{
-						pRenderComponent->SetTexture("platformdarkladder.png");
-					}
-					else
-					{
-						pRenderComponent->SetTexture("platformdark.png");
-					}
+					CreateDarkPlatform(pRenderComponent, pLevelElementGameObject, levelElement.hasLadder);
 				}
 				else
 				{
@@ -90,14 +83,8 @@ void Level::BuildLevel(Scene* pScene, const std::string& fileName)
 				break;
 			case ELevelElement::topbun:
 				hasFoodAbove[c] = true;
-				if (levelElement.hasLadder)
-				{
-					pRenderComponent->SetTexture("platformdarkladder.png");
-				}
-				else
-				{
-					pRenderComponent->SetTexture("platformdark.png");
-				}
+				CreateDarkPlatform(pRenderComponent, pLevelElementGameObject, levelElement.hasLadder);
+
 				if (c == 0 || levelElements[GetLevelElementsIndex(r, c - 1)].eLevelElement != ELevelElement::topbun) //if this is left most element
 				{
 					SpawnFood(position + foodOffset, pScene, levelElements, r, c, ELevelElement::topbun, "topbun");
@@ -105,14 +92,8 @@ void Level::BuildLevel(Scene* pScene, const std::string& fileName)
 				break;
 			case ELevelElement::botbun:
 				hasFoodAbove[c] = true;
-				if (levelElement.hasLadder)
-				{
-					pRenderComponent->SetTexture("platformdarkladder.png");
-				}
-				else
-				{
-					pRenderComponent->SetTexture("platformdark.png");
-				}
+				CreateDarkPlatform(pRenderComponent, pLevelElementGameObject, levelElement.hasLadder);
+
 				if (c == 0 || levelElements[GetLevelElementsIndex(r, c - 1)].eLevelElement != ELevelElement::botbun) //if this is left most element
 				{
 					SpawnFood(position + foodOffset, pScene, levelElements, r, c, ELevelElement::botbun, "botbun");
@@ -120,14 +101,8 @@ void Level::BuildLevel(Scene* pScene, const std::string& fileName)
 				break;
 			case ELevelElement::lettuce:
 				hasFoodAbove[c] = true;
-				if (levelElement.hasLadder)
-				{
-					pRenderComponent->SetTexture("platformdarkladder.png");
-				}
-				else
-				{
-					pRenderComponent->SetTexture("platformdark.png");
-				}
+				CreateDarkPlatform(pRenderComponent, pLevelElementGameObject, levelElement.hasLadder);
+
 				if (c == 0 || levelElements[GetLevelElementsIndex(r, c - 1)].eLevelElement != ELevelElement::lettuce) //if this is left most element
 				{
 					SpawnFood(position + foodOffset, pScene, levelElements, r, c, ELevelElement::lettuce, "lettuce");
@@ -135,14 +110,8 @@ void Level::BuildLevel(Scene* pScene, const std::string& fileName)
 				break;
 			case ELevelElement::meat:
 				hasFoodAbove[c] = true;
-				if (levelElement.hasLadder)
-				{
-					pRenderComponent->SetTexture("platformdarkladder.png");
-				}
-				else
-				{
-					pRenderComponent->SetTexture("platformdark.png");
-				}
+				CreateDarkPlatform(pRenderComponent, pLevelElementGameObject, levelElement.hasLadder);
+
 				if (c == 0 || levelElements[GetLevelElementsIndex(r, c - 1)].eLevelElement != ELevelElement::meat) //if this is left most element
 				{
 					SpawnFood(position + foodOffset, pScene, levelElements, r, c, ELevelElement::meat, "meat");
@@ -150,14 +119,8 @@ void Level::BuildLevel(Scene* pScene, const std::string& fileName)
 				break;
 			case ELevelElement::cheese:
 				hasFoodAbove[c] = true;
-				if (levelElement.hasLadder)
-				{
-					pRenderComponent->SetTexture("platformdarkladder.png");
-				}
-				else
-				{
-					pRenderComponent->SetTexture("platformdark.png");
-				}
+				CreateDarkPlatform(pRenderComponent, pLevelElementGameObject, levelElement.hasLadder);
+
 				if (c == 0 || levelElements[GetLevelElementsIndex(r, c - 1)].eLevelElement != ELevelElement::cheese) //if this is left most element
 				{
 					SpawnFood(position + foodOffset, pScene, levelElements, r, c, ELevelElement::cheese, "cheese");
@@ -165,14 +128,8 @@ void Level::BuildLevel(Scene* pScene, const std::string& fileName)
 				break;
 			case ELevelElement::tomato:
 				hasFoodAbove[c] = true;
-				if (levelElement.hasLadder)
-				{
-					pRenderComponent->SetTexture("platformdarkladder.png");
-				}
-				else
-				{
-					pRenderComponent->SetTexture("platformdark.png");
-				}
+				CreateDarkPlatform(pRenderComponent, pLevelElementGameObject, levelElement.hasLadder);
+
 				if (c == 0 || levelElements[GetLevelElementsIndex(r, c - 1)].eLevelElement != ELevelElement::tomato) //if this is left most element
 				{
 					SpawnFood(position + foodOffset, pScene, levelElements, r, c, ELevelElement::tomato, "tomato");
@@ -291,47 +248,75 @@ int Level::GetLevelElementsIndex(int row, int col)
 	return row * m_LevelWidth + col;
 }
 
+void Level::CreateDarkPlatform(TextureRenderComponent* pRenderComponent, GameObject* pLevelElementGameObject, bool hasLadder)
+{
+	if (hasLadder)
+	{
+		pRenderComponent->SetTexture("platformdarkladder.png");
+	}
+	else
+	{
+		pRenderComponent->SetTexture("platformdark.png");
+	}
+	pLevelElementGameObject->AddTag("platform");
+	auto pColliderComponent = pLevelElementGameObject->CreateAndAddComponent<BoxCollider>();
+	pColliderComponent->SetShape({ 0,-m_GridElementHeight / 6,m_GridElementWidth , m_GridElementHeight/6 });
+}
+
+//todo: refactor this
 void Level::SpawnPlate(glm::vec2 pos, Scene* pScene, const std::vector<LevelElement>& levelElements, int row, int col)
 {
-
 	GameObject* pLevelElementGameObject{};
 	TextureRenderComponent* pRenderComponent{};
 	if (col == m_LevelWidth - 1 || levelElements[GetLevelElementsIndex(row, col + 1)].eLevelElement != ELevelElement::plate) //if this is right most element
 	{
 		//put left and 
 		pLevelElementGameObject = pScene->CreateAndAddGameObject();
+		pLevelElementGameObject->AddTag("plate");
 		pLevelElementGameObject->GetTransform()->SetWorldPosition(pos);
 		pRenderComponent = pLevelElementGameObject->CreateAndAddComponent<TextureRenderComponent>();
 		pRenderComponent->SetTexture("platesingle.png");
+		auto pBoxCollider = pLevelElementGameObject->CreateAndAddComponent<BoxCollider>();
+		pBoxCollider->SetShape({ 0,0,m_GridElementWidth, m_GridElementHeight/6 });
 	}
 	else
 	{
 		pLevelElementGameObject = pScene->CreateAndAddGameObject();
+		pLevelElementGameObject->AddTag("plate");
 		pLevelElementGameObject->GetTransform()->SetWorldPosition(pos);
 		pRenderComponent = pLevelElementGameObject->CreateAndAddComponent<TextureRenderComponent>();
 		pRenderComponent->SetTexture("plateleft.png");
+		auto pBoxCollider = pLevelElementGameObject->CreateAndAddComponent<BoxCollider>();
+		pBoxCollider->SetShape({ 0,0,m_GridElementWidth, m_GridElementHeight/6 });
 
 		while (!(col == m_LevelWidth - 2 || levelElements[GetLevelElementsIndex(row, col + 2)].eLevelElement != ELevelElement::plate)) //while next element is not right most element
 		{
 			++col;
 			pos.x += m_GridElementWidth;
 			pLevelElementGameObject = pScene->CreateAndAddGameObject();
+			pLevelElementGameObject->AddTag("plate");
 			pLevelElementGameObject->GetTransform()->SetWorldPosition(pos);
 			pRenderComponent = pLevelElementGameObject->CreateAndAddComponent<TextureRenderComponent>();
 			pRenderComponent->SetTexture("platemiddle.png");
+			pBoxCollider = pLevelElementGameObject->CreateAndAddComponent<BoxCollider>();
+			pBoxCollider->SetShape({ 0,0,m_GridElementWidth, m_GridElementHeight/6 });
 		}
 
 		pos.x += m_GridElementWidth;
 		pLevelElementGameObject = pScene->CreateAndAddGameObject();
+		pLevelElementGameObject->AddTag("plate");
 		pLevelElementGameObject->GetTransform()->SetWorldPosition(pos);
 		pRenderComponent = pLevelElementGameObject->CreateAndAddComponent<TextureRenderComponent>();
 		pRenderComponent->SetTexture("plateright.png");
+		pBoxCollider = pLevelElementGameObject->CreateAndAddComponent<BoxCollider>();
+		pBoxCollider->SetShape({ 0,0,m_GridElementWidth, m_GridElementHeight/6 });
 	}
 }
 
 void Level::SpawnFood(glm::vec2 pos, Scene* pScene, const std::vector<LevelElement>& levelElements, int row, int col, ELevelElement eLevelElement, const std::string& name)
 {
 	GameObject* pFoodParentGameObject = pScene->CreateAndAddGameObject("FoodParent");
+	pFoodParentGameObject->AddTag("foodparent");
 	pFoodParentGameObject->GetTransform()->SetWorldPosition(pos);
 	pFoodParentGameObject->CreateAndAddComponent<FoodParent>();
 	auto pParentCollider = pFoodParentGameObject->CreateAndAddComponent<BoxCollider>();

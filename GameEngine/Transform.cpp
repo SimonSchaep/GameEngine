@@ -106,9 +106,23 @@ namespace engine
 		SetDirty(true);
 	}
 
+	void Transform::Translate(float x, float y)
+	{
+		m_LocalPosition += glm::vec3{ x,y,0 };
+
+		SetDirty(true);
+	}
+
 	void Transform::Translate(const glm::vec3& offset)
 	{
 		m_LocalPosition += offset;
+
+		SetDirty(true);
+	}
+
+	void Transform::Translate(float x, float y, float z)
+	{
+		m_LocalPosition += glm::vec3{x,y,z};
 
 		SetDirty(true);
 	}

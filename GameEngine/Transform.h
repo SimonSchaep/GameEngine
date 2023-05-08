@@ -24,7 +24,9 @@ namespace engine
 		void SetWorldPosition(const glm::vec2& pos);
 		void SetWorldPosition(const glm::vec3& pos);
 		void Translate(const glm::vec2& offset);
+		void Translate(float x, float y);
 		void Translate(const glm::vec3& offset);
+		void Translate(float x, float y, float z);
 
 	private:
 		GameObject* m_pGameObject{};

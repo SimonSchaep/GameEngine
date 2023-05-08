@@ -1,6 +1,7 @@
 #pragma once
 #include "BaseComponent.h"
 #include "Observer.h"
+#include "Collider.h"
 #include <vector>
 
 namespace engine
@@ -12,7 +13,7 @@ namespace engine
 
 using namespace engine;
 
-class FoodParent : public BaseComponent, Observer<Collider*, Collider*>
+class FoodParent : public BaseComponent, Observer<Collider::TriggerType, Collider*, Collider*>
 {
 public:
 	FoodParent(GameObject* pGameObject) :BaseComponent(pGameObject) {};
@@ -23,11 +24,15 @@ public:
 
 	void Fall();
 
-	virtual void Notify(Collider* pOriginCollider, Collider* pHitCollider) override;
+	virtual void Notify(Collider::TriggerType triggerType, Collider* pOriginCollider, Collider* pHitCollider) override;
 
 private:
+	void HandleTriggerEnter(Collider* pOriginCollider, Collider* pHitCollider);
+	void HandleTriggerExit(Collider* pOriginCollider, Collider* pHitCollider);
+	void HandleTriggerStay(Collider* pOriginCollider, Collider* pHitCollider);
+
 	float m_FallSpeed{50};
-	float m_YPosForFoodDown{-2};
+	float m_YPosForFoodDown{-4};
 	std::vector<GameObject*> m_FoodElements{};
 	std::vector<bool> m_FoodElementStates{}; //true == fallen
 

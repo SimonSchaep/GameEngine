@@ -9,10 +9,15 @@ namespace engine
 	class Collider : public BaseComponent
 	{
 	public:
+		enum class TriggerType
+		{
+			enter,
+			exit,
+			stay,
+		};
+
 		Collider(GameObject* pGameObject);
-		Event<Collider*, Collider*>* GetOnTriggerEnterEvent() { return m_OnTriggerEnter.get(); }
-		Event<Collider*, Collider*>* GetOnTriggerStayEvent() { return m_OnTriggerStay.get(); }
-		Event<Collider*, Collider*>* GetOnTriggerExitEvent() { return m_OnTriggerExit.get(); }
+		Event<TriggerType, Collider*, Collider*>* GetOnTriggerEvent() { return m_OnTrigger.get(); }
 
 		virtual void Initialize()override {};
 		virtual void Update()override {};
@@ -28,9 +33,7 @@ namespace engine
 		void RemoveCurrentTrigger(Collider* pCollider) { m_CurrentTriggers.erase(std::remove(m_CurrentTriggers.begin(), m_CurrentTriggers.end(), pCollider)); }
 
 	private:
-		std::unique_ptr<Event<Collider*, Collider*>> m_OnTriggerEnter{};
-		std::unique_ptr<Event<Collider*, Collider*>> m_OnTriggerStay{};
-		std::unique_ptr<Event<Collider*, Collider*>> m_OnTriggerExit{};
+		std::unique_ptr<Event<TriggerType, Collider*, Collider*>> m_OnTrigger{}; //enter, stay and exit
 
 		std::vector<Collider*> m_CurrentTriggers{};
 	};

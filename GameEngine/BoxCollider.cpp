@@ -29,19 +29,19 @@ namespace engine
 		{
 			if (pCollider->IsRectInCollider(GetShapeInWorld())) //and we are still triggering
 			{
-				GetOnTriggerStayEvent()->NotifyObservers(this, pCollider); //on trigger stay
+				GetOnTriggerEvent()->NotifyObservers(TriggerType::stay, this, pCollider); //on trigger stay
 			}
 			else
 			{
-				GetOnTriggerExitEvent()->NotifyObservers(this, pCollider); //on trigger exit
+				GetOnTriggerEvent()->NotifyObservers(TriggerType::exit, this, pCollider); //on trigger exit
 				RemoveCurrentTrigger(pCollider);
 			}
 		}
 		else if (pCollider->IsRectInCollider(GetShapeInWorld())) //else, if we are triggering
 		{
 			//std::cout << "trigger\n";
-			GetOnTriggerEnterEvent()->NotifyObservers(this, pCollider); //on trigger enter
-			GetOnTriggerStayEvent()->NotifyObservers(this, pCollider); //on trigger stay
+			GetOnTriggerEvent()->NotifyObservers(TriggerType::enter, this, pCollider); //on trigger enter
+			GetOnTriggerEvent()->NotifyObservers(TriggerType::stay, this, pCollider); //on trigger stay
 			AddCurrentTrigger(pCollider);
 		}
 	}

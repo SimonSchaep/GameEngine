@@ -11,6 +11,7 @@ namespace engine
 		BoxCollider(GameObject* pGameObject) :Collider(pGameObject) {}
 
 		void SetShape(const structs::Rect& rect) { m_Shape = rect; }
+		const structs::Rect& GetShape() { return m_Shape; }
 
 		virtual bool IsRectInCollider(const structs::Rect& rect) override;
 		virtual bool IsPointInCollider(const glm::vec2& point) override;

@@ -4,6 +4,8 @@
 #include "Event.h"
 #include <vector>
 
+//todo: add circle collider
+
 namespace engine
 {
 	class Collider : public BaseComponent

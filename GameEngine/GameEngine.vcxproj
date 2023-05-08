@@ -222,6 +222,7 @@
     <ClInclude Include="BaseCommand.h" />
     <ClInclude Include="BoxCollider.h" />
     <ClInclude Include="Collider.h" />
+    <ClInclude Include="ColliderDebugRenderComponent.h" />
     <ClInclude Include="CollisionManager.h" />
     <ClInclude Include="Event.h" />
     <ClInclude Include="InputController.h" />
@@ -259,6 +260,7 @@
     <ClCompile Include="BaseComponent.cpp" />
     <ClCompile Include="BoxCollider.cpp" />
     <ClCompile Include="Collider.cpp" />
+    <ClCompile Include="ColliderDebugRenderComponent.cpp" />
     <ClCompile Include="CollisionManager.cpp" />
     <ClCompile Include="Event.cpp" />
     <ClCompile Include="InputController.cpp" />

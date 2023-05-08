@@ -92,13 +92,16 @@
       <Filter>Engine\Observer</Filter>
     </ClCompile>
     <ClCompile Include="BoxCollider.cpp">
-      <Filter>Engine\Components</Filter>
+      <Filter>Engine\Collisions</Filter>
     </ClCompile>
     <ClCompile Include="Collider.cpp">
-      <Filter>Engine\Components</Filter>
+      <Filter>Engine\Collisions</Filter>
     </ClCompile>
     <ClCompile Include="CollisionManager.cpp">
-      <Filter>Engine\Singletons</Filter>
+      <Filter>Engine\Collisions</Filter>
+    </ClCompile>
+    <ClCompile Include="ColliderDebugRenderComponent.cpp">
+      <Filter>Engine\Collisions</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -201,17 +204,20 @@
     <ClInclude Include="Event.h">
       <Filter>Engine\Observer</Filter>
     </ClInclude>
-    <ClInclude Include="BoxCollider.h">
-      <Filter>Engine\Components</Filter>
-    </ClInclude>
-    <ClInclude Include="Collider.h">
-      <Filter>Engine\Components</Filter>
-    </ClInclude>
-    <ClInclude Include="CollisionManager.h">
-      <Filter>Engine\Singletons</Filter>
-    </ClInclude>
     <ClInclude Include="Structs.h">
       <Filter>Engine\Utility</Filter>
+    </ClInclude>
+    <ClInclude Include="BoxCollider.h">
+      <Filter>Engine\Collisions</Filter>
+    </ClInclude>
+    <ClInclude Include="Collider.h">
+      <Filter>Engine\Collisions</Filter>
+    </ClInclude>
+    <ClInclude Include="CollisionManager.h">
+      <Filter>Engine\Collisions</Filter>
+    </ClInclude>
+    <ClInclude Include="ColliderDebugRenderComponent.h">
+      <Filter>Engine\Collisions</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -235,6 +241,9 @@
     </Filter>
     <Filter Include="Engine\Utility">
       <UniqueIdentifier>{aaeaed58-47fc-49cc-afc5-37be08da4ff3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\Collisions">
+      <UniqueIdentifier>{ec1fd8ce-86a2-4306-8d31-fdd6bc990e8c}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

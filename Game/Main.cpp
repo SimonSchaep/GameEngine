@@ -86,9 +86,10 @@ void load()
 	auto pChefVisuals = pScene->CreateAndAddGameObject("ChefVisuals", pChef);
 	auto pRenderComponent = pChefVisuals->CreateAndAddComponent<TextureRenderComponent>();
 	pRenderComponent->SetTexture("chef.png");
-	float width = float(pRenderComponent->GetTexture()->GetSize().x);
-	float height = float(pRenderComponent->GetTexture()->GetSize().y);
-	pChefVisuals->GetTransform()->SetLocalPosition({ -width / 2, -height });
+	pRenderComponent->SetSize({28, 28});
+	float width = float(pRenderComponent->GetSize().x);
+	float height = float(pRenderComponent->GetSize().y);
+	pChefVisuals->GetTransform()->SetLocalPosition({ -width / 2, -4 });
 
 	//collider
 	auto pBoxCollider = pChef->CreateAndAddComponent<BoxCollider>();
@@ -107,9 +108,10 @@ void load()
 	auto pBeanVisuals = pScene->CreateAndAddGameObject("BeanVisuals", pBean);
 	pRenderComponent = pBeanVisuals->CreateAndAddComponent<TextureRenderComponent>();
 	pRenderComponent->SetTexture("bean.png");
-	width = float(pRenderComponent->GetTexture()->GetSize().x);
-	height = float(pRenderComponent->GetTexture()->GetSize().y);
-	pBeanVisuals->GetTransform()->SetLocalPosition({ -width / 2, -height });
+	pRenderComponent->SetSize({ 28, 28 });
+	width = float(pRenderComponent->GetSize().x);
+	height = float(pRenderComponent->GetSize().y);
+	pBeanVisuals->GetTransform()->SetLocalPosition({ -width / 2, -4 });
 
 	//collider
 	pBoxCollider = pBean->CreateAndAddComponent<BoxCollider>();

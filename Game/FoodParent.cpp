@@ -36,11 +36,16 @@ void FoodParent::Notify(Collider::TriggerType triggerType, Collider* pOriginColl
 
 void FoodParent::HandleTriggerEnter(Collider* pOriginCollider, Collider* pHitCollider)
 {
-	//make corresponding food part fall
+	if (pOriginCollider->GetGameObject() == GetGameObject()) //hit food parent
+	{
+		return;
+	}
 	if (!pHitCollider->GetGameObject()->HasTag("Chef"))
 	{
 		return;
 	}
+	//hit food element
+	//make corresponding food part fall
 	auto it = std::find(m_FoodElements.begin(), m_FoodElements.end(), pOriginCollider->GetGameObject());
 	if (it != m_FoodElements.end())
 	{

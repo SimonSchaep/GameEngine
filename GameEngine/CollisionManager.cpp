@@ -11,14 +11,14 @@ void engine::CollisionManager::CheckTriggers()
 	//todo: optimize this
 
 	//for every collider
-	for (auto& gameObject : gameObjects)
+	for (size_t i{}; i < gameObjects.size(); ++i)
 	{
-		for (auto& collider : gameObject->GetColliders())
-		{
+		for (auto& collider : gameObjects[i]->GetColliders())
+		{			
 			//check triggers with every other collider
-			for (auto& otherGameObject : gameObjects)
+			for (size_t j{i + 1}; j < gameObjects.size(); ++j) //start with i + 1 to make sure we don't check collisions twice
 			{
-				for (auto& otherCollider : otherGameObject->GetColliders())
+				for (auto& otherCollider : gameObjects[j]->GetColliders())
 				{
 					collider->CheckTrigger(otherCollider);
 				}

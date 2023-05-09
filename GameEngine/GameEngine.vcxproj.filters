@@ -103,6 +103,9 @@
     <ClCompile Include="ColliderDebugRenderComponent.cpp">
       <Filter>Engine\Collisions</Filter>
     </ClCompile>
+    <ClCompile Include="Logger.cpp">
+      <Filter>Engine\Services</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Font.h">
@@ -219,6 +222,9 @@
     <ClInclude Include="ColliderDebugRenderComponent.h">
       <Filter>Engine\Collisions</Filter>
     </ClInclude>
+    <ClInclude Include="Logger.h">
+      <Filter>Engine\Services</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Engine">
@@ -244,6 +250,9 @@
     </Filter>
     <Filter Include="Engine\Collisions">
       <UniqueIdentifier>{ec1fd8ce-86a2-4306-8d31-fdd6bc990e8c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\Services">
+      <UniqueIdentifier>{fe80e821-2e3e-42ef-8c08-8caaaa4cfca7}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

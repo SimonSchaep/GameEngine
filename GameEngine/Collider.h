@@ -29,10 +29,11 @@ namespace engine
 		virtual bool IsCircleInCollider(const structs::Circle& circle) = 0;
 		virtual void CheckTrigger(Collider* pCollider) = 0;
 
-	protected:
-		std::vector<Collider*>& GetCurrentTriggers() { return m_CurrentTriggers; }
 		void AddCurrentTrigger(Collider* pCollider) { m_CurrentTriggers.push_back(pCollider); }
 		void RemoveCurrentTrigger(Collider* pCollider) { m_CurrentTriggers.erase(std::remove(m_CurrentTriggers.begin(), m_CurrentTriggers.end(), pCollider)); }
+
+	protected:
+		std::vector<Collider*>& GetCurrentTriggers() { return m_CurrentTriggers; }
 
 	private:
 		std::unique_ptr<Event<TriggerType, Collider*, Collider*>> m_OnTrigger{}; //enter, stay and exit

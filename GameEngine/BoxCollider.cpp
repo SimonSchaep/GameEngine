@@ -22,28 +22,34 @@ namespace engine
 	}
 
 	//todo: optimize this function
-	void engine::BoxCollider::CheckTrigger(Collider* pCollider)
+	void engine::BoxCollider::CheckTrigger(Collider* pOtherCollider)
 	{
 		auto& currentTriggers = GetCurrentTriggers();
 		//this find is very inefficient
-		if (std::find(currentTriggers.begin(), currentTriggers.end(), pCollider) != currentTriggers.end()) //if we triggered previous frame
+		if (std::find(currentTriggers.begin(), currentTriggers.end(), pOtherCollider) != currentTriggers.end()) //if we triggered previous frame
 		{
-			if (pCollider->IsRectInCollider(GetShapeInWorld())) //and we are still triggering
+			if (pOtherCollider->IsRectInCollider(GetShapeInWorld())) //and we are still triggering
 			{
-				GetOnTriggerEvent()->NotifyObservers(TriggerType::stay, this, pCollider); //on trigger stay
+				GetOnTriggerEvent()->NotifyObservers(TriggerType::stay, this, pOtherCollider); //on trigger stay
+				pOtherCollider->GetOnTriggerEvent()->NotifyObservers(TriggerType::stay, pOtherCollider, this); //on trigger stay
 			}
 			else
 			{
-				GetOnTriggerEvent()->NotifyObservers(TriggerType::exit, this, pCollider); //on trigger exit
-				RemoveCurrentTrigger(pCollider);
+				GetOnTriggerEvent()->NotifyObservers(TriggerType::exit, this, pOtherCollider); //on trigger exit
+				pOtherCollider->GetOnTriggerEvent()->NotifyObservers(TriggerType::exit, pOtherCollider, this); //on trigger exit
+				RemoveCurrentTrigger(pOtherCollider);
+				pOtherCollider->RemoveCurrentTrigger(this);
 			}
 		}
-		else if (pCollider->IsRectInCollider(GetShapeInWorld())) //else, if we are triggering
+		else if (pOtherCollider->IsRectInCollider(GetShapeInWorld())) //else, if we are triggering
 		{
 			//std::cout << "trigger\n";
-			GetOnTriggerEvent()->NotifyObservers(TriggerType::enter, this, pCollider); //on trigger enter
-			GetOnTriggerEvent()->NotifyObservers(TriggerType::stay, this, pCollider); //on trigger stay
-			AddCurrentTrigger(pCollider);
+			GetOnTriggerEvent()->NotifyObservers(TriggerType::enter, this, pOtherCollider); //on trigger enter			
+			GetOnTriggerEvent()->NotifyObservers(TriggerType::stay, this, pOtherCollider); //on trigger stay
+			pOtherCollider->GetOnTriggerEvent()->NotifyObservers(TriggerType::enter, pOtherCollider, this); //on trigger enter
+			pOtherCollider->GetOnTriggerEvent()->NotifyObservers(TriggerType::stay, pOtherCollider, this); //on trigger stay
+			AddCurrentTrigger(pOtherCollider);
+			pOtherCollider->AddCurrentTrigger(this);
 		}
 	}
 

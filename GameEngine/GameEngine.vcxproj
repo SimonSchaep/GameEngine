@@ -224,6 +224,7 @@
     <ClInclude Include="Collider.h" />
     <ClInclude Include="ColliderDebugRenderComponent.h" />
     <ClInclude Include="CollisionManager.h" />
+    <ClInclude Include="Logger.h" />
     <ClInclude Include="Event.h" />
     <ClInclude Include="InputController.h" />
     <ClInclude Include="Observer.h" />
@@ -262,6 +263,7 @@
     <ClCompile Include="Collider.cpp" />
     <ClCompile Include="ColliderDebugRenderComponent.cpp" />
     <ClCompile Include="CollisionManager.cpp" />
+    <ClCompile Include="Logger.cpp" />
     <ClCompile Include="Event.cpp" />
     <ClCompile Include="InputController.cpp" />
     <ClCompile Include="Observer.cpp" />

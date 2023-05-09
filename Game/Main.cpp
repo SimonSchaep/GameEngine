@@ -77,7 +77,7 @@ void load()
 	pChef->AddTag("Chef");
 	pChef->GetTransform()->SetLocalPosition({ 120,400 });
 	auto pMovementComponent = pChef->CreateAndAddComponent<MovementComponent>();
-	pMovementComponent->SetMoveSpeed(50);
+	pMovementComponent->SetMoveSpeed(100);
 	auto pPlayerLives = pChef->CreateAndAddComponent<PlayerLives>();
 	pPlayerLives->SetMaxLives(5);
 	pChef->CreateAndAddComponent<PlayerPoints>();	

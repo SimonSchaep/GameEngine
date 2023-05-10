@@ -13,6 +13,8 @@ namespace engine
 	{
 	public:
 		void CheckTriggers();
+
+		void Render()const;
 	private:
 		friend class Singleton<CollisionManager>;
 		CollisionManager() = default;

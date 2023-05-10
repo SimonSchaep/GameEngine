@@ -54,23 +54,26 @@ void FoodParent::HandleTriggerEnter(Collider* pOriginCollider, Collider* pHitCol
 {
 	if (pOriginCollider->GetGameObject() == GetGameObject()) //hit food parent
 	{
-		if (IsFalling())
+		if (IsFalling() && m_FallVelocity < 0)
 		{
 			if (pHitCollider->GetGameObject()->HasTag("platform"))
 			{
+				//std::cout << "hit platform\n";
 				StopFall();
 			}
 			else if (pHitCollider->GetGameObject()->HasTag("plate"))
 			{
+				//std::cout << "hit plate\n";
 				m_ReachedPlate = true;
 				StopFall();
 			}
 			else if (pHitCollider->GetGameObject()->HasTag("foodparent"))
 			{
+				//std::cout << "hit food\n";
 				auto otherFoodParent = pHitCollider->GetGameObject()->GetComponent<FoodParent>();
 				if (!otherFoodParent->ReachedPlate())
 				{
-					if (!otherFoodParent->IsFalling())
+					if (!otherFoodParent->IsFalling() && otherFoodParent->GetGameObject()->GetTransform()->GetWorldPosition().y < GetGameObject()->GetTransform()->GetWorldPosition().y)
 					{
 						otherFoodParent->StartFall();
 						m_FallVelocity = m_BounceVelocity;
@@ -110,9 +113,11 @@ void FoodParent::HandleTriggerEnter(Collider* pOriginCollider, Collider* pHitCol
 		}
 		else
 		{
-			glm::vec3 newPos = pOriginCollider->GetGameObject()->GetTransform()->GetLocalPosition();
-			newPos.y = m_YPosForFoodDown;
-			pOriginCollider->GetGameObject()->GetTransform()->SetLocalPosition(newPos);
+			//glm::vec3 newPos = pOriginCollider->GetGameObject()->GetTransform()->GetLocalPosition();
+			//newPos.y = m_YPosForFoodDown;
+			//pOriginCollider->GetGameObject()->GetTransform()->SetLocalPosition(newPos);
+
+			DropFoodElement(id, false, false);
 		}		
 	}
 }
@@ -123,6 +128,52 @@ void FoodParent::HandleTriggerExit(Collider* /*pOriginCollider*/, Collider* /*pH
 
 void FoodParent::HandleTriggerStay(Collider* /*pOriginCollider*/, Collider* /*pHitCollider*/)
 {
+}
+
+void FoodParent::DropFoodElement(int elementId, bool skipDropLeftNeighbor, bool skipDropRightNeighbor)
+{
+	//check 2 neighbors
+	//get their highest y
+	//set our pos to highest y minus something
+	//if any neighbor y is lower than our y
+	//call dropfoodelement on them
+
+	if (elementId == 0) //left
+	{
+		float rightNeighborPosY = m_FoodElements[elementId + 1]->GetTransform()->GetLocalPosition().y;
+
+		auto newPos = m_FoodElements[elementId]->GetTransform()->GetLocalPosition();
+		newPos.y = std::max(rightNeighborPosY + m_YPosForFoodDown, m_MinYPosForFoodDown);
+		m_FoodElements[elementId]->GetTransform()->SetLocalPosition(newPos);
+	}
+	else if (elementId == m_FoodElements.size() - 1) //right
+	{
+		float leftNeighborPosY = m_FoodElements[elementId - 1]->GetTransform()->GetLocalPosition().y;
+
+		auto newPos = m_FoodElements[elementId]->GetTransform()->GetLocalPosition();
+		newPos.y = std::max(leftNeighborPosY + m_YPosForFoodDown, m_MinYPosForFoodDown);
+		m_FoodElements[elementId]->GetTransform()->SetLocalPosition(newPos);
+
+	}
+	else //middle
+	{
+		float leftNeighborPosY = m_FoodElements[elementId - 1]->GetTransform()->GetLocalPosition().y;
+		float rightNeighborPosY = m_FoodElements[elementId + 1]->GetTransform()->GetLocalPosition().y;
+
+		auto newPos = m_FoodElements[elementId]->GetTransform()->GetLocalPosition();
+		newPos.y = std::max(std::max(leftNeighborPosY, rightNeighborPosY) + m_YPosForFoodDown, m_MinYPosForFoodDown);
+		m_FoodElements[elementId]->GetTransform()->SetLocalPosition(newPos);
+
+		//check if neighbors need to be lowered
+		if (!skipDropLeftNeighbor && m_FoodElementStates[elementId - 1] && leftNeighborPosY >= newPos.y)
+		{
+			DropFoodElement(elementId - 1, false, true);
+		}
+		if (!skipDropRightNeighbor && m_FoodElementStates[elementId + 1] && rightNeighborPosY >= newPos.y)
+		{
+			DropFoodElement(elementId + 1, true, false);
+		}
+	}
 }
 
 void FoodParent::StopFall()

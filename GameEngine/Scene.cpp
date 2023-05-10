@@ -1,5 +1,6 @@
 #include "Scene.h"
 #include "RenderComponent.h"
+#include "CameraComponent.h"
 #include <algorithm>
 
 namespace engine

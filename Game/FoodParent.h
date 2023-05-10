@@ -37,14 +37,17 @@ private:
 	void HandleTriggerExit(Collider* pOriginCollider, Collider* pHitCollider);
 	void HandleTriggerStay(Collider* pOriginCollider, Collider* pHitCollider);
 
+	void DropFoodElement(int elementId, bool skipDropLeftNeighbor, bool skipDropRightNeighbor);
+
 	void StopFall();
 
 	//this would be done in a rigidbody component if we had one
 	float m_FallVelocity{0};
 	float m_FallAcceleration{-400};
-	float m_BounceVelocity{ 150 };
+	float m_BounceVelocity{ 50 };
 
-	float m_YPosForFoodDown{-4};
+	float m_YPosForFoodDown{-2}; //todo: maybe rename
+	float m_MinYPosForFoodDown{-12};
 	std::vector<GameObject*> m_FoodElements{};
 	std::vector<bool> m_FoodElementStates{}; //true == fallen
 

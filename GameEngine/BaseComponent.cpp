@@ -18,6 +18,10 @@ namespace engine
 		}
 		Update();
 	}
+	Transform* BaseComponent::GetTransform() const
+	{
+		return GetGameObject()->GetTransform();
+	}
 	BaseComponent::BaseComponent(GameObject* gameObject)
 		: m_pGameObject{ gameObject }
 	{

@@ -2,7 +2,7 @@
 #include "RenderComponent.h"
 #include <vector>
 
-//todo: finish this
+//might not be necessary anymore since the collisionmanager can now debug draw
 
 namespace engine
 {
@@ -14,8 +14,7 @@ namespace engine
 		ColliderDebugRenderComponent(GameObject* pGameObject);
 		virtual ~ColliderDebugRenderComponent();
 
-		virtual void Initialize()override;
-		
+		virtual void Initialize()override;		
 
 		virtual void Render()const override;
 

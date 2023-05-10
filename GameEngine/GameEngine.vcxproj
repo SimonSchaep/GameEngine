@@ -221,6 +221,7 @@
     <ClInclude Include="BaseComponent.h" />
     <ClInclude Include="BaseCommand.h" />
     <ClInclude Include="BoxCollider.h" />
+    <ClInclude Include="CameraComponent.h" />
     <ClInclude Include="Collider.h" />
     <ClInclude Include="ColliderDebugRenderComponent.h" />
     <ClInclude Include="CollisionManager.h" />
@@ -260,6 +261,7 @@
     <ClCompile Include="..\3rdParty\imgui\implot_items.cpp" />
     <ClCompile Include="BaseComponent.cpp" />
     <ClCompile Include="BoxCollider.cpp" />
+    <ClCompile Include="CameraComponent.cpp" />
     <ClCompile Include="Collider.cpp" />
     <ClCompile Include="ColliderDebugRenderComponent.cpp" />
     <ClCompile Include="CollisionManager.cpp" />

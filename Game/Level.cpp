@@ -3,6 +3,7 @@
 #include "LevelParser.h"
 #include "TextureRenderComponent.h"
 #include "BoxCollider.h"
+#include "ColliderDebugRenderComponent.h"
 #include "FoodParent.h"
 
 using namespace engine;
@@ -260,7 +261,7 @@ void Level::CreateDarkPlatform(TextureRenderComponent* pRenderComponent, GameObj
 	}
 	pLevelElementGameObject->AddTag("platform");
 	auto pColliderComponent = pLevelElementGameObject->CreateAndAddComponent<BoxCollider>();
-	pColliderComponent->SetShape({ 0,-m_GridElementHeight / 6,m_GridElementWidth , m_GridElementHeight/6 });
+	pColliderComponent->SetShape({ 0,-m_GridElementHeight/6,m_GridElementWidth , m_GridElementHeight/6 });
 }
 
 //todo: refactor this

@@ -31,6 +31,7 @@
 #include "Level.h"
 #include "Texture2D.h"
 #include "BoxCollider.h"
+#include "ColliderDebugRenderComponent.h"
 
 using namespace engine;
 
@@ -66,7 +67,7 @@ void load()
 
 
 	//Load level
-	Level::GetInstance().BuildLevel(pScene, "Data/level1.csv");
+	Level::GetInstance().BuildLevel(pScene, "Data/level2.csv");
 
 	// separating gameobjects from controllers makes it possible to switch between controlled gameobjects
 	// input will first go to a controller, then the controller will send the input to a controlled gameobject
@@ -75,7 +76,7 @@ void load()
 	//chef gameobject
 	auto pChef = pScene->CreateAndAddGameObject("Chef");
 	pChef->AddTag("Chef");
-	pChef->GetTransform()->SetLocalPosition({ 120,400 });
+	pChef->GetTransform()->SetLocalPosition({ 100,600 });
 	auto pMovementComponent = pChef->CreateAndAddComponent<MovementComponent>();
 	pMovementComponent->SetMoveSpeed(100);
 	auto pPlayerLives = pChef->CreateAndAddComponent<PlayerLives>();
@@ -89,15 +90,15 @@ void load()
 	pRenderComponent->SetSize({28, 28});
 	float width = float(pRenderComponent->GetSize().x);
 	float height = float(pRenderComponent->GetSize().y);
-	pChefVisuals->GetTransform()->SetLocalPosition({ -width / 2, -4 });
+	pChefVisuals->GetTransform()->SetLocalPosition({ -width / 2, -8 });
 
 	//collider
 	auto pBoxCollider = pChef->CreateAndAddComponent<BoxCollider>();
-	pBoxCollider->SetShape({ -width / 2, -4, width, height });
+	pBoxCollider->SetShape({ -width / 2, -8, width, height });
 
 	//bean gameobject
 	auto pBean = pScene->CreateAndAddGameObject("Bean");
-	pBean->GetTransform()->SetLocalPosition({ 120,400 });
+	pBean->GetTransform()->SetLocalPosition({ 100,600 });
 	pMovementComponent = pBean->CreateAndAddComponent<MovementComponent>();
 	pMovementComponent->SetMoveSpeed(100);
 	pPlayerLives = pBean->CreateAndAddComponent<PlayerLives>();

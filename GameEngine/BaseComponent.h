@@ -4,6 +4,7 @@
 namespace engine
 {
 	class GameObject;
+	class Transform;
 
 	class BaseComponent
 	{
@@ -21,6 +22,7 @@ namespace engine
 		void UpdateComponent(); //calls Update
 
 		GameObject* GetGameObject()const { return m_pGameObject; };
+		Transform* GetTransform()const;
 
 	protected:
 		BaseComponent(GameObject* gameObject);

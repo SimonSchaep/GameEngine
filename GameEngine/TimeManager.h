@@ -13,8 +13,8 @@ namespace engine
 		void SetFixedTimeStep(float fixedTimeStep) { m_FixedTimeStep = fixedTimeStep; };
 		float GetFixedTimeStep()const { return m_FixedTimeStep; };
 
-		void SetFrameRateCap(int frameRateCap) { m_FrameRateCap = frameRateCap; };
-		int GetFrameRateCap()const { return m_FrameRateCap; };
+		void SetFrameRateCap(int frameRateCap) { m_FrameRateCap = frameRateCap; }; //-1 for no cap
+		int GetFrameRateCap()const { return m_FrameRateCap; }; //-1 for no cap
 
 		void SetTimeScale(float timeScale) { m_TimeScale = timeScale; };
 		float GetTimeScale()const { return m_TimeScale; };

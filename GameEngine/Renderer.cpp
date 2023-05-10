@@ -1,6 +1,7 @@
 #include <stdexcept>
 #include "Renderer.h"
 #include "SceneManager.h"
+#include "CollisionManager.h" //collision debug rendering
 #include "Texture2D.h"
 #include "imgui.h"
 #include "implot.h"
@@ -51,6 +52,11 @@ namespace engine
 		ImGui::NewFrame();
 
 		SceneManager::GetInstance().Render();
+
+#ifdef _DEBUG
+		CollisionManager::GetInstance().Render();
+#endif // DEBUG		
+
 		SceneManager::GetInstance().RenderUI();
 
 		if (m_ShowImGuiDemo)
@@ -87,6 +93,7 @@ namespace engine
 		dst.y = static_cast<int>(y);
 		dst.y = windowHeight - dst.y;
 		SDL_QueryTexture(texture.GetSDLTexture(), nullptr, nullptr, &dst.w, &dst.h);
+		dst.y -= dst.h;
 		SDL_RenderCopy(GetSDLRenderer(), texture.GetSDLTexture(), nullptr, &dst);
 	}
 
@@ -101,6 +108,7 @@ namespace engine
 		dst.y = windowHeight - dst.y;
 		dst.w = static_cast<int>(width);
 		dst.h = static_cast<int>(height);
+		dst.y -= dst.h;
 		SDL_RenderCopy(GetSDLRenderer(), texture.GetSDLTexture(), nullptr, &dst);
 	}
 

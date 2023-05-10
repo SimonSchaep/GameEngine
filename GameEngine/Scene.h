@@ -25,6 +25,9 @@ namespace engine
 		void Render()const;
 		void RenderUI();
 
+		void SetActiveCamera(CameraComponent* pCameraComponent) { m_pCameraComponent = pCameraComponent; }
+		//CameraComponent* GetActiveCamera() { m_pCameraComponent = pCameraComponent; }
+
 		~Scene();
 		Scene(const std::string& name, int index);
 		Scene(const Scene& other) = delete;
@@ -44,5 +47,7 @@ namespace engine
 		std::vector<std::shared_ptr<GameObject>> m_GameObjects{};
 
 		bool m_IsInitialized{};
+
+		CameraComponent* m_pCameraComponent{};
 	};
 }

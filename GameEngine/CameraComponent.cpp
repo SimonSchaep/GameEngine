@@ -2,6 +2,7 @@
 #include "TimeManager.h"
 #include "GameObject.h"
 #include "Transform.h"
+#include "Renderer.h"
 #include <iostream>
 #include <SDL_opengl.h>
 
@@ -9,6 +10,20 @@
 
 namespace engine
 {
+	void CameraComponent::Initialize()
+	{
+		SetScale(m_Scale); //to set camerabox correctly
+
+		//todo: do this, implement ==
+		/*if (m_LevelBoundaries == structs::Rect{})
+		{
+			std::cerr << "no levelboundaries set\n";
+		}*/
+		if (m_LevelBoundaries.Width == 0)
+		{
+			std::cerr << "no levelboundaries set\n";
+		}
+	}
 	void CameraComponent::Update()
 	{
 		glm::vec2 targetPos{ Track() };
@@ -58,12 +73,36 @@ namespace engine
 
 		m_CameraBox.BottomLeft += m_Velocity * TimeManager::GetInstance().GetDeltaTime();
 
-		Clamp();
+		ClampToLevelBoundaries();
 	}
 
-	void CameraComponent::Transform(float parralaxMultiplier)const
+	void CameraComponent::SetScale(float scale)
 	{
-		glTranslatef(-m_CameraBox.BottomLeft.x * parralaxMultiplier, -m_CameraBox.BottomLeft.y * parralaxMultiplier, 0);
+		m_Scale = scale;
+		auto windowSize{ Renderer::GetInstance().GetWindowSize() };
+		m_CameraBox.Width = windowSize.x / scale;
+		m_CameraBox.Height = windowSize.y / scale;
+	}
+
+	void CameraComponent::Transform()const
+	{
+		auto windowSize{ Renderer::GetInstance().GetWindowSize() };
+		glScalef(m_Scale/1, m_Scale/1, 1);
+		glTranslatef(-m_CameraBox.BottomLeft.x, (-windowSize.y / m_Scale) + m_CameraBox.BottomLeft.y, 0);
+
+#ifdef _DEBUG
+		auto shape = m_CameraBox;
+		SDL_Rect rect{};
+		rect.x = int(shape.BottomLeft.x);
+		rect.y = int(windowSize.y) - int(shape.BottomLeft.y);
+		rect.w = int(shape.Width);
+		rect.h = int(shape.Height);
+		rect.y -= rect.h;
+
+		SDL_SetRenderDrawColor(Renderer::GetInstance().GetSDLRenderer(), 255, 255, 255, 255);
+		SDL_RenderDrawRect(Renderer::GetInstance().GetSDLRenderer(), &rect);
+#endif // _DEBUG
+
 	}
 
 	void CameraComponent::SetPosition(const glm::vec2& pos)
@@ -96,12 +135,12 @@ namespace engine
 	{
 		//for rect:
 		//return glm::vec2{ target.left + target.width / 2 - m_CameraBox.width / 2 , target.bottom + target.height / 2 - m_CameraBox.height / 2 };
-		auto gameObjectPosition = GetGameObject()->GetTransform()->GetWorldPosition();
 
+		auto gameObjectPosition = GetGameObject()->GetTransform()->GetWorldPosition();
 		return glm::vec2{ gameObjectPosition.x - m_CameraBox.Width / 2 , gameObjectPosition.y - m_CameraBox.Height / 2};
 	}
 
-	void CameraComponent::Clamp()
+	void CameraComponent::ClampToLevelBoundaries()
 	{
 		if (m_CameraBox.BottomLeft.x < m_LevelBoundaries.BottomLeft.x)
 		{

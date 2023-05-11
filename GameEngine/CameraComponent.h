@@ -13,12 +13,14 @@ namespace engine
 		CameraComponent(GameObject* pGameObject) :BaseComponent(pGameObject) {};
 		virtual ~CameraComponent() = default;
 
+		virtual void Initialize()override;
 		virtual void Update() override;
 
-		void SetCameraBox(const Rect& cameraBox) { m_CameraBox = cameraBox; }
+		void SetScale(float scale);
+		float GetScale()const { return m_Scale; };
 		void SetSpeed(float speed) { m_Speed = speed; }
 		void SetDeadZone(float width, float height) { m_DeadZoneWidth = width; m_DeadZoneHeight = height; };
-		void Transform(float parralaxMultiplier = 1)const;
+		void Transform()const;
 		void SetPosition(const glm::vec2& pos);
 		void SetLevelBoundaries(const Rect& levelBoundaries);
 		glm::vec2 GetCameraPosition()const;
@@ -27,10 +29,12 @@ namespace engine
 
 	private:
 		glm::vec2 Track()const;
-		void Clamp();
+		void ClampToLevelBoundaries();
 
-		Rect m_CameraBox{0,0,200,200};
+		Rect m_CameraBox{0,0,100,100};
 		Rect m_LevelBoundaries{};
+
+		float m_Scale{2.f};
 
 		float m_Speed{1000};
 

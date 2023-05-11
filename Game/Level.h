@@ -22,6 +22,9 @@ namespace levelParser
 using namespace engine;
 using namespace levelParser;
 
+//todo: shouldn't be a singleton
+//also should somwhow be able to set cell size, and level pos
+
 class Level final : public engine::Singleton<Level>
 {
 public:
@@ -35,6 +38,12 @@ public:
 	void SnapToCenterY(glm::vec2& pos)const;
 	void GetRowColOfPos(const glm::vec2& pos, int& row, int& col)const;
 	glm::vec2 GetCenterOfCell(int row, int col)const;
+
+	int GetLevelWidth()const { return m_LevelWidth; }
+	int GetLevelHeight()const { return m_LevelHeight; }
+	float GetCellWidth()const { return m_GridElementWidth; }
+	float GetCellHeight()const { return m_GridElementHeight; }
+	const glm::vec2& GetLevelPosition()const { return m_LevelStartPos; }
 
 private:
 	int GetLevelElementsIndex(int row, int col);

@@ -32,6 +32,7 @@
 #include "Texture2D.h"
 #include "BoxCollider.h"
 #include "ColliderDebugRenderComponent.h"
+#include <CameraComponent.h>
 
 using namespace engine;
 
@@ -67,7 +68,8 @@ void load()
 
 
 	//Load level
-	Level::GetInstance().BuildLevel(pScene, "Data/level2.csv");
+	auto& level = Level::GetInstance();
+	level.BuildLevel(pScene, "Data/level2.csv");
 
 	// separating gameobjects from controllers makes it possible to switch between controlled gameobjects
 	// input will first go to a controller, then the controller will send the input to a controlled gameobject
@@ -95,6 +97,11 @@ void load()
 	//collider
 	auto pBoxCollider = pChef->CreateAndAddComponent<BoxCollider>();
 	pBoxCollider->SetShape({ -width / 2, -8, width, height });
+
+	//camera
+	//auto pCamera = pChef->CreateAndAddComponent<CameraComponent>();
+	//pScene->SetActiveCamera(pCamera);
+	//pCamera->SetLevelBoundaries({ level.GetLevelPosition().x,level.GetLevelPosition().y,float(level.GetLevelWidth() * level.GetCellWidth()),float((level.GetLevelHeight() + 1) * level.GetCellHeight()) }); //make sure level is built before this
 
 	//bean gameobject
 	auto pBean = pScene->CreateAndAddGameObject("Bean");

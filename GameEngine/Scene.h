@@ -5,6 +5,7 @@
 namespace engine
 {
 	class RenderComponent;
+	class CameraComponent;
 
 	class Scene final
 	{
@@ -26,7 +27,7 @@ namespace engine
 		void RenderUI();
 
 		void SetActiveCamera(CameraComponent* pCameraComponent) { m_pCameraComponent = pCameraComponent; }
-		//CameraComponent* GetActiveCamera() { m_pCameraComponent = pCameraComponent; }
+		CameraComponent* GetActiveCamera() { return m_pCameraComponent; }
 
 		~Scene();
 		Scene(const std::string& name, int index);

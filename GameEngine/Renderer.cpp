@@ -1,12 +1,16 @@
 #include <stdexcept>
 #include "Renderer.h"
 #include "SceneManager.h"
+#include "Scene.h"
+#include "CameraComponent.h"
 #include "CollisionManager.h" //collision debug rendering
 #include "Texture2D.h"
 #include "imgui.h"
 #include "implot.h"
 #include "backends/imgui_impl_opengl2.h"
 #include "backends/imgui_impl_sdl2.h"
+#include "SDL_opengl.h"
+#include <iostream>
 
 namespace engine
 {
@@ -51,11 +55,20 @@ namespace engine
 		ImGui_ImplSDL2_NewFrame(m_Window);
 		ImGui::NewFrame();
 
+		glPushMatrix();
+		CameraComponent* pCamera = SceneManager::GetInstance().GetActiveScene()->GetActiveCamera();
+		if (pCamera)
+		{
+			pCamera->Transform();
+		}
+
 		SceneManager::GetInstance().Render();
 
 #ifdef _DEBUG
-		CollisionManager::GetInstance().Render();
+		CollisionManager::GetInstance().Render(); //todo: figure out why this messes up the UI
 #endif // DEBUG		
+
+		glPopMatrix();
 
 		SceneManager::GetInstance().RenderUI();
 

@@ -65,7 +65,7 @@ namespace engine
 		SceneManager::GetInstance().Render();
 
 #ifdef _DEBUG
-		CollisionManager::GetInstance().Render(); //todo: figure out why this messes up the UI
+		//CollisionManager::GetInstance().Render(); //todo: figure out why this messes up the UI
 #endif // DEBUG		
 
 		glPopMatrix();

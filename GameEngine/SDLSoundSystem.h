@@ -8,8 +8,6 @@
 
 namespace engine
 {
-	class SDLSoundClip;
-
 	enum class SoundAction
 	{
 		play,
@@ -33,19 +31,10 @@ namespace engine
 		virtual void StopAll()override;
 
 	private:
-		void ProcessSounds(); //thread-safe
+		class SDLSoundSystemImpl;
+		std::unique_ptr<SDLSoundSystemImpl> m_Impl;
 
-		std::vector<std::unique_ptr<SDLSoundClip>> m_SoundClips;
-
-		std::vector<std::pair<SDLSoundClip*, SoundAction>> m_SoundsToProcess{};
-
-		int m_ChannelCount{8};
-
-		std::jthread m_SoundThread{};
-		std::condition_variable m_DoesQueueNeedProcessing{};
-		std::mutex m_SoundsToProcessMutex{};
-
-		bool m_EndQueue{};
+		
 
 	};
 }

@@ -143,7 +143,7 @@ void FoodParent::DropFoodElement(int elementId, bool skipDropLeftNeighbor, bool 
 		newPos.y = std::max(rightNeighborPosY + m_YPosForFoodDown, m_MinYPosForFoodDown);
 		m_FoodElements[elementId]->GetTransform()->SetLocalPosition(newPos);
 	}
-	else if (elementId == m_FoodElements.size() - 1) //right
+	else if (elementId == int(m_FoodElements.size()) - 1) //right
 	{
 		float leftNeighborPosY = m_FoodElements[elementId - 1]->GetTransform()->GetLocalPosition().y;
 

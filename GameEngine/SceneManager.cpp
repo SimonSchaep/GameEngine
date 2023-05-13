@@ -85,7 +85,7 @@ namespace engine
 
 	void SceneManager::SetActiveSceneByIndex(int index)
 	{
-		assert(m_scenes.size() > index);
+		assert(int(m_scenes.size()) > index);
 		m_pActiveScene = m_scenes[index].get();
 
 		//ensure there is an active scene
@@ -116,7 +116,7 @@ namespace engine
 
 	Scene* SceneManager::GetSceneByIndex(int index)
 	{
-		assert(m_scenes.size() > index);
+		assert(int(m_scenes.size()) > index);
 		return m_scenes[index].get();
 	}
 

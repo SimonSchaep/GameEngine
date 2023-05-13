@@ -77,7 +77,7 @@ int engine::SDLSoundSystem::AddClip(const std::string& fileName)
 
 void engine::SDLSoundSystem::Play(int clipId)
 {
-	assert(clipId < m_SoundClips.size());
+	assert(clipId < int(m_SoundClips.size()));
 
 	std::lock_guard<std::mutex> lock(m_SoundsToProcessMutex);
 	m_SoundsToProcess.push_back(std::pair<SDLSoundClip*, SoundAction>{ m_SoundClips[clipId].get(), SoundAction::play });
@@ -86,7 +86,7 @@ void engine::SDLSoundSystem::Play(int clipId)
 
 void engine::SDLSoundSystem::Stop(int clipId)
 {
-	assert(clipId < m_SoundClips.size());
+	assert(clipId < int(m_SoundClips.size()));
 
 	std::lock_guard<std::mutex> lock(m_SoundsToProcessMutex);
 	m_SoundsToProcess.push_back(std::pair<SDLSoundClip*, SoundAction>{ m_SoundClips[clipId].get(), SoundAction::stop });
@@ -95,7 +95,7 @@ void engine::SDLSoundSystem::Stop(int clipId)
 
 void engine::SDLSoundSystem::Pause(int clipId)
 {
-	assert(clipId < m_SoundClips.size());
+	assert(clipId < int(m_SoundClips.size()));
 
 	std::lock_guard<std::mutex> lock(m_SoundsToProcessMutex);
 	m_SoundsToProcess.push_back(std::pair<SDLSoundClip*, SoundAction>{ m_SoundClips[clipId].get(), SoundAction::pause });
@@ -104,7 +104,7 @@ void engine::SDLSoundSystem::Pause(int clipId)
 
 void engine::SDLSoundSystem::Resume(int clipId)
 {
-	assert(clipId < m_SoundClips.size());
+	assert(clipId < int(m_SoundClips.size()));
 
 	std::lock_guard<std::mutex> lock(m_SoundsToProcessMutex);
 	m_SoundsToProcess.push_back(std::pair<SDLSoundClip*, SoundAction>{ m_SoundClips[clipId].get(), SoundAction::resume });

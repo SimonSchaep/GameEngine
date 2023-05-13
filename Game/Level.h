@@ -19,7 +19,6 @@ namespace levelParser
 	enum class ELevelElement;
 }
 
-using namespace engine;
 using namespace levelParser;
 
 //todo: shouldn't be a singleton
@@ -28,7 +27,7 @@ using namespace levelParser;
 class Level final : public engine::Singleton<Level>
 {
 public:
-	void BuildLevel(Scene* pScene, const std::string& fileName);
+	void BuildLevel(engine::Scene* pScene, const std::string& fileName);
 	bool IsNavigableByPlayer(int row, int col)const;
 	bool IsNavigableByEnemy(int row, int col)const;
 
@@ -48,10 +47,10 @@ public:
 private:
 	int GetLevelElementsIndex(int row, int col);
 
-	void CreateDarkPlatform(TextureRenderComponent* pRenderComponent, GameObject* pLevelElementGameObject, bool hasLadder);
-	void SpawnPlate(glm::vec2 pos, Scene* pScene, const std::vector<LevelElement>& levelElements, int row, int col);
-	void SpawnFood(glm::vec2 pos, Scene* pScene, const std::vector<LevelElement>& levelElements, int row, int col, ELevelElement eLevelElement, const std::string& name);
-	void CreateFoodElement(const glm::vec2 pos, Scene* pScene, const std::string& textureFileName, GameObject* pParent, BoxCollider* pParentCollider);
+	void CreateDarkPlatform(engine::TextureRenderComponent* pRenderComponent, engine::GameObject* pLevelElementGameObject, bool hasLadder);
+	void SpawnPlate(glm::vec2 pos, engine::Scene* pScene, const std::vector<LevelElement>& levelElements, int row, int col);
+	void SpawnFood(glm::vec2 pos, engine::Scene* pScene, const std::vector<LevelElement>& levelElements, int row, int col, ELevelElement eLevelElement, const std::string& name);
+	void CreateFoodElement(const glm::vec2 pos, engine::Scene* pScene, const std::string& textureFileName, engine::GameObject* pParent, engine::BoxCollider* pParentCollider);
 
 	void GenerateNavigableAreas(const std::vector<LevelElement>& levelElements);
 	std::vector<bool> m_PlayerNavigableArea{};

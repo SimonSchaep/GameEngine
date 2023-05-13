@@ -7,6 +7,8 @@
 #include "Logger.h"
 #include "SoundSystem.h"
 
+using namespace engine;
+
 FoodParent::FoodParent(GameObject* pGameObject)
 	:BaseComponent(pGameObject)
 {

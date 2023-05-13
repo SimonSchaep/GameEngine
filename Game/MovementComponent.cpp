@@ -10,6 +10,7 @@
 
 //todo: fix jittering when moving left/right when we can't
 
+using namespace engine;
 
 void MovementComponent::Update()
 {

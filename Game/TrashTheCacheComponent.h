@@ -2,9 +2,7 @@
 #include "UIRenderComponent.h"
 #include <vector>
 
-using namespace engine;
-
-class TrashTheCacheComponent : public UIRenderComponent
+class TrashTheCacheComponent : public engine::UIRenderComponent
 {
 	struct Transform
 	{
@@ -31,7 +29,7 @@ class TrashTheCacheComponent : public UIRenderComponent
 	};
 
 public:
-	TrashTheCacheComponent(GameObject* pGameObject) :UIRenderComponent(pGameObject) {};
+	TrashTheCacheComponent(engine::GameObject* pGameObject) :UIRenderComponent(pGameObject) {};
 	virtual ~TrashTheCacheComponent() = default;
 
 	virtual void Initialize() override;

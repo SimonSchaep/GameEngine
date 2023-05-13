@@ -11,6 +11,8 @@
 #include "SceneManager.h"
 #include "Scene.h"
 
+using namespace engine;
+
 void MyPlayerController::Initialize()
 {
 	auto pScene = SceneManager::GetInstance().GetActiveScene();

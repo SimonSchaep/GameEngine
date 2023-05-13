@@ -4,6 +4,8 @@
 #include "Event.h"
 #include <iostream>
 
+using namespace engine;
+
 PointsDisplay::PointsDisplay(GameObject* pGameObject)
 	:TextRenderComponent(pGameObject)
 {

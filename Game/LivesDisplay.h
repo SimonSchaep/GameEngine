@@ -2,21 +2,19 @@
 #include "TextRenderComponent.h"
 #include "Observer.h"
 
-using namespace engine;
-
 class PlayerLives;
 
-class LivesDisplay : public TextRenderComponent, Observer<>
+class LivesDisplay : public engine::TextRenderComponent, engine::Observer<>
 {
 public:
-	LivesDisplay(GameObject* pGameObject);
+	LivesDisplay(engine::GameObject* pGameObject);
 	virtual ~LivesDisplay() = default;
 	LivesDisplay(const LivesDisplay& other) = delete;
 	LivesDisplay(LivesDisplay&& other) = delete;
 	LivesDisplay& operator=(const LivesDisplay& other) = delete;
 	LivesDisplay& operator=(LivesDisplay&& other) = delete;
 
-	void SetSubjectGameObject(GameObject* pGameObject);
+	void SetSubjectGameObject(engine::GameObject* pGameObject);
 
 	void Notify() override;
 

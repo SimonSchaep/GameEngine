@@ -2,6 +2,8 @@
 #include "DieCommand.h"
 #include "Event.h"
 
+using namespace engine;
+
 PlayerLives::PlayerLives(GameObject* pGameObject)
 	:BaseComponent(pGameObject)
 {

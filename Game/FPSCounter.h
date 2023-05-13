@@ -10,17 +10,15 @@ namespace engine
 	class TextRenderComponent;
 }
 
-using namespace engine;
-
-class FPSCounter : public BaseComponent
+class FPSCounter : public engine::BaseComponent
 {
 public:
-	FPSCounter(GameObject* pGameObject) :BaseComponent(pGameObject) {};
+	FPSCounter(engine::GameObject* pGameObject) :BaseComponent(pGameObject) {};
 	virtual ~FPSCounter() = default;
 
 	virtual void Initialize() override;
 	virtual void Update() override;
 
 private:
-	TextRenderComponent* m_pTextRenderComponent{};
+	engine::TextRenderComponent* m_pTextRenderComponent{};
 };

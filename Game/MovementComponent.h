@@ -2,12 +2,10 @@
 #include "BaseComponent.h"
 #include "glm/glm.hpp"
 
-using namespace engine;
-
-class MovementComponent : public BaseComponent
+class MovementComponent : public engine::BaseComponent
 {
 public:
-	MovementComponent(GameObject* pGameObject) :BaseComponent(pGameObject) {};
+	MovementComponent(engine::GameObject* pGameObject) :BaseComponent(pGameObject) {};
 	virtual ~MovementComponent() = default;
 
 	virtual void Initialize() override {};

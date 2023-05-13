@@ -2,12 +2,10 @@
 #include "BaseComponent.h"
 #include "Event.h"
 
-using namespace engine;
-
-class PlayerLives : public BaseComponent
+class PlayerLives : public engine::BaseComponent
 {
 public:
-	PlayerLives(GameObject* pGameObject);
+	PlayerLives(engine::GameObject* pGameObject);
 	virtual ~PlayerLives() = default;
 
 	virtual void Initialize() override;
@@ -19,14 +17,14 @@ public:
 	void Die();
 	void ResetLives();
 
-	Event<>* GetDieEvent() { return m_DieEvent.get(); }
-	Event<>* GetResetLivesEvent() { return m_ResetLivesEvent.get(); }
+	engine::Event<>* GetDieEvent() { return m_DieEvent.get(); }
+	engine::Event<>* GetResetLivesEvent() { return m_ResetLivesEvent.get(); }
 
 private:
 	int m_MaxLives{3};
 	int m_Lives{};
-	std::unique_ptr<Event<>> m_DieEvent{};
-	std::unique_ptr<Event<>> m_ResetLivesEvent{};
+	std::unique_ptr<engine::Event<>> m_DieEvent{};
+	std::unique_ptr<engine::Event<>> m_ResetLivesEvent{};
 
 };
 

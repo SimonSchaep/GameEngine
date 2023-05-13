@@ -12,12 +12,10 @@ namespace engine
 	class BoxCollider;
 }
 
-using namespace engine;
-
-class FoodParent : public BaseComponent, Observer<Collider::TriggerType, Collider*, Collider*>
+class FoodParent : public engine::BaseComponent, engine::Observer<engine::Collider::TriggerType, engine::Collider*, engine::Collider*>
 {
 public:
-	FoodParent(GameObject* pGameObject);
+	FoodParent(engine::GameObject* pGameObject);
 	virtual ~FoodParent() = default;
 
 	virtual void Initialize() override;
@@ -25,17 +23,17 @@ public:
 
 	void StartFall();
 
-	virtual void Notify(Collider::TriggerType triggerType, Collider* pOriginCollider, Collider* pHitCollider) override;
+	virtual void Notify(engine::Collider::TriggerType triggerType, engine::Collider* pOriginCollider, engine::Collider* pHitCollider) override;
 
 	bool IsFalling() { return m_IsFalling; }
 	bool ReachedPlate() { return m_ReachedPlate; }
 
-	Event<GameObject*, bool>* GetFallEvent() { return m_FallEvent.get(); }
+	engine::Event<engine::GameObject*, bool>* GetFallEvent() { return m_FallEvent.get(); }
 
 private:
-	void HandleTriggerEnter(Collider* pOriginCollider, Collider* pHitCollider);
-	void HandleTriggerExit(Collider* pOriginCollider, Collider* pHitCollider);
-	void HandleTriggerStay(Collider* pOriginCollider, Collider* pHitCollider);
+	void HandleTriggerEnter(engine::Collider* pOriginCollider, engine::Collider* pHitCollider);
+	void HandleTriggerExit(engine::Collider* pOriginCollider, engine::Collider* pHitCollider);
+	void HandleTriggerStay(engine::Collider* pOriginCollider, engine::Collider* pHitCollider);
 
 	void DropFoodElement(int elementId, bool skipDropLeftNeighbor, bool skipDropRightNeighbor);
 
@@ -48,10 +46,10 @@ private:
 
 	float m_YPosForFoodDown{-2}; //todo: maybe rename
 	float m_MinYPosForFoodDown{-12};
-	std::vector<GameObject*> m_FoodElements{};
+	std::vector<engine::GameObject*> m_FoodElements{};
 	std::vector<bool> m_FoodElementStates{}; //true == fallen
 
-	std::unique_ptr<Event<GameObject*, bool>> m_FallEvent{};
+	std::unique_ptr<engine::Event<engine::GameObject*, bool>> m_FallEvent{};
 
 	bool m_IsFalling{};
 	bool m_ReachedPlate{};

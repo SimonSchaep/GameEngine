@@ -5,6 +5,8 @@
 #include <iostream>
 #include "Event.h"
 
+using namespace engine;
+
 LivesDisplay::LivesDisplay(GameObject* pGameObject)
 	:TextRenderComponent(pGameObject)
 {

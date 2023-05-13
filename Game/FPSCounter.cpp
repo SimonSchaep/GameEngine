@@ -3,6 +3,8 @@
 #include "GameObject.h"
 #include "TimeManager.h"
 
+using namespace engine;
+
 void FPSCounter::Initialize()
 {
 	m_pTextRenderComponent = GetGameObject()->GetComponent<TextRenderComponent>();

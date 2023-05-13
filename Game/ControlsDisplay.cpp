@@ -2,6 +2,7 @@
 #include <imgui.h>
 #include <string>
 
+using namespace engine;
 
 void ControlsDisplay::RenderUI()
 {

@@ -2,21 +2,19 @@
 #include "TextRenderComponent.h"
 #include "Observer.h"
 
-using namespace engine;
-
 class PlayerPoints;
 
-class PointsDisplay : public TextRenderComponent, Observer<>
+class PointsDisplay : public engine::TextRenderComponent, engine::Observer<>
 {
 public:
-	PointsDisplay(GameObject* pGameObject);
+	PointsDisplay(engine::GameObject* pGameObject);
 	virtual ~PointsDisplay() = default;
 	PointsDisplay(const PointsDisplay& other) = delete;
 	PointsDisplay(PointsDisplay&& other) = delete;
 	PointsDisplay& operator=(const PointsDisplay& other) = delete;
 	PointsDisplay& operator=(PointsDisplay&& other) = delete;
 
-	void SetSubjectGameObject(GameObject* pGameObject);
+	void SetSubjectGameObject(engine::GameObject* pGameObject);
 
 	virtual void Notify() override;
 

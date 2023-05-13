@@ -1,12 +1,10 @@
 #pragma once
 #include "BaseComponent.h"
 
-using namespace engine;
-
-class DestroyComponent : public BaseComponent
+class DestroyComponent : public engine::BaseComponent
 {
 public:
-	DestroyComponent(GameObject* pGameObject) :BaseComponent(pGameObject) {};
+	DestroyComponent(engine::GameObject* pGameObject) :BaseComponent(pGameObject) {};
 	virtual ~DestroyComponent() = default;
 
 	virtual void Initialize() override {};

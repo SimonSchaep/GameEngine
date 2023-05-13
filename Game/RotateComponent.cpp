@@ -2,6 +2,8 @@
 #include "GameObject.h"
 #include "TimeManager.h"
 
+using namespace engine;
+
 void RotateComponent::Initialize()
 {
 }

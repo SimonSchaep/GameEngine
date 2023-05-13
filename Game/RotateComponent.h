@@ -2,12 +2,10 @@
 #include "BaseComponent.h"
 #include "glm/glm.hpp"
 
-using namespace engine;
-
-class RotateComponent : public BaseComponent
+class RotateComponent : public engine::BaseComponent
 {
 public:
-	RotateComponent(GameObject* pGameObject) :BaseComponent(pGameObject) {};
+	RotateComponent(engine::GameObject* pGameObject) :BaseComponent(pGameObject) {};
 	virtual ~RotateComponent() = default;
 
 	virtual void Initialize() override;

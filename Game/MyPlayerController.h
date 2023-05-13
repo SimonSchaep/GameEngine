@@ -8,10 +8,10 @@ class PlayerPoints;
 
 using namespace engine;
 
-class MyPlayerController : public PlayerController
+class MyPlayerController : public engine::PlayerController
 {
 public:
-    MyPlayerController(GameObject* pGameObject) :PlayerController(pGameObject) {};
+    MyPlayerController(engine::GameObject* pGameObject) :PlayerController(pGameObject) {};
 
     virtual void Initialize() override;
 
@@ -28,8 +28,8 @@ private:
     PlayerLives* m_pControlledPlayerLivesComponent{};
     PlayerPoints* m_pControlledPlayerPointsComponent{};
 
-    GameObject* m_pChef{};
-    GameObject* m_pBean{};
+    engine::GameObject* m_pChef{};
+    engine::GameObject* m_pBean{};
 
     bool m_ControlChef{};
 

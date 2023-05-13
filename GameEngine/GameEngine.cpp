@@ -13,6 +13,7 @@
 #include "GameObject.h"
 #include "TextureRenderComponent.h"
 #include "CollisionManager.h"
+#include "ServiceLocator.h"
 #include <iostream>
 #include <chrono>
 
@@ -100,7 +101,6 @@ namespace engine
 		bool doContinue = true;
 
 		sceneManager.Initialize();
-
 
 		while (doContinue)
 		{

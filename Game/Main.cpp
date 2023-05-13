@@ -33,11 +33,23 @@
 #include "BoxCollider.h"
 #include "ColliderDebugRenderComponent.h"
 #include <CameraComponent.h>
+#include "ServiceLocator.h"
+#include "ConsoleLogger.h"
+#include "FileLogger.h"
+#include "SDLSoundSystem.h"
 
 using namespace engine;
 
 void load()
 {
+	//register services
+	ServiceLocator::RegisterLogger<ConsoleLogger>();
+	/*auto logger = ServiceLocator::RegisterLogger<FileLogger>();
+	logger->SetActualLogger<ConsoleLogger>();*/
+
+	ServiceLocator::RegisterSoundSystem<SDLSoundSystem>();
+
+
 	auto pScene = SceneManager::GetInstance().CreateScene("Demo");
 	//background
 	//auto pGameObject = pScene->CreateAndAddGameObject("Background");
@@ -78,7 +90,7 @@ void load()
 	//chef gameobject
 	auto pChef = pScene->CreateAndAddGameObject("Chef");
 	pChef->AddTag("Chef");
-	pChef->GetTransform()->SetLocalPosition({ 100,600 });
+	pChef->GetTransform()->SetLocalPosition({ 96,596 });
 	auto pMovementComponent = pChef->CreateAndAddComponent<MovementComponent>();
 	pMovementComponent->SetMoveSpeed(100);
 	auto pPlayerLives = pChef->CreateAndAddComponent<PlayerLives>();
@@ -105,7 +117,7 @@ void load()
 
 	//bean gameobject
 	auto pBean = pScene->CreateAndAddGameObject("Bean");
-	pBean->GetTransform()->SetLocalPosition({ 100,600 });
+	pBean->GetTransform()->SetLocalPosition({ 96,596 });
 	pMovementComponent = pBean->CreateAndAddComponent<MovementComponent>();
 	pMovementComponent->SetMoveSpeed(100);
 	pPlayerLives = pBean->CreateAndAddComponent<PlayerLives>();

@@ -103,11 +103,32 @@
     <ClCompile Include="ColliderDebugRenderComponent.cpp">
       <Filter>Engine\Collisions</Filter>
     </ClCompile>
-    <ClCompile Include="Logger.cpp">
-      <Filter>Engine\Services</Filter>
-    </ClCompile>
     <ClCompile Include="CameraComponent.cpp">
       <Filter>Engine\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="ServiceLocator.cpp">
+      <Filter>Engine\Services</Filter>
+    </ClCompile>
+    <ClCompile Include="ConsoleLogger.cpp">
+      <Filter>Engine\Services\Logger</Filter>
+    </ClCompile>
+    <ClCompile Include="Logger.cpp">
+      <Filter>Engine\Services\Logger</Filter>
+    </ClCompile>
+    <ClCompile Include="FileLogger.cpp">
+      <Filter>Engine\Services\Logger</Filter>
+    </ClCompile>
+    <ClCompile Include="SoundSystem.cpp">
+      <Filter>Engine\Services\SoundSystem</Filter>
+    </ClCompile>
+    <ClCompile Include="SDLSoundSystem.cpp">
+      <Filter>Engine\Services\SoundSystem</Filter>
+    </ClCompile>
+    <ClCompile Include="SDLSoundClip.cpp">
+      <Filter>Engine\Services\SoundSystem</Filter>
+    </ClCompile>
+    <ClCompile Include="SoundClip.cpp">
+      <Filter>Engine\Services\SoundSystem</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -225,11 +246,38 @@
     <ClInclude Include="ColliderDebugRenderComponent.h">
       <Filter>Engine\Collisions</Filter>
     </ClInclude>
-    <ClInclude Include="Logger.h">
-      <Filter>Engine\Services</Filter>
-    </ClInclude>
     <ClInclude Include="CameraComponent.h">
       <Filter>Engine\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="ServiceLocator.h">
+      <Filter>Engine\Services</Filter>
+    </ClInclude>
+    <ClInclude Include="ConsoleLogger.h">
+      <Filter>Engine\Services\Logger</Filter>
+    </ClInclude>
+    <ClInclude Include="Logger.h">
+      <Filter>Engine\Services\Logger</Filter>
+    </ClInclude>
+    <ClInclude Include="NullLogger.h">
+      <Filter>Engine\Services\Logger</Filter>
+    </ClInclude>
+    <ClInclude Include="FileLogger.h">
+      <Filter>Engine\Services\Logger</Filter>
+    </ClInclude>
+    <ClInclude Include="SoundSystem.h">
+      <Filter>Engine\Services\SoundSystem</Filter>
+    </ClInclude>
+    <ClInclude Include="SDLSoundSystem.h">
+      <Filter>Engine\Services\SoundSystem</Filter>
+    </ClInclude>
+    <ClInclude Include="SDLSoundClip.h">
+      <Filter>Engine\Services\SoundSystem</Filter>
+    </ClInclude>
+    <ClInclude Include="SoundClip.h">
+      <Filter>Engine\Services\SoundSystem</Filter>
+    </ClInclude>
+    <ClInclude Include="NullSoundSystem.h">
+      <Filter>Engine\Services\SoundSystem</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -259,6 +307,12 @@
     </Filter>
     <Filter Include="Engine\Services">
       <UniqueIdentifier>{fe80e821-2e3e-42ef-8c08-8caaaa4cfca7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\Services\Logger">
+      <UniqueIdentifier>{eb922d2b-926e-4895-af4a-3e23e3786f3c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\Services\SoundSystem">
+      <UniqueIdentifier>{5121e7ed-2a89-49d8-ae2a-ddb9ceb4f9c4}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

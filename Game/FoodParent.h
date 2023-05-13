@@ -55,5 +55,7 @@ private:
 
 	bool m_IsFalling{};
 	bool m_ReachedPlate{};
+
+	int m_DropSound{};
 };
 

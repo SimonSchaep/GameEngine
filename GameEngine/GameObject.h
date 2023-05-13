@@ -66,6 +66,8 @@ namespace engine
 		template<typename T>
 		void RemoveAllComponentsOfType();
 
+		//ideally this would be private, but that complicates things since the constructor needs to be used in make_shared
+		//https://stackoverflow.com/questions/8147027/how-do-i-call-stdmake-shared-on-a-class-with-only-protected-or-private-const/73236821#73236821
 		GameObject(const std::string& name); //only use this with scene.CreateAndAddGameObject()
 		~GameObject();
 		GameObject(const GameObject& other) = delete;

@@ -84,7 +84,7 @@ namespace levelParser
 		while (std::getline(ifstream, line))
 		{
 			++levelHeight;
-			line.erase(std::remove_if(line.begin(), line.end(), std::isspace), line.end()); //remove spaces
+			line.erase(std::remove(line.begin(), line.end(), ' '), line.end()); //remove spaces
 			std::stringstream sstream{ line + ','}; //make sure every line ends with a comma
 			std::string element{};
 			int thisLineElementCount{};

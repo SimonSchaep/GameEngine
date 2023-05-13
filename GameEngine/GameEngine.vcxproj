@@ -66,6 +66,7 @@
   <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
     <Import Project="..\sdl.props" />
+    <Import Project="..\vld.props" />
   </ImportGroup>
   <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
@@ -75,6 +76,7 @@
   <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
     <Import Project="..\sdl.props" />
+    <Import Project="..\vld.props" />
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
@@ -225,9 +227,13 @@
     <ClInclude Include="Collider.h" />
     <ClInclude Include="ColliderDebugRenderComponent.h" />
     <ClInclude Include="CollisionManager.h" />
+    <ClInclude Include="ConsoleLogger.h" />
+    <ClInclude Include="FileLogger.h" />
     <ClInclude Include="Logger.h" />
     <ClInclude Include="Event.h" />
     <ClInclude Include="InputController.h" />
+    <ClInclude Include="NullLogger.h" />
+    <ClInclude Include="NullSoundSystem.h" />
     <ClInclude Include="Observer.h" />
     <ClInclude Include="PlayerController.h" />
     <ClInclude Include="Font.h" />
@@ -235,6 +241,11 @@
     <ClInclude Include="GameObject.h" />
     <ClInclude Include="InputManager.h" />
     <ClInclude Include="RenderComponent.h" />
+    <ClInclude Include="SDLSoundSystem.h" />
+    <ClInclude Include="ServiceLocator.h" />
+    <ClInclude Include="SDLSoundClip.h" />
+    <ClInclude Include="SoundClip.h" />
+    <ClInclude Include="SoundSystem.h" />
     <ClInclude Include="Structs.h" />
     <ClInclude Include="TextureRenderComponent.h" />
     <ClInclude Include="Renderer.h" />
@@ -265,6 +276,8 @@
     <ClCompile Include="Collider.cpp" />
     <ClCompile Include="ColliderDebugRenderComponent.cpp" />
     <ClCompile Include="CollisionManager.cpp" />
+    <ClCompile Include="ConsoleLogger.cpp" />
+    <ClCompile Include="FileLogger.cpp" />
     <ClCompile Include="Logger.cpp" />
     <ClCompile Include="Event.cpp" />
     <ClCompile Include="InputController.cpp" />
@@ -275,6 +288,11 @@
     <ClCompile Include="GameObject.cpp" />
     <ClCompile Include="InputManager.cpp" />
     <ClCompile Include="RenderComponent.cpp" />
+    <ClCompile Include="SDLSoundSystem.cpp" />
+    <ClCompile Include="ServiceLocator.cpp" />
+    <ClCompile Include="SDLSoundClip.cpp" />
+    <ClCompile Include="SoundClip.cpp" />
+    <ClCompile Include="SoundSystem.cpp" />
     <ClCompile Include="TextureRenderComponent.cpp" />
     <ClCompile Include="Renderer.cpp" />
     <ClCompile Include="ResourceManager.cpp" />

@@ -3,7 +3,9 @@
 #include "FoodElement.h"
 #include "BoxCollider.h"
 #include "TimeManager.h"
-#include <iostream>
+#include "ServiceLocator.h"
+#include "Logger.h"
+#include "SoundSystem.h"
 
 FoodParent::FoodParent(GameObject* pGameObject)
 	:BaseComponent(pGameObject)
@@ -21,6 +23,8 @@ void FoodParent::Initialize()
 		m_FoodElementStates.push_back(false);
 		pChild->GetComponent<BoxCollider>()->GetOnTriggerEvent()->AddObserver(this);
 	}
+
+	m_DropSound = ServiceLocator::GetSoundSystem().AddClip("data/foodelementdrop.wav");
 }
 
 void FoodParent::Update()
@@ -52,24 +56,22 @@ void FoodParent::Notify(Collider::TriggerType triggerType, Collider* pOriginColl
 
 void FoodParent::HandleTriggerEnter(Collider* pOriginCollider, Collider* pHitCollider)
 {
+
 	if (pOriginCollider->GetGameObject() == GetGameObject()) //hit food parent
 	{
 		if (IsFalling() && m_FallVelocity < 0)
 		{
 			if (pHitCollider->GetGameObject()->HasTag("platform"))
 			{
-				//std::cout << "hit platform\n";
 				StopFall();
 			}
 			else if (pHitCollider->GetGameObject()->HasTag("plate"))
 			{
-				//std::cout << "hit plate\n";
 				m_ReachedPlate = true;
 				StopFall();
 			}
 			else if (pHitCollider->GetGameObject()->HasTag("foodparent"))
 			{
-				//std::cout << "hit food\n";
 				auto otherFoodParent = pHitCollider->GetGameObject()->GetComponent<FoodParent>();
 				if (!otherFoodParent->ReachedPlate())
 				{
@@ -105,7 +107,8 @@ void FoodParent::HandleTriggerEnter(Collider* pOriginCollider, Collider* pHitCol
 
 		m_FoodElementStates[id] = true;
 
-		//std::cout << "drop\n";
+		ServiceLocator::GetLogger().LogLine("drop food element");
+		ServiceLocator::GetSoundSystem().Play(m_DropSound);
 
 		if (std::find(m_FoodElementStates.begin(), m_FoodElementStates.end(), false) == m_FoodElementStates.end()) //if all elements are dropped
 		{
@@ -132,12 +135,6 @@ void FoodParent::HandleTriggerStay(Collider* /*pOriginCollider*/, Collider* /*pH
 
 void FoodParent::DropFoodElement(int elementId, bool skipDropLeftNeighbor, bool skipDropRightNeighbor)
 {
-	//check 2 neighbors
-	//get their highest y
-	//set our pos to highest y minus something
-	//if any neighbor y is lower than our y
-	//call dropfoodelement on them
-
 	if (elementId == 0) //left
 	{
 		float rightNeighborPosY = m_FoodElements[elementId + 1]->GetTransform()->GetLocalPosition().y;

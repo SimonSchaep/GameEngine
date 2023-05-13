@@ -11,6 +11,7 @@ void ControlsDisplay::RenderUI()
 
     ImGui::Text("Up to 2 controllers supported");
     ImGui::Text("One player can also use keyboard");
+    ImGui::Text("Sound plays when hitting a food element");
 
     ImGui::Spacing();
     ImGui::Spacing();

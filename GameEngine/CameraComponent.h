@@ -5,8 +5,6 @@
 
 namespace engine
 {
-	using namespace structs;
-
 	class CameraComponent final : public BaseComponent
 	{
 	public:
@@ -22,17 +20,17 @@ namespace engine
 		void SetDeadZone(float width, float height) { m_DeadZoneWidth = width; m_DeadZoneHeight = height; };
 		void Transform()const;
 		void SetPosition(const glm::vec2& pos);
-		void SetLevelBoundaries(const Rect& levelBoundaries);
+		void SetLevelBoundaries(const structs::Rect& levelBoundaries);
 		glm::vec2 GetCameraPosition()const;
-		const Rect& GetCameraBox()const;
+		const structs::Rect& GetCameraBox()const;
 		float GetCameraSpeed()const;
 
 	private:
 		glm::vec2 Track()const;
 		void ClampToLevelBoundaries();
 
-		Rect m_CameraBox{0,0,100,100};
-		Rect m_LevelBoundaries{};
+		structs::Rect m_CameraBox{0,0,100,100};
+		structs::Rect m_LevelBoundaries{};
 
 		float m_Scale{2.f};
 

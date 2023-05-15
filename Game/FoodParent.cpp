@@ -109,7 +109,7 @@ void FoodParent::HandleTriggerEnter(Collider* pOriginCollider, Collider* pHitCol
 
 		m_FoodElementStates[id] = true;
 
-		ServiceLocator::GetLogger().LogLine("drop food element");
+		//ServiceLocator::GetLogger().LogLine("drop food element");
 		ServiceLocator::GetSoundSystem().Play(m_DropSound);
 
 		if (std::find(m_FoodElementStates.begin(), m_FoodElementStates.end(), false) == m_FoodElementStates.end()) //if all elements are dropped

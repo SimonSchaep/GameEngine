@@ -10,6 +10,8 @@
 
 namespace engine
 {
+	using namespace structs;
+
 	void CameraComponent::Initialize()
 	{
 		SetScale(m_Scale); //to set camerabox correctly

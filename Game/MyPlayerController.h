@@ -6,8 +6,6 @@ class MovementComponent;
 class PlayerLives;
 class PlayerPoints;
 
-using namespace engine;
-
 class MyPlayerController : public engine::PlayerController
 {
 public:

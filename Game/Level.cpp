@@ -58,6 +58,7 @@ void Level::BuildLevel(Scene* pScene, const std::string& fileName)
 				pLevelElementGameObject->GetTransform()->SetLocalPosition(position);
 				pRenderComponent = pLevelElementGameObject->CreateAndAddComponent<TextureRenderComponent>();
 				pRenderComponent->SetLayer(-1);
+				pRenderComponent->SetSize({m_GridElementWidth, m_GridElementHeight});
 			}
 
 			switch (levelElement.eLevelElement)
@@ -277,6 +278,7 @@ void Level::SpawnPlate(glm::vec2 pos, Scene* pScene, const std::vector<LevelElem
 		pLevelElementGameObject->GetTransform()->SetWorldPosition(pos);
 		pRenderComponent = pLevelElementGameObject->CreateAndAddComponent<TextureRenderComponent>();
 		pRenderComponent->SetTexture("platesingle.png");
+		pRenderComponent->SetSize({ m_GridElementWidth, m_GridElementHeight });
 		auto pBoxCollider = pLevelElementGameObject->CreateAndAddComponent<BoxCollider>();
 		pBoxCollider->SetShape({ 0,0,m_GridElementWidth, m_GridElementHeight/6 });
 	}
@@ -287,6 +289,7 @@ void Level::SpawnPlate(glm::vec2 pos, Scene* pScene, const std::vector<LevelElem
 		pLevelElementGameObject->GetTransform()->SetWorldPosition(pos);
 		pRenderComponent = pLevelElementGameObject->CreateAndAddComponent<TextureRenderComponent>();
 		pRenderComponent->SetTexture("plateleft.png");
+		pRenderComponent->SetSize({ m_GridElementWidth, m_GridElementHeight });
 		auto pBoxCollider = pLevelElementGameObject->CreateAndAddComponent<BoxCollider>();
 		pBoxCollider->SetShape({ 0,0,m_GridElementWidth, m_GridElementHeight/6 });
 
@@ -299,6 +302,7 @@ void Level::SpawnPlate(glm::vec2 pos, Scene* pScene, const std::vector<LevelElem
 			pLevelElementGameObject->GetTransform()->SetWorldPosition(pos);
 			pRenderComponent = pLevelElementGameObject->CreateAndAddComponent<TextureRenderComponent>();
 			pRenderComponent->SetTexture("platemiddle.png");
+			pRenderComponent->SetSize({ m_GridElementWidth, m_GridElementHeight });
 			pBoxCollider = pLevelElementGameObject->CreateAndAddComponent<BoxCollider>();
 			pBoxCollider->SetShape({ 0,0,m_GridElementWidth, m_GridElementHeight/6 });
 		}
@@ -309,6 +313,7 @@ void Level::SpawnPlate(glm::vec2 pos, Scene* pScene, const std::vector<LevelElem
 		pLevelElementGameObject->GetTransform()->SetWorldPosition(pos);
 		pRenderComponent = pLevelElementGameObject->CreateAndAddComponent<TextureRenderComponent>();
 		pRenderComponent->SetTexture("plateright.png");
+		pRenderComponent->SetSize({ m_GridElementWidth, m_GridElementHeight });
 		pBoxCollider = pLevelElementGameObject->CreateAndAddComponent<BoxCollider>();
 		pBoxCollider->SetShape({ 0,0,m_GridElementWidth, m_GridElementHeight/6 });
 	}
@@ -362,6 +367,7 @@ void Level::CreateFoodElement(const glm::vec2 pos, Scene* pScene, const std::str
 	pLevelElementGameObject->GetTransform()->SetWorldPosition(pos);
 	auto pRenderComponent = pLevelElementGameObject->CreateAndAddComponent<TextureRenderComponent>();
 	pRenderComponent->SetTexture(textureFileName);
+	pRenderComponent->SetSize({ m_GridElementWidth/2, m_GridElementHeight });
 	auto pBoxCollider = pLevelElementGameObject->CreateAndAddComponent<BoxCollider>();
 	pBoxCollider->SetShape({ 0,0,m_GridElementWidth / 2, m_GridElementHeight });
 

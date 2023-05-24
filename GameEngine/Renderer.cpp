@@ -96,33 +96,83 @@ namespace engine
 		}
 	}
 
-	void Renderer::RenderTexture(const Texture2D& texture, const float x, const float y) const
+	void Renderer::RenderTexture(const Texture2D& texture, const float x, const float y, bool flipX, bool flipY) const
 	{
-		int windowHeight{};
-		SDL_GetWindowSize(SDL_GL_GetCurrentWindow(), nullptr, &windowHeight);
-
-		SDL_Rect dst{};
-		dst.x = static_cast<int>(x);
-		dst.y = static_cast<int>(y);
-		dst.y = windowHeight - dst.y;
-		SDL_QueryTexture(texture.GetSDLTexture(), nullptr, nullptr, &dst.w, &dst.h);
-		dst.y -= dst.h;
-		SDL_RenderCopy(GetSDLRenderer(), texture.GetSDLTexture(), nullptr, &dst);
+		RenderTexture(texture, x, y, 0, 0, flipX, flipY);
 	}
 
-	void Renderer::RenderTexture(const Texture2D& texture, const float x, const float y, const float width, const float height) const
+	void Renderer::RenderTexture(const Texture2D& texture, const float x, const float y, const float width, const float height, bool flipX, bool flipY) const
 	{
-		int windowHeight{};
-		SDL_GetWindowSize(SDL_GL_GetCurrentWindow(), nullptr, &windowHeight);
+		auto dst = GetSDLDstRect(texture, x, y, width, height);
 
-		SDL_Rect dst{};
-		dst.x = static_cast<int>(x);
-		dst.y = static_cast<int>(y);
-		dst.y = windowHeight - dst.y;
-		dst.w = static_cast<int>(width);
-		dst.h = static_cast<int>(height);
-		dst.y -= dst.h;
+		if (flipX)
+		{
+			glPushMatrix();
+			glTranslatef(dst.x + dst.w / 2.f, dst.y + dst.h / 2.f, 0);
+			glScalef(-1, 1, 1);
+			glTranslatef(-(dst.x + dst.w / 2.f), -(dst.y + dst.h / 2.f), 0);
+		}
+		if (flipY)
+		{
+			glPushMatrix();
+			glTranslatef(dst.x + dst.w / 2.f, dst.y + dst.h / 2.f, 0);
+			glScalef(1, -1, 1);
+			glTranslatef(-(dst.x + dst.w / 2.f), -(dst.y + dst.h / 2.f), 0);
+		}
+
 		SDL_RenderCopy(GetSDLRenderer(), texture.GetSDLTexture(), nullptr, &dst);
+
+		if (flipX)
+		{
+			glPopMatrix();
+		}
+		if (flipY)
+		{
+			glPopMatrix();
+		}
+	}
+
+	void Renderer::RenderTexture(const Texture2D& texture, const structs::Rect& dstRect, bool flipX, bool flipY) const
+	{
+		RenderTexture(texture, dstRect.BottomLeft.x, dstRect.BottomLeft.y, dstRect.Width, dstRect.Height, flipX, flipY);
+	}
+
+	void Renderer::RenderTexture(const Texture2D& texture, const structs::Rect& dstRect, const structs::Rect& srcRect, bool flipX, bool flipY) const
+	{
+		auto dst = GetSDLDstRect(texture, dstRect.BottomLeft.x, dstRect.BottomLeft.y, dstRect.Width, dstRect.Height);
+
+		auto src = GetSDLSrcRect(texture, srcRect.BottomLeft.x, srcRect.BottomLeft.y, srcRect.Width, srcRect.Height);
+
+		if (flipX)
+		{
+			glPushMatrix();
+			glTranslatef(dst.x + dst.w / 2.f, dst.y + dst.h / 2.f, 0);
+			glScalef(-1, 1, 1);
+			glTranslatef(-(dst.x + dst.w / 2.f), -(dst.y + dst.h / 2.f), 0);
+		}
+		if (flipY)
+		{
+			glPushMatrix();
+			glTranslatef(dst.x + dst.w / 2.f, dst.y + dst.h / 2.f, 0);
+			glScalef(1, -1, 1);
+			glTranslatef(-(dst.x + dst.w / 2.f), -(dst.y + dst.h / 2.f), 0);
+		}
+
+		SDL_RenderCopy(GetSDLRenderer(), texture.GetSDLTexture(), &src, &dst);
+
+		if (flipX)
+		{
+			glPopMatrix();
+		}
+		if (flipY)
+		{
+			glPopMatrix();
+		}
+	}
+
+	void Renderer::RenderTexture(const Texture2D& texture, float x, float y, const structs::Rect& srcRect, bool flipX, bool flipY) const
+	{
+		RenderTexture(texture, { x,y,0,0 }, srcRect, flipX, flipY);
 	}
 
 	inline SDL_Renderer* Renderer::GetSDLRenderer() const { return m_Renderer; }
@@ -133,5 +183,49 @@ namespace engine
 		int height{};
 		SDL_GetWindowSize(SDL_GL_GetCurrentWindow(), &width, &height);
 		return glm::vec2(width, height);
+	}
+	SDL_Rect Renderer::GetSDLDstRect(const Texture2D& texture, float x, float y, float width, float height) const
+	{
+		int windowHeight{};
+		SDL_GetWindowSize(SDL_GL_GetCurrentWindow(), nullptr, &windowHeight);
+
+		SDL_Rect dst{};
+		dst.x = static_cast<int>(x);
+		dst.y = static_cast<int>(y);
+		dst.y = windowHeight - dst.y;
+
+		if (width == 0 || height == 0)
+		{
+			SDL_QueryTexture(texture.GetSDLTexture(), nullptr, nullptr, &dst.w, &dst.h);
+		}
+		else
+		{
+			dst.w = static_cast<int>(width);
+			dst.h = static_cast<int>(height);
+		}	
+
+		dst.y -= dst.h;
+
+		return dst;
+	}
+	SDL_Rect Renderer::GetSDLSrcRect(const Texture2D& texture, float x, float y, float width, float height) const
+	{
+		SDL_Rect src{};
+		src.x = static_cast<int>(x);
+		src.y = static_cast<int>(y);
+
+		if (width == 0 || height == 0)
+		{
+			SDL_QueryTexture(texture.GetSDLTexture(), nullptr, nullptr, &src.w, &src.h);
+		}
+		else
+		{
+			src.w = static_cast<int>(width);
+			src.h = static_cast<int>(height);
+		}
+
+		src.y -= src.h;
+
+		return src;
 	}
 }

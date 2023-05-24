@@ -15,6 +15,10 @@
 #include "Scene.h"
 #include "GameObject.h"
 #include "TextureRenderComponent.h"
+#include "SpriteRenderComponent.h"
+#include "SpriteStateMachineComponent.h"
+#include "SpriteState.h"
+#include "Sprite.h"
 #include "Font.h"
 #include "FPSCounter.h"
 #include "RotateComponent.h"
@@ -39,6 +43,8 @@
 #include "SDLSoundSystem.h"
 
 using namespace engine;
+
+//Todo: replace push_back with emplace_back
 
 void load()
 {
@@ -99,11 +105,68 @@ void load()
 
 	//visuals
 	auto pChefVisuals = pScene->CreateAndAddGameObject("ChefVisuals", pChef);
-	auto pRenderComponent = pChefVisuals->CreateAndAddComponent<TextureRenderComponent>();
+	/*auto pRenderComponent = pChefVisuals->CreateAndAddComponent<TextureRenderComponent>();
 	pRenderComponent->SetTexture("chef.png");
 	pRenderComponent->SetSize({28, 28});
 	float width = float(pRenderComponent->GetSize().x);
-	float height = float(pRenderComponent->GetSize().y);
+	float height = float(pRenderComponent->GetSize().y);*/
+	auto pSpriteRenderComponent = pChefVisuals->CreateAndAddComponent<SpriteRenderComponent>();
+	pSpriteRenderComponent->SetSize({ 28, 28 });
+
+	//states
+	auto pSpriteStateMachineComponent = pChefVisuals->CreateAndAddComponent<SpriteStateMachineComponent>();
+
+	auto pStateIdle = pSpriteStateMachineComponent->CreateAndAddState(std::move(ResourceManager::GetInstance().LoadSprite("Chef.png",1,1,.2f,0,0,true,false)));
+	auto pStateRunningLeft = pSpriteStateMachineComponent->CreateAndAddState(std::move(ResourceManager::GetInstance().LoadSprite("ChefRunning.png",3,1,.2f,0,2,true,false)));
+	auto pStateRunningRight = pSpriteStateMachineComponent->CreateAndAddState(std::move(ResourceManager::GetInstance().LoadSprite("ChefRunning.png",3,1,.2f,0,2,true,false, true)));
+	auto pStateClimbingUp = pSpriteStateMachineComponent->CreateAndAddState(std::move(ResourceManager::GetInstance().LoadSprite("ChefClimbingUp.png",3,1,.2f,0,2,true,false)));
+	auto pStateClimbingDown = pSpriteStateMachineComponent->CreateAndAddState(std::move(ResourceManager::GetInstance().LoadSprite("ChefClimbingDown.png",3,1,.2f,0,2,true,false)));
+
+	pStateIdle->AddConnection(SpriteConnection{ pStateRunningLeft, [pMovementComponent]()
+		{
+			return pMovementComponent->GetCurrentMovementDirection().x < -0.01f;
+		}
+	});
+	pStateIdle->AddConnection(SpriteConnection{ pStateRunningRight, [pMovementComponent]()
+		{
+			return pMovementComponent->GetCurrentMovementDirection().x > 0.01f;
+		}
+	});
+	pStateIdle->AddConnection(SpriteConnection{ pStateClimbingUp, [pMovementComponent]()
+		{
+			return pMovementComponent->GetCurrentMovementDirection().y > 0.01f;
+		}
+	});
+	pStateIdle->AddConnection(SpriteConnection{ pStateClimbingDown, [pMovementComponent]()
+		{
+			return pMovementComponent->GetCurrentMovementDirection().y < -0.01f;
+		}
+	});
+
+	pStateRunningLeft->AddConnection(SpriteConnection{ pStateIdle, [pMovementComponent]()
+		{
+			return pMovementComponent->GetCurrentMovementDirection().x > -0.01f;
+		}
+	});
+	pStateRunningRight->AddConnection(SpriteConnection{ pStateIdle, [pMovementComponent]()
+		{
+			return pMovementComponent->GetCurrentMovementDirection().x < 0.01f;
+		}
+	});
+	pStateClimbingUp->AddConnection(SpriteConnection{ pStateIdle, [pMovementComponent]()
+		{
+			return pMovementComponent->GetCurrentMovementDirection().y < 0.01f;
+		}
+	});
+	pStateClimbingDown->AddConnection(SpriteConnection{ pStateIdle, [pMovementComponent]()
+		{
+			return pMovementComponent->GetCurrentMovementDirection().y > -0.01f;
+		}
+	});
+
+
+	float width = float(pSpriteRenderComponent->GetSize().x);
+	float height = float(pSpriteRenderComponent->GetSize().y);
 	pChefVisuals->GetTransform()->SetLocalPosition({ -width / 2, -8 });
 
 	//collider
@@ -126,7 +189,7 @@ void load()
 
 	//visuals
 	auto pBeanVisuals = pScene->CreateAndAddGameObject("BeanVisuals", pBean);
-	pRenderComponent = pBeanVisuals->CreateAndAddComponent<TextureRenderComponent>();
+	auto pRenderComponent = pBeanVisuals->CreateAndAddComponent<TextureRenderComponent>();
 	pRenderComponent->SetTexture("bean.png");
 	pRenderComponent->SetSize({ 28, 28 });
 	width = float(pRenderComponent->GetSize().x);

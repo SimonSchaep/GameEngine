@@ -5,6 +5,7 @@
 #include "Renderer.h"
 #include "Texture2D.h"
 #include "Font.h"
+#include "Sprite.h"
 
 namespace engine
 {
@@ -33,5 +34,10 @@ namespace engine
 	std::unique_ptr<Font> ResourceManager::LoadFont(const std::string& file, unsigned int size) const
 	{
 		return std::make_unique<Font>(m_DataPath + file, size);
+	}
+
+	std::shared_ptr<Sprite> ResourceManager::LoadSprite(const std::string& fileName, int cols, int rows, float timePerFrame, int startFrame, int endFrame, bool loop, bool reverse, bool flipX, bool flipY) const
+	{
+		return std::make_shared<Sprite>(fileName, cols, rows, timePerFrame, startFrame, endFrame, loop, reverse, flipX, flipY);
 	}
 }

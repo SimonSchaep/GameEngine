@@ -246,6 +246,10 @@
     <ClInclude Include="SDLSoundClip.h" />
     <ClInclude Include="SoundClip.h" />
     <ClInclude Include="SoundSystem.h" />
+    <ClInclude Include="Sprite.h" />
+    <ClInclude Include="SpriteRenderComponent.h" />
+    <ClInclude Include="SpriteState.h" />
+    <ClInclude Include="SpriteStateMachineComponent.h" />
     <ClInclude Include="Structs.h" />
     <ClInclude Include="TextureRenderComponent.h" />
     <ClInclude Include="Renderer.h" />
@@ -293,6 +297,10 @@
     <ClCompile Include="SDLSoundClip.cpp" />
     <ClCompile Include="SoundClip.cpp" />
     <ClCompile Include="SoundSystem.cpp" />
+    <ClCompile Include="Sprite.cpp" />
+    <ClCompile Include="SpriteRenderComponent.cpp" />
+    <ClCompile Include="SpriteState.cpp" />
+    <ClCompile Include="SpriteStateMachineComponent.cpp" />
     <ClCompile Include="TextureRenderComponent.cpp" />
     <ClCompile Include="Renderer.cpp" />
     <ClCompile Include="ResourceManager.cpp" />

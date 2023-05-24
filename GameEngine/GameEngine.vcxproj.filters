@@ -130,6 +130,18 @@
     <ClCompile Include="SoundClip.cpp">
       <Filter>Engine\Services\SoundSystem</Filter>
     </ClCompile>
+    <ClCompile Include="Sprite.cpp">
+      <Filter>Engine\Sprites</Filter>
+    </ClCompile>
+    <ClCompile Include="SpriteStateMachineComponent.cpp">
+      <Filter>Engine\Sprites</Filter>
+    </ClCompile>
+    <ClCompile Include="SpriteState.cpp">
+      <Filter>Engine\Sprites</Filter>
+    </ClCompile>
+    <ClCompile Include="SpriteRenderComponent.cpp">
+      <Filter>Engine\Sprites</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Font.h">
@@ -279,6 +291,18 @@
     <ClInclude Include="NullSoundSystem.h">
       <Filter>Engine\Services\SoundSystem</Filter>
     </ClInclude>
+    <ClInclude Include="Sprite.h">
+      <Filter>Engine\Sprites</Filter>
+    </ClInclude>
+    <ClInclude Include="SpriteStateMachineComponent.h">
+      <Filter>Engine\Sprites</Filter>
+    </ClInclude>
+    <ClInclude Include="SpriteState.h">
+      <Filter>Engine\Sprites</Filter>
+    </ClInclude>
+    <ClInclude Include="SpriteRenderComponent.h">
+      <Filter>Engine\Sprites</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Engine">
@@ -313,6 +337,9 @@
     </Filter>
     <Filter Include="Engine\Services\SoundSystem">
       <UniqueIdentifier>{5121e7ed-2a89-49d8-ae2a-ddb9ceb4f9c4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\Sprites">
+      <UniqueIdentifier>{fe74e78f-e83f-4f1b-9e16-368718186239}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

@@ -14,6 +14,8 @@ using namespace engine;
 
 void MovementComponent::Update()
 {
+	m_CurrentMovementDirection = { 0.f,0.f }; //reset for animations
+
 	if (m_Direction != glm::vec2{0, 0})
 	{
 		//normalize if length more than 1
@@ -33,8 +35,6 @@ void MovementComponent::Update()
 			CheckMoveY();
 			CheckMoveX();
 		}
-		
-				
 
 		m_Direction = { 0,0 };
 	}
@@ -203,6 +203,8 @@ void MovementComponent::MoveAlongX()
 	Level::GetInstance().SnapToCenterY(centerYPos);
 	transform->SetWorldPosition(centerYPos);
 
+	m_CurrentMovementDirection = { m_Direction.x, 0 };
+
 	m_Direction = { 0,0 }; //make sure there is no further movement
 }
 
@@ -213,6 +215,8 @@ void MovementComponent::MoveAlongY()
 	glm::vec2 centerXPos = transform->GetWorldPosition();
 	Level::GetInstance().SnapToCenterX(centerXPos);
 	transform->SetWorldPosition(centerXPos);
+
+	m_CurrentMovementDirection = { 0,m_Direction.y };
 
 	m_Direction = { 0,0 }; //make sure there is no further movement
 }

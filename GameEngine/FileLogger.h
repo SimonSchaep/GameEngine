@@ -3,6 +3,7 @@
 #include <fstream>
 
 //todo: add timestamps
+//todo: use File instead of ostream
 
 namespace engine
 {

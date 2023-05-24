@@ -24,5 +24,3 @@ namespace engine
 		Logger() = default;
 	};
 }
-
-

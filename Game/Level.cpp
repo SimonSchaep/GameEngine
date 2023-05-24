@@ -34,7 +34,6 @@ void Level::BuildLevel(Scene* pScene, const std::string& fileName)
 	catch (levelParser::UnknownLevelElement& except)
 	{
 		std::cout << except.what();
-		return;
 	}
 
 	std::vector<bool> hasFoodAbove{ std::vector<bool>(m_LevelWidth, false) }; //to make sure platforms below will be dark blue
@@ -52,7 +51,7 @@ void Level::BuildLevel(Scene* pScene, const std::string& fileName)
 
 			GameObject* pLevelElementGameObject{};
 			TextureRenderComponent* pRenderComponent{};
-			if (levelElement.eLevelElement != ELevelElement::plate) //plate doesn't have gameobject underneath it
+			if (levelElement.eLevelElement != ELevelElement::plate) //plate doesn't have platform behind it
 			{
 				pLevelElementGameObject = pScene->CreateAndAddGameObject();
 				pLevelElementGameObject->GetTransform()->SetLocalPosition(position);

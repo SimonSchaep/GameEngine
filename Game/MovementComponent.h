@@ -15,6 +15,8 @@ public:
 
 	void SetMoveSpeed(float moveSpeed) { m_MoveSpeed = moveSpeed; };
 
+	const glm::vec2& GetCurrentMovementDirection()const { return m_CurrentMovementDirection; }
+
 private:
 	void CheckMoveX();
 	void CheckMoveY();
@@ -29,6 +31,8 @@ private:
 
 	float m_MoveSpeed{};
 	glm::vec2 m_Direction{};
+
+	glm::vec2 m_CurrentMovementDirection{}; //only used for animation, maybe there's a better way to do it, something like using velocity
 
 	int m_CenterMargin{ 1 };
 };

@@ -115,6 +115,7 @@ namespace engine
 			}
 		}
 		//no Component of specified type was found
+		//todo: add log
 		return nullptr;
 	}
 

@@ -22,9 +22,8 @@ namespace engine
 	}
 
 	Texture2D::Texture2D(SDL_Texture* texture)
-	{
-		m_Texture = texture;
-	}
+		:m_Texture{texture}
+	{}
 
 
 }

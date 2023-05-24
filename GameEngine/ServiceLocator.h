@@ -1,6 +1,10 @@
 #pragma once
 #include <memory>
 
+//todo:
+//feedback from alex:
+//No weay to unregister a service or to register a service that has a constructor that takes arguments (like the logging sound service that was requested)
+
 namespace engine
 {
 	class Logger;

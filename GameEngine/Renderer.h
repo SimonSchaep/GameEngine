@@ -3,6 +3,7 @@
 #include "Singleton.h"
 #include <vector>
 #include "glm/glm.hpp"
+#include "Structs.h"
 
 namespace engine
 {
@@ -18,8 +19,11 @@ namespace engine
 		void Render() const;
 		void Destroy();
 
-		void RenderTexture(const Texture2D& texture, float x, float y) const;
-		void RenderTexture(const Texture2D& texture, float x, float y, float width, float height) const;
+		void RenderTexture(const Texture2D& texture, float x, float y, bool flipX = false, bool flipY = false) const;
+		void RenderTexture(const Texture2D& texture, float x, float y, float width, float height, bool flipX = false, bool flipY = false) const;
+		void RenderTexture(const Texture2D& texture, const structs::Rect& dstRect, bool flipX = false, bool flipY = false) const;
+		void RenderTexture(const Texture2D& texture, const structs::Rect& dstRect, const structs::Rect& srcRect, bool flipX = false, bool flipY = false) const;
+		void RenderTexture(const Texture2D& texture, float x, float y, const structs::Rect& srcRect, bool flipX = false, bool flipY = false) const;
 
 		SDL_Renderer* GetSDLRenderer() const;
 
@@ -31,6 +35,9 @@ namespace engine
 	private:
 		friend class Singleton<Renderer>;
 		Renderer() = default;
+
+		SDL_Rect GetSDLDstRect(const Texture2D& texture, float x, float y, float width, float height)const;
+		SDL_Rect GetSDLSrcRect(const Texture2D& texture, float x, float y, float width, float height)const;
 
 		SDL_Renderer* m_Renderer{};
 		SDL_Window* m_Window{};

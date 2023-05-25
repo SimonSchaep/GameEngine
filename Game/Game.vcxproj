@@ -192,6 +192,8 @@ xcopy "$(SolutionDir)Data\" "$(ProjectDir)Data\" /Y</Command>
     <ClCompile Include="FoodElement.cpp" />
     <ClCompile Include="FoodParent.cpp" />
     <ClCompile Include="FPSCounter.cpp" />
+    <ClCompile Include="GameManager.cpp" />
+    <ClCompile Include="GameState.cpp" />
     <ClCompile Include="Level.cpp" />
     <ClCompile Include="LivesDisplay.cpp" />
     <ClCompile Include="Main.cpp" />
@@ -210,6 +212,8 @@ xcopy "$(SolutionDir)Data\" "$(ProjectDir)Data\" /Y</Command>
     <ClInclude Include="FoodElement.h" />
     <ClInclude Include="FoodParent.h" />
     <ClInclude Include="FPSCounter.h" />
+    <ClInclude Include="GameManager.h" />
+    <ClInclude Include="GameState.h" />
     <ClInclude Include="KilledEnemyCommand.h" />
     <ClInclude Include="Level.h" />
     <ClInclude Include="LevelParser.h" />

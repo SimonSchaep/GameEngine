@@ -5,14 +5,16 @@
 #include "BaseComponent.h"
 #include "RenderComponent.h"
 #include "UIRenderComponent.h"
+#include "SceneManager.h"
 #include <iostream>
 
 namespace engine
 {
 
-	GameObject::GameObject(const std::string& name)
+	GameObject::GameObject(const std::string& name, Scene* pScene)
 		: m_Transform{ std::make_unique<Transform>(this) }
 		, m_Name{ name }
+		, m_pScene{ pScene }
 	{
 	}
 
@@ -77,6 +79,15 @@ namespace engine
 		{
 			renderer->RenderUI();
 		}
+	}
+
+	Scene* GameObject::GetScene() const
+	{
+		if (m_IsSceneIndependant)
+		{
+			return SceneManager::GetInstance().GetActiveScene();
+		}
+		return m_pScene;
 	}
 
 	void GameObject::Render()const

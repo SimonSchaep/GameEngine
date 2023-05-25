@@ -11,11 +11,12 @@ namespace engine
 	{
 	public:
 		GameObject* CreateAndAddGameObject(const std::string& name = "DefaultName", GameObject* pParent = nullptr);
-		GameObject* AddGameObject(std::shared_ptr<GameObject> gameObject);
 		GameObject* FindGameObjectByName(const std::string& name);
-		std::shared_ptr<GameObject> GetSharedPtrForGameObject(GameObject* pGameObject);
 
-		const std::vector<std::shared_ptr<GameObject>>& GetGameObjects()const { return m_GameObjects; }
+		void TransferSceneIndependantGameObjects(Scene* targetScene);
+		void TransferGameObject(std::unique_ptr<GameObject> gameObject);
+
+		const std::vector<std::unique_ptr<GameObject>>& GetGameObjects()const { return m_GameObjects; }
 
 		const std::string& GetName()const { return m_Name; };
 		int GetIndex()const { return m_Index; };
@@ -45,7 +46,7 @@ namespace engine
 
 		std::string m_Name;
 		int m_Index;
-		std::vector<std::shared_ptr<GameObject>> m_GameObjects{};
+		std::vector<std::unique_ptr<GameObject>> m_GameObjects{};
 
 		bool m_IsInitialized{};
 

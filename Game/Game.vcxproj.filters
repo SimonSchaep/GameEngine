@@ -17,6 +17,9 @@
     <Filter Include="Components\Old">
       <UniqueIdentifier>{1fcef0c9-3791-4e44-8c87-ad3ba8bbd515}</UniqueIdentifier>
     </Filter>
+    <Filter Include="GameManager">
+      <UniqueIdentifier>{182c5289-d4c7-48f4-a074-f76bd4ac637a}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="FPSCounter.cpp">
@@ -61,6 +64,12 @@
     </ClCompile>
     <ClCompile Include="FoodElement.cpp">
       <Filter>Components\Food</Filter>
+    </ClCompile>
+    <ClCompile Include="GameState.cpp">
+      <Filter>GameManager</Filter>
+    </ClCompile>
+    <ClCompile Include="GameManager.cpp">
+      <Filter>GameManager</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -123,6 +132,12 @@
     </ClInclude>
     <ClInclude Include="FoodElement.h">
       <Filter>Components\Food</Filter>
+    </ClInclude>
+    <ClInclude Include="GameState.h">
+      <Filter>GameManager</Filter>
+    </ClInclude>
+    <ClInclude Include="GameManager.h">
+      <Filter>GameManager</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

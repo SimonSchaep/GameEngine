@@ -38,25 +38,29 @@ namespace engine
 		}
 	}
 
-	//needs to be here for the unique_ptr to incomplete type scene to compile
+	//needs to be here for the unique_ptrs of the scenes to compile
 	SceneManager::~SceneManager() = default;
 	SceneManager::SceneManager() = default;
 
 	Scene* SceneManager::CreateScene(const std::string& name)
 	{
-		auto scene = std::make_unique<Scene>(name, int(m_scenes.size()));
+		auto scene = std::make_unique<Scene>(name, int(m_Scenes.size()));
 		Scene* pReturnValue = scene.get();
-		m_scenes.push_back(std::move(scene));
+		m_Scenes.push_back(std::move(scene));
 		if (!m_pActiveScene)
 		{
-			SetActiveSceneByPtr(pReturnValue);
+			SetActiveScene(pReturnValue);
 		}
 		return pReturnValue;
 	}
 
-	void SceneManager::SetActiveSceneByPtr(Scene* pScene)
+	void SceneManager::SetActiveScene(Scene* pScene)
 	{
 		assert(pScene);
+		if (m_pActiveScene)
+		{
+			m_pActiveScene->TransferSceneIndependantGameObjects(pScene);
+		}
 		m_pActiveScene = pScene;
 		if (m_IsInitialized && !m_pActiveScene->GetIsInitialized())
 		{
@@ -66,37 +70,20 @@ namespace engine
 
 	void SceneManager::SetActiveSceneByName(const std::string& sceneName)
 	{
-		for (auto& scene : m_scenes)
+		for (auto& scene : m_Scenes)
 		{
 			if (scene->GetName() == sceneName)
 			{
-				m_pActiveScene = scene.get();
+				SetActiveScene(scene.get());
 			}
-		}
-
-		//ensure there is an active scene
-		assert(m_pActiveScene);
-
-		if (m_IsInitialized && !m_pActiveScene->GetIsInitialized())
-		{
-			m_pActiveScene->Initialize();
 		}
 	}
 
 	void SceneManager::SetActiveSceneByIndex(int index)
 	{
-		assert(int(m_scenes.size()) > index);
-		m_pActiveScene = m_scenes[index].get();
-
-		//ensure there is an active scene
-		assert(m_pActiveScene);
-
-		if (m_IsInitialized && !m_pActiveScene->GetIsInitialized())
-		{
-			m_pActiveScene->Initialize();
-		}
+		SetActiveScene(GetSceneByIndex(index));
 	}
-
+	
 	Scene* SceneManager::GetActiveScene()
 	{
 		return m_pActiveScene;
@@ -104,7 +91,7 @@ namespace engine
 
 	Scene* SceneManager::GetSceneByName(const std::string& sceneName)
 	{
-		for (auto& scene : m_scenes)
+		for (auto& scene : m_Scenes)
 		{
 			if (scene->GetName() == sceneName)
 			{
@@ -116,8 +103,8 @@ namespace engine
 
 	Scene* SceneManager::GetSceneByIndex(int index)
 	{
-		assert(int(m_scenes.size()) > index);
-		return m_scenes[index].get();
+		assert(int(m_Scenes.size()) > index);
+		return m_Scenes[index].get();
 	}
 
 }

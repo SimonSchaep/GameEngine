@@ -11,18 +11,11 @@ namespace engine
 
 	GameObject* Scene::CreateAndAddGameObject(const std::string& name, GameObject* pParent)
 	{
-		auto gameObject = std::make_shared<GameObject>(name);
+		auto gameObject = std::make_unique<GameObject>(name, this);
 		if (pParent)
 		{
 			gameObject->SetParent(pParent, false);
 		}
-		GameObject* pReturnValue = gameObject.get();
-		m_GameObjects.emplace_back(std::move(gameObject));
-		return pReturnValue;
-	}
-
-	GameObject* Scene::AddGameObject(std::shared_ptr<GameObject> gameObject)
-	{
 		GameObject* pReturnValue = gameObject.get();
 		m_GameObjects.emplace_back(std::move(gameObject));
 		return pReturnValue;
@@ -40,16 +33,20 @@ namespace engine
 		return nullptr;
 	}
 
-	std::shared_ptr<GameObject> Scene::GetSharedPtrForGameObject(GameObject* pGameObject)
+	void Scene::TransferSceneIndependantGameObjects(Scene* targetScene)
 	{
 		for (auto& gameObject : m_GameObjects)
 		{
-			if (gameObject.get() == pGameObject)
+			if (gameObject->IsSceneIndependant())
 			{
-				return gameObject;
+				targetScene->TransferGameObject(std::move(gameObject));
 			}
 		}
-		return std::shared_ptr<GameObject>(nullptr);
+	}
+
+	void Scene::TransferGameObject(std::unique_ptr<GameObject> gameObject)
+	{
+		m_GameObjects.emplace_back(std::move(gameObject));
 	}
 
 	void Scene::Initialize()
@@ -105,7 +102,7 @@ namespace engine
 	{
 		//Sort gameObjects so render will be based on layer of first rendercomponent of each gameobject
 		std::sort(m_GameObjects.begin(), m_GameObjects.end(),
-			[](std::shared_ptr<GameObject> obj1, std::shared_ptr<GameObject> obj2)
+			[](const std::unique_ptr<GameObject>& obj1, const std::unique_ptr<GameObject>& obj2)
 			{
 				int layer1{};
 				int layer2{};

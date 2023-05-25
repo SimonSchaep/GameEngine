@@ -8,7 +8,7 @@
 void engine::CollisionManager::CheckTriggers()
 {
 	auto pActiveScene = SceneManager::GetInstance().GetActiveScene();
-	const std::vector<std::shared_ptr<GameObject>>& gameObjects = pActiveScene->GetGameObjects();
+	const auto& gameObjects = pActiveScene->GetGameObjects();
 
 	//todo: optimize this
 
@@ -33,7 +33,7 @@ void engine::CollisionManager::CheckTriggers()
 void engine::CollisionManager::Render() const
 {
 	auto pActiveScene = SceneManager::GetInstance().GetActiveScene();
-	const std::vector<std::shared_ptr<GameObject>>& gameObjects = pActiveScene->GetGameObjects();
+	const auto& gameObjects = pActiveScene->GetGameObjects();
 
 	for (size_t i{}; i < gameObjects.size(); ++i)
 	{

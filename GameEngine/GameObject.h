@@ -12,6 +12,7 @@ namespace engine
 	class RenderComponent;
 	class UIRenderComponent;
 	class Collider;
+	class Scene;
 
 	class GameObject final
 	{
@@ -23,9 +24,13 @@ namespace engine
 
 		Transform* GetTransform() { return m_Transform.get(); }
 
+		Scene* GetScene()const;
 		const std::string& GetName()const { return m_Name; }
 		bool HasTag(const std::string& tag) { return std::find(m_Tags.begin(), m_Tags.end(), tag) != m_Tags.end(); }
 		void AddTag(const std::string& tag) { m_Tags.push_back(tag); }
+
+		void MarkAsSceneIndependant() { m_IsSceneIndependant = true; }
+		bool IsSceneIndependant() { return m_IsSceneIndependant; }
 
 		void MarkForDeletion(bool includeChildren);
 		bool IsMarkedForDeletion() { return m_IsMarkedForDeletion; }
@@ -68,7 +73,7 @@ namespace engine
 
 		//ideally this would be private, but that complicates things since the constructor needs to be used in make_shared
 		//https://stackoverflow.com/questions/8147027/how-do-i-call-stdmake-shared-on-a-class-with-only-protected-or-private-const/73236821#73236821
-		GameObject(const std::string& name); //only use this with scene.CreateAndAddGameObject()
+		GameObject(const std::string& name, Scene* pScene); //only use this with scene.CreateAndAddGameObject()
 		~GameObject();
 		GameObject(const GameObject& other) = delete;
 		GameObject(GameObject&& other) = delete;
@@ -83,8 +88,11 @@ namespace engine
 
 		std::unique_ptr<Transform> m_Transform{};
 
+		Scene* m_pScene{};
 		std::string m_Name{};
 		std::vector<std::string> m_Tags{};
+
+		bool m_IsSceneIndependant{};
 
 		bool m_IsMarkedForDeletion{};
 

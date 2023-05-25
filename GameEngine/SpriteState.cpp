@@ -10,7 +10,7 @@ engine::SpriteState* engine::SpriteState::EvaluateConnections()
 {
 	for (const SpriteConnection& connection : m_Connections)
 	{
-		if (connection.Predicate()) //todo: not sure if this will work, test
+		if (connection.Predicate())
 		{
 			return connection.To;
 		}

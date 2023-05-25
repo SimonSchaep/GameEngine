@@ -46,6 +46,7 @@ namespace engine
 
 		std::string m_Name;
 		int m_Index;
+		//todo: maybe use a vector of active and inactive gameobjects
 		std::vector<std::unique_ptr<GameObject>> m_GameObjects{};
 
 		bool m_IsInitialized{};

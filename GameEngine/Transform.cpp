@@ -38,17 +38,21 @@ namespace engine
 
 	void Transform::SetLocalPosition(const float x, const float y, const float z)
 	{
-		m_LocalPosition.x = x;
-		m_LocalPosition.y = y;
-		m_LocalPosition.z = z;
+		SetLocalPosition({ x,y,z });
+
+		SetDirty(true);
+	}
+
+	void Transform::SetLocalPosition(float x, float y)
+	{
+		SetLocalPosition({ x,y,0 });
 
 		SetDirty(true);
 	}
 
 	void Transform::SetLocalPosition(const glm::vec2& pos)
 	{
-		glm::vec3 temp{ pos.x, pos.y, 0 };
-		m_LocalPosition = temp;
+		SetLocalPosition({pos.x,pos.y,0});
 
 		SetDirty(true);
 	}
@@ -62,28 +66,17 @@ namespace engine
 
 	void Transform::SetWorldPosition(float x, float y, float z)
 	{
-		if (m_pGameObject->GetParent())
-		{
-			SetLocalPosition(x - m_pGameObject->GetParent()->GetTransform()->GetWorldPosition().x,
-				y - m_pGameObject->GetParent()->GetTransform()->GetWorldPosition().y,
-				z - m_pGameObject->GetParent()->GetTransform()->GetWorldPosition().z);
-		}
-		else
-		{
-			SetLocalPosition(x, y, z);
-		}
+		SetWorldPosition({ x,y,z });
+	}
+
+	void Transform::SetWorldPosition(float x, float y)
+	{
+		SetWorldPosition({ x,y,0 });
 	}
 
 	void Transform::SetWorldPosition(const glm::vec2& pos)
 	{
-		if (m_pGameObject->GetParent())
-		{
-			SetLocalPosition(pos - glm::vec2(m_pGameObject->GetParent()->GetTransform()->GetWorldPosition()));
-		}
-		else
-		{
-			SetLocalPosition(pos);
-		}
+		SetWorldPosition({ pos.x,pos.y,0 });
 	}
 
 	void Transform::SetWorldPosition(const glm::vec3& pos)

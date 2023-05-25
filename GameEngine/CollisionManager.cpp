@@ -15,13 +15,21 @@ void engine::CollisionManager::CheckTriggers()
 	//for every collider
 	for (size_t i{}; i < gameObjects.size(); ++i)
 	{
+		if (!gameObjects[i]->IsActive()) continue;
+
 		for (auto& collider : gameObjects[i]->GetColliders())
-		{			
+		{
+			if (!collider->IsActive()) continue;
+
 			//check triggers with every other collider
 			for (size_t j{i + 1}; j < gameObjects.size(); ++j) //start with i + 1 to make sure we don't check collisions twice
 			{
+				if (!gameObjects[j]->IsActive()) continue;
+
 				for (auto& otherCollider : gameObjects[j]->GetColliders())
 				{
+					if (!otherCollider->IsActive()) continue;
+
 					collider->CheckTrigger(otherCollider);
 				}
 			}
@@ -37,8 +45,12 @@ void engine::CollisionManager::Render() const
 
 	for (size_t i{}; i < gameObjects.size(); ++i)
 	{
+		if (!gameObjects[i]->IsActive()) continue;
+
 		for (auto& collider : gameObjects[i]->GetColliders())
 		{
+			if (!collider->IsActive()) continue;
+
 			BoxCollider* pBox = dynamic_cast<BoxCollider*>(collider);
 			if (pBox)
 			{

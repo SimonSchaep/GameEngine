@@ -5,6 +5,7 @@
 #include "SpriteRenderComponent.h"
 #include "ServiceLocator.h"
 #include "Logger.h"
+#include "TimeManager.h"
 
 engine::SpriteStateMachineComponent::SpriteStateMachineComponent(GameObject* pGameObject)
 	:BaseComponent(pGameObject)
@@ -43,7 +44,7 @@ void engine::SpriteStateMachineComponent::Initialize()
 
 void engine::SpriteStateMachineComponent::Update()
 {
-	if (!m_pSpriteRenderComponent)return;
+	if (!m_pSpriteRenderComponent || TimeManager::GetInstance().GetTimePaused())return;
 
 	auto newState = m_CurrentState->EvaluateConnections();
 	if (newState) //might be good to replace with a while loop to keep checking connections of newer states

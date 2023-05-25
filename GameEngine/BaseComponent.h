@@ -24,6 +24,9 @@ namespace engine
 		GameObject* GetGameObject()const { return m_pGameObject; };
 		Transform* GetTransform()const;
 
+		void SetIsActive(bool isActive) { m_IsActive = isActive; }
+		bool IsActive() { return m_IsActive; }
+
 	protected:
 		BaseComponent(GameObject* gameObject);
 
@@ -35,8 +38,7 @@ namespace engine
 		bool m_IsMarkedForDeletion{};
 
 		bool m_IsInitialized{};
+
+		bool m_IsActive{true};
 	};
-
-
-
 }

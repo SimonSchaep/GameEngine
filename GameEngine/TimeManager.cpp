@@ -24,7 +24,7 @@ namespace engine
 		const auto currentFrameStart = std::chrono::high_resolution_clock::now();
 		m_DeltaTime = std::chrono::duration<float>(currentFrameStart - previousFrameStart).count();
 		m_DeltaTime *= m_TimeScale;
-		m_TotalTime += m_DeltaTime;
+		m_TotalTime += GetDeltaTime();
 
 		previousFrameStart = currentFrameStart;
 	}

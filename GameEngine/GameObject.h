@@ -29,16 +29,18 @@ namespace engine
 		bool HasTag(const std::string& tag) { return std::find(m_Tags.begin(), m_Tags.end(), tag) != m_Tags.end(); }
 		void AddTag(const std::string& tag) { m_Tags.push_back(tag); }
 
-		void MarkAsSceneIndependant() { m_IsSceneIndependant = true; }
+		void MarkAsSceneIndependant();
 		bool IsSceneIndependant() { return m_IsSceneIndependant; }
 
 		void MarkForDeletion(bool includeChildren);
 		bool IsMarkedForDeletion() { return m_IsMarkedForDeletion; }
 
+		void SetIsActive(bool isActive) { m_IsActive = isActive; }
+		bool IsActive() { return m_IsActive && (!m_pParent || m_pParent->IsActive()); } //if all in hierarchy above is active, return true. Here it would be easier if a gameobject owns its children
 
 		//PARENT/CHILDREN
 		void SetParent(GameObject* pParent, bool keepWorldPosition);
-		GameObject* GetParent()const { return m_Parent; }
+		GameObject* GetParent()const { return m_pParent; }
 
 		const std::vector<GameObject*>& GetChildren()const { return m_Children; }
 
@@ -81,10 +83,14 @@ namespace engine
 		GameObject& operator=(GameObject&& other) = delete;
 
 	private:
-		void AddChild(GameObject* pGameObject) { m_Children.push_back(pGameObject); };
-		void RemoveChild(GameObject* pGameObject) { m_Children.erase(std::remove(m_Children.begin(), m_Children.end(), pGameObject)); }
+		void AddChild(GameObject* pGameObject);
+		void RemoveChild(GameObject* pGameObject);
+
+		void SetHierarchyIsSceneIndependant(bool isDependant);
 
 		bool m_IsInitialized{};
+
+		bool m_IsActive{true};
 
 		std::unique_ptr<Transform> m_Transform{};
 
@@ -99,12 +105,13 @@ namespace engine
 		std::vector<size_t> m_ToDeleteIndexes{};
 
 		std::vector<GameObject*> m_Children;
-		GameObject* m_Parent{};
+		GameObject* m_pParent{};
 
 		std::vector<Collider*> m_Colliders{};
 		std::vector<RenderComponent*> m_RenderComponents{};
 		std::vector<UIRenderComponent*> m_UIRenderComponents{};
 
+		//todo: maybe use a vector of active and inactive components
 		std::vector<std::unique_ptr<BaseComponent>> m_Components{};
 		//this could be interesting if getcomponent is too slow:
 		//https://stackoverflow.com/questions/9859390/use-data-type-class-type-as-key-in-a-map

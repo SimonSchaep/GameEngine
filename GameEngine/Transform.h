@@ -18,9 +18,11 @@ namespace engine
 		const glm::vec3& GetLocalPosition() const { return m_LocalPosition; }
 		const glm::vec3& GetWorldPosition();
 		void SetLocalPosition(float x, float y, float z);
+		void SetLocalPosition(float x, float y);
 		void SetLocalPosition(const glm::vec2& pos);
 		void SetLocalPosition(const glm::vec3& pos);
 		void SetWorldPosition(float x, float y, float z);
+		void SetWorldPosition(float x, float y);
 		void SetWorldPosition(const glm::vec2& pos);
 		void SetWorldPosition(const glm::vec3& pos);
 		void Translate(const glm::vec2& offset);

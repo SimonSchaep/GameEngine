@@ -12,6 +12,7 @@ void FPSCounter::Initialize()
 
 void FPSCounter::Update()
 {
+	if (TimeManager::GetInstance().GetDeltaTime() < 0.001f) return;
 	const std::string text{ "FPS: " + std::to_string(int(glm::round(1.f / TimeManager::GetInstance().GetDeltaTime()))) };
 	m_pTextRenderComponent->SetText(text);
 }

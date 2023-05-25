@@ -218,6 +218,7 @@ xcopy "$(SolutionDir)Data\" "$(ProjectDir)Data\" /Y</Command>
     <ClInclude Include="Level.h" />
     <ClInclude Include="LevelParser.h" />
     <ClInclude Include="LivesDisplay.h" />
+    <ClInclude Include="MenuCommands.h" />
     <ClInclude Include="MoveCommands.h" />
     <ClInclude Include="MovementComponent.h" />
     <ClInclude Include="MyPlayerController.h" />

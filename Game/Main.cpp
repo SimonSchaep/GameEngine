@@ -41,6 +41,7 @@
 #include "ConsoleLogger.h"
 #include "FileLogger.h"
 #include "SDLSoundSystem.h"
+#include "GameManager.h"
 
 using namespace engine;
 
@@ -79,7 +80,7 @@ void load()
 	//fps counter gameobject
 	auto pGameObject = pScene->CreateAndAddGameObject("Fps");
 	auto pTextRenderComponent = pGameObject->CreateAndAddComponent<TextRenderComponent>();
-	pTextRenderComponent->SetText("fps test");
+	pTextRenderComponent->SetText("FPS:");
 	pTextRenderComponent->SetFont(ResourceManager::GetInstance().LoadFont("Lingua.otf", 12));
 	pGameObject->CreateAndAddComponent<FPSCounter>();
 	pGameObject->GetTransform()->SetLocalPosition(20, 20, 0);
@@ -179,26 +180,26 @@ void load()
 	//pCamera->SetLevelBoundaries({ level.GetLevelPosition().x,level.GetLevelPosition().y,float(level.GetLevelWidth() * level.GetCellWidth()),float((level.GetLevelHeight() + 1) * level.GetCellHeight()) }); //make sure level is built before this
 
 	//bean gameobject
-	auto pBean = pScene->CreateAndAddGameObject("Bean");
-	pBean->GetTransform()->SetLocalPosition({ 96,596 });
-	pMovementComponent = pBean->CreateAndAddComponent<MovementComponent>();
-	pMovementComponent->SetMoveSpeed(100);
-	pPlayerLives = pBean->CreateAndAddComponent<PlayerLives>();
-	pPlayerLives->SetMaxLives(5);
-	pBean->CreateAndAddComponent<PlayerPoints>();
+	//auto pBean = pScene->CreateAndAddGameObject("Bean");
+	//pBean->GetTransform()->SetLocalPosition({ 96,596 });
+	//pMovementComponent = pBean->CreateAndAddComponent<MovementComponent>();
+	//pMovementComponent->SetMoveSpeed(100);
+	//pPlayerLives = pBean->CreateAndAddComponent<PlayerLives>();
+	//pPlayerLives->SetMaxLives(5);
+	//pBean->CreateAndAddComponent<PlayerPoints>();
 
-	//visuals
-	auto pBeanVisuals = pScene->CreateAndAddGameObject("BeanVisuals", pBean);
-	auto pRenderComponent = pBeanVisuals->CreateAndAddComponent<TextureRenderComponent>();
-	pRenderComponent->SetTexture("bean.png");
-	pRenderComponent->SetSize({ 28, 28 });
-	width = float(pRenderComponent->GetSize().x);
-	height = float(pRenderComponent->GetSize().y);
-	pBeanVisuals->GetTransform()->SetLocalPosition({ -width / 2, -4 });
+	////visuals
+	//auto pBeanVisuals = pScene->CreateAndAddGameObject("BeanVisuals", pBean);
+	//auto pRenderComponent = pBeanVisuals->CreateAndAddComponent<TextureRenderComponent>();
+	//pRenderComponent->SetTexture("bean.png");
+	//pRenderComponent->SetSize({ 28, 28 });
+	//width = float(pRenderComponent->GetSize().x);
+	//height = float(pRenderComponent->GetSize().y);
+	//pBeanVisuals->GetTransform()->SetLocalPosition({ -width / 2, -4 });
 
-	//collider
-	pBoxCollider = pBean->CreateAndAddComponent<BoxCollider>();
-	pBoxCollider->SetShape({ -width / 2, -4, width, height });
+	////collider
+	//pBoxCollider = pBean->CreateAndAddComponent<BoxCollider>();
+	//pBoxCollider->SetShape({ -width / 2, -4, width, height });
 
 	//player 1 controller gameobject
 	auto pPlayer1ControllerObject = pScene->CreateAndAddGameObject();
@@ -209,14 +210,14 @@ void load()
 	pPlayer1Controller->SetControlChef(true);
 
 	//player 2 controller gameobject
-	auto pPlayer2ControllerObject = pScene->CreateAndAddGameObject();
-	auto pPlayer2Controller = pPlayer2ControllerObject->CreateAndAddComponent<MyPlayerController>();
-	pPlayer2Controller->UseController(0);
-	//make controller posses bean
-	pPlayer2Controller->SetControlChef(false);
+	//auto pPlayer2ControllerObject = pScene->CreateAndAddGameObject();
+	//auto pPlayer2Controller = pPlayer2ControllerObject->CreateAndAddComponent<MyPlayerController>();
+	//pPlayer2Controller->UseController(0);
+	////make controller posses bean
+	//pPlayer2Controller->SetControlChef(false);
 
 	//Observers
-	auto pChefLivesDisplay = pScene->CreateAndAddGameObject("ChefLivesDisplay");
+	/*auto pChefLivesDisplay = pScene->CreateAndAddGameObject("ChefLivesDisplay");
 	pChefLivesDisplay->GetTransform()->SetLocalPosition({ 20,300 });
 	auto pLivesDisplayComponent = pChefLivesDisplay->CreateAndAddComponent<LivesDisplay>();
 	pLivesDisplayComponent->SetFont(ResourceManager::GetInstance().LoadFont("Lingua.otf", 18));
@@ -242,7 +243,7 @@ void load()
 	pPointsDisplayComponent = pBeanPointsDisplay->CreateAndAddComponent<PointsDisplay>();
 	pPointsDisplayComponent->SetFont(ResourceManager::GetInstance().LoadFont("Lingua.otf", 18));
 	pPointsDisplayComponent->SetColor({ 0,255,0,255 });
-	pPointsDisplayComponent->SetSubjectGameObject(pBean);
+	pPointsDisplayComponent->SetSubjectGameObject(pBean);*/
 
 
 	//Controls display
@@ -250,7 +251,10 @@ void load()
 	pControlsDisplay->CreateAndAddComponent<ControlsDisplay>();
 
 	
-
+	//Game Manager
+	auto pGameManager = pScene->CreateAndAddGameObject("GameManager");
+	pGameManager->MarkAsSceneIndependant();
+	pGameManager->CreateAndAddComponent<GameManager>();
 }
 
 int main(int, char* [])

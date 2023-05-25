@@ -139,5 +139,8 @@
     <ClInclude Include="GameManager.h">
       <Filter>GameManager</Filter>
     </ClInclude>
+    <ClInclude Include="MenuCommands.h">
+      <Filter>Commands</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

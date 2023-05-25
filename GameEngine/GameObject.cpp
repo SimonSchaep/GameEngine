@@ -7,6 +7,8 @@
 #include "UIRenderComponent.h"
 #include "SceneManager.h"
 #include <iostream>
+#include "ServiceLocator.h"
+#include "Logger.h"
 
 namespace engine
 {
@@ -37,6 +39,26 @@ namespace engine
 		}
 	}
 
+	void GameObject::AddChild(GameObject* pGameObject)
+	{
+		pGameObject->SetHierarchyIsSceneIndependant(m_IsSceneIndependant);
+		m_Children.push_back(pGameObject);
+	}
+
+	void GameObject::RemoveChild(GameObject* pGameObject)
+	{
+		m_Children.erase(std::remove(m_Children.begin(), m_Children.end(), pGameObject));
+	}
+
+	void GameObject::SetHierarchyIsSceneIndependant(bool isDependant)
+	{
+		m_IsSceneIndependant = isDependant;
+		for (auto child : m_Children)
+		{
+			child->SetHierarchyIsSceneIndependant(isDependant);
+		}
+	}
+
 	void GameObject::Initialize()
 	{
 		//std::cout << GetName() << "init\n";
@@ -57,6 +79,8 @@ namespace engine
 		//Update Components
 		for (size_t i{}; i < m_Components.size(); ++i)
 		{
+			if (!m_Components[i]->IsActive())continue;
+
 			m_Components[i]->UpdateComponent();
 			if (m_Components[i]->IsMarkedForDeletion())
 			{
@@ -77,6 +101,8 @@ namespace engine
 	{
 		for (auto& renderer : m_UIRenderComponents)
 		{
+			if (!renderer->IsActive())continue;
+
 			renderer->RenderUI();
 		}
 	}
@@ -94,8 +120,22 @@ namespace engine
 	{
 		for (auto& renderer : m_RenderComponents)
 		{
+			if (!renderer->IsActive())continue;
+
 			renderer->Render();
 		}
+	}
+
+	void GameObject::MarkAsSceneIndependant()
+	{
+		if (m_pParent)
+		{
+			ServiceLocator::GetLogger().LogLine("marking a child as scene independant doesn't work, try marking the parent gameobject");
+		}
+		else
+		{
+			SetHierarchyIsSceneIndependant(true);
+		}		
 	}
 
 	void GameObject::MarkForDeletion(bool includeChildren)
@@ -126,14 +166,14 @@ namespace engine
 			m_Transform->SetDirty(true);
 		}
 
-		if (m_Parent)
+		if (m_pParent)
 		{
-			m_Parent->RemoveChild(this);
+			m_pParent->RemoveChild(this);
 		}
-		m_Parent = pParent;
-		if (m_Parent)
+		m_pParent = pParent;
+		if (m_pParent)
 		{
-			m_Parent->AddChild(this);
+			m_pParent->AddChild(this);
 		}
 	}
 

@@ -63,6 +63,8 @@ namespace engine
 		//Update GameObjects
 		for (size_t i{}; i < m_GameObjects.size(); ++i)
 		{
+			if (!m_GameObjects[i]->IsActive())continue;
+
 			m_GameObjects[i]->Update();
 			if (m_GameObjects[i]->IsMarkedForDeletion())
 			{
@@ -86,6 +88,8 @@ namespace engine
 	{
 		for (const auto& gameObject : m_GameObjects)
 		{
+			if (!gameObject->IsActive())continue;
+
 			gameObject->RenderUI();
 		}
 	}
@@ -94,6 +98,8 @@ namespace engine
 	{
 		for (const auto& gameObject : m_GameObjects)
 		{
+			if (!gameObject->IsActive())continue;
+
 			gameObject->Render();
 		}
 	}

@@ -26,9 +26,12 @@ namespace engine
 
 		bool ProcessInput();
 
-		void BindControllerButtonToCommand(int controllerIndex, InputController::ControllerButton button, KeyState keyState, std::unique_ptr<BaseCommand> command);
-		void BindControllerAxisToCommand(int controllerIndex, InputController::ControllerAxis axis, std::unique_ptr<BaseAxisCommand> command);
-		void BindKeyboardButtonToCommand(SDL_Scancode scanCode, KeyState keyState, std::unique_ptr<BaseCommand> command);
+		BaseCommand* BindControllerButtonToCommand(int controllerIndex, InputController::ControllerButton button, KeyState keyState, std::unique_ptr<BaseCommand> command);
+		BaseAxisCommand* BindControllerAxisToCommand(int controllerIndex, InputController::ControllerAxis axis, std::unique_ptr<BaseAxisCommand> command);
+		BaseCommand* BindKeyboardButtonToCommand(SDL_Scancode scanCode, KeyState keyState, std::unique_ptr<BaseCommand> command);
+
+		void RemoveCommand(BaseCommand* baseCommand);
+		void RemoveCommand(BaseAxisCommand* baseAxisCommand);
 
 	private:
 		friend class Singleton<InputManager>;

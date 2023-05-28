@@ -25,8 +25,9 @@ namespace engine
 		m_Controllers.erase(std::remove(m_Controllers.begin(), m_Controllers.end(), m_Controllers[controllerIndex]), m_Controllers.end());
 	}
 
-	void InputManager::BindKeyboardButtonToCommand(SDL_Scancode scanCode, KeyState keyState, std::unique_ptr<BaseCommand> command)
+	BaseCommand* InputManager::BindKeyboardButtonToCommand(SDL_Scancode scanCode, KeyState keyState, std::unique_ptr<BaseCommand> command)
 	{
+		auto pReturnValue = command.get();
 		if (m_KeyboardInputBindings.find(std::pair(scanCode, keyState)) != m_KeyboardInputBindings.end())
 		{
 			m_KeyboardInputBindings[std::pair(scanCode, keyState)].push_back(std::move(command));
@@ -37,10 +38,12 @@ namespace engine
 			commandVec.push_back(std::move(command));
 			m_KeyboardInputBindings.emplace(std::pair(scanCode, keyState), std::move(commandVec));
 		}
+		return pReturnValue;
 	}
 
-	void InputManager::BindControllerButtonToCommand(int controllerIndex, InputController::ControllerButton button, KeyState keyState, std::unique_ptr<BaseCommand> command)
+	BaseCommand* InputManager::BindControllerButtonToCommand(int controllerIndex, InputController::ControllerButton button, KeyState keyState, std::unique_ptr<BaseCommand> command)
 	{
+		auto pReturnValue = command.get();
 		if (m_ControllerButtonBindings.find(std::pair(std::pair(controllerIndex, button), keyState)) != m_ControllerButtonBindings.end())
 		{
 			m_ControllerButtonBindings[std::pair(std::pair(controllerIndex, button), keyState)].push_back(std::move(command));
@@ -51,10 +54,12 @@ namespace engine
 			commandVec.push_back(std::move(command));
 			m_ControllerButtonBindings.emplace(std::pair(std::pair(controllerIndex, button), keyState), std::move(commandVec));
 		}
+		return pReturnValue;
 	}
 
-	void InputManager::BindControllerAxisToCommand(int controllerIndex, InputController::ControllerAxis axis, std::unique_ptr<BaseAxisCommand> command)
+	BaseAxisCommand* InputManager::BindControllerAxisToCommand(int controllerIndex, InputController::ControllerAxis axis, std::unique_ptr<BaseAxisCommand> command)
 	{
+		auto pReturnValue = command.get();
 		if (m_ControllerAxisBindings.find(std::pair(controllerIndex, axis)) != m_ControllerAxisBindings.end())
 		{
 			m_ControllerAxisBindings[std::pair(controllerIndex, axis)].push_back(std::move(command));
@@ -64,6 +69,43 @@ namespace engine
 			std::vector<std::unique_ptr<BaseAxisCommand>> commandVec{};
 			commandVec.push_back(std::move(command));
 			m_ControllerAxisBindings.emplace(std::pair(controllerIndex, axis), std::move(commandVec));
+		}
+		return pReturnValue;
+	}
+
+	void InputManager::RemoveCommand(BaseCommand* baseCommand)
+	{
+		for (auto& [key, value] : m_KeyboardInputBindings)
+		{
+			auto it = std::find_if(value.begin(), value.end(), [&](std::unique_ptr<BaseCommand>& element) { return element.get() == baseCommand; });
+			if (it != value.end())
+			{
+				value.erase(it);
+				return;
+			}
+		}
+
+		for (auto& [key, value] : m_ControllerButtonBindings)
+		{
+			auto it = std::find_if(value.begin(), value.end(), [&](std::unique_ptr<BaseCommand>& element) { return element.get() == baseCommand; });
+			if (it != value.end())
+			{
+				value.erase(it);
+				return;
+			}
+		}
+	}
+
+	void InputManager::RemoveCommand(BaseAxisCommand* baseAxisCommand)
+	{
+		for (auto& [key, value] : m_ControllerAxisBindings)
+		{
+			auto it = std::find_if(value.begin(), value.end(), [&](std::unique_ptr<BaseAxisCommand>& element) { return element.get() == baseAxisCommand; });
+			if (it != value.end())
+			{
+				value.erase(it);
+				return;
+			}
 		}
 	}
 

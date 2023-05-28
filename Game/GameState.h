@@ -1,5 +1,6 @@
 #pragma once
 #include <memory>
+#include <vector>
 
 //todo: add going back to menu from pause and leaderboard
 //add restarting game from pause menu
@@ -8,6 +9,7 @@
 namespace engine
 {
 	class GameObject;
+	class BaseCommand;
 }
 
 class GameManager;
@@ -42,6 +44,7 @@ public:
 private:
 	engine::GameObject* m_pMenuGameObject{};
 	bool m_StartGame{};
+	std::vector<engine::BaseCommand*> m_Commands{};
 };
 
 //Game Playing
@@ -55,10 +58,12 @@ public:
 
 	virtual GameState* Update()override;
 	virtual void OnEnter()override;
-	virtual void OnExit()override {};
+	virtual void OnExit()override;
+
 private:
 	bool m_PauseGame{};
 	bool m_EndGame{};
+	std::vector<engine::BaseCommand*> m_Commands{};
 };
 
 //Game paused
@@ -75,6 +80,7 @@ public:
 private:
 	engine::GameObject* m_pPauseMenuGameObject{};
 	bool m_ResumeGame{};
+	std::vector<engine::BaseCommand*> m_Commands{};
 };
 
 //Leaderboard

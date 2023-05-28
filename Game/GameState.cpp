@@ -14,7 +14,6 @@ StartMenuState::StartMenuState(GameManager* pGameManager, engine::GameObject* pM
 	, m_pMenuGameObject{ pMenuGameObject }
 {
 	m_pMenuGameObject->SetIsActive(false);
-	InputManager::GetInstance().BindKeyboardButtonToCommand(SDL_SCANCODE_SPACE, InputManager::KeyState::up, std::make_unique<StartGameCommand>(this));
 }
 
 GameState* StartMenuState::Update()
@@ -28,6 +27,7 @@ GameState* StartMenuState::Update()
 
 void StartMenuState::OnEnter()
 {
+	m_Commands.emplace_back(InputManager::GetInstance().BindKeyboardButtonToCommand(SDL_SCANCODE_SPACE, InputManager::KeyState::up, std::make_unique<StartGameCommand>(this)));
 	m_StartGame = false;
 	m_pMenuGameObject->SetIsActive(true);
 	TimeManager::GetInstance().SetTimePaused(true);
@@ -35,6 +35,11 @@ void StartMenuState::OnEnter()
 
 void StartMenuState::OnExit()
 {
+	for (auto& command : m_Commands)
+	{
+		InputManager::GetInstance().RemoveCommand(command);
+	}
+	m_Commands.clear();
 	m_pMenuGameObject->SetIsActive(false);
 }
 
@@ -43,11 +48,7 @@ void StartMenuState::OnExit()
 GamePlayingState::GamePlayingState(GameManager* pGameManager)
 	:GameState(pGameManager)
 {
-	InputManager::GetInstance().BindKeyboardButtonToCommand(SDL_SCANCODE_ESCAPE, InputManager::KeyState::up, std::make_unique<PauseGameCommand>(this));
-	InputManager::GetInstance().BindKeyboardButtonToCommand(SDL_SCANCODE_P, InputManager::KeyState::up, std::make_unique<PauseGameCommand>(this));
-
-	//todo: make this in game event instead of input event
-	InputManager::GetInstance().BindKeyboardButtonToCommand(SDL_SCANCODE_G, InputManager::KeyState::up, std::make_unique<EndGameCommand>(this));
+	
 }
 
 GameState* GamePlayingState::Update()
@@ -65,9 +66,24 @@ GameState* GamePlayingState::Update()
 
 void GamePlayingState::OnEnter()
 {
+	m_Commands.emplace_back(InputManager::GetInstance().BindKeyboardButtonToCommand(SDL_SCANCODE_ESCAPE, InputManager::KeyState::up, std::make_unique<PauseGameCommand>(this)));
+	m_Commands.emplace_back(InputManager::GetInstance().BindKeyboardButtonToCommand(SDL_SCANCODE_P, InputManager::KeyState::up, std::make_unique<PauseGameCommand>(this)));
+
+	//todo: make this in game event instead of input event
+	m_Commands.emplace_back(InputManager::GetInstance().BindKeyboardButtonToCommand(SDL_SCANCODE_G, InputManager::KeyState::up, std::make_unique<EndGameCommand>(this)));
+
 	m_PauseGame = false;
 	m_EndGame = false;
 	TimeManager::GetInstance().SetTimePaused(false);
+}
+
+void GamePlayingState::OnExit()
+{
+	for (auto& command : m_Commands)
+	{
+		InputManager::GetInstance().RemoveCommand(command);
+	}
+	m_Commands.clear();
 }
 
 
@@ -77,8 +93,6 @@ GamePausedState::GamePausedState(GameManager* pGameManager, engine::GameObject* 
 	, m_pPauseMenuGameObject{pPauseMenuGameObject}
 {
 	m_pPauseMenuGameObject->SetIsActive(false);
-	InputManager::GetInstance().BindKeyboardButtonToCommand(SDL_SCANCODE_SPACE, InputManager::KeyState::up, std::make_unique<ResumeGameCommand>(this));
-	InputManager::GetInstance().BindKeyboardButtonToCommand(SDL_SCANCODE_P, InputManager::KeyState::up, std::make_unique<ResumeGameCommand>(this));
 }
 
 GameState* GamePausedState::Update()
@@ -92,6 +106,9 @@ GameState* GamePausedState::Update()
 
 void GamePausedState::OnEnter()
 {
+	m_Commands.emplace_back(InputManager::GetInstance().BindKeyboardButtonToCommand(SDL_SCANCODE_SPACE, InputManager::KeyState::up, std::make_unique<ResumeGameCommand>(this)));
+	m_Commands.emplace_back(InputManager::GetInstance().BindKeyboardButtonToCommand(SDL_SCANCODE_P, InputManager::KeyState::up, std::make_unique<ResumeGameCommand>(this)));
+
 	m_ResumeGame = false;
 	TimeManager::GetInstance().SetTimePaused(true);
 
@@ -100,6 +117,11 @@ void GamePausedState::OnEnter()
 
 void GamePausedState::OnExit()
 {
+	for (auto& command : m_Commands)
+	{
+		InputManager::GetInstance().RemoveCommand(command);
+	}
+	m_Commands.clear();
 	m_pPauseMenuGameObject->SetIsActive(false);
 }
 

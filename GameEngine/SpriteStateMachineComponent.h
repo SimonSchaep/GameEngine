@@ -19,11 +19,15 @@ namespace engine
 		virtual void Initialize() override;
 		virtual void Update() override;
 
+		void ForceStateEvaluation();
+
 		SpriteState* CreateAndAddState(std::shared_ptr<Sprite> sprite);
 		void SetStartState(SpriteState* state) { m_CurrentState = state; }
 		void SetSpriteRenderComponent(SpriteRenderComponent* pSpriteRenderComponent) { m_pSpriteRenderComponent = pSpriteRenderComponent; }
 
 	private:
+		void EvaluateStates();
+
 		std::vector<std::unique_ptr<SpriteState>> m_SpriteStates{};
 
 		SpriteState* m_CurrentState{};

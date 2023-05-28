@@ -20,6 +20,9 @@
     <Filter Include="GameManager">
       <UniqueIdentifier>{182c5289-d4c7-48f4-a074-f76bd4ac637a}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Components\AnimationControllers">
+      <UniqueIdentifier>{a233df35-b072-4fe7-b360-4ab2a9136bcd}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="FPSCounter.cpp">
@@ -70,6 +73,9 @@
     </ClCompile>
     <ClCompile Include="GameManager.cpp">
       <Filter>GameManager</Filter>
+    </ClCompile>
+    <ClCompile Include="ChefSpriteController.cpp">
+      <Filter>Components\AnimationControllers</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -141,6 +147,9 @@
     </ClInclude>
     <ClInclude Include="MenuCommands.h">
       <Filter>Commands</Filter>
+    </ClInclude>
+    <ClInclude Include="ChefSpriteController.h">
+      <Filter>Components\AnimationControllers</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

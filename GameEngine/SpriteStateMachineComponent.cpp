@@ -21,6 +21,18 @@ engine::SpriteState* engine::SpriteStateMachineComponent::CreateAndAddState(std:
 	return pReturnValue;
 }
 
+void engine::SpriteStateMachineComponent::EvaluateStates()
+{
+	if (!m_pSpriteRenderComponent || !m_CurrentState || TimeManager::GetInstance().GetTimePaused())return;
+
+	auto newState = m_CurrentState->EvaluateConnections();
+	if (newState) //might be good to replace with a while loop to keep checking connections of newer states
+	{
+		m_CurrentState = newState;
+		m_pSpriteRenderComponent->SetSprite(m_CurrentState->GetSprite());
+	}
+}
+
 void engine::SpriteStateMachineComponent::Initialize()
 {
 	if (!m_pSpriteRenderComponent)
@@ -44,12 +56,10 @@ void engine::SpriteStateMachineComponent::Initialize()
 
 void engine::SpriteStateMachineComponent::Update()
 {
-	if (!m_pSpriteRenderComponent || TimeManager::GetInstance().GetTimePaused())return;
+	EvaluateStates();
+}
 
-	auto newState = m_CurrentState->EvaluateConnections();
-	if (newState) //might be good to replace with a while loop to keep checking connections of newer states
-	{
-		m_CurrentState = newState;
-		m_pSpriteRenderComponent->SetSprite(m_CurrentState->GetSprite());
-	}
+void engine::SpriteStateMachineComponent::ForceStateEvaluation()
+{
+	EvaluateStates();
 }

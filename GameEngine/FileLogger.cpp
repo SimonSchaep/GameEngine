@@ -1,6 +1,7 @@
 #include "FileLogger.h"
 #include "NullLogger.h"
 #include <filesystem>
+#include <chrono>
 
 engine::FileLogger::FileLogger()
 {
@@ -49,16 +50,27 @@ void engine::FileLogger::LogText(const std::string& message, LogType logType)
 	switch (logType)
 	{
 	case engine::LogType::message:
-		m_OfStream << m_MessagePrefix << message;
+		m_OfStream << GetTimeStamp() << m_MessagePrefix << message;
 		break;
 	case engine::LogType::debug:
-		m_OfStream << m_DebugPrefix << message;
+		m_OfStream << GetTimeStamp() << m_DebugPrefix << message;
 		break;
 	case engine::LogType::warning:
-		m_OfStream << m_WarningPrefix << message;
+		m_OfStream << GetTimeStamp() << m_WarningPrefix << message;
 		break;
 	case engine::LogType::error:
-		m_OfStream << m_ErrorPrefix << message;
+		m_OfStream << GetTimeStamp() << m_ErrorPrefix << message;
 		break;
 	}
+}
+
+std::string engine::FileLogger::GetTimeStamp()
+{
+	if (!m_TimeStampsEnabled) return "";
+
+	auto now = std::chrono::system_clock::now();
+	auto currTime = std::chrono::system_clock::to_time_t(now);
+	auto pTm = localtime(&currTime);
+
+	return "[" + std::to_string(pTm->tm_hour) + ":" + std::to_string(pTm->tm_min) + ":" + std::to_string(pTm->tm_sec) + "] ";
 }

@@ -19,16 +19,19 @@ namespace engine
 		virtual void Log(const std::string& message, LogType logType = LogType::message)override;
 		virtual void LogLine(const std::string& message, LogType logType = LogType::message)override;
 
+		void SetEnableTimestamps(bool timestampsEnabled) { m_TimeStampsEnabled = timestampsEnabled; }
+
 	private:
 		void LogText(const std::string& message, LogType logType);
+		std::string GetTimeStamp();
+
+		bool m_TimeStampsEnabled{ true };
 
 		std::unique_ptr<Logger> m_ActualLogger{};
-
 		std::string m_FilePath{"Logs/log.txt"};
-
 		std::ofstream m_OfStream{};
 
-		std::string m_MessagePrefix{ "" };
+		std::string m_MessagePrefix{ "MESSAGE: " };
 		std::string m_DebugPrefix{ "DEBUG: " };
 		std::string m_WarningPrefix{ "WARNING: " };
 		std::string m_ErrorPrefix{ "ERROR: " };

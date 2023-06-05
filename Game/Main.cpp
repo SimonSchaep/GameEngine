@@ -50,6 +50,7 @@ void load()
 {
 	//register services
 	ServiceLocator::RegisterLogger<ConsoleLogger>();
+	//logger->SetEnableTimestamps(true);
 	/*auto logger = ServiceLocator::RegisterLogger<FileLogger>();
 	logger->SetActualLogger<ConsoleLogger>();*/
 

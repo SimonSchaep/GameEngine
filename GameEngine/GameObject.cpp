@@ -42,7 +42,7 @@ namespace engine
 	void GameObject::AddChild(GameObject* pGameObject)
 	{
 		pGameObject->SetHierarchyIsSceneIndependant(m_IsSceneIndependant);
-		m_Children.push_back(pGameObject);
+		m_Children.emplace_back(pGameObject);
 	}
 
 	void GameObject::RemoveChild(GameObject* pGameObject)
@@ -61,10 +61,10 @@ namespace engine
 
 	void GameObject::Initialize()
 	{
-		//std::cout << GetName() << "init\n";
-		for (auto& c : m_Components)
+		//no range-based for, cause than iterator would get invalidated if components get added during initailize
+		for (size_t i{}; i < m_Components.size(); ++i)
 		{
-			c->InitializeComponent();
+			m_Components[i]->InitializeComponent();
 		}
 		m_IsInitialized = true;
 	}

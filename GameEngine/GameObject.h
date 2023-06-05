@@ -62,8 +62,8 @@ namespace engine
 		template<typename T>
 		std::vector<T*> GetAllComponentsOfType()const;
 
-		template<typename T>
-		T* CreateAndAddComponent();
+		template<typename T, typename ...Args>
+		T* CreateAndAddComponent(Args... args);
 
 		//removes the first m_pComponent of the specified type
 		template<typename T>
@@ -150,10 +150,10 @@ namespace engine
 		return returnComponents;
 	}
 
-	template<typename T>
-	T* GameObject::CreateAndAddComponent()
+	template<typename T, typename ...Args>
+	T* GameObject::CreateAndAddComponent(Args... args)
 	{
-		auto component = std::make_unique<T>(this);
+		auto component = std::make_unique<T>(this, args...);
 		T* pReturnValue = component.get();
 
 		m_Components.push_back(std::move(component));

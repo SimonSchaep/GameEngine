@@ -16,30 +16,30 @@ namespace engine
 		static Logger& GetLogger() { return *m_Logger; }
 		static SoundSystem& GetSoundSystem() { return *m_SoundSystem; }
 
-		template<typename T>
-		static T* RegisterLogger();
+		template<typename T, typename ...Args>
+		static T* RegisterLogger(Args... args);
 
-		template<typename T>
-		static T* RegisterSoundSystem();
+		template<typename T, typename ...Args>
+		static T* RegisterSoundSystem(Args... args);
 
 	private:
 		static std::unique_ptr<Logger> m_Logger;
 		static std::unique_ptr<SoundSystem> m_SoundSystem;
 	};
 
-	template<typename T>
-	static T* ServiceLocator::RegisterLogger()
+	template<typename T, typename ...Args>
+	static T* ServiceLocator::RegisterLogger(Args... args)
 	{
-		auto logger = std::make_unique<T>();
+		auto logger = std::make_unique<T>(args);
 		T* pReturnValue = logger.get();
 		m_Logger = std::move(logger);
 		return pReturnValue;
 	}
 
-	template<typename T>
-	static T* ServiceLocator::RegisterSoundSystem()
+	template<typename T, typename ...Args>
+	static T* ServiceLocator::RegisterSoundSystem(Args... args)
 	{
-		auto soundSystem = std::make_unique<T>();
+		auto soundSystem = std::make_unique<T>(args);
 		T* pReturnValue = soundSystem.get();
 		m_SoundSystem = std::move(soundSystem);
 		return pReturnValue;

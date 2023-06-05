@@ -88,42 +88,42 @@ void load()
 
 
 	//Load level
-	auto& level = Level::GetInstance();
-	level.BuildLevel(pScene, "Data/level2.csv");
+	//auto& level = Level::GetInstance();
+	//level.BuildLevel(pScene, "Data/level2.csv");
 
 	// separating gameobjects from controllers makes it possible to switch between controlled gameobjects
 	// input will first go to a controller, then the controller will send the input to a controlled gameobject
 	// you could put the logic of the MyPlayerController in the movementcomponent, or put the MyPlayerController on the same gameobject if you don't need the switching
 
 	//chef gameobject
-	auto pChef = pScene->CreateAndAddGameObject("Chef");
-	pChef->AddTag("Chef");
-	pChef->GetTransform()->SetLocalPosition({ 96,596 });
-	auto pMovementComponent = pChef->CreateAndAddComponent<MovementComponent>();
-	pMovementComponent->SetMoveSpeed(100);
-	auto pPlayerLives = pChef->CreateAndAddComponent<PlayerLives>();
-	pPlayerLives->SetMaxLives(5);
-	pChef->CreateAndAddComponent<PlayerPoints>();	
+	//auto pChef = pScene->CreateAndAddGameObject("Chef");
+	//pChef->AddTag("Chef");
+	//pChef->GetTransform()->SetLocalPosition({ 96,596 });
+	//auto pMovementComponent = pChef->CreateAndAddComponent<MovementComponent>();
+	//pMovementComponent->SetMoveSpeed(100);
+	//auto pPlayerLives = pChef->CreateAndAddComponent<PlayerLives>();
+	//pPlayerLives->SetMaxLives(5);
+	//pChef->CreateAndAddComponent<PlayerPoints>();	
 
-	//visuals
-	auto pChefVisuals = pScene->CreateAndAddGameObject("ChefVisuals", pChef);
-	/*auto pRenderComponent = pChefVisuals->CreateAndAddComponent<TextureRenderComponent>();
-	pRenderComponent->SetTexture("chef.png");
-	pRenderComponent->SetSize({28, 28});
-	float width = float(pRenderComponent->GetSize().x);
-	float height = float(pRenderComponent->GetSize().y);*/
-	auto pSpriteRenderComponent = pChefVisuals->CreateAndAddComponent<SpriteRenderComponent>();
-	pSpriteRenderComponent->SetSize({ 28, 28 });
+	////visuals
+	//auto pChefVisuals = pScene->CreateAndAddGameObject("ChefVisuals", pChef);
+	///*auto pRenderComponent = pChefVisuals->CreateAndAddComponent<TextureRenderComponent>();
+	//pRenderComponent->SetTexture("chef.png");
+	//pRenderComponent->SetSize({28, 28});
+	//float width = float(pRenderComponent->GetSize().x);
+	//float height = float(pRenderComponent->GetSize().y);*/
+	//auto pSpriteRenderComponent = pChefVisuals->CreateAndAddComponent<SpriteRenderComponent>();
+	//pSpriteRenderComponent->SetSize({ 28, 28 });
 
-	pChefVisuals->CreateAndAddComponent<ChefSpriteController>();
+	//pChefVisuals->CreateAndAddComponent<ChefSpriteController>();
 
-	float width = float(pSpriteRenderComponent->GetSize().x);
-	float height = float(pSpriteRenderComponent->GetSize().y);
-	pChefVisuals->GetTransform()->SetLocalPosition({ -width / 2, -8 });
+	//float width = float(pSpriteRenderComponent->GetSize().x);
+	//float height = float(pSpriteRenderComponent->GetSize().y);
+	//pChefVisuals->GetTransform()->SetLocalPosition({ -width / 2, -8 });
 
-	//collider
-	auto pBoxCollider = pChef->CreateAndAddComponent<BoxCollider>();
-	pBoxCollider->SetShape({ -width / 2, -8, width, height });
+	////collider
+	//auto pBoxCollider = pChef->CreateAndAddComponent<BoxCollider>();
+	//pBoxCollider->SetShape({ -width / 2, -8, width, height });
 
 	//camera
 	//auto pCamera = pChef->CreateAndAddComponent<CameraComponent>();
@@ -152,13 +152,13 @@ void load()
 	//pBoxCollider = pBean->CreateAndAddComponent<BoxCollider>();
 	//pBoxCollider->SetShape({ -width / 2, -4, width, height });
 
-	//player 1 controller gameobject
-	auto pPlayer1ControllerObject = pScene->CreateAndAddGameObject();
-	auto pPlayer1Controller = pPlayer1ControllerObject->CreateAndAddComponent<MyPlayerController>();
-	pPlayer1Controller->UseKeyboard(true);
-	pPlayer1Controller->UseController(1);
-	//make controller posses chef
-	pPlayer1Controller->SetControlChef(true);
+	////player 1 controller gameobject
+	//auto pPlayer1ControllerObject = pScene->CreateAndAddGameObject();
+	//auto pPlayer1Controller = pPlayer1ControllerObject->CreateAndAddComponent<MyPlayerController>();
+	//pPlayer1Controller->UseKeyboard(true);
+	//pPlayer1Controller->UseController(1);
+	////make controller posses chef
+	//pPlayer1Controller->SetControlChef(true);
 
 	//player 2 controller gameobject
 	//auto pPlayer2ControllerObject = pScene->CreateAndAddGameObject();

@@ -6,11 +6,23 @@
 #include "InputController.h"
 #include "PlayerController.h"
 #include "Level.h"
+#include "Scene.h"
+#include "ServiceLocator.h"
+#include "Logger.h"
 #include <iostream>
 
 //todo: fix jittering when moving left/right when we can't
 
 using namespace engine;
+
+void MovementComponent::Initialize()
+{
+	m_pLevel = GetGameObject()->GetScene()->FindGameObjectByName("Level")->GetComponent<Level>();
+	if (!m_pLevel)
+	{
+		ServiceLocator::GetLogger().LogLine("No level component on an object named \"Level\" found", LogType::error);
+	}
+}
 
 void MovementComponent::Update()
 {
@@ -47,12 +59,10 @@ void MovementComponent::Move(const glm::vec2& direction)
 
 void MovementComponent::CheckMoveX()
 {
-	Level& level = Level::GetInstance();
-
 	auto transform = GetGameObject()->GetTransform();
 	int row{};
 	int col{};
-	level.GetRowColOfPos(transform->GetWorldPosition(), row, col);
+	m_pLevel->GetRowColOfPos(transform->GetWorldPosition(), row, col);
 
 	const float epsilon = 0.0001f;
 
@@ -66,9 +76,9 @@ void MovementComponent::CheckMoveX()
 		}
 		else
 		{
-			if (abs(m_Direction.y) <= epsilon && !level.IsInCenterOfElementY(transform->GetWorldPosition(), m_CenterMargin)) //if there is no y input -> try to move closer to center
+			if (abs(m_Direction.y) <= epsilon && !m_pLevel->IsInCenterOfElementY(transform->GetWorldPosition(), m_CenterMargin)) //if there is no y input -> try to move closer to center
 			{
-				if (transform->GetWorldPosition().y > level.GetCenterOfCell(row, col).y)
+				if (transform->GetWorldPosition().y > m_pLevel->GetCenterOfCell(row, col).y)
 				{
 					m_Direction.y = -1;
 				}
@@ -88,12 +98,10 @@ void MovementComponent::CheckMoveX()
 
 void MovementComponent::CheckMoveY()
 {
-	Level& level = Level::GetInstance();
-
 	auto transform = GetGameObject()->GetTransform();
 	int row{};
 	int col{};
-	level.GetRowColOfPos(transform->GetWorldPosition(), row, col);
+	m_pLevel->GetRowColOfPos(transform->GetWorldPosition(), row, col);
 
 	const float epsilon = 0.0001f;
 
@@ -107,9 +115,9 @@ void MovementComponent::CheckMoveY()
 		}
 		else
 		{
-			if (abs(m_Direction.x) <= epsilon && !level.IsInCenterOfElementX(transform->GetWorldPosition(), m_CenterMargin)) //if there is no x input -> try to move closer to center
+			if (abs(m_Direction.x) <= epsilon && !m_pLevel->IsInCenterOfElementX(transform->GetWorldPosition(), m_CenterMargin)) //if there is no x input -> try to move closer to center
 			{
-				if (transform->GetWorldPosition().x > level.GetCenterOfCell(row, col).x)
+				if (transform->GetWorldPosition().x > m_pLevel->GetCenterOfCell(row, col).x)
 				{
 					m_Direction.x = -1;
 				}
@@ -129,70 +137,62 @@ void MovementComponent::CheckMoveY()
 
 bool MovementComponent::CanMoveUp()
 {
-	Level& level = Level::GetInstance();
-
 	auto transform = GetGameObject()->GetTransform();
 	int row{};
 	int col{};
-	level.GetRowColOfPos(transform->GetWorldPosition(), row, col);
+	m_pLevel->GetRowColOfPos(transform->GetWorldPosition(), row, col);
 
-	if (transform->GetWorldPosition().y < level.GetCenterOfCell(row, col).y)
+	if (transform->GetWorldPosition().y < m_pLevel->GetCenterOfCell(row, col).y)
 	{
 		return true;
 	}
-	return level.IsInCenterOfElementX(transform->GetWorldPosition(), m_CenterMargin)
-		&& level.IsNavigableByPlayer(row + 1, col);
+	return m_pLevel->IsInCenterOfElementX(transform->GetWorldPosition(), m_CenterMargin)
+		&& m_pLevel->IsNavigableByPlayer(row + 1, col);
 }
 
 bool MovementComponent::CanMoveDown()
 {
-	Level& level = Level::GetInstance();
-
 	auto transform = GetGameObject()->GetTransform();
 	int row{};
 	int col{};
-	level.GetRowColOfPos(transform->GetWorldPosition(), row, col);
+	m_pLevel->GetRowColOfPos(transform->GetWorldPosition(), row, col);
 
-	if (transform->GetWorldPosition().y > level.GetCenterOfCell(row, col).y)
+	if (transform->GetWorldPosition().y > m_pLevel->GetCenterOfCell(row, col).y)
 	{
 		return true;
 	}
-	return level.IsInCenterOfElementX(transform->GetWorldPosition(), m_CenterMargin)
-		&& level.IsNavigableByPlayer(row - 1, col);
+	return m_pLevel->IsInCenterOfElementX(transform->GetWorldPosition(), m_CenterMargin)
+		&& m_pLevel->IsNavigableByPlayer(row - 1, col);
 }
 
 bool MovementComponent::CanMoveRight()
 {
-	Level& level = Level::GetInstance();
-
 	auto transform = GetGameObject()->GetTransform();
 	int row{};
 	int col{};
-	level.GetRowColOfPos(transform->GetWorldPosition(), row, col);
+	m_pLevel->GetRowColOfPos(transform->GetWorldPosition(), row, col);
 
-	if (transform->GetWorldPosition().x < level.GetCenterOfCell(row, col).x)
+	if (transform->GetWorldPosition().x < m_pLevel->GetCenterOfCell(row, col).x)
 	{
 		return true;
 	}
-	return level.IsInCenterOfElementY(transform->GetWorldPosition(), m_CenterMargin)
-		&& level.IsNavigableByPlayer(row, col + 1);
+	return m_pLevel->IsInCenterOfElementY(transform->GetWorldPosition(), m_CenterMargin)
+		&& m_pLevel->IsNavigableByPlayer(row, col + 1);
 }
 
 bool MovementComponent::CanMoveLeft()
 {
-	Level& level = Level::GetInstance();
-
 	auto transform = GetGameObject()->GetTransform();
 	int row{};
 	int col{};
-	level.GetRowColOfPos(transform->GetWorldPosition(), row, col);
+	m_pLevel->GetRowColOfPos(transform->GetWorldPosition(), row, col);
 
-	if (transform->GetWorldPosition().x > level.GetCenterOfCell(row, col).x)
+	if (transform->GetWorldPosition().x > m_pLevel->GetCenterOfCell(row, col).x)
 	{
 		return true;
 	}
-	return level.IsInCenterOfElementY(transform->GetWorldPosition(), m_CenterMargin)
-		&& level.IsNavigableByPlayer(row, col - 1);
+	return m_pLevel->IsInCenterOfElementY(transform->GetWorldPosition(), m_CenterMargin)
+		&& m_pLevel->IsNavigableByPlayer(row, col - 1);
 }
 
 void MovementComponent::MoveAlongX()
@@ -200,7 +200,7 @@ void MovementComponent::MoveAlongX()
 	auto transform = GetGameObject()->GetTransform();
 	transform->Translate(glm::normalize(glm::vec2{ m_Direction.x, 0 }) * m_MoveSpeed * TimeManager::GetInstance().GetDeltaTime());
 	glm::vec2 centerYPos = transform->GetWorldPosition();
-	Level::GetInstance().SnapToCenterY(centerYPos);
+	m_pLevel->SnapToCenterY(centerYPos);
 	transform->SetWorldPosition(centerYPos);
 
 	m_CurrentMovementDirection = { m_Direction.x, 0 };
@@ -213,7 +213,7 @@ void MovementComponent::MoveAlongY()
 	auto transform = GetGameObject()->GetTransform();
 	transform->Translate(glm::normalize(glm::vec2{ 0, m_Direction.y }) * m_MoveSpeed * TimeManager::GetInstance().GetDeltaTime());
 	glm::vec2 centerXPos = transform->GetWorldPosition();
-	Level::GetInstance().SnapToCenterX(centerXPos);
+	m_pLevel->SnapToCenterX(centerXPos);
 	transform->SetWorldPosition(centerXPos);
 
 	m_CurrentMovementDirection = { 0,m_Direction.y };

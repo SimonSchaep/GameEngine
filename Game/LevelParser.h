@@ -13,7 +13,7 @@ namespace levelParser
 		std::string m_Msg;
 	public:
 		FileNameNotFound(const std::string& fileName) 
-			: m_Msg{ "File with path " + fileName + " not found" } {};
+			: m_Msg{ "Level file with path " + fileName + " not found" } {};
 		const char* what() const noexcept override
 		{
 			return m_Msg.c_str();

@@ -1,5 +1,5 @@
 #pragma once
-#include "Singleton.h"
+#include "BaseComponent.h"
 #include "glm/glm.hpp"
 #include <string>
 #include <vector>
@@ -19,13 +19,17 @@ namespace levelParser
 	enum class ELevelElement;
 }
 
-//todo: shouldn't be a singleton
-//also should somwhow be able to set cell size, and level pos
+//todo: should somehow be able to set cell size, and level pos
 
-class Level final : public engine::Singleton<Level>
+class Level : public engine::BaseComponent
 {
 public:
-	void BuildLevel(engine::Scene* pScene, const std::string& fileName);
+	Level(engine::GameObject* pGameObject, const std::string& levelFileName);
+	virtual ~Level() = default;
+
+	virtual void Initialize() override;
+	virtual void Update() override {};
+
 	bool IsNavigableByPlayer(int row, int col)const;
 	bool IsNavigableByEnemy(int row, int col)const;
 
@@ -43,12 +47,13 @@ public:
 	const glm::vec2& GetLevelPosition()const { return m_LevelStartPos; }
 
 private:
+	void BuildLevel();
 	int GetLevelElementsIndex(int row, int col);
 
 	void CreateDarkPlatform(engine::TextureRenderComponent* pRenderComponent, engine::GameObject* pLevelElementGameObject, bool hasLadder);
-	void SpawnPlate(glm::vec2 pos, engine::Scene* pScene, const std::vector<levelParser::LevelElement>& levelElements, int row, int col);
-	void SpawnFood(glm::vec2 pos, engine::Scene* pScene, const std::vector<levelParser::LevelElement>& levelElements, int row, int col, levelParser::ELevelElement eLevelElement, const std::string& name);
-	void CreateFoodElement(const glm::vec2 pos, engine::Scene* pScene, const std::string& textureFileName, engine::GameObject* pParent, engine::BoxCollider* pParentCollider);
+	void SpawnPlate(glm::vec2 pos, const std::vector<levelParser::LevelElement>& levelElements, int row, int col);
+	void SpawnFood(glm::vec2 pos, const std::vector<levelParser::LevelElement>& levelElements, int row, int col, levelParser::ELevelElement eLevelElement, const std::string& name);
+	void CreateFoodElement(const glm::vec2 pos, const std::string& textureFileName, engine::GameObject* pParent, engine::BoxCollider* pParentCollider);
 
 	void GenerateNavigableAreas(const std::vector<levelParser::LevelElement>& levelElements);
 	std::vector<bool> m_PlayerNavigableArea{};
@@ -60,5 +65,7 @@ private:
 	float m_GridElementWidth{ 32 };
 	float m_GridElementHeight{ 24 };
 	glm::vec2 m_LevelStartPos{ 80,80 };
+
+	std::string m_LevelFileName{};
 };
 

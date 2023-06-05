@@ -2,13 +2,15 @@
 #include "BaseComponent.h"
 #include "glm/glm.hpp"
 
+class Level;
+
 class MovementComponent : public engine::BaseComponent
 {
 public:
 	MovementComponent(engine::GameObject* pGameObject) :BaseComponent(pGameObject) {};
 	virtual ~MovementComponent() = default;
 
-	virtual void Initialize() override {};
+	virtual void Initialize() override;
 	virtual void Update() override;
 
 	void Move(const glm::vec2& direction);
@@ -35,5 +37,7 @@ private:
 	glm::vec2 m_CurrentMovementDirection{}; //only used for animation, maybe there's a better way to do it, something like using velocity
 
 	int m_CenterMargin{ 1 };
+
+	Level* m_pLevel{};
 };
 

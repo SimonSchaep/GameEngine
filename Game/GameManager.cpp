@@ -6,6 +6,14 @@
 #include "ResourceManager.h"
 #include "Font.h"
 #include "Renderer.h"
+#include "MovementComponent.h"
+#include "PlayerLives.h"
+#include "PlayerPoints.h"
+#include <SpriteRenderComponent.h>
+#include "ChefSpriteController.h"
+#include <BoxCollider.h>
+#include "MyPlayerController.h"
+#include "Level.h"
 
 using namespace engine;
 
@@ -52,6 +60,8 @@ void GameManager::Initialize()
 {
 	m_pActiveGameState = GetStartMenuState();
 	m_pActiveGameState->OnEnter();
+
+	StartLevel1();
 }
 
 void GameManager::Update()
@@ -63,4 +73,50 @@ void GameManager::Update()
 		pNewState->OnEnter();
 		m_pActiveGameState = pNewState;
 	}
+}
+
+void GameManager::StartLevel1()
+{
+	auto pScene = SceneManager::GetInstance().CreateScene("Level1");
+	
+	//Load level
+	auto pLevelObject = pScene->CreateAndAddGameObject("Level");
+	pLevelObject->CreateAndAddComponent<Level>("Data/level1.csv");
+
+	//create chef
+	auto pChef = pScene->CreateAndAddGameObject("Chef");
+	pChef->AddTag("Chef");
+	pChef->GetTransform()->SetLocalPosition({ 96,596 });
+	auto pMovementComponent = pChef->CreateAndAddComponent<MovementComponent>();
+	pMovementComponent->SetMoveSpeed(100);
+	auto pPlayerLives = pChef->CreateAndAddComponent<PlayerLives>();
+	pPlayerLives->SetMaxLives(5);
+	pChef->CreateAndAddComponent<PlayerPoints>();
+
+	//visuals
+	auto pChefVisuals = pScene->CreateAndAddGameObject("ChefVisuals", pChef);
+	auto pSpriteRenderComponent = pChefVisuals->CreateAndAddComponent<SpriteRenderComponent>();
+	pSpriteRenderComponent->SetSize({ 28, 28 });
+
+	pChefVisuals->CreateAndAddComponent<ChefSpriteController>();
+
+	float width = float(pSpriteRenderComponent->GetSize().x);
+	float height = float(pSpriteRenderComponent->GetSize().y);
+	pChefVisuals->GetTransform()->SetLocalPosition({ -width / 2, -8 });
+	
+	//collider
+	auto pBoxCollider = pChef->CreateAndAddComponent<BoxCollider>();
+	pBoxCollider->SetShape({ -width / 2, -8, width, height });
+
+
+	//player 1 controller gameobject
+	auto pPlayer1ControllerObject = pScene->CreateAndAddGameObject();
+	auto pPlayer1Controller = pPlayer1ControllerObject->CreateAndAddComponent<MyPlayerController>();
+	pPlayer1Controller->UseKeyboard(true);
+	pPlayer1Controller->UseController(1);
+	//make controller posses chef
+	pPlayer1Controller->SetControlChef(true);
+
+
+	SceneManager::GetInstance().SetActiveScene(pScene);
 }

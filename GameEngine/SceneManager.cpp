@@ -57,6 +57,8 @@ namespace engine
 	void SceneManager::SetActiveScene(Scene* pScene)
 	{
 		assert(pScene);
+		if(m_pActiveScene == pScene) return;
+
 		if (m_pActiveScene)
 		{
 			m_pActiveScene->TransferSceneIndependantGameObjects(pScene);

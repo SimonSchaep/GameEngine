@@ -35,13 +35,23 @@ namespace engine
 
 	void Scene::TransferSceneIndependantGameObjects(Scene* targetScene)
 	{
-		for (auto& gameObject : m_GameObjects)
+		if(targetScene == this) return;
+
+		for (size_t i{}; i < m_GameObjects.size(); ++i)
 		{
-			if (gameObject->IsSceneIndependant())
+			if (m_GameObjects[i]->IsSceneIndependant())
 			{
-				targetScene->TransferGameObject(std::move(gameObject));
+				targetScene->TransferGameObject(std::move(m_GameObjects[i]));
+				m_ToDeleteIndexes.push_back(i);
 			}
 		}
+		//Delete GameObjects - reverse order because it removes gameobjects by index
+		//If the gameobjects at idx 0 and 1 need to be deleted and the one at 0 is deleted first, the gameobject at idx 1 will be at 0 when we delete it
+		for (int i{ int(m_ToDeleteIndexes.size()) - 1 }; i >= 0; --i)
+		{
+			RemoveGameObjectByIndex(m_ToDeleteIndexes[i]);
+		}
+		m_ToDeleteIndexes.clear();
 	}
 
 	void Scene::TransferGameObject(std::unique_ptr<GameObject> gameObject)
@@ -51,9 +61,10 @@ namespace engine
 
 	void Scene::Initialize()
 	{
-		for (auto& gameObject : m_GameObjects)
+		//no range-based for, cause than iterator would get invalidated if gameobjects get added during initailize
+		for (size_t i{}; i < m_GameObjects.size(); ++i)
 		{
-			gameObject->Initialize();
+			m_GameObjects[i]->Initialize();
 		}
 		m_IsInitialized = true;
 	}

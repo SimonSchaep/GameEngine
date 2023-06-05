@@ -17,6 +17,8 @@ public:
 	virtual void Initialize() override;
 	virtual void Update() override;
 
+	void StartLevel1();
+
 	StartMenuState* GetStartMenuState()const { return m_StartMenuState.get(); }
 	GamePlayingState* GetGamePlayingState()const { return m_GamePlayingState.get(); }
 	GamePausedState* GetGamePausedState()const { return m_GamePausedState.get(); }

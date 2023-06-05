@@ -53,9 +53,9 @@ namespace engine
 	void GameObject::SetHierarchyIsSceneIndependant(bool isDependant)
 	{
 		m_IsSceneIndependant = isDependant;
-		for (auto child : m_Children)
+		for (auto pChild : m_Children)
 		{
-			child->SetHierarchyIsSceneIndependant(isDependant);
+			pChild->SetHierarchyIsSceneIndependant(isDependant);
 		}
 	}
 
@@ -107,13 +107,13 @@ namespace engine
 		}
 	}
 
-	Scene* GameObject::GetScene() const
+	void GameObject::OnSceneTransferred(Scene* pNewScene)
 	{
-		if (m_IsSceneIndependant)
+		m_pScene = pNewScene;
+		for (size_t i{}; i < m_Components.size(); ++i)
 		{
-			return SceneManager::GetInstance().GetActiveScene();
+			m_Components[i]->OnSceneTransferred();
 		}
-		return m_pScene;
 	}
 
 	void GameObject::Render()const

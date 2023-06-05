@@ -24,7 +24,9 @@ namespace engine
 
 		Transform* GetTransform() { return m_Transform.get(); }
 
-		Scene* GetScene()const;
+		void OnSceneTransferred(Scene* pNewScene);
+
+		Scene* GetScene()const { return m_pScene; }
 		const std::string& GetName()const { return m_Name; }
 		bool HasTag(const std::string& tag) { return std::find(m_Tags.begin(), m_Tags.end(), tag) != m_Tags.end(); }
 		void AddTag(const std::string& tag) { m_Tags.emplace_back(tag); }

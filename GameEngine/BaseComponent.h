@@ -27,6 +27,8 @@ namespace engine
 		void SetIsActive(bool isActive) { m_IsActive = isActive; }
 		bool IsActive() { return m_IsActive; }
 
+		virtual void OnSceneTransferred() {};
+
 	protected:
 		BaseComponent(GameObject* gameObject);
 

@@ -12,6 +12,7 @@ public:
 
 	virtual void Initialize() override;
 	virtual void Update() override;
+	virtual void OnSceneTransferred()override;
 
 	void Move(const glm::vec2& direction);
 

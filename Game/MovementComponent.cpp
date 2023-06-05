@@ -52,6 +52,15 @@ void MovementComponent::Update()
 	}
 }
 
+void MovementComponent::OnSceneTransferred()
+{
+	m_pLevel = GetGameObject()->GetScene()->FindGameObjectByName("Level")->GetComponent<Level>();
+	if (!m_pLevel)
+	{
+		ServiceLocator::GetLogger().LogLine("No level component on an object named \"Level\" found", LogType::error);
+	}
+}
+
 void MovementComponent::Move(const glm::vec2& direction)
 {
 	m_Direction += direction;

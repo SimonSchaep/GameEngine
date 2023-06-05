@@ -32,7 +32,7 @@ public:
 
 	int AddClip(const std::string& fileName)
 	{
-		m_SoundClips.push_back(std::make_unique<SDLSoundClip>(fileName));
+		m_SoundClips.emplace_back(std::make_unique<SDLSoundClip>(fileName));
 		return int(m_SoundClips.size() - 1);
 	}
 
@@ -41,7 +41,7 @@ public:
 		assert(clipId < int(m_SoundClips.size()));
 
 		std::lock_guard<std::mutex> lock(m_SoundsToProcessMutex);
-		m_SoundsToProcess.push_back(std::pair<SDLSoundClip*, SoundAction>{ m_SoundClips[clipId].get(), SoundAction::play });
+		m_SoundsToProcess.emplace_back(std::pair<SDLSoundClip*, SoundAction>{ m_SoundClips[clipId].get(), SoundAction::play });
 		m_DoesQueueNeedProcessing.notify_one();
 	}
 
@@ -50,7 +50,7 @@ public:
 		assert(clipId < int(m_SoundClips.size()));
 
 		std::lock_guard<std::mutex> lock(m_SoundsToProcessMutex);
-		m_SoundsToProcess.push_back(std::pair<SDLSoundClip*, SoundAction>{ m_SoundClips[clipId].get(), SoundAction::stop });
+		m_SoundsToProcess.emplace_back(std::pair<SDLSoundClip*, SoundAction>{ m_SoundClips[clipId].get(), SoundAction::stop });
 		m_DoesQueueNeedProcessing.notify_one();
 	}
 
@@ -59,7 +59,7 @@ public:
 		assert(clipId < int(m_SoundClips.size()));
 
 		std::lock_guard<std::mutex> lock(m_SoundsToProcessMutex);
-		m_SoundsToProcess.push_back(std::pair<SDLSoundClip*, SoundAction>{ m_SoundClips[clipId].get(), SoundAction::pause });
+		m_SoundsToProcess.emplace_back(std::pair<SDLSoundClip*, SoundAction>{ m_SoundClips[clipId].get(), SoundAction::pause });
 		m_DoesQueueNeedProcessing.notify_one();
 	}
 
@@ -68,7 +68,7 @@ public:
 		assert(clipId < int(m_SoundClips.size()));
 
 		std::lock_guard<std::mutex> lock(m_SoundsToProcessMutex);
-		m_SoundsToProcess.push_back(std::pair<SDLSoundClip*, SoundAction>{ m_SoundClips[clipId].get(), SoundAction::resume });
+		m_SoundsToProcess.emplace_back(std::pair<SDLSoundClip*, SoundAction>{ m_SoundClips[clipId].get(), SoundAction::resume });
 		m_DoesQueueNeedProcessing.notify_one();
 	}
 

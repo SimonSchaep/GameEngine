@@ -24,7 +24,7 @@ namespace engine
 	template<typename ...Args>
 	inline void Event<Args...>::AddObserver(Observer<Args...>* pObserver)
 	{
-		m_Observers.push_back(pObserver);
+		m_Observers.emplace_back(pObserver);
 	}
 
 	template<typename ...Args>

@@ -46,7 +46,7 @@ namespace engine
 	{
 		auto scene = std::make_unique<Scene>(name, int(m_Scenes.size()));
 		Scene* pReturnValue = scene.get();
-		m_Scenes.push_back(std::move(scene));
+		m_Scenes.emplace_back(std::move(scene));
 		if (!m_pActiveScene)
 		{
 			SetActiveScene(pReturnValue);

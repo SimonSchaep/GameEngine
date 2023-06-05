@@ -29,7 +29,7 @@ namespace engine
 		virtual bool IsCircleInCollider(const structs::Circle& circle) = 0;
 		virtual void CheckTrigger(Collider* pCollider) = 0;
 
-		void AddCurrentTrigger(Collider* pCollider) { m_CurrentTriggers.push_back(pCollider); }
+		void AddCurrentTrigger(Collider* pCollider) { m_CurrentTriggers.emplace_back(pCollider); }
 		void RemoveCurrentTrigger(Collider* pCollider) { m_CurrentTriggers.erase(std::remove(m_CurrentTriggers.begin(), m_CurrentTriggers.end(), pCollider)); }
 
 	protected:

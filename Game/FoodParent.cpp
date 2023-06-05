@@ -21,8 +21,8 @@ void FoodParent::Initialize()
 
 	for (auto pChild : GetGameObject()->GetChildren())
 	{
-		m_FoodElements.push_back(pChild);
-		m_FoodElementStates.push_back(false);
+		m_FoodElements.emplace_back(pChild);
+		m_FoodElementStates.emplace_back(false);
 		pChild->GetComponent<BoxCollider>()->GetOnTriggerEvent()->AddObserver(this);
 	}
 

@@ -84,7 +84,7 @@ namespace engine
 			m_Components[i]->UpdateComponent();
 			if (m_Components[i]->IsMarkedForDeletion())
 			{
-				m_ToDeleteIndexes.push_back(i);
+				m_ToDeleteIndexes.emplace_back(i);
 			}
 		}
 

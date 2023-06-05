@@ -46,8 +46,6 @@
 
 using namespace engine;
 
-//Todo: replace push_back with emplace_back
-
 void load()
 {
 	//register services

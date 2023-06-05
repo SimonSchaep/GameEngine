@@ -141,7 +141,7 @@ namespace levelParser
 				{
 					throw UnknownLevelElement(element);
 				}
-				levelElements.push_back(levelElement);
+				levelElements.emplace_back(levelElement);
 				++thisLineElementCount;
 			}
 			if (levelWidth == 0) levelWidth = thisLineElementCount;

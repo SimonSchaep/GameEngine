@@ -42,7 +42,7 @@ namespace engine
 			if (m_GameObjects[i]->IsSceneIndependant())
 			{
 				targetScene->TransferGameObject(std::move(m_GameObjects[i]));
-				m_ToDeleteIndexes.push_back(i);
+				m_ToDeleteIndexes.emplace_back(i);
 			}
 		}
 		//Delete GameObjects - reverse order because it removes gameobjects by index
@@ -79,7 +79,7 @@ namespace engine
 			m_GameObjects[i]->Update();
 			if (m_GameObjects[i]->IsMarkedForDeletion())
 			{
-				m_ToDeleteIndexes.push_back(i);
+				m_ToDeleteIndexes.emplace_back(i);
 			}
 		}
 

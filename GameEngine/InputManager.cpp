@@ -17,7 +17,7 @@ namespace engine
 
 	void InputManager::AddController()
 	{
-		m_Controllers.push_back(std::make_unique<InputController>(int(m_Controllers.size())));
+		m_Controllers.emplace_back(std::make_unique<InputController>(int(m_Controllers.size())));
 	}
 
 	void InputManager::RemoveController(int controllerIndex)
@@ -30,12 +30,12 @@ namespace engine
 		auto pReturnValue = command.get();
 		if (m_KeyboardInputBindings.find(std::pair(scanCode, keyState)) != m_KeyboardInputBindings.end())
 		{
-			m_KeyboardInputBindings[std::pair(scanCode, keyState)].push_back(std::move(command));
+			m_KeyboardInputBindings[std::pair(scanCode, keyState)].emplace_back(std::move(command));
 		}
 		else
 		{
 			std::vector<std::unique_ptr<BaseCommand>> commandVec{};
-			commandVec.push_back(std::move(command));
+			commandVec.emplace_back(std::move(command));
 			m_KeyboardInputBindings.emplace(std::pair(scanCode, keyState), std::move(commandVec));
 		}
 		return pReturnValue;
@@ -46,12 +46,12 @@ namespace engine
 		auto pReturnValue = command.get();
 		if (m_ControllerButtonBindings.find(std::pair(std::pair(controllerIndex, button), keyState)) != m_ControllerButtonBindings.end())
 		{
-			m_ControllerButtonBindings[std::pair(std::pair(controllerIndex, button), keyState)].push_back(std::move(command));
+			m_ControllerButtonBindings[std::pair(std::pair(controllerIndex, button), keyState)].emplace_back(std::move(command));
 		}
 		else
 		{
 			std::vector<std::unique_ptr<BaseCommand>> commandVec{};
-			commandVec.push_back(std::move(command));
+			commandVec.emplace_back(std::move(command));
 			m_ControllerButtonBindings.emplace(std::pair(std::pair(controllerIndex, button), keyState), std::move(commandVec));
 		}
 		return pReturnValue;
@@ -62,12 +62,12 @@ namespace engine
 		auto pReturnValue = command.get();
 		if (m_ControllerAxisBindings.find(std::pair(controllerIndex, axis)) != m_ControllerAxisBindings.end())
 		{
-			m_ControllerAxisBindings[std::pair(controllerIndex, axis)].push_back(std::move(command));
+			m_ControllerAxisBindings[std::pair(controllerIndex, axis)].emplace_back(std::move(command));
 		}
 		else
 		{
 			std::vector<std::unique_ptr<BaseAxisCommand>> commandVec{};
-			commandVec.push_back(std::move(command));
+			commandVec.emplace_back(std::move(command));
 			m_ControllerAxisBindings.emplace(std::pair(controllerIndex, axis), std::move(commandVec));
 		}
 		return pReturnValue;

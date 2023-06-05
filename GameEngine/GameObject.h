@@ -27,7 +27,7 @@ namespace engine
 		Scene* GetScene()const;
 		const std::string& GetName()const { return m_Name; }
 		bool HasTag(const std::string& tag) { return std::find(m_Tags.begin(), m_Tags.end(), tag) != m_Tags.end(); }
-		void AddTag(const std::string& tag) { m_Tags.push_back(tag); }
+		void AddTag(const std::string& tag) { m_Tags.emplace_back(tag); }
 
 		void MarkAsSceneIndependant();
 		bool IsSceneIndependant() { return m_IsSceneIndependant; }
@@ -44,13 +44,13 @@ namespace engine
 
 		const std::vector<GameObject*>& GetChildren()const { return m_Children; }
 
-		void RegisterCollider(Collider* pCollider) { m_Colliders.push_back(pCollider); }
+		void RegisterCollider(Collider* pCollider) { m_Colliders.emplace_back(pCollider); }
 		const std::vector<Collider*>& GetColliders()const { return m_Colliders; } //to make collisions not have to use GetAllComponentsOfType
 
-		void RegisterRenderComponent(RenderComponent* pRenderComponent) { m_RenderComponents.push_back(pRenderComponent); }
+		void RegisterRenderComponent(RenderComponent* pRenderComponent) { m_RenderComponents.emplace_back(pRenderComponent); }
 		const std::vector<RenderComponent*>& GetRenderComponents()const { return m_RenderComponents; } //to make rendering not have to use GetAllComponentsOfType
 
-		void RegisterUIRenderComponent(UIRenderComponent* pUIRenderComponent) { m_UIRenderComponents.push_back(pUIRenderComponent); }
+		void RegisterUIRenderComponent(UIRenderComponent* pUIRenderComponent) { m_UIRenderComponents.emplace_back(pUIRenderComponent); }
 		const std::vector<UIRenderComponent*>& GetUIRenderComponents()const { return m_UIRenderComponents; } //to make ui rendering not have to use GetAllComponentsOfType
 
 		//COMPONENTS
@@ -144,7 +144,7 @@ namespace engine
 			T* component{ dynamic_cast<T*>(c.get()) };
 			if (component)
 			{
-				returnComponents.push_back(component);
+				returnComponents.emplace_back(component);
 			}
 		}
 		return returnComponents;
@@ -156,7 +156,7 @@ namespace engine
 		auto component = std::make_unique<T>(this, args...);
 		T* pReturnValue = component.get();
 
-		m_Components.push_back(std::move(component));
+		m_Components.emplace_back(std::move(component));
 		return pReturnValue;
 	}
 

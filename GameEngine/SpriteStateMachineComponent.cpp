@@ -17,7 +17,7 @@ engine::SpriteState* engine::SpriteStateMachineComponent::CreateAndAddState(std:
 	auto state = std::make_unique<SpriteState>(sprite);
 	SpriteState* pReturnValue = state.get();
 
-	m_SpriteStates.push_back(std::move(state));
+	m_SpriteStates.emplace_back(std::move(state));
 	return pReturnValue;
 }
 

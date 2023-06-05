@@ -153,12 +153,12 @@ void TrashTheCacheComponent::MeasureExercise1(int count)
                 pArray[i] *= 2;
             }
             int measurement = int(std::chrono::duration_cast<std::chrono::microseconds>(std::chrono::high_resolution_clock::now() - start).count());
-            measurements.push_back(measurement);
+            measurements.emplace_back(measurement);
         }
 
         delete[] pArray;
 
-        measurementsGroup.push_back(measurements);
+        measurementsGroup.emplace_back(measurements);
     }
 
     //store avg
@@ -170,7 +170,7 @@ void TrashTheCacheComponent::MeasureExercise1(int count)
             sum += measurements[i];
         }
 
-        if (firstMeasurent) m_Ex1Measurements.push_back(int(sum / measurementsGroup.size()));
+        if (firstMeasurent) m_Ex1Measurements.emplace_back(int(sum / measurementsGroup.size()));
         else m_Ex1Measurements[i] = int(sum / measurementsGroup.size());
     }
 }
@@ -197,12 +197,12 @@ void TrashTheCacheComponent::MeasureExercise2(int count)
                 pArray[i].ID = 0;
             }
             int measurement = int(std::chrono::duration_cast<std::chrono::microseconds>(std::chrono::high_resolution_clock::now() - start).count());
-            measurements.push_back(measurement);
+            measurements.emplace_back(measurement);
         }
 
         delete[] pArray;
 
-        measurementsGroup.push_back(measurements);
+        measurementsGroup.emplace_back(measurements);
     }
 
     //store avg
@@ -214,7 +214,7 @@ void TrashTheCacheComponent::MeasureExercise2(int count)
             sum += measurements[i];
         }
 
-        if (firstMeasurent) m_Ex2Measurements.push_back(int(sum / measurementsGroup.size()));
+        if (firstMeasurent) m_Ex2Measurements.emplace_back(int(sum / measurementsGroup.size()));
         else m_Ex2Measurements[i] = int(sum / measurementsGroup.size());
     }
 }
@@ -241,12 +241,12 @@ void TrashTheCacheComponent::MeasureExercise2Alt(int count)
                 pArray[i].ID = 0;
             }
             int measurement = int(std::chrono::duration_cast<std::chrono::microseconds>(std::chrono::high_resolution_clock::now() - start).count());
-            measurements.push_back(measurement);
+            measurements.emplace_back(measurement);
         }
 
         delete[] pArray;
 
-        measurementsGroup.push_back(measurements);
+        measurementsGroup.emplace_back(measurements);
     }
 
     //store avg
@@ -258,7 +258,7 @@ void TrashTheCacheComponent::MeasureExercise2Alt(int count)
             sum += measurements[i];
         }
 
-        if (firstMeasurent) m_Ex2AltMeasurements.push_back(int(sum / measurementsGroup.size()));
+        if (firstMeasurent) m_Ex2AltMeasurements.emplace_back(int(sum / measurementsGroup.size()));
         else m_Ex2AltMeasurements[i] = int(sum / measurementsGroup.size());
     }
 }

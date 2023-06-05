@@ -28,7 +28,7 @@ namespace engine
 		SpriteState& operator=(SpriteState&& other) = delete;
 
 		std::shared_ptr<Sprite> GetSprite()const { return m_Sprite; }
-		void AddConnection(const SpriteConnection& connection) { m_Connections.push_back(connection); }
+		void AddConnection(const SpriteConnection& connection) { m_Connections.emplace_back(connection); }
 
 		//returns state that it needs to switch to, nullptr, if no change is needed
 		SpriteState* EvaluateConnections();

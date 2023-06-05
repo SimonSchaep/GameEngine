@@ -134,14 +134,14 @@ namespace engine
 
 	void Renderer::RenderTexture(const Texture2D& texture, const structs::Rect& dstRect, bool flipX, bool flipY) const
 	{
-		RenderTexture(texture, dstRect.BottomLeft.x, dstRect.BottomLeft.y, dstRect.Width, dstRect.Height, flipX, flipY);
+		RenderTexture(texture, dstRect.bottomLeft.x, dstRect.bottomLeft.y, dstRect.width, dstRect.height, flipX, flipY);
 	}
 
 	void Renderer::RenderTexture(const Texture2D& texture, const structs::Rect& dstRect, const structs::Rect& srcRect, bool flipX, bool flipY) const
 	{
-		auto dst = GetSDLDstRect(texture, dstRect.BottomLeft.x, dstRect.BottomLeft.y, dstRect.Width, dstRect.Height);
+		auto dst = GetSDLDstRect(texture, dstRect.bottomLeft.x, dstRect.bottomLeft.y, dstRect.width, dstRect.height);
 
-		auto src = GetSDLSrcRect(texture, srcRect.BottomLeft.x, srcRect.BottomLeft.y, srcRect.Width, srcRect.Height);
+		auto src = GetSDLSrcRect(texture, srcRect.bottomLeft.x, srcRect.bottomLeft.y, srcRect.width, srcRect.height);
 
 		if (flipX)
 		{

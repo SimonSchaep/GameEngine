@@ -55,12 +55,12 @@ void engine::CollisionManager::Render() const
 			if (pBox)
 			{
 				auto shape = pBox->GetShape();
-				shape.BottomLeft += glm::vec2(pBox->GetGameObject()->GetTransform()->GetWorldPosition().x, pBox->GetGameObject()->GetTransform()->GetWorldPosition().y);
+				shape.bottomLeft += glm::vec2(pBox->GetGameObject()->GetTransform()->GetWorldPosition().x, pBox->GetGameObject()->GetTransform()->GetWorldPosition().y);
 				SDL_Rect rect{};
-				rect.x = int(shape.BottomLeft.x);
-				rect.y = int(Renderer::GetInstance().GetWindowSize().y) - int(shape.BottomLeft.y);
-				rect.w = int(shape.Width);
-				rect.h = int(shape.Height);
+				rect.x = int(shape.bottomLeft.x);
+				rect.y = int(Renderer::GetInstance().GetWindowSize().y) - int(shape.bottomLeft.y);
+				rect.w = int(shape.width);
+				rect.h = int(shape.height);
 				rect.y -= rect.h;
 
 				SDL_SetRenderDrawColor(Renderer::GetInstance().GetSDLRenderer(), 255, 255, 255, 255);

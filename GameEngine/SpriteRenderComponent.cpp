@@ -23,9 +23,9 @@ void engine::SpriteRenderComponent::Render() const
 	{
 		const auto& pos = GetGameObject()->GetTransform()->GetWorldPosition();
 		structs::Rect dstRect{};
-		dstRect.BottomLeft = pos;
-		dstRect.Width = m_Size.x;
-		dstRect.Height = m_Size.y;
+		dstRect.bottomLeft = pos;
+		dstRect.width = m_Size.x;
+		dstRect.height = m_Size.y;
 		m_Sprite->Render(dstRect);
 	}
 

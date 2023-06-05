@@ -10,10 +10,10 @@ namespace engine
 
 	struct SpriteConnection
 	{
-		SpriteConnection(SpriteState* to, const std::function<bool()>& predicate) :To{ to }, Predicate{ predicate } {}
+		SpriteConnection(SpriteState* to, const std::function<bool()>& predicate) :to{ to }, predicate{ predicate } {}
 
-		SpriteState* To{};
-		std::function<bool()> Predicate{};
+		SpriteState* to{};
+		std::function<bool()> predicate{};
 	};
 
 	class SpriteState final

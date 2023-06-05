@@ -388,7 +388,7 @@ void Level::CreateFoodElement(const glm::vec2 pos, const std::string& textureFil
 	pBoxCollider->SetShape({ 0,0,m_GridElementWidth / 2, m_GridElementHeight });
 
 	auto newShape = pParentCollider->GetShape();
-	newShape.Width += m_GridElementWidth / 2;
+	newShape.width += m_GridElementWidth / 2;
 	pParentCollider->SetShape(newShape);
 }
 

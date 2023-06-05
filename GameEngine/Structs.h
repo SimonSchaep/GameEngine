@@ -8,11 +8,11 @@ namespace engine
 		struct Rect
 		{
 			Rect() = default;
-			Rect(const glm::vec2& bottomLeft, float width, float height) :BottomLeft{ bottomLeft }, Width{ width }, Height{height} {};
-			Rect(float x, float y, float width, float height) :BottomLeft{ x,y }, Width{ width }, Height{height} {};
-			glm::vec2 BottomLeft;
-			float Width;
-			float Height;
+			Rect(const glm::vec2& bottomLeft, float width, float height) :bottomLeft{ bottomLeft }, width{ width }, height{height} {};
+			Rect(float x, float y, float width, float height) :bottomLeft{ x,y }, width{ width }, height{height} {};
+			glm::vec2 bottomLeft;
+			float width;
+			float height;
 
 			//this auto generates all comparison operators
 			//https://en.cppreference.com/w/cpp/language/operators
@@ -22,10 +22,10 @@ namespace engine
 		struct Circle
 		{
 			Circle() = default;
-			Circle(const glm::vec2& center, float radius) :Center{ center }, Radius{ radius } {};
-			Circle(float x, float y, float radius) :Center{ x,y }, Radius{ radius } {};
-			glm::vec2 Center;
-			float Radius;
+			Circle(const glm::vec2& center, float radius) :center{ center }, radius{ radius } {};
+			Circle(float x, float y, float radius) :center{ x,y }, radius{ radius } {};
+			glm::vec2 center;
+			float radius;
 
 			//this auto generates all comparison operators
 			//https://en.cppreference.com/w/cpp/language/operators

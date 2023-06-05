@@ -79,18 +79,18 @@ void engine::Sprite::Render(const structs::Rect& dstRect) const
 	float frameHeight{ float(textureHeight) / m_Rows };
 
 	structs::Rect srcRect;
-	srcRect.Height = frameHeight;
-	srcRect.Width = frameWidth;
-	srcRect.BottomLeft.x = m_CurrentFrame % m_Cols * srcRect.Width;
-	srcRect.BottomLeft.y = m_CurrentFrame / m_Cols * srcRect.Height + srcRect.Height;
+	srcRect.height = frameHeight;
+	srcRect.width = frameWidth;
+	srcRect.bottomLeft.x = m_CurrentFrame % m_Cols * srcRect.width;
+	srcRect.bottomLeft.y = m_CurrentFrame / m_Cols * srcRect.height + srcRect.height;
 
-	if (dstRect.Width != 0 && dstRect.Height != 0)
+	if (dstRect.width != 0 && dstRect.height != 0)
 	{
 		Renderer::GetInstance().RenderTexture(*m_Texture, dstRect, srcRect, m_FlipX, m_FlipY);
 	}
 	else
 	{
-		Renderer::GetInstance().RenderTexture(*m_Texture, dstRect.BottomLeft.x, dstRect.BottomLeft.y, srcRect, m_FlipX, m_FlipY);
+		Renderer::GetInstance().RenderTexture(*m_Texture, dstRect.bottomLeft.x, dstRect.bottomLeft.y, srcRect, m_FlipX, m_FlipY);
 	}
 }
 

@@ -7,8 +7,8 @@ namespace engine
 {
 	bool engine::BoxCollider::IsRectInCollider(const structs::Rect& rect)
 	{
-		return (GetShapeInWorld().BottomLeft.x < rect.BottomLeft.x + rect.Width && GetShapeInWorld().BottomLeft.x + GetShapeInWorld().Width > rect.BottomLeft.x &&
-			GetShapeInWorld().BottomLeft.y + GetShapeInWorld().Height > rect.BottomLeft.y && GetShapeInWorld().BottomLeft.y < rect.BottomLeft.y + rect.Height);
+		return (GetShapeInWorld().bottomLeft.x < rect.bottomLeft.x + rect.width && GetShapeInWorld().bottomLeft.x + GetShapeInWorld().width > rect.bottomLeft.x &&
+			GetShapeInWorld().bottomLeft.y + GetShapeInWorld().height > rect.bottomLeft.y && GetShapeInWorld().bottomLeft.y < rect.bottomLeft.y + rect.height);
 	}
 
 	bool engine::BoxCollider::IsPointInCollider(const glm::vec2& /*point*/)
@@ -55,7 +55,7 @@ namespace engine
 	structs::Rect engine::BoxCollider::GetShapeInWorld() const
 	{
 		structs::Rect worldShape{ m_Shape };
-		worldShape.BottomLeft += glm::vec2(GetGameObject()->GetTransform()->GetWorldPosition());
+		worldShape.bottomLeft += glm::vec2(GetGameObject()->GetTransform()->GetWorldPosition());
 		return worldShape;
 	}
 

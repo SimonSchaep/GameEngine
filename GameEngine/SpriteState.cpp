@@ -12,7 +12,7 @@ engine::SpriteState* engine::SpriteState::EvaluateConnections()
 	{
 		if (connection.Predicate())
 		{
-			return connection.To;
+			return connection.to;
 		}
 	}
 

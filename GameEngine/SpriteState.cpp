@@ -10,7 +10,7 @@ engine::SpriteState* engine::SpriteState::EvaluateConnections()
 {
 	for (const SpriteConnection& connection : m_Connections)
 	{
-		if (connection.Predicate())
+		if (connection.predicate())
 		{
 			return connection.to;
 		}

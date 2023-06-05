@@ -25,6 +25,8 @@ public:
 	LeaderboardState* GetLeaderboardState()const { return m_LeaderboardState.get(); }
 
 private:
+	void InitializeUI();
+
 	std::unique_ptr<StartMenuState> m_StartMenuState{};
 	std::unique_ptr<GamePlayingState> m_GamePlayingState{};
 	std::unique_ptr<GamePausedState> m_GamePausedState{};

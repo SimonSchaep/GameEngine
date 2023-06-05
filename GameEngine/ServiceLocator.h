@@ -30,7 +30,7 @@ namespace engine
 	template<typename T, typename ...Args>
 	static T* ServiceLocator::RegisterLogger(Args... args)
 	{
-		auto logger = std::make_unique<T>(args);
+		auto logger = std::make_unique<T>(args...);
 		T* pReturnValue = logger.get();
 		m_Logger = std::move(logger);
 		return pReturnValue;
@@ -39,7 +39,7 @@ namespace engine
 	template<typename T, typename ...Args>
 	static T* ServiceLocator::RegisterSoundSystem(Args... args)
 	{
-		auto soundSystem = std::make_unique<T>(args);
+		auto soundSystem = std::make_unique<T>(args...);
 		T* pReturnValue = soundSystem.get();
 		m_SoundSystem = std::move(soundSystem);
 		return pReturnValue;

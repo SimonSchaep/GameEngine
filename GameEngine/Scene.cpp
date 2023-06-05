@@ -5,7 +5,7 @@
 
 namespace engine
 {
-	Scene::Scene(const std::string& name, int index) : m_Name(name), m_Index{index} {}
+	Scene::Scene(const std::string& name, bool destroyAfterDisable) : m_Name(name), m_DestroyAfterDisable{ destroyAfterDisable } {}
 
 	Scene::~Scene() = default;
 
@@ -37,21 +37,19 @@ namespace engine
 	{
 		if(targetScene == this) return;
 
-		for (size_t i{}; i < m_GameObjects.size(); ++i)
+		for (auto& gameObject : m_GameObjects)
 		{
-			if (m_GameObjects[i]->IsSceneIndependant())
+			if (gameObject->IsSceneIndependant())
 			{
-				targetScene->TransferGameObject(std::move(m_GameObjects[i]));
-				m_ToDeleteIndexes.emplace_back(i);
+				targetScene->TransferGameObject(std::move(gameObject));
 			}
 		}
-		//Delete GameObjects - reverse order because it removes gameobjects by index
-		//If the gameobjects at idx 0 and 1 need to be deleted and the one at 0 is deleted first, the gameobject at idx 1 will be at 0 when we delete it
-		for (int i{ int(m_ToDeleteIndexes.size()) - 1 }; i >= 0; --i)
-		{
-			RemoveGameObjectByIndex(m_ToDeleteIndexes[i]);
-		}
-		m_ToDeleteIndexes.clear();
+		//moving unique pointers will leave empty ones in the vector
+		//remove them here, after finishing iterating over them
+		RemoveEmptyGameObjectUniquePointers();
+
+		int i{};
+		i++;
 	}
 
 	void Scene::TransferGameObject(std::unique_ptr<GameObject> gameObject)
@@ -61,6 +59,7 @@ namespace engine
 
 	void Scene::Initialize()
 	{
+		if (m_IsInitialized) return;
 		//no range-based for, cause than iterator would get invalidated if gameobjects get added during initailize
 		for (size_t i{}; i < m_GameObjects.size(); ++i)
 		{
@@ -140,6 +139,11 @@ namespace engine
 	void Scene::RemoveGameObjectByIndex(size_t i)
 	{
 		m_GameObjects.erase(std::remove(m_GameObjects.begin(), m_GameObjects.end(), m_GameObjects[i]));
+	}
+
+	void Scene::RemoveEmptyGameObjectUniquePointers()
+	{
+		m_GameObjects.erase(std::remove(m_GameObjects.begin(), m_GameObjects.end(), std::unique_ptr<GameObject>{}), m_GameObjects.end());
 	}
 
 }

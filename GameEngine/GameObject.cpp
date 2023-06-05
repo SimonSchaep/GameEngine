@@ -61,6 +61,7 @@ namespace engine
 
 	void GameObject::Initialize()
 	{
+		if (m_IsInitialized) return;
 		//no range-based for, cause than iterator would get invalidated if components get added during initailize
 		for (size_t i{}; i < m_Components.size(); ++i)
 		{

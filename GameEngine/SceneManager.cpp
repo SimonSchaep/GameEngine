@@ -1,10 +1,10 @@
 #include "SceneManager.h"
 #include "Scene.h"
 #include <assert.h>
+#include <iostream>
 
 namespace engine
 {
-
 	void SceneManager::Initialize()
 	{
 		if (m_pActiveScene)
@@ -16,6 +16,13 @@ namespace engine
 
 	void SceneManager::Update()
 	{
+		//set active scene to desired
+		if (m_pDesiredActiveScene)
+		{
+			SwitchDesiredAndActiveScene();
+		}
+
+		//update
 		if (m_pActiveScene)
 		{
 			m_pActiveScene->Update();
@@ -42,12 +49,36 @@ namespace engine
 	SceneManager::~SceneManager() = default;
 	SceneManager::SceneManager() = default;
 
-	Scene* SceneManager::CreateScene(const std::string& name)
+	void SceneManager::SwitchDesiredAndActiveScene()
 	{
-		auto scene = std::make_unique<Scene>(name, int(m_Scenes.size()));
+		if (m_pActiveScene)
+		{
+			m_pActiveScene->TransferSceneIndependantGameObjects(m_pDesiredActiveScene);
+
+			if (m_pActiveScene->GetShouldDestroyAfterDisable())
+			{
+				m_Scenes.erase(std::remove_if(m_Scenes.begin(), m_Scenes.end(), [this](const std::unique_ptr<Scene>& scene)
+					{
+						return scene.get() == m_pActiveScene;
+					}));
+			}
+		}
+
+		m_pActiveScene = m_pDesiredActiveScene;
+		m_pDesiredActiveScene = nullptr;
+
+		if (!m_pActiveScene->GetIsInitialized())
+		{
+			m_pActiveScene->Initialize();
+		}
+	}
+
+	Scene* SceneManager::CreateScene(const std::string& name, bool destroyAfterDisable)
+	{
+		auto scene = std::make_unique<Scene>(name, destroyAfterDisable);
 		Scene* pReturnValue = scene.get();
 		m_Scenes.emplace_back(std::move(scene));
-		if (!m_pActiveScene)
+		if (!m_pActiveScene && !m_pDesiredActiveScene)
 		{
 			SetActiveScene(pReturnValue);
 		}
@@ -57,16 +88,16 @@ namespace engine
 	void SceneManager::SetActiveScene(Scene* pScene)
 	{
 		assert(pScene);
-		if(m_pActiveScene == pScene) return;
+		if(m_pActiveScene == pScene || m_pDesiredActiveScene == pScene) return;
 
-		if (m_pActiveScene)
+		if (!m_pActiveScene)
 		{
-			m_pActiveScene->TransferSceneIndependantGameObjects(pScene);
+			m_pActiveScene = pScene;
 		}
-		m_pActiveScene = pScene;
-		if (m_IsInitialized && !m_pActiveScene->GetIsInitialized())
+		else
 		{
-			m_pActiveScene->Initialize();
+			//avoid switching scenes during update/initialize
+			m_pDesiredActiveScene = pScene;
 		}
 	}
 
@@ -79,11 +110,6 @@ namespace engine
 				SetActiveScene(scene.get());
 			}
 		}
-	}
-
-	void SceneManager::SetActiveSceneByIndex(int index)
-	{
-		SetActiveScene(GetSceneByIndex(index));
 	}
 	
 	Scene* SceneManager::GetActiveScene()
@@ -102,11 +128,4 @@ namespace engine
 		}
 		return nullptr;
 	}
-
-	Scene* SceneManager::GetSceneByIndex(int index)
-	{
-		assert(int(m_Scenes.size()) > index);
-		return m_Scenes[index].get();
-	}
-
 }

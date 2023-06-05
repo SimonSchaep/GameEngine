@@ -12,9 +12,11 @@ public:
 
 	virtual ~StartGameCommand() = default;
 
-	virtual void Execute() override
+	virtual bool Execute() override
 	{
+		if (!m_pStartMenuState)return false;
 		m_pStartMenuState->StartGame();
+		return true;
 	}
 
 private:
@@ -32,9 +34,11 @@ public:
 
 	virtual ~PauseGameCommand() = default;
 
-	virtual void Execute() override
+	virtual bool Execute() override
 	{
+		if (!m_pGamePlayingState)return false;
 		m_pGamePlayingState->PauseGame();
+		return true;
 	}
 
 private:
@@ -52,9 +56,11 @@ public:
 
 	virtual ~ResumeGameCommand() = default;
 
-	virtual void Execute() override
+	virtual bool Execute() override
 	{
+		if (!m_pGamePausedState)return false;
 		m_pGamePausedState->ResumeGame();
+		return true;
 	}
 
 private:
@@ -72,11 +78,34 @@ public:
 
 	virtual ~EndGameCommand() = default;
 
-	virtual void Execute() override
+	virtual bool Execute() override
 	{
+		if (!m_pGamePlayingState)return false;
 		m_pGamePlayingState->EndGame();
+		return true;
 	}
 
 private:
 	GamePlayingState* m_pGamePlayingState;
+};
+
+
+class NextLevelCommand : public engine::BaseCommand
+{
+public:
+	NextLevelCommand(GameManager* pGameManager)
+		: m_pGameManager{ pGameManager }
+	{
+	}
+
+	virtual ~NextLevelCommand() = default;
+
+	virtual bool Execute() override
+	{
+		m_pGameManager->StartNextLevel();
+		return true;
+	}
+
+private:
+	GameManager* m_pGameManager;
 };

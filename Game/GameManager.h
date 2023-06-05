@@ -2,6 +2,11 @@
 #include <BaseComponent.h>
 #include <vector>
 
+namespace engine
+{
+	class Scene;
+}
+
 class GameState;
 class StartMenuState;
 class GamePlayingState;
@@ -17,7 +22,7 @@ public:
 	virtual void Initialize() override;
 	virtual void Update() override;
 
-	void StartLevel1();
+	void StartNextLevel();
 
 	StartMenuState* GetStartMenuState()const { return m_StartMenuState.get(); }
 	GamePlayingState* GetGamePlayingState()const { return m_GamePlayingState.get(); }
@@ -26,6 +31,7 @@ public:
 
 private:
 	void InitializeUI();
+	engine::Scene* CreateLevel(int id);
 
 	std::unique_ptr<StartMenuState> m_StartMenuState{};
 	std::unique_ptr<GamePlayingState> m_GamePlayingState{};
@@ -33,5 +39,8 @@ private:
 	std::unique_ptr<LeaderboardState> m_LeaderboardState{};
 
 	GameState* m_pActiveGameState{};
+
+	int m_NextLevelId{};
+	int m_MaxLevelId{2};
 };
 

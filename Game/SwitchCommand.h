@@ -7,9 +7,10 @@ class SwitchCommand : public engine::BaseCommand
 public:
 	SwitchCommand(MyPlayerController* pMovementController) : m_pMovementController{ pMovementController } {};
 
-	virtual void Execute() override
+	virtual bool Execute() override
 	{
 		m_pMovementController->SwitchControlledGameObjects();
+		return true;
 	}
 
 private:

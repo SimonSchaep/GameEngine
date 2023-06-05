@@ -19,7 +19,7 @@ namespace engine
 		const std::vector<std::unique_ptr<GameObject>>& GetGameObjects()const { return m_GameObjects; }
 
 		const std::string& GetName()const { return m_Name; };
-		int GetIndex()const { return m_Index; };
+		int GetShouldDestroyAfterDisable()const { return m_DestroyAfterDisable; };
 		bool GetIsInitialized()const { return m_IsInitialized; };
 
 		void Initialize();
@@ -31,7 +31,7 @@ namespace engine
 		CameraComponent* GetActiveCamera() { return m_pCameraComponent; }
 
 		~Scene();
-		Scene(const std::string& name, int index);
+		Scene(const std::string& name, bool destroyAfterDisable);
 		Scene(const Scene& other) = delete;
 		Scene(Scene&& other) = delete;
 		Scene& operator=(const Scene& other) = delete;
@@ -41,11 +41,13 @@ namespace engine
 		void SortGameObjectsByRenderLayer();
 
 		void RemoveGameObjectByIndex(size_t i);
+		void RemoveEmptyGameObjectUniquePointers();
 
 		std::vector<size_t> m_ToDeleteIndexes{};
 
-		std::string m_Name;
-		int m_Index;
+		std::string m_Name{};
+		bool m_DestroyAfterDisable{};
+
 		//todo: maybe use a vector of active and inactive gameobjects
 		std::vector<std::unique_ptr<GameObject>> m_GameObjects{};
 

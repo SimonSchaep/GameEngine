@@ -6,6 +6,7 @@ namespace engine
 {
 	void BaseComponent::InitializeComponent()
 	{
+		if (m_IsInitialized) return;
 		Initialize();
 		m_IsInitialized = true;
 	}

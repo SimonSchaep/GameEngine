@@ -14,6 +14,8 @@
 #include <BoxCollider.h>
 #include "MyPlayerController.h"
 #include "Level.h"
+#include "InputManager.h"
+#include "MenuCommands.h"
 
 using namespace engine;
 
@@ -25,12 +27,14 @@ GameManager::~GameManager() = default;
 
 void GameManager::Initialize()
 {
+	InputManager::GetInstance().BindKeyboardButtonToCommand(SDL_SCANCODE_F1, InputManager::KeyState::up, std::move(std::make_unique<NextLevelCommand>(this)));
+
 	InitializeUI();
 
 	m_pActiveGameState = GetStartMenuState();
 	m_pActiveGameState->OnEnter();
 
-	StartLevel1();
+	StartNextLevel();
 }
 
 void GameManager::Update()
@@ -44,50 +48,11 @@ void GameManager::Update()
 	}
 }
 
-void GameManager::StartLevel1()
+void GameManager::StartNextLevel()
 {
-	auto pScene = SceneManager::GetInstance().CreateScene("Level1");
-	
-	//Load level
-	auto pLevelObject = pScene->CreateAndAddGameObject("Level");
-	pLevelObject->CreateAndAddComponent<Level>("Data/level1.csv");
-
-	//create chef
-	auto pChef = pScene->CreateAndAddGameObject("Chef");
-	pChef->AddTag("Chef");
-	pChef->GetTransform()->SetLocalPosition({ 96,596 });
-	auto pMovementComponent = pChef->CreateAndAddComponent<MovementComponent>();
-	pMovementComponent->SetMoveSpeed(100);
-	auto pPlayerLives = pChef->CreateAndAddComponent<PlayerLives>();
-	pPlayerLives->SetMaxLives(5);
-	pChef->CreateAndAddComponent<PlayerPoints>();
-
-	//visuals
-	auto pChefVisuals = pScene->CreateAndAddGameObject("ChefVisuals", pChef);
-	auto pSpriteRenderComponent = pChefVisuals->CreateAndAddComponent<SpriteRenderComponent>();
-	pSpriteRenderComponent->SetSize({ 28, 28 });
-
-	pChefVisuals->CreateAndAddComponent<ChefSpriteController>();
-
-	float width = float(pSpriteRenderComponent->GetSize().x);
-	float height = float(pSpriteRenderComponent->GetSize().y);
-	pChefVisuals->GetTransform()->SetLocalPosition({ -width / 2, -8 });
-	
-	//collider
-	auto pBoxCollider = pChef->CreateAndAddComponent<BoxCollider>();
-	pBoxCollider->SetShape({ -width / 2, -8, width, height });
-
-
-	//player 1 controller gameobject
-	auto pPlayer1ControllerObject = pScene->CreateAndAddGameObject();
-	auto pPlayer1Controller = pPlayer1ControllerObject->CreateAndAddComponent<MyPlayerController>();
-	pPlayer1Controller->UseKeyboard(true);
-	pPlayer1Controller->UseController(1);
-	//make controller posses chef
-	pPlayer1Controller->SetControlChef(true);
-
-
-	SceneManager::GetInstance().SetActiveScene(pScene);
+	auto pLevel = CreateLevel(m_NextLevelId);
+	SceneManager::GetInstance().SetActiveScene(pLevel);
+	m_NextLevelId = (m_NextLevelId + 1) % m_MaxLevelId;
 }
 
 void GameManager::InitializeUI()
@@ -124,4 +89,49 @@ void GameManager::InitializeUI()
 	pTextRenderer->SetText("LEADERBOARD");
 	pTextRenderer->SetFont(ResourceManager::GetInstance().LoadFont("Lingua.otf", 40));
 	m_LeaderboardState = std::make_unique<LeaderboardState>(this, pLeaderboardMenu);
+}
+
+Scene* GameManager::CreateLevel(int id)
+{
+	auto pScene = SceneManager::GetInstance().CreateScene("level" + std::to_string(id), true);
+
+	//Load level
+	auto pLevelObject = pScene->CreateAndAddGameObject("Level");
+	pLevelObject->CreateAndAddComponent<Level>("Data/level" + std::to_string(id+1) + ".csv");
+
+	//create chef
+	auto pChef = pScene->CreateAndAddGameObject("Chef");
+	pChef->AddTag("Chef");
+	pChef->GetTransform()->SetLocalPosition({ 96,596 });
+	auto pMovementComponent = pChef->CreateAndAddComponent<MovementComponent>();
+	pMovementComponent->SetMoveSpeed(100);
+	auto pPlayerLives = pChef->CreateAndAddComponent<PlayerLives>();
+	pPlayerLives->SetMaxLives(5);
+	pChef->CreateAndAddComponent<PlayerPoints>();
+
+	//visuals
+	auto pChefVisuals = pScene->CreateAndAddGameObject("ChefVisuals", pChef);
+	auto pSpriteRenderComponent = pChefVisuals->CreateAndAddComponent<SpriteRenderComponent>();
+	pSpriteRenderComponent->SetSize({ 28, 28 });
+
+	pChefVisuals->CreateAndAddComponent<ChefSpriteController>();
+
+	float width = float(pSpriteRenderComponent->GetSize().x);
+	float height = float(pSpriteRenderComponent->GetSize().y);
+	pChefVisuals->GetTransform()->SetLocalPosition({ -width / 2, -8 });
+
+	//collider
+	auto pBoxCollider = pChef->CreateAndAddComponent<BoxCollider>();
+	pBoxCollider->SetShape({ -width / 2, -8, width, height });
+
+
+	//player 1 controller gameobject
+	auto pPlayer1ControllerObject = pScene->CreateAndAddGameObject();
+	auto pPlayer1Controller = pPlayer1ControllerObject->CreateAndAddComponent<MyPlayerController>();
+	pPlayer1Controller->UseKeyboard(true);
+	pPlayer1Controller->UseController(1);
+	//make controller posses chef
+	pPlayer1Controller->SetControlChef(true);
+
+	return pScene;
 }

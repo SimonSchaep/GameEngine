@@ -10,7 +10,6 @@
 
 namespace engine
 {
-
 	class InputManager final : public Singleton<InputManager>
 	{
 	public:
@@ -43,6 +42,7 @@ namespace engine
 
 		std::vector<std::unique_ptr<InputController>> m_Controllers;
 
+		//todo: make pairs structs
 		using ControllerButtonKey = std::pair<std::pair<int, InputController::ControllerButton>, KeyState>;
 		using ControllerButtonCommandsMap = std::map<ControllerButtonKey, std::vector<std::unique_ptr<BaseCommand>>>;
 		ControllerButtonCommandsMap m_ControllerButtonBindings{};

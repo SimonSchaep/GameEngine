@@ -11,7 +11,7 @@ namespace engine
 	public:
 		BaseAxisCommand() = default;
 		virtual ~BaseAxisCommand() = default;
-		virtual void Execute(float axisValue) = 0;
+		virtual bool Execute(float axisValue) = 0;
 	};
 
 }

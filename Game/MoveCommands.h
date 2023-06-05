@@ -13,9 +13,11 @@ public:
 
 	virtual ~MoveCommand() = default;
 
-	virtual void Execute() override
+	virtual bool Execute() override
 	{
+		if (!m_pMovementController)return false;
 		m_pMovementController->Move(m_Direction);
+		return true;
 	}
 
 private:
@@ -33,9 +35,10 @@ public:
 		, m_Direction{direction}
 	{}
 
-	virtual void Execute(float axisValue) override
+	virtual bool Execute(float axisValue) override
 	{
 		m_pMovementController->Move(m_Direction * axisValue);
+		return true;
 	}
 
 private:

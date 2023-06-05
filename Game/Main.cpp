@@ -60,7 +60,7 @@ void load()
 	soundSystem->SetActualSoundSystem<SDLSoundSystem>();*/
 
 
-	auto pScene = SceneManager::GetInstance().CreateScene("Demo");
+	auto pScene = SceneManager::GetInstance().CreateScene("Demo", true);
 	//background
 	//auto pGameObject = pScene->CreateAndAddGameObject("Background");
 	//auto pRenderComponent = pGameObject->CreateAndAddComponent<TextureRenderComponent>();
@@ -82,6 +82,7 @@ void load()
 
 	//fps counter gameobject
 	auto pGameObject = pScene->CreateAndAddGameObject("Fps");
+	pGameObject->MarkAsSceneIndependant();
 	auto pTextRenderComponent = pGameObject->CreateAndAddComponent<TextRenderComponent>();
 	pTextRenderComponent->SetText("FPS:");
 	pTextRenderComponent->SetFont(ResourceManager::GetInstance().LoadFont("Lingua.otf", 12));

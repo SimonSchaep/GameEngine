@@ -12,9 +12,10 @@ public:
 
 	virtual ~KilledEnemyCommand() = default;
 
-	virtual void Execute() override
+	virtual bool Execute() override
 	{
 		m_pMyPlayerController->KilledEnemy();
+		return true;
 	}
 
 private:

@@ -15,7 +15,7 @@ using namespace engine;
 
 void MyPlayerController::Initialize()
 {
-	auto pScene = SceneManager::GetInstance().GetActiveScene();
+	auto pScene = GetGameObject()->GetScene();
 	m_pChef = pScene->FindGameObjectByName("Chef");
 	m_pBean = pScene->FindGameObjectByName("Bean");
 

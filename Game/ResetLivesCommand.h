@@ -11,9 +11,10 @@ public:
 
 	virtual ~ResetLivesCommand() = default;
 
-	virtual void Execute() override
+	virtual bool Execute() override
 	{
-		m_pMovementController->ResetLives();
+		m_pMovementController->ResetLives(); //todo: this doesn't make sense
+		return true;
 	}
 
 private:

@@ -11,9 +11,10 @@ public:
 
 	virtual ~DieCommand() = default;
 
-	virtual void Execute() override
+	virtual bool Execute() override
 	{
 		m_pMovementController->Die();
+		return true;
 	}
 
 private:

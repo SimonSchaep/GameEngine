@@ -10,7 +10,7 @@ namespace engine
 	public:
 		BaseCommand() = default;
 		virtual ~BaseCommand() = default;
-		virtual void Execute() = 0;
+		virtual bool Execute() = 0;
 	};
 
 }

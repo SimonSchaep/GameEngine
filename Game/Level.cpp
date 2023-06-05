@@ -124,17 +124,17 @@ void Level::BuildLevel()
 	}
 	catch (levelParser::FileNameNotFound& except)
 	{
-		std::cout << except.what();
+		ServiceLocator::GetLogger().LogLine(except.what(), LogType::error);
 		return;
 	}
 	catch (levelParser::InvalidLevelWidth& except)
 	{
-		std::cout << except.what();
+		ServiceLocator::GetLogger().LogLine(except.what(), LogType::error);
 		return;
 	}
 	catch (levelParser::UnknownLevelElement& except)
 	{
-		std::cout << except.what();
+		ServiceLocator::GetLogger().LogLine(except.what(), LogType::warning);
 	}
 
 	std::vector<bool> hasFoodAbove{ std::vector<bool>(m_LevelWidth, false) }; //to make sure platforms below will be dark blue

@@ -3,6 +3,8 @@
 #include "GameObject.h"
 #include "Transform.h"
 #include "Renderer.h"
+#include "ServiceLocator.h"
+#include "Logger.h"
 #include <iostream>
 #include <SDL_opengl.h>
 
@@ -19,11 +21,11 @@ namespace engine
 		//todo: do this, implement ==
 		/*if (m_LevelBoundaries == structs::Rect{})
 		{
-			std::cerr << "no levelboundaries set\n";
+			ServiceLocator::GetLogger().LogLine("no levelboundaries set", LogType::error);
 		}*/
 		if (m_LevelBoundaries.Width == 0)
 		{
-			std::cerr << "no levelboundaries set\n";
+			ServiceLocator::GetLogger().LogLine("no levelboundaries set", LogType::error);
 		}
 	}
 	void CameraComponent::Update()

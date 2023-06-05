@@ -43,7 +43,6 @@ namespace engine
 		}
 		else if (pOtherCollider->IsRectInCollider(GetShapeInWorld())) //else, if we are triggering
 		{
-			//std::cout << "trigger\n";
 			GetOnTriggerEvent()->NotifyObservers(TriggerType::enter, this, pOtherCollider); //on trigger enter			
 			GetOnTriggerEvent()->NotifyObservers(TriggerType::stay, this, pOtherCollider); //on trigger stay
 			pOtherCollider->GetOnTriggerEvent()->NotifyObservers(TriggerType::enter, pOtherCollider, this); //on trigger enter

@@ -5,8 +5,7 @@
 namespace engine
 {
 	void BaseComponent::InitializeComponent()
-	{	
-		//std::cout << GetGameObject()->GetName() << "init\n";
+	{
 		Initialize();
 		m_IsInitialized = true;
 	}

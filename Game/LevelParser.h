@@ -150,6 +150,6 @@ namespace levelParser
 
 
 		auto duration = std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::high_resolution_clock::now() - start).count();
-		std::cout << "Parsing level file took: " << duration << "ms\n";
+		ServiceLocator::GetLogger().LogLine("Parsing level file took: " + std::to_string(duration) + "ms", LogType::message);
 	}
 }

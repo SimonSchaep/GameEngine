@@ -142,6 +142,9 @@
     <ClCompile Include="SpriteRenderComponent.cpp">
       <Filter>Engine\Sprites</Filter>
     </ClCompile>
+    <ClCompile Include="LoggingSoundSystem.cpp">
+      <Filter>Engine\Services\SoundSystem</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Font.h">
@@ -302,6 +305,9 @@
     </ClInclude>
     <ClInclude Include="SpriteRenderComponent.h">
       <Filter>Engine\Sprites</Filter>
+    </ClInclude>
+    <ClInclude Include="LoggingSoundSystem.h">
+      <Filter>Engine\Services\SoundSystem</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

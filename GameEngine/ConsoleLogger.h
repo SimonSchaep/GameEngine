@@ -10,6 +10,7 @@ namespace engine
 	{
 	public:
 		ConsoleLogger() = default;
+		virtual ~ConsoleLogger() = default;
 
 		virtual void Log(const std::string& message, LogType logType = LogType::message)override;
 		virtual void LogLine(const std::string& message, LogType logType = LogType::message)override;

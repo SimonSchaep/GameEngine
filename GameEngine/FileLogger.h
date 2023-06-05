@@ -7,10 +7,11 @@
 
 namespace engine
 {
-	class FileLogger : public Logger
+	class FileLogger final : public Logger
 	{
 	public:
 		FileLogger();
+		virtual ~FileLogger() = default;;
 
 		template<typename T>
 		void SetActualLogger();

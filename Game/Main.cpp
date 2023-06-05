@@ -41,6 +41,7 @@
 #include "ConsoleLogger.h"
 #include "FileLogger.h"
 #include "SDLSoundSystem.h"
+#include "LoggingSoundSystem.h"
 #include "GameManager.h"
 #include "ChefSpriteController.h"
 
@@ -55,6 +56,8 @@ void load()
 	logger->SetActualLogger<ConsoleLogger>();*/
 
 	ServiceLocator::RegisterSoundSystem<SDLSoundSystem>();
+	/*auto soundSystem = ServiceLocator::RegisterSoundSystem<LoggingSoundSystem>();
+	soundSystem->SetActualSoundSystem<SDLSoundSystem>();*/
 
 
 	auto pScene = SceneManager::GetInstance().CreateScene("Demo");

@@ -13,6 +13,10 @@ namespace engine
 			glm::vec2 BottomLeft;
 			float Width;
 			float Height;
+
+			//this auto generates all comparison operators
+			//https://en.cppreference.com/w/cpp/language/operators
+			auto operator<=>(const Rect&) const = default;
 		};
 
 		struct Circle
@@ -22,6 +26,10 @@ namespace engine
 			Circle(float x, float y, float radius) :Center{ x,y }, Radius{ radius } {};
 			glm::vec2 Center;
 			float Radius;
+
+			//this auto generates all comparison operators
+			//https://en.cppreference.com/w/cpp/language/operators
+			auto operator<=>(const Circle&) const = default;
 		};
 	}
 }

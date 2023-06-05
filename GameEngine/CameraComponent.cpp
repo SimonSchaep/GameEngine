@@ -19,11 +19,7 @@ namespace engine
 		SetScale(m_Scale); //to set camerabox correctly
 
 		//todo: do this, implement ==
-		/*if (m_LevelBoundaries == structs::Rect{})
-		{
-			ServiceLocator::GetLogger().LogLine("no levelboundaries set", LogType::error);
-		}*/
-		if (m_LevelBoundaries.Width == 0)
+		if (m_LevelBoundaries == structs::Rect{})
 		{
 			ServiceLocator::GetLogger().LogLine("no levelboundaries set", LogType::error);
 		}

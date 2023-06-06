@@ -99,7 +99,25 @@ Scene* GameManager::CreateLevel(int id)
 	auto pLevelObject = pScene->CreateAndAddGameObject("Level");
 	pLevelObject->CreateAndAddComponent<Level>("Data/level" + std::to_string(id+1) + ".csv");
 
-	//create chef
+	auto pChef = CreateChef(pScene);
+	auto pController = CreatePlayerController(pScene);
+
+	pController->SetControlledObject(pChef);
+	pController->UseKeyboard(true);
+	pController->UseController(1);
+
+	pChef = CreateChef(pScene);
+	pController = CreatePlayerController(pScene);
+
+	pController->SetControlledObject(pChef);
+	pController->UseKeyboard(false);
+	pController->UseController(0);
+
+	return pScene;
+}
+
+engine::GameObject* GameManager::CreateChef(engine::Scene* pScene)
+{
 	auto pChef = pScene->CreateAndAddGameObject("Chef");
 	pChef->AddTag("Chef");
 	pChef->GetTransform()->SetLocalPosition({ 96,596 });
@@ -124,14 +142,17 @@ Scene* GameManager::CreateLevel(int id)
 	auto pBoxCollider = pChef->CreateAndAddComponent<BoxCollider>();
 	pBoxCollider->SetShape({ -width / 2, -8, width, height });
 
+	return pChef;
+}
 
-	//player 1 controller gameobject
-	auto pPlayer1ControllerObject = pScene->CreateAndAddGameObject();
-	auto pPlayer1Controller = pPlayer1ControllerObject->CreateAndAddComponent<MyPlayerController>();
-	pPlayer1Controller->UseKeyboard(true);
-	pPlayer1Controller->UseController(1);
-	//make controller posses chef
-	pPlayer1Controller->SetControlChef(true);
+MyPlayerController* GameManager::CreatePlayerController(engine::Scene* pScene)
+{
+	auto pPlayerControllerObject = pScene->CreateAndAddGameObject();
+	auto pPlayerController = pPlayerControllerObject->CreateAndAddComponent<MyPlayerController>();
+	return pPlayerController;
+}
 
-	return pScene;
+engine::GameObject* GameManager::CreateBean(engine::Scene* /*pScene*/, bool /*isPlayer*/)
+{
+	return nullptr;
 }

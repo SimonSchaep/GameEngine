@@ -209,12 +209,10 @@ xcopy "$(SolutionDir)Data\" "$(ProjectDir)Data\" /Y</Command>
     <ClInclude Include="ChefSpriteController.h" />
     <ClInclude Include="ControlsDisplay.h" />
     <ClInclude Include="DestroyComponent.h" />
-    <ClInclude Include="DieCommand.h" />
     <ClInclude Include="FoodParent.h" />
     <ClInclude Include="FPSCounter.h" />
     <ClInclude Include="GameManager.h" />
     <ClInclude Include="GameState.h" />
-    <ClInclude Include="KilledEnemyCommand.h" />
     <ClInclude Include="Level.h" />
     <ClInclude Include="LevelParser.h" />
     <ClInclude Include="LivesDisplay.h" />
@@ -225,9 +223,7 @@ xcopy "$(SolutionDir)Data\" "$(ProjectDir)Data\" /Y</Command>
     <ClInclude Include="PlayerLives.h" />
     <ClInclude Include="PlayerPoints.h" />
     <ClInclude Include="PointsDisplay.h" />
-    <ClInclude Include="ResetLivesCommand.h" />
     <ClInclude Include="RotateComponent.h" />
-    <ClInclude Include="SwitchCommand.h" />
     <ClInclude Include="TrashTheCacheComponent.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

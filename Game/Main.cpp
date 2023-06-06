@@ -202,6 +202,7 @@ void load()
 
 	//Controls display
 	auto pControlsDisplay = pScene->CreateAndAddGameObject("ControlsDisplay");
+	pControlsDisplay->MarkAsSceneIndependant();
 	pControlsDisplay->CreateAndAddComponent<ControlsDisplay>();
 
 	

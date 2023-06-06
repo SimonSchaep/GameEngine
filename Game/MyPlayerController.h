@@ -15,22 +15,13 @@ public:
     virtual void Initialize() override;
 
     void Move(const glm::vec2& direction);
-    void Die();
-    void ResetLives();
-    void KilledEnemy();
 
-    void SetControlChef(bool controlChef);
-    void SwitchControlledGameObjects();
+    void SetControlledObject(engine::GameObject* pControlledObject);
 
 private:
     engine::ObservingPointer<MovementComponent> m_pControlledMovementComponent;
     engine::ObservingPointer<PlayerLives> m_pControlledPlayerLivesComponent;
     engine::ObservingPointer<PlayerPoints> m_pControlledPlayerPointsComponent;
-
-    engine::ObservingPointer<engine::GameObject> m_pChef;
-    engine::ObservingPointer<engine::GameObject> m_pBean;
-
-    bool m_ControlChef{};
 
 };
 

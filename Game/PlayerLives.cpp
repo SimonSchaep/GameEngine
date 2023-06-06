@@ -1,5 +1,4 @@
 #include "PlayerLives.h"
-#include "DieCommand.h"
 #include "Event.h"
 
 using namespace engine;

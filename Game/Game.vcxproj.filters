@@ -76,19 +76,7 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="DieCommand.h">
-      <Filter>Commands</Filter>
-    </ClInclude>
-    <ClInclude Include="KilledEnemyCommand.h">
-      <Filter>Commands</Filter>
-    </ClInclude>
     <ClInclude Include="MoveCommands.h">
-      <Filter>Commands</Filter>
-    </ClInclude>
-    <ClInclude Include="ResetLivesCommand.h">
-      <Filter>Commands</Filter>
-    </ClInclude>
-    <ClInclude Include="SwitchCommand.h">
       <Filter>Commands</Filter>
     </ClInclude>
     <ClInclude Include="FPSCounter.h">

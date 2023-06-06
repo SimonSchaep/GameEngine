@@ -42,16 +42,34 @@ namespace engine
 
 		std::vector<std::unique_ptr<InputController>> m_Controllers;
 
-		//todo: make pairs structs
-		using ControllerButtonKey = std::pair<std::pair<int, InputController::ControllerButton>, KeyState>;
+		struct ControllerButtonKey
+		{
+			int controllerIndex{};
+			InputController::ControllerButton controllerButton{};
+			KeyState keyState{};
+
+			auto operator<=>(const ControllerButtonKey&) const = default;
+		};
 		using ControllerButtonCommandsMap = std::map<ControllerButtonKey, std::vector<std::unique_ptr<BaseCommand>>>;
 		ControllerButtonCommandsMap m_ControllerButtonBindings{};
 
-		using ControllerAxisKey = std::pair<int, InputController::ControllerAxis>;
+		struct ControllerAxisKey
+		{
+			int controllerIndex{};
+			InputController::ControllerAxis controllerAxis{};
+
+			auto operator<=>(const ControllerAxisKey&) const = default;
+		};
 		using ControllerAxisCommandsMap = std::map<ControllerAxisKey, std::vector<std::unique_ptr<BaseAxisCommand>>>;
 		ControllerAxisCommandsMap m_ControllerAxisBindings{};
 
-		using KeyboardKey = std::pair<SDL_Scancode, KeyState>;
+		struct KeyboardKey
+		{
+			SDL_Scancode scanCode{};
+			KeyState keyState{};
+
+			auto operator<=>(const KeyboardKey&) const = default;
+		};
 		using KeyboardCommandsMap = std::map<KeyboardKey, std::vector<std::unique_ptr<BaseCommand>>>;
 		KeyboardCommandsMap m_KeyboardInputBindings{};
 	};

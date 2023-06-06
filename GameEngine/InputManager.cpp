@@ -28,15 +28,15 @@ namespace engine
 	BaseCommand* InputManager::BindKeyboardButtonToCommand(SDL_Scancode scanCode, KeyState keyState, std::unique_ptr<BaseCommand> command)
 	{
 		auto pReturnValue = command.get();
-		if (m_KeyboardInputBindings.find(std::pair(scanCode, keyState)) != m_KeyboardInputBindings.end())
+		if (m_KeyboardInputBindings.find(KeyboardKey{scanCode,keyState}) != m_KeyboardInputBindings.end())
 		{
-			m_KeyboardInputBindings[std::pair(scanCode, keyState)].emplace_back(std::move(command));
+			m_KeyboardInputBindings[KeyboardKey{scanCode, keyState}].emplace_back(std::move(command));
 		}
 		else
 		{
 			std::vector<std::unique_ptr<BaseCommand>> commandVec{};
 			commandVec.emplace_back(std::move(command));
-			m_KeyboardInputBindings.emplace(std::pair(scanCode, keyState), std::move(commandVec));
+			m_KeyboardInputBindings.emplace(KeyboardKey{ scanCode,keyState }, std::move(commandVec));
 		}
 		return pReturnValue;
 	}
@@ -44,15 +44,15 @@ namespace engine
 	BaseCommand* InputManager::BindControllerButtonToCommand(int controllerIndex, InputController::ControllerButton button, KeyState keyState, std::unique_ptr<BaseCommand> command)
 	{
 		auto pReturnValue = command.get();
-		if (m_ControllerButtonBindings.find(std::pair(std::pair(controllerIndex, button), keyState)) != m_ControllerButtonBindings.end())
+		if (m_ControllerButtonBindings.find(ControllerButtonKey{ controllerIndex, button, keyState }) != m_ControllerButtonBindings.end())
 		{
-			m_ControllerButtonBindings[std::pair(std::pair(controllerIndex, button), keyState)].emplace_back(std::move(command));
+			m_ControllerButtonBindings[ControllerButtonKey{ controllerIndex, button, keyState }].emplace_back(std::move(command));
 		}
 		else
 		{
 			std::vector<std::unique_ptr<BaseCommand>> commandVec{};
 			commandVec.emplace_back(std::move(command));
-			m_ControllerButtonBindings.emplace(std::pair(std::pair(controllerIndex, button), keyState), std::move(commandVec));
+			m_ControllerButtonBindings.emplace(ControllerButtonKey{ controllerIndex, button, keyState }, std::move(commandVec));
 		}
 		return pReturnValue;
 	}
@@ -60,15 +60,15 @@ namespace engine
 	BaseAxisCommand* InputManager::BindControllerAxisToCommand(int controllerIndex, InputController::ControllerAxis axis, std::unique_ptr<BaseAxisCommand> command)
 	{
 		auto pReturnValue = command.get();
-		if (m_ControllerAxisBindings.find(std::pair(controllerIndex, axis)) != m_ControllerAxisBindings.end())
+		if (m_ControllerAxisBindings.find(ControllerAxisKey{ controllerIndex, axis }) != m_ControllerAxisBindings.end())
 		{
-			m_ControllerAxisBindings[std::pair(controllerIndex, axis)].emplace_back(std::move(command));
+			m_ControllerAxisBindings[ControllerAxisKey{ controllerIndex, axis }].emplace_back(std::move(command));
 		}
 		else
 		{
 			std::vector<std::unique_ptr<BaseAxisCommand>> commandVec{};
 			commandVec.emplace_back(std::move(command));
-			m_ControllerAxisBindings.emplace(std::pair(controllerIndex, axis), std::move(commandVec));
+			m_ControllerAxisBindings.emplace(ControllerAxisKey{ controllerIndex, axis }, std::move(commandVec));
 		}
 		return pReturnValue;
 	}
@@ -120,15 +120,15 @@ namespace engine
 			for (auto& binding : m_ControllerButtonBindings)
 			{
 				const ControllerButtonKey& controllerKey = binding.first;
-				const InputController::ControllerButton controllerButton = controllerKey.first.second;
+				const InputController::ControllerButton controllerButton = controllerKey.controllerButton;
 
 				//check if controllerindex is the same as the controllerindex that was bound to the command
-				if (controllerKey.first.first != m_Controllers[i]->GetControllerIndex())
+				if (controllerKey.controllerIndex != m_Controllers[i]->GetControllerIndex())
 				{
 					continue;
 				}
 
-				switch (controllerKey.second)
+				switch (controllerKey.keyState)
 				{
 				case KeyState::down:
 					if (m_Controllers[i]->isDown(controllerButton))
@@ -164,10 +164,10 @@ namespace engine
 			for (auto& binding : m_ControllerAxisBindings)
 			{
 				const ControllerAxisKey& controllerKey = binding.first;
-				const InputController::ControllerAxis controllerAxis = controllerKey.second;
+				const InputController::ControllerAxis controllerAxis = controllerKey.controllerAxis;
 
 				//check if controllerindex is the same as the controllerindex that was bound to the command
-				if (controllerKey.first != m_Controllers[i]->GetControllerIndex())
+				if (controllerKey.controllerIndex != m_Controllers[i]->GetControllerIndex())
 				{
 					continue;
 				}
@@ -187,11 +187,11 @@ namespace engine
 		for (auto& binding : m_KeyboardInputBindings)
 		{
 			const KeyboardKey& keyboardKey = binding.first;
-			if (keyboardKey.second != KeyState::pressed)
+			if (keyboardKey.keyState != KeyState::pressed)
 			{
 				continue;
 			}
-			if (keys[keyboardKey.first])
+			if (keys[keyboardKey.scanCode])
 			{
 				for (auto& command : binding.second)
 				{
@@ -215,11 +215,11 @@ namespace engine
 				for (auto& binding : m_KeyboardInputBindings)
 				{
 					const KeyboardKey& keyboardKey = binding.first;
-					if (keyboardKey.second != KeyState::down)
+					if (keyboardKey.keyState != KeyState::down)
 					{
 						continue;
 					}
-					if (e.key.keysym.scancode == keyboardKey.first)
+					if (e.key.keysym.scancode == keyboardKey.scanCode)
 					{
 						for (auto& command : binding.second)
 						{
@@ -233,11 +233,11 @@ namespace engine
 				for (auto& binding : m_KeyboardInputBindings)
 				{
 					const KeyboardKey& keyboardKey = binding.first;
-					if (keyboardKey.second != KeyState::up)
+					if (keyboardKey.keyState != KeyState::up)
 					{
 						continue;
 					}
-					if (e.key.keysym.scancode == keyboardKey.first)
+					if (e.key.keysym.scancode == keyboardKey.scanCode)
 					{
 						for (auto& command : binding.second)
 						{

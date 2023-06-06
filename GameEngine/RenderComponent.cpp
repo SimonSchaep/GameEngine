@@ -9,3 +9,8 @@ engine::RenderComponent::RenderComponent(GameObject* pGameObject)
 {
 	pGameObject->RegisterRenderComponent(this);
 }
+
+engine::RenderComponent::~RenderComponent()
+{
+	GetGameObject()->RemoveRenderComponent(this);
+}

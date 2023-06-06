@@ -2,12 +2,13 @@
 #include "BaseCommand.h"
 #include "BaseAxisCommand.h"
 #include "MyPlayerController.h"
+#include "ObservingPointer.h"
 
 class MoveCommand : public engine::BaseCommand
 {
 public:
-	MoveCommand(MyPlayerController* pMovementController, const glm::vec2& direction)
-		: m_pMovementController{ pMovementController } 
+	MoveCommand(MyPlayerController* pMyPlayerController, const glm::vec2& direction)
+		: m_pMyPlayerController{ pMyPlayerController }
 		, m_Direction{direction}
 	{}
 
@@ -15,13 +16,13 @@ public:
 
 	virtual bool Execute() override
 	{
-		if (!m_pMovementController)return false;
-		m_pMovementController->Move(m_Direction);
+		if (!m_pMyPlayerController)return false;
+		m_pMyPlayerController->Move(m_Direction);
 		return true;
 	}
 
 private:
-	MyPlayerController* m_pMovementController{};
+	engine::ObservingPointer<MyPlayerController> m_pMyPlayerController;
 	glm::vec2 m_Direction{};
 };
 
@@ -30,18 +31,19 @@ private:
 class MoveAxisCommand : public engine::BaseAxisCommand
 {
 public:
-	MoveAxisCommand(MyPlayerController* pMovementController, const glm::vec2& direction)
-		: m_pMovementController{ pMovementController } 
+	MoveAxisCommand(MyPlayerController* pMyPlayerController, const glm::vec2& direction)
+		: m_pMyPlayerController{ pMyPlayerController }
 		, m_Direction{direction}
 	{}
 
 	virtual bool Execute(float axisValue) override
 	{
-		m_pMovementController->Move(m_Direction * axisValue);
+		if (!m_pMyPlayerController)return false;
+		m_pMyPlayerController->Move(m_Direction * axisValue);
 		return true;
 	}
 
 private:
-	MyPlayerController* m_pMovementController{};
+	engine::ObservingPointer<MyPlayerController> m_pMyPlayerController;
 	glm::vec2 m_Direction{};
 };

@@ -8,4 +8,8 @@ namespace engine
 	{
 		pGameObject->RegisterUIRenderComponent(this);
 	}
+	UIRenderComponent::~UIRenderComponent()
+	{
+		GetGameObject()->RemoveUIRenderComponent(this);
+	}
 }

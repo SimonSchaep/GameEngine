@@ -235,7 +235,9 @@
     <ClInclude Include="LoggingSoundSystem.h" />
     <ClInclude Include="NullLogger.h" />
     <ClInclude Include="NullSoundSystem.h" />
+    <ClInclude Include="ObservableObject.h" />
     <ClInclude Include="Observer.h" />
+    <ClInclude Include="ObservingPointer.h" />
     <ClInclude Include="PlayerController.h" />
     <ClInclude Include="Font.h" />
     <ClInclude Include="GameEngine.h" />
@@ -287,6 +289,7 @@
     <ClCompile Include="Event.cpp" />
     <ClCompile Include="InputController.cpp" />
     <ClCompile Include="LoggingSoundSystem.cpp" />
+    <ClCompile Include="ObservableObject.cpp" />
     <ClCompile Include="Observer.cpp" />
     <ClCompile Include="PlayerController.cpp" />
     <ClCompile Include="Font.cpp" />

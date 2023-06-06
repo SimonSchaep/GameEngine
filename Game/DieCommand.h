@@ -1,22 +1,24 @@
 #pragma once
 #include "BaseCommand.h"
 #include "MyPlayerController.h"
+#include "ObservingPointer.h"
 
 class DieCommand : public engine::BaseCommand
 {
 public:
-	DieCommand(MyPlayerController* pMovementController)
-		:m_pMovementController{ pMovementController }
+	DieCommand(MyPlayerController* pMyPlayerController)
+		:m_pMyPlayerController{ pMyPlayerController }
 	{}
 
 	virtual ~DieCommand() = default;
 
 	virtual bool Execute() override
 	{
-		m_pMovementController->Die();
+		if (!m_pMyPlayerController)return false;
+		m_pMyPlayerController->Die();
 		return true;
 	}
 
 private:
-	MyPlayerController* m_pMovementController;
+	engine::ObservingPointer<MyPlayerController> m_pMyPlayerController;
 };

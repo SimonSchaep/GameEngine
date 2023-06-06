@@ -25,7 +25,7 @@ class Level : public engine::BaseComponent
 {
 public:
 	Level(engine::GameObject* pGameObject, const std::string& levelFileName);
-	virtual ~Level() = default;
+	virtual ~Level();
 
 	virtual void Initialize() override;
 	virtual void Update() override {};

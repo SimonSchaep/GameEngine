@@ -1,5 +1,6 @@
 #pragma once
 #include "BaseComponent.h"
+#include "ObservingPointer.h"
 #include "glm/glm.hpp"
 
 class Level;
@@ -7,8 +8,8 @@ class Level;
 class MovementComponent : public engine::BaseComponent
 {
 public:
-	MovementComponent(engine::GameObject* pGameObject) :BaseComponent(pGameObject) {};
-	virtual ~MovementComponent() = default;
+	MovementComponent(engine::GameObject* pGameObject);
+	virtual ~MovementComponent();
 
 	virtual void Initialize() override;
 	virtual void Update() override;
@@ -39,6 +40,6 @@ private:
 
 	int m_CenterMargin{ 1 };
 
-	Level* m_pLevel{};
+	engine::ObservingPointer<Level> m_pLevel;
 };
 

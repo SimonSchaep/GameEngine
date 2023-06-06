@@ -5,7 +5,7 @@
 #include <string>
 #include "Transform.h"
 #include "BaseComponent.h"
-//#include "Collider.h"
+#include "ObservableObject.h"
 
 namespace engine
 {
@@ -14,7 +14,7 @@ namespace engine
 	class Collider;
 	class Scene;
 
-	class GameObject final
+	class GameObject final : public ObservableObject
 	{
 	public:
 		void Initialize();
@@ -47,12 +47,15 @@ namespace engine
 		const std::vector<GameObject*>& GetChildren()const { return m_Children; }
 
 		void RegisterCollider(Collider* pCollider) { m_Colliders.emplace_back(pCollider); }
+		void RemoveCollider(Collider* pCollider) { m_Colliders.erase(std::remove(m_Colliders.begin(), m_Colliders.end(), pCollider)); }
 		const std::vector<Collider*>& GetColliders()const { return m_Colliders; } //to make collisions not have to use GetAllComponentsOfType
 
 		void RegisterRenderComponent(RenderComponent* pRenderComponent) { m_RenderComponents.emplace_back(pRenderComponent); }
+		void RemoveRenderComponent(RenderComponent* pRenderComponent) { m_RenderComponents.erase(std::remove(m_RenderComponents.begin(), m_RenderComponents.end(), pRenderComponent)); }
 		const std::vector<RenderComponent*>& GetRenderComponents()const { return m_RenderComponents; } //to make rendering not have to use GetAllComponentsOfType
 
 		void RegisterUIRenderComponent(UIRenderComponent* pUIRenderComponent) { m_UIRenderComponents.emplace_back(pUIRenderComponent); }
+		void RemoveUIRenderComponent(UIRenderComponent* pUIRenderComponent) { m_UIRenderComponents.erase(std::remove(m_UIRenderComponents.begin(), m_UIRenderComponents.end(), pUIRenderComponent)); }
 		const std::vector<UIRenderComponent*>& GetUIRenderComponents()const { return m_UIRenderComponents; } //to make ui rendering not have to use GetAllComponentsOfType
 
 		//COMPONENTS

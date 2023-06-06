@@ -1,5 +1,6 @@
 #pragma once
 #include "BaseComponent.h"
+#include "ObservingPointer.h"
 
 
 //todo: add avg fps
@@ -20,5 +21,5 @@ public:
 	virtual void Update() override;
 
 private:
-	engine::TextRenderComponent* m_pTextRenderComponent{};
+	engine::ObservingPointer<engine::TextRenderComponent> m_pTextRenderComponent{};
 };

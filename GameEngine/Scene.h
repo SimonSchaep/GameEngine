@@ -1,6 +1,7 @@
 #pragma once
 #include "SceneManager.h"
 #include "GameObject.h"
+#include "ObservingPointer.h"
 
 namespace engine
 {
@@ -27,10 +28,11 @@ namespace engine
 		void Render()const;
 		void RenderUI();
 
-		void SetActiveCamera(CameraComponent* pCameraComponent) { m_pCameraComponent = pCameraComponent; }
-		CameraComponent* GetActiveCamera() { return m_pCameraComponent; }
+		void SetActiveCamera(CameraComponent* pCameraComponent);
+		CameraComponent* GetActiveCamera();
 
 		~Scene();
+		Scene() = delete;
 		Scene(const std::string& name, bool destroyAfterDisable);
 		Scene(const Scene& other) = delete;
 		Scene(Scene&& other) = delete;
@@ -53,6 +55,6 @@ namespace engine
 
 		bool m_IsInitialized{};
 
-		CameraComponent* m_pCameraComponent{};
+		ObservingPointer<CameraComponent> m_pCameraComponent{};
 	};
 }

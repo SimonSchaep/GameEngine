@@ -1,6 +1,7 @@
 #pragma once
 #include "BaseCommand.h"
 #include "GameState.h"
+#include "ObservingPointer.h"
 
 class StartGameCommand : public engine::BaseCommand
 {
@@ -20,7 +21,7 @@ public:
 	}
 
 private:
-	StartMenuState* m_pStartMenuState;
+	engine::ObservingPointer<StartMenuState> m_pStartMenuState;
 };
 
 
@@ -42,7 +43,7 @@ public:
 	}
 
 private:
-	GamePlayingState* m_pGamePlayingState;
+	engine::ObservingPointer<GamePlayingState> m_pGamePlayingState;
 };
 
 
@@ -64,7 +65,7 @@ public:
 	}
 
 private:
-	GamePausedState* m_pGamePausedState;
+	engine::ObservingPointer<GamePausedState> m_pGamePausedState;
 };
 
 
@@ -86,7 +87,7 @@ public:
 	}
 
 private:
-	GamePlayingState* m_pGamePlayingState;
+	engine::ObservingPointer<GamePlayingState> m_pGamePlayingState;
 };
 
 
@@ -102,10 +103,11 @@ public:
 
 	virtual bool Execute() override
 	{
+		if (!m_pGameManager)return false;
 		m_pGameManager->StartNextLevel();
 		return true;
 	}
 
 private:
-	GameManager* m_pGameManager;
+	engine::ObservingPointer<GameManager> m_pGameManager;
 };

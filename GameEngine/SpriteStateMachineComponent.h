@@ -1,5 +1,6 @@
 #pragma once
 #include "BaseComponent.h"
+#include "ObservingPointer.h"
 #include <vector>
 #include <memory>
 #include <functional>
@@ -14,7 +15,7 @@ namespace engine
 	{
 	public:
 		SpriteStateMachineComponent(GameObject* pGameObject);
-		virtual ~SpriteStateMachineComponent() = default;
+		virtual ~SpriteStateMachineComponent();
 
 		virtual void Initialize() override;
 		virtual void Update() override;
@@ -23,7 +24,7 @@ namespace engine
 
 		SpriteState* CreateAndAddState(std::shared_ptr<Sprite> sprite);
 		void SetStartState(SpriteState* state) { m_CurrentState = state; }
-		void SetSpriteRenderComponent(SpriteRenderComponent* pSpriteRenderComponent) { m_pSpriteRenderComponent = pSpriteRenderComponent; }
+		void SetSpriteRenderComponent(SpriteRenderComponent* pSpriteRenderComponent);
 
 	private:
 		void EvaluateStates();
@@ -31,6 +32,6 @@ namespace engine
 		std::vector<std::unique_ptr<SpriteState>> m_SpriteStates{};
 
 		SpriteState* m_CurrentState{};
-		SpriteRenderComponent* m_pSpriteRenderComponent{};
+		ObservingPointer<SpriteRenderComponent> m_pSpriteRenderComponent{};
 	};
 }

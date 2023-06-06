@@ -8,7 +8,7 @@ namespace engine
 	{
 	public:
 		RenderComponent(GameObject* pGameObject);
-		virtual ~RenderComponent() = default;
+		virtual ~RenderComponent();
 
 		virtual void Initialize() override {};
 

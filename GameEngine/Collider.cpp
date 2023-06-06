@@ -8,3 +8,8 @@ engine::Collider::Collider(GameObject* pGameObject)
 
 	pGameObject->RegisterCollider(this);
 }
+
+engine::Collider::~Collider()
+{
+	GetGameObject()->RemoveCollider(this);
+}

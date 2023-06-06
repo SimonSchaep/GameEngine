@@ -1,6 +1,7 @@
 #pragma once
 #include <memory>
 #include <vector>
+#include "ObservableObject.h"
 
 //todo: add going back to menu from pause and leaderboard
 //add restarting game from pause menu
@@ -14,7 +15,7 @@ namespace engine
 
 class GameManager;
 
-class GameState
+class GameState : public engine::ObservableObject
 {
 public:
 	GameState(GameManager* pGameManager) :m_pGameManager{ pGameManager } {};
@@ -27,7 +28,7 @@ protected:
 	GameManager* GetGameManager()const { return m_pGameManager; }
 
 private:	
-	GameManager* m_pGameManager{}; //todo: set this
+	GameManager* m_pGameManager{};
 };
 
 //Start Menu

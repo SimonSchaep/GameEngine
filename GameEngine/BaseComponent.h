@@ -1,12 +1,13 @@
 #pragma once
 #include <memory>
+#include "ObservableObject.h"
 
 namespace engine
 {
 	class GameObject;
 	class Transform;
 
-	class BaseComponent
+	class BaseComponent : public ObservableObject
 	{
 	public:
 		virtual ~BaseComponent() = default;

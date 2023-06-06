@@ -12,6 +12,8 @@ engine::SpriteStateMachineComponent::SpriteStateMachineComponent(GameObject* pGa
 {
 }
 
+engine::SpriteStateMachineComponent::~SpriteStateMachineComponent() = default;
+
 engine::SpriteState* engine::SpriteStateMachineComponent::CreateAndAddState(std::shared_ptr<Sprite> sprite)
 {
 	auto state = std::make_unique<SpriteState>(sprite);
@@ -19,6 +21,11 @@ engine::SpriteState* engine::SpriteStateMachineComponent::CreateAndAddState(std:
 
 	m_SpriteStates.emplace_back(std::move(state));
 	return pReturnValue;
+}
+
+void engine::SpriteStateMachineComponent::SetSpriteRenderComponent(SpriteRenderComponent* pSpriteRenderComponent)
+{
+	m_pSpriteRenderComponent = pSpriteRenderComponent;
 }
 
 void engine::SpriteStateMachineComponent::EvaluateStates()

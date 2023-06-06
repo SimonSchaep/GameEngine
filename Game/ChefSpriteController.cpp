@@ -7,12 +7,12 @@
 
 using namespace engine;
 
-engine::ChefSpriteController::ChefSpriteController(engine::GameObject* pGameObject)
+ChefSpriteController::ChefSpriteController(engine::GameObject* pGameObject)
 	:BaseComponent(pGameObject)
 {	
 }
 
-void engine::ChefSpriteController::Initialize()
+void ChefSpriteController::Initialize()
 {
 	//create state machine
 	m_pSpriteStateMachine = GetGameObject()->CreateAndAddComponent<SpriteStateMachineComponent>();
@@ -105,7 +105,7 @@ void engine::ChefSpriteController::Initialize()
 }
 
 //todo: still need to bind this event
-void engine::ChefSpriteController::Notify()
+void ChefSpriteController::Notify()
 {
 	m_HasPlayerWon = true;
 	m_pSpriteStateMachine->ForceStateEvaluation();

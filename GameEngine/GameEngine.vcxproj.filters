@@ -145,6 +145,9 @@
     <ClCompile Include="LoggingSoundSystem.cpp">
       <Filter>Engine\Services\SoundSystem</Filter>
     </ClCompile>
+    <ClCompile Include="ObservableObject.cpp">
+      <Filter>Engine\ObservingPointer</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Font.h">
@@ -309,6 +312,12 @@
     <ClInclude Include="LoggingSoundSystem.h">
       <Filter>Engine\Services\SoundSystem</Filter>
     </ClInclude>
+    <ClInclude Include="ObservableObject.h">
+      <Filter>Engine\ObservingPointer</Filter>
+    </ClInclude>
+    <ClInclude Include="ObservingPointer.h">
+      <Filter>Engine\ObservingPointer</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Engine">
@@ -346,6 +355,9 @@
     </Filter>
     <Filter Include="Engine\Sprites">
       <UniqueIdentifier>{fe74e78f-e83f-4f1b-9e16-368718186239}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\ObservingPointer">
+      <UniqueIdentifier>{adeb5aa6-ea43-4cf6-9547-3e502a9b81ce}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

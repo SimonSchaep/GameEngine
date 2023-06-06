@@ -13,6 +13,11 @@
 
 using namespace engine;
 
+MyPlayerController::MyPlayerController(engine::GameObject* pGameObject)
+	:PlayerController(pGameObject)
+{
+}
+
 void MyPlayerController::Initialize()
 {
 	auto pScene = GetGameObject()->GetScene();

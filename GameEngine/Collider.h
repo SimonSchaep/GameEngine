@@ -2,9 +2,15 @@
 #include "BaseComponent.h"
 #include "Structs.h"
 #include "Event.h"
+#include "ObservingPointer.h"
 #include <vector>
 
 //todo: add circle collider
+
+// currently unsafe, you could destroy a gameobject after it enters a trigger
+// this will invalidate the pointer in m_CurrentTriggers and cause undefined behavior
+// todo: complete ObservingPointer.h so it can be used in containers
+// then we can check for nullptr when iterating m_CurrentTriggers
 
 namespace engine
 {
@@ -19,6 +25,7 @@ namespace engine
 		};
 
 		Collider(GameObject* pGameObject);
+		virtual ~Collider();
 		Event<TriggerType, Collider*, Collider*>* GetOnTriggerEvent() { return m_OnTrigger.get(); }
 
 		virtual void Initialize()override {};

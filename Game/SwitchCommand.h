@@ -1,18 +1,20 @@
 #pragma once
 #include "BaseCommand.h"
 #include "MyPlayerController.h"
+#include "ObservingPointer.h"
 
 class SwitchCommand : public engine::BaseCommand
 {
 public:
-	SwitchCommand(MyPlayerController* pMovementController) : m_pMovementController{ pMovementController } {};
+	SwitchCommand(MyPlayerController* pMyPlayerController) : m_pMyPlayerController{ pMyPlayerController } {};
 
 	virtual bool Execute() override
 	{
-		m_pMovementController->SwitchControlledGameObjects();
+		if (!m_pMyPlayerController)return false;
+		m_pMyPlayerController->SwitchControlledGameObjects();
 		return true;
 	}
 
 private:
-	MyPlayerController* m_pMovementController{};
+	engine::ObservingPointer<MyPlayerController> m_pMyPlayerController;
 };

@@ -7,6 +7,16 @@ namespace engine
 {
 	Scene::Scene(const std::string& name, bool destroyAfterDisable) : m_Name(name), m_DestroyAfterDisable{ destroyAfterDisable } {}
 
+	void Scene::SetActiveCamera(CameraComponent* pCameraComponent)
+	{
+		m_pCameraComponent = pCameraComponent;
+	}
+
+	CameraComponent* Scene::GetActiveCamera()
+	{
+		return m_pCameraComponent.Get();
+	}
+
 	Scene::~Scene() = default;
 
 	GameObject* Scene::CreateAndAddGameObject(const std::string& name, GameObject* pParent)

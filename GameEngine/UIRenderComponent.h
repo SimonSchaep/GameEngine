@@ -8,7 +8,7 @@ namespace engine
 	{
 	public:
 		UIRenderComponent(GameObject* pGameObject);
-		virtual ~UIRenderComponent() = default;
+		virtual ~UIRenderComponent();
 
 		virtual void Initialize() override {};
 

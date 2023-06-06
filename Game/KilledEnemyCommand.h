@@ -1,12 +1,13 @@
 #pragma once
 #include "BaseCommand.h"
 #include "MyPlayerController.h"
+#include "ObservingPointer.h"
 
 class KilledEnemyCommand : public engine::BaseCommand
 {
 public:
-	KilledEnemyCommand(MyPlayerController* pMovementController)
-		: m_pMyPlayerController{ pMovementController }
+	KilledEnemyCommand(MyPlayerController* pMyPlayerController)
+		: m_pMyPlayerController{ pMyPlayerController }
 	{
 	}
 
@@ -14,10 +15,11 @@ public:
 
 	virtual bool Execute() override
 	{
+		if (!m_pMyPlayerController)return false;
 		m_pMyPlayerController->KilledEnemy();
 		return true;
 	}
 
 private:
-	MyPlayerController* m_pMyPlayerController;
+	engine::ObservingPointer<MyPlayerController> m_pMyPlayerController;
 };

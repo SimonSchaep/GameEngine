@@ -16,6 +16,8 @@ Level::Level(engine::GameObject* pGameObject, const std::string& levelFileName)
 {
 }
 
+Level::~Level() = default;
+
 void Level::Initialize()
 {
 	BuildLevel();

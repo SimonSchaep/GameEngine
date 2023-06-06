@@ -65,9 +65,6 @@
     <ClCompile Include="TrashTheCacheComponent.cpp">
       <Filter>Components\Old</Filter>
     </ClCompile>
-    <ClCompile Include="FoodElement.cpp">
-      <Filter>Components\Food</Filter>
-    </ClCompile>
     <ClCompile Include="GameState.cpp">
       <Filter>GameManager</Filter>
     </ClCompile>
@@ -135,9 +132,6 @@
     </ClInclude>
     <ClInclude Include="TrashTheCacheComponent.h">
       <Filter>Components\Old</Filter>
-    </ClInclude>
-    <ClInclude Include="FoodElement.h">
-      <Filter>Components\Food</Filter>
     </ClInclude>
     <ClInclude Include="GameState.h">
       <Filter>GameManager</Filter>

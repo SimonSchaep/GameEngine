@@ -3,12 +3,23 @@
 
 namespace engine
 {
+	PlayerController::~PlayerController()
+	{
+		for (auto pCommand : m_BaseCommands)
+		{
+			InputManager::GetInstance().RemoveCommand(pCommand);
+		}
+		for (auto pAxisCommand : m_BaseAxisCommands)
+		{
+			InputManager::GetInstance().RemoveCommand(pAxisCommand);
+		}
+	}
 
 	void PlayerController::BindKeyboardButtonToCommand(SDL_Scancode scanCode, InputManager::KeyState keyState, std::unique_ptr<BaseCommand> command)
 	{
 		if (m_UseKeyboard)
 		{
-			InputManager::GetInstance().BindKeyboardButtonToCommand(scanCode, keyState, std::move(command));
+			m_BaseCommands.emplace_back(InputManager::GetInstance().BindKeyboardButtonToCommand(scanCode, keyState, std::move(command)));
 		}
 	}
 
@@ -16,7 +27,7 @@ namespace engine
 	{
 		if (m_ControllerIndex >= 0)
 		{
-			InputManager::GetInstance().BindControllerButtonToCommand(m_ControllerIndex, button, keyState, std::move(command));
+			m_BaseCommands.emplace_back(InputManager::GetInstance().BindControllerButtonToCommand(m_ControllerIndex, button, keyState, std::move(command)));
 		}
 	}
 
@@ -24,7 +35,7 @@ namespace engine
 	{
 		if (m_ControllerIndex >= 0)
 		{
-			InputManager::GetInstance().BindControllerAxisToCommand(m_ControllerIndex, axis, std::move(command));
+			m_BaseAxisCommands.emplace_back(InputManager::GetInstance().BindControllerAxisToCommand(m_ControllerIndex, axis, std::move(command)));
 		}
 	}
 

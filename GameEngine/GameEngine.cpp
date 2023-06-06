@@ -82,6 +82,7 @@ namespace engine
 	GameEngine::~GameEngine()
 	{
 		Renderer::GetInstance().Destroy();
+		SceneManager::GetInstance().ClearScenes(); //clear before exiting since some objects might still do things in destructor
 		SDL_DestroyWindow(g_window);
 		g_window = nullptr;
 		SDL_Quit();
@@ -94,9 +95,9 @@ namespace engine
 		load();
 
 		auto& renderer = Renderer::GetInstance();
-		auto& sceneManager = SceneManager::GetInstance();
 		auto& input = InputManager::GetInstance();
 		auto& time = TimeManager::GetInstance();
+		auto& sceneManager = SceneManager::GetInstance();
 
 		bool doContinue = true;
 

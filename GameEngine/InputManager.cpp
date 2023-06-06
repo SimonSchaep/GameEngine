@@ -73,11 +73,12 @@ namespace engine
 		return pReturnValue;
 	}
 
+	//careful! If this gets called while processing input, things will go wrong
 	void InputManager::RemoveCommand(BaseCommand* baseCommand)
 	{
 		for (auto& [key, value] : m_KeyboardInputBindings)
 		{
-			auto it = std::find_if(value.begin(), value.end(), [&](std::unique_ptr<BaseCommand>& element) { return element.get() == baseCommand; });
+			auto it = std::find_if(value.begin(), value.end(), [&](const std::unique_ptr<BaseCommand>& element) { return element.get() == baseCommand; });
 			if (it != value.end())
 			{
 				value.erase(it);
@@ -87,7 +88,7 @@ namespace engine
 
 		for (auto& [key, value] : m_ControllerButtonBindings)
 		{
-			auto it = std::find_if(value.begin(), value.end(), [&](std::unique_ptr<BaseCommand>& element) { return element.get() == baseCommand; });
+			auto it = std::find_if(value.begin(), value.end(), [&](const std::unique_ptr<BaseCommand>& element) { return element.get() == baseCommand; });
 			if (it != value.end())
 			{
 				value.erase(it);
@@ -96,11 +97,12 @@ namespace engine
 		}
 	}
 
+	//careful! If this gets called while processing input, things will go wrong
 	void InputManager::RemoveCommand(BaseAxisCommand* baseAxisCommand)
 	{
 		for (auto& [key, value] : m_ControllerAxisBindings)
 		{
-			auto it = std::find_if(value.begin(), value.end(), [&](std::unique_ptr<BaseAxisCommand>& element) { return element.get() == baseAxisCommand; });
+			auto it = std::find_if(value.begin(), value.end(), [&](const std::unique_ptr<BaseAxisCommand>& element) { return element.get() == baseAxisCommand; });
 			if (it != value.end())
 			{
 				value.erase(it);

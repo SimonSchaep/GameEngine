@@ -24,6 +24,8 @@ namespace engine
 		void Render()const;
 		void RenderUI();
 
+		void ClearScenes();
+
 		virtual ~SceneManager() override;
 	private:
 		friend class Singleton<SceneManager>;

@@ -45,6 +45,11 @@ namespace engine
 		}
 	}
 
+	void SceneManager::ClearScenes()
+	{
+		m_Scenes.clear();
+	}
+
 	//needs to be here for the unique_ptrs of the scenes to compile
 	SceneManager::~SceneManager() = default;
 	SceneManager::SceneManager() = default;

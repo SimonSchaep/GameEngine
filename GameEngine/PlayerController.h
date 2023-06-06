@@ -9,7 +9,7 @@ namespace engine
 	{
 	public:
 		PlayerController(GameObject* pGameObject) :BaseComponent(pGameObject) {};
-		virtual ~PlayerController() = default;
+		virtual ~PlayerController();
 
 		virtual void Initialize() override {};
 		virtual void Update() override {};
@@ -27,6 +27,10 @@ namespace engine
 	private:
 		int m_ControllerIndex{ -1 };
 		bool m_UseKeyboard{};
+
+		//store so we can remove them when this controller gets destroyed
+		std::vector<BaseCommand*> m_BaseCommands{};
+		std::vector<BaseAxisCommand*> m_BaseAxisCommands{};
 	};
 
 }

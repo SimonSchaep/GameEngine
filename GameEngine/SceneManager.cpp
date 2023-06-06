@@ -62,10 +62,7 @@ namespace engine
 
 			if (m_pActiveScene->GetShouldDestroyAfterDisable())
 			{
-				m_Scenes.erase(std::remove_if(m_Scenes.begin(), m_Scenes.end(), [this](const std::unique_ptr<Scene>& scene)
-					{
-						return scene.get() == m_pActiveScene;
-					}));
+				RemoveScene(m_pActiveScene);
 			}
 		}
 
@@ -115,6 +112,21 @@ namespace engine
 				SetActiveScene(scene.get());
 			}
 		}
+	}
+
+	void SceneManager::RemoveScene(Scene* pScene)
+	{
+		if (m_pActiveScene == pScene)m_pActiveScene = nullptr;
+
+		m_Scenes.erase(std::remove_if(m_Scenes.begin(), m_Scenes.end(), [&](const std::unique_ptr<Scene>& scene)
+			{
+				return scene.get() == pScene;
+			}));
+	}
+
+	void SceneManager::RemoveSceneByName(const std::string& sceneName)
+	{
+		RemoveScene(GetSceneByName(sceneName));
 	}
 	
 	Scene* SceneManager::GetActiveScene()

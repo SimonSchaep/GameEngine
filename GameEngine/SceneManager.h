@@ -4,6 +4,8 @@
 #include <memory>
 #include "Singleton.h"
 
+//todo: implement scene reloading
+
 namespace engine
 {
 
@@ -15,6 +17,9 @@ namespace engine
 		Scene* CreateScene(const std::string& name, bool destroyAfterDisable);
 		void SetActiveScene(Scene* pScene);
 		void SetActiveSceneByName(const std::string& sceneName);
+
+		void RemoveScene(Scene* pScene);
+		void RemoveSceneByName(const std::string& sceneName);
 
 		Scene* GetActiveScene();
 		Scene* GetSceneByName(const std::string& sceneName);

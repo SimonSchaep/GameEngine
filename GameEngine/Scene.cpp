@@ -70,7 +70,7 @@ namespace engine
 	void Scene::Initialize()
 	{
 		if (m_IsInitialized) return;
-		//no range-based for, cause than iterator would get invalidated if gameobjects get added during initailize
+		//no range-based for, cause then iterator would get invalidated if gameobjects get added during initailize
 		for (size_t i{}; i < m_GameObjects.size(); ++i)
 		{
 			m_GameObjects[i]->Initialize();
@@ -102,6 +102,15 @@ namespace engine
 
 		//maybe shoudln't do this every frame, but should be able to change layer at runtime
 		SortGameObjectsByRenderLayer();
+	}
+
+	void Scene::Reset()
+	{
+		//no range-based for, cause then iterator would get invalidated if gameobjects get added during reset
+		for (size_t i{}; i < m_GameObjects.size(); ++i)
+		{
+			m_GameObjects[i]->Reset();
+		}
 	}
 
 	void Scene::RenderUI()

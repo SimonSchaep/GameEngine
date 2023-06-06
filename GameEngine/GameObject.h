@@ -19,6 +19,7 @@ namespace engine
 	public:
 		void Initialize();
 		void Update();
+		void Reset();
 		void Render()const;
 		void RenderUI();
 

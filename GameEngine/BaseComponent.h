@@ -21,6 +21,7 @@ namespace engine
 
 		void InitializeComponent(); //calls Initialize
 		void UpdateComponent(); //calls Update
+		virtual void Reset() {};
 
 		GameObject* GetGameObject()const { return m_pGameObject; };
 		Transform* GetTransform()const;
@@ -33,10 +34,10 @@ namespace engine
 	protected:
 		BaseComponent(GameObject* gameObject);
 
-		virtual void Initialize() = 0;
-		virtual void Update() = 0;
+		virtual void Initialize() {};
+		virtual void Update() {};
 	private:
-		GameObject* m_pGameObject{}; //baseComponent is not the owner of the gameobject. This could be a replacement for the raw pointer: https://en.cppreference.com/w/cpp/experimental/observer_ptr 
+		GameObject* m_pGameObject{};
 
 		bool m_IsMarkedForDeletion{};
 

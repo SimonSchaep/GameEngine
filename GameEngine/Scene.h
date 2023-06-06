@@ -25,6 +25,7 @@ namespace engine
 
 		void Initialize();
 		void Update();
+		void Reset();
 		void Render()const;
 		void RenderUI();
 

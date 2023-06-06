@@ -62,7 +62,7 @@ namespace engine
 	void GameObject::Initialize()
 	{
 		if (m_IsInitialized) return;
-		//no range-based for, cause than iterator would get invalidated if components get added during initailize
+		//no range-based for, cause then iterator would get invalidated if components get added during initailize
 		for (size_t i{}; i < m_Components.size(); ++i)
 		{
 			m_Components[i]->InitializeComponent();
@@ -96,6 +96,15 @@ namespace engine
 			m_Components.erase(std::remove(m_Components.begin(), m_Components.end(), m_Components[m_ToDeleteIndexes[i]]));
 		}
 		m_ToDeleteIndexes.clear();
+	}
+
+	void GameObject::Reset()
+	{
+		//no range-based for, cause then iterator would get invalidated if components get added during initailize
+		for (size_t i{}; i < m_Components.size(); ++i)
+		{
+			m_Components[i]->Reset();
+		}
 	}
 
 	void GameObject::RenderUI()

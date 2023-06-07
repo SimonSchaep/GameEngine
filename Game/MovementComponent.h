@@ -21,17 +21,21 @@ public:
 
 	const glm::vec2& GetCurrentMovementDirection()const { return m_CurrentMovementDirection; }
 
-private:
-	void CheckMoveX();
-	void CheckMoveY();
+	void SetIsEnemy(bool isEnemy) { m_IsEnemy = isEnemy; }
 
 	bool CanMoveUp();
 	bool CanMoveDown();
 	bool CanMoveRight();
 	bool CanMoveLeft();
 
+private:
+	void CheckMoveX();
+	void CheckMoveY();
+
 	void MoveAlongX();
 	void MoveAlongY();
+
+	bool m_IsEnemy{};
 
 	float m_MoveSpeed{};
 	glm::vec2 m_Direction{};

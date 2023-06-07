@@ -14,6 +14,7 @@ class GamePausedState;
 class LeaderboardState;
 
 class MyPlayerController;
+class AIController;
 
 class GameManager final : public engine::BaseComponent
 {
@@ -36,8 +37,9 @@ private:
 	engine::Scene* CreateLevel(int id);
 
 	engine::GameObject* CreateChef(engine::Scene* pScene);
+	engine::GameObject* CreateBean(engine::Scene* pScene);
 	MyPlayerController* CreatePlayerController(engine::Scene* pScene);
-	engine::GameObject* CreateBean(engine::Scene* pScene, bool isPlayer = false);
+	AIController* CreateAIController(engine::Scene* pScene);
 
 	std::unique_ptr<StartMenuState> m_StartMenuState{};
 	std::unique_ptr<GamePlayingState> m_GamePlayingState{};

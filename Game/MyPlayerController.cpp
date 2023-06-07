@@ -47,6 +47,8 @@ void MyPlayerController::Move(const glm::vec2& direction)
 void MyPlayerController::SetControlledObject(engine::GameObject* pControlledObject)
 {
 	m_pControlledMovementComponent = pControlledObject->GetComponent<MovementComponent>();
-	m_pControlledPlayerLivesComponent = pControlledObject->GetComponent<PlayerLives>();
-	m_pControlledPlayerPointsComponent = pControlledObject->GetComponent<PlayerPoints>();
+	if (pControlledObject->HasTag("Enemy"))
+	{
+		m_pControlledMovementComponent->SetIsEnemy(true);
+	}
 }

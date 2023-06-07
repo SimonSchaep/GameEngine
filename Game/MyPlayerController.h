@@ -20,8 +20,6 @@ public:
 
 private:
     engine::ObservingPointer<MovementComponent> m_pControlledMovementComponent;
-    engine::ObservingPointer<PlayerLives> m_pControlledPlayerLivesComponent;
-    engine::ObservingPointer<PlayerPoints> m_pControlledPlayerPointsComponent;
 
 };
 

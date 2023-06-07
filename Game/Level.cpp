@@ -23,22 +23,21 @@ void Level::Initialize()
 	BuildLevel();
 }
 
-bool Level::IsNavigableByPlayer(int row, int col) const
+bool Level::IsNavigable(int row, int col, bool isEnemy) const
 {
 	if (col < 0 || col > m_LevelWidth - 1 || row < 0 || row > m_LevelHeight - 1)
 	{
 		return false;
 	}
-	return m_PlayerNavigableArea[col + row * m_LevelWidth];
-}
 
-bool Level::IsNavigableByEnemy(int row, int col) const
-{
-	if (col < 0 || col > m_LevelWidth - 1 || row < 0 || row > m_LevelHeight - 1)
+	if (isEnemy)
 	{
-		return false;
+		return m_EnemyNavigableArea[col + row * m_LevelWidth];
 	}
-	return m_EnemyNavigableArea[col + row * m_LevelWidth];
+	else
+	{
+		return m_ChefNavigableArea[col + row * m_LevelWidth];
+	}
 }
 
 bool Level::IsInCenterOfElementX(const glm::vec2& pos, int margin) const
@@ -396,7 +395,7 @@ void Level::CreateFoodElement(const glm::vec2 pos, const std::string& textureFil
 
 void Level::GenerateNavigableAreas(const std::vector<LevelElement>& levelElements)
 {
-	m_PlayerNavigableArea.resize(levelElements.size());
+	m_ChefNavigableArea.resize(levelElements.size());
 	m_EnemyNavigableArea.resize(levelElements.size());
 
 	for (int r{}; r < m_LevelHeight; ++r)
@@ -408,7 +407,7 @@ void Level::GenerateNavigableAreas(const std::vector<LevelElement>& levelElement
 			int iNav = GetLevelElementsIndex(r, c);
 			if (levelElements[iLvl].hasLadder)
 			{
-				m_PlayerNavigableArea[iNav] = true;
+				m_ChefNavigableArea[iNav] = true;
 				m_EnemyNavigableArea[iNav] = true;
 			}
 			else if (levelElements[iLvl].eLevelElement != ELevelElement::empty)
@@ -416,7 +415,7 @@ void Level::GenerateNavigableAreas(const std::vector<LevelElement>& levelElement
 				m_EnemyNavigableArea[iNav] = true;
 				if (levelElements[iLvl].eLevelElement != ELevelElement::plate && levelElements[iLvl].eLevelElement != ELevelElement::enemyCheat)
 				{
-					m_PlayerNavigableArea[iNav] = true;
+					m_ChefNavigableArea[iNav] = true;
 				}
 			}
 		}

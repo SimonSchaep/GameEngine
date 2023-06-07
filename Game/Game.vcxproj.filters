@@ -74,6 +74,9 @@
     <ClCompile Include="ChefSpriteController.cpp">
       <Filter>Components\AnimationControllers</Filter>
     </ClCompile>
+    <ClCompile Include="AIController.cpp">
+      <Filter>Components</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="MoveCommands.h">
@@ -132,6 +135,9 @@
     </ClInclude>
     <ClInclude Include="ChefSpriteController.h">
       <Filter>Components\AnimationControllers</Filter>
+    </ClInclude>
+    <ClInclude Include="AIController.h">
+      <Filter>Components</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

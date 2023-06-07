@@ -13,6 +13,7 @@
 #include "ChefSpriteController.h"
 #include <BoxCollider.h>
 #include "MyPlayerController.h"
+#include "AIController.h"
 #include "Level.h"
 #include "InputManager.h"
 #include "MenuCommands.h"
@@ -100,18 +101,23 @@ Scene* GameManager::CreateLevel(int id)
 	pLevelObject->CreateAndAddComponent<Level>("Data/level" + std::to_string(id+1) + ".csv");
 
 	auto pChef = CreateChef(pScene);
-	auto pController = CreatePlayerController(pScene);
+	auto pPlayerController = CreatePlayerController(pScene);
 
-	pController->SetControlledObject(pChef);
-	pController->UseKeyboard(true);
-	pController->UseController(1);
+	pPlayerController->SetControlledObject(pChef);
+	pPlayerController->UseKeyboard(true);
+	pPlayerController->UseController(1);
 
 	pChef = CreateChef(pScene);
-	pController = CreatePlayerController(pScene);
+	pPlayerController = CreatePlayerController(pScene);
 
-	pController->SetControlledObject(pChef);
-	pController->UseKeyboard(false);
-	pController->UseController(0);
+	pPlayerController->SetControlledObject(pChef);
+	pPlayerController->UseKeyboard(false);
+	pPlayerController->UseController(0);
+
+
+	auto pBean = CreateBean(pScene);
+	auto pAIController = CreateAIController(pScene);
+	pAIController->SetControlledObject(pBean);
 
 	return pScene;
 }
@@ -145,6 +151,30 @@ engine::GameObject* GameManager::CreateChef(engine::Scene* pScene)
 	return pChef;
 }
 
+engine::GameObject* GameManager::CreateBean(engine::Scene* pScene)
+{
+	auto pBean = pScene->CreateAndAddGameObject("Bean");
+	pBean->AddTag("Enemy");
+	pBean->GetTransform()->SetLocalPosition({ 96,96 });
+	auto pMovementComponent = pBean->CreateAndAddComponent<MovementComponent>();
+	pMovementComponent->SetMoveSpeed(100);
+
+	//visuals
+	auto pBeanVisuals = pScene->CreateAndAddGameObject("BeanVisuals", pBean);
+	auto pRenderComponent = pBeanVisuals->CreateAndAddComponent<TextureRenderComponent>();
+	pRenderComponent->SetTexture("bean.png");
+	pRenderComponent->SetSize({ 28, 28 });
+	auto width = float(pRenderComponent->GetSize().x);
+	auto height = float(pRenderComponent->GetSize().y);
+	pBeanVisuals->GetTransform()->SetLocalPosition({ -width / 2, -4 });
+
+	//collider
+	auto pBoxCollider = pBean->CreateAndAddComponent<BoxCollider>();
+	pBoxCollider->SetShape({ -width / 2, -8, width, height });
+
+	return pBean;
+}
+
 MyPlayerController* GameManager::CreatePlayerController(engine::Scene* pScene)
 {
 	auto pPlayerControllerObject = pScene->CreateAndAddGameObject();
@@ -152,7 +182,9 @@ MyPlayerController* GameManager::CreatePlayerController(engine::Scene* pScene)
 	return pPlayerController;
 }
 
-engine::GameObject* GameManager::CreateBean(engine::Scene* /*pScene*/, bool /*isPlayer*/)
+AIController* GameManager::CreateAIController(engine::Scene* pScene)
 {
-	return nullptr;
+	auto pAIcontrollerObject = pScene->CreateAndAddGameObject();
+	auto pAIController = pAIcontrollerObject->CreateAndAddComponent<AIController>();
+	return pAIController;
 }

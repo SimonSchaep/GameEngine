@@ -164,7 +164,7 @@ bool MovementComponent::CanMoveUp()
 		return true;
 	}
 	return m_pLevel->IsInCenterOfElementX(transform->GetWorldPosition(), m_CenterMargin)
-		&& m_pLevel->IsNavigableByPlayer(row + 1, col);
+		&& m_pLevel->IsNavigable(row + 1, col, m_IsEnemy);
 }
 
 bool MovementComponent::CanMoveDown()
@@ -179,7 +179,7 @@ bool MovementComponent::CanMoveDown()
 		return true;
 	}
 	return m_pLevel->IsInCenterOfElementX(transform->GetWorldPosition(), m_CenterMargin)
-		&& m_pLevel->IsNavigableByPlayer(row - 1, col);
+		&& m_pLevel->IsNavigable(row - 1, col, m_IsEnemy);
 }
 
 bool MovementComponent::CanMoveRight()
@@ -194,7 +194,7 @@ bool MovementComponent::CanMoveRight()
 		return true;
 	}
 	return m_pLevel->IsInCenterOfElementY(transform->GetWorldPosition(), m_CenterMargin)
-		&& m_pLevel->IsNavigableByPlayer(row, col + 1);
+		&& m_pLevel->IsNavigable(row, col + 1, m_IsEnemy);
 }
 
 bool MovementComponent::CanMoveLeft()
@@ -209,7 +209,7 @@ bool MovementComponent::CanMoveLeft()
 		return true;
 	}
 	return m_pLevel->IsInCenterOfElementY(transform->GetWorldPosition(), m_CenterMargin)
-		&& m_pLevel->IsNavigableByPlayer(row, col - 1);
+		&& m_pLevel->IsNavigable(row, col - 1, m_IsEnemy);
 }
 
 void MovementComponent::MoveAlongX()

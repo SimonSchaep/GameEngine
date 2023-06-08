@@ -23,7 +23,8 @@
 
 
 //todo: write unit tests for this
-//todo: complete this class so it can be used by containers
+//todo: right now the move constructor is too expensive, because doing std::find on a container of observingpointers is 4x (kinda, not measured) as slow as on a container of raw pointers
+//so it's currently not usable for the collision implementation
 
 
 #include "Observer.h"
@@ -42,10 +43,10 @@ namespace engine
         ObservingPointer(T* pObservableObject);
         ~ObservingPointer();
 
-        ObservingPointer(const ObservingPointer& other) = delete;
-        ObservingPointer(ObservingPointer&& other) = delete;
-        ObservingPointer& operator=(const ObservingPointer& other) = delete;
-        ObservingPointer& operator=(ObservingPointer&& other) = delete;
+        ObservingPointer(const ObservingPointer& other) noexcept;
+        ObservingPointer(ObservingPointer&& other) noexcept;
+        ObservingPointer& operator=(const ObservingPointer& other) noexcept;
+        ObservingPointer& operator=(ObservingPointer&& other) noexcept;
 
         ObservingPointer<T>& operator=(T* pObservableObject);
 
@@ -114,6 +115,42 @@ namespace engine
                 m_RawPointer->RemoveObservingPointer(this);
             }
         }
+    }
+
+    template<typename T>
+    ObservingPointer<T>::ObservingPointer(ObservingPointer&& other) noexcept
+        :m_RawPointer{other.Get()}
+    {
+        if (m_RawPointer)
+        {
+            m_RawPointer->AddObservingPointer(this);
+        }
+        other = nullptr; //this will call removeobservingpointer on other
+    }
+
+    template<typename T>
+    ObservingPointer<T>::ObservingPointer(const ObservingPointer& other) noexcept
+        :m_RawPointer{ other.Get() }
+    {
+        if (m_RawPointer)
+        {
+            m_RawPointer->AddObservingPointer(this);
+        }
+    }
+
+    template<typename T>
+    ObservingPointer<T>& ObservingPointer<T>::operator=(ObservingPointer<T>&& other) noexcept
+    {
+        *this = other.Get();
+        other = nullptr; //this will call removeobservingpointer on other
+        return *this;
+    }
+
+    template<typename T>
+    ObservingPointer<T>& ObservingPointer<T>::operator=(const ObservingPointer<T>& other) noexcept
+    {
+        *this = other.Get();
+        return *this;
     }
 
     template <typename T>

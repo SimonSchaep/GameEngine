@@ -28,29 +28,40 @@
 
 #include "Observer.h"
 #include "ObservableObject.h"
+#include <type_traits>
 
 
 namespace engine
 {
     //using pimpl here makes it so you can declare an observingpointer with an incomplete type
     template <typename T>
-    class ObservingPointerImpl final : public Observer<>
+    class ObservingPointer final : public Observer<>
     {
     public:
-        ObservingPointerImpl() = default;
-        ObservingPointerImpl(T* pObservableObject);
-        ~ObservingPointerImpl();
+        ObservingPointer() = default;
+        ObservingPointer(T* pObservableObject);
+        ~ObservingPointer();
 
-        ObservingPointerImpl(const ObservingPointerImpl& other) = delete;
-        ObservingPointerImpl(ObservingPointerImpl&& other) = delete;
-        ObservingPointerImpl& operator=(const ObservingPointerImpl& other) = delete;
-        ObservingPointerImpl& operator=(ObservingPointerImpl&& other) = delete;
+        ObservingPointer(const ObservingPointer& other) = delete;
+        ObservingPointer(ObservingPointer&& other) = delete;
+        ObservingPointer& operator=(const ObservingPointer& other) = delete;
+        ObservingPointer& operator=(ObservingPointer&& other) = delete;
 
-        ObservingPointerImpl<T>& operator=(T* pObservableObject);
+        ObservingPointer<T>& operator=(T* pObservableObject);
 
         T& operator*() { return *m_RawPointer; }
         T* operator->() { return m_RawPointer; }
         operator bool() const { return m_RawPointer; }
+
+        bool operator==(const ObservingPointer<T>& other)
+        {
+            return m_RawPointer == other.m_RawPointer;
+        }
+
+        bool operator!=(const ObservingPointer<T>& other)
+        {
+            return !(*this == other);
+        }
 
         T* Get()const;
 
@@ -60,47 +71,31 @@ namespace engine
         T* m_RawPointer{};
     };
 
-    template <typename T>
-    class ObservingPointer final
+    // Chatgpt wrote this when I asked how to make this template class work with undefined types as template parameters
+    // I don't understand 100% of it
+    // but it comes down to this:
+    // without the constexpr check in the destructor, the compiler needs to know if T can do RemoveObservingPointer
+    // so when T is undefined, it can't know for sure
+    // to fix this
+    // we add a compile-time check with constexpr
+    // if T has checkRemoveObservingPointer(), it will take the first overload and return true_type
+    // otherwise it will take the second overload and return false_type
+    // But then why does this check not need a defined type?
+    // I'm still unsure why this check is only needed in the destructor
+    // maybe because the compiler only needs to know about the destructor when a variable is declared?
+    namespace checks
     {
-    public:
-        ObservingPointer() : m_Impl(new ObservingPointerImpl<T>()) {}
-        ObservingPointer(T* pObservableObject) : m_Impl(new ObservingPointerImpl<T>(pObservableObject)) {}
-        ~ObservingPointer() { delete m_Impl; }
+        template <typename T>
+        auto checkRemoveObservingPointer(T* pObservableObject)
+            -> decltype(pObservableObject->RemoveObservingPointer(std::declval<ObservingPointer<T>*>()), std::true_type{});
 
-        ObservingPointer(const ObservingPointer& other) = delete;
-        ObservingPointer(ObservingPointer&& other) = delete;
-        ObservingPointer& operator=(const ObservingPointer& other) = delete;
-        ObservingPointer& operator=(ObservingPointer&& other) = delete;
-
-        ObservingPointer<T>& operator=(T* pObservableObject)
-        {
-            *m_Impl = pObservableObject;
-            return *this;
-        }
-
-        T& operator*() { return **m_Impl; }
-        T* operator->() { return m_Impl->operator->(); }
-        operator bool() const { return m_Impl->Get(); }
-
-        bool operator==(const ObservingPointer<T>& other)
-        {
-            return Get() == other.Get();
-        }
-
-        bool operator!=(const ObservingPointer<T>& other)
-        {
-            return !(*this == other);
-        }
-
-        T* Get()const { return m_Impl->Get(); }
-
-    private:
-        ObservingPointerImpl<T>* m_Impl;
-    };
+        template <typename T>
+        auto checkRemoveObservingPointer(...)
+            -> std::false_type;
+    }
 
     template <typename T>
-    ObservingPointerImpl<T>::ObservingPointerImpl(T* pObservableObject)
+    ObservingPointer<T>::ObservingPointer(T* pObservableObject)
         : m_RawPointer(pObservableObject)
     {
         if (m_RawPointer)
@@ -110,16 +105,19 @@ namespace engine
     }
 
     template <typename T>
-    ObservingPointerImpl<T>::~ObservingPointerImpl()
+    ObservingPointer<T>::~ObservingPointer()
     {
-        if (m_RawPointer)
+        if constexpr (decltype(checks::checkRemoveObservingPointer<T>(nullptr))::value)
         {
-            m_RawPointer->RemoveObservingPointer(this);
-        }       
+            if (m_RawPointer)
+            {
+                m_RawPointer->RemoveObservingPointer(this);
+            }
+        }
     }
 
     template <typename T>
-    ObservingPointerImpl<T>& ObservingPointerImpl<T>::operator=(T* pObservableObject)
+    ObservingPointer<T>& ObservingPointer<T>::operator=(T* pObservableObject)
     {
         if (m_RawPointer)
         {
@@ -134,13 +132,13 @@ namespace engine
     }
 
     template <typename T>
-    T* ObservingPointerImpl<T>::Get()const
+    T* ObservingPointer<T>::Get()const
     {
         return m_RawPointer;
     }
 
     template <typename T>
-    void ObservingPointerImpl<T>::Notify()
+    void ObservingPointer<T>::Notify()
     {
         m_RawPointer = nullptr;
     }
@@ -148,33 +146,3 @@ namespace engine
 
 
 
-
-
-//WIP
-// 
-//ObservingPointer(const ObservingPointer& other) noexcept
-//{
-//    m_Impl = new ObservingPointerImpl<T>(other.Get());
-//}
-//ObservingPointer(ObservingPointer&& other) noexcept
-//{
-//    m_Impl = new ObservingPointerImpl<T>(std::move(other.Get()));
-//}
-//ObservingPointer& operator=(const ObservingPointer& other) noexcept
-//{
-//    if (this != &other)
-//    {
-//        delete m_Impl;
-//        m_Impl = new ObservingPointerImpl<T>(other.Get());
-//    }
-//    return *this;
-//}
-//ObservingPointer& operator=(ObservingPointer&& other) noexcept
-//{
-//    if (this != &other)
-//    {
-//        delete m_Impl;
-//        m_Impl = new ObservingPointerImpl<T>(std::move(other.Get()));
-//    }
-//    return *this;
-//}

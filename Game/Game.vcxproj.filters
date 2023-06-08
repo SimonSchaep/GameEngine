@@ -23,15 +23,15 @@
     <Filter Include="Components\AnimationControllers">
       <UniqueIdentifier>{a233df35-b072-4fe7-b360-4ab2a9136bcd}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Components\Controllers">
+      <UniqueIdentifier>{62ce2001-4562-4381-a622-43060ffe490f}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="FPSCounter.cpp">
       <Filter>Components</Filter>
     </ClCompile>
     <ClCompile Include="MovementComponent.cpp">
-      <Filter>Components</Filter>
-    </ClCompile>
-    <ClCompile Include="MyPlayerController.cpp">
       <Filter>Components</Filter>
     </ClCompile>
     <ClCompile Include="Main.cpp" />
@@ -75,7 +75,13 @@
       <Filter>Components\AnimationControllers</Filter>
     </ClCompile>
     <ClCompile Include="AIController.cpp">
-      <Filter>Components</Filter>
+      <Filter>Components\Controllers</Filter>
+    </ClCompile>
+    <ClCompile Include="MyPlayerController.cpp">
+      <Filter>Components\Controllers</Filter>
+    </ClCompile>
+    <ClCompile Include="BeanAIController.cpp">
+      <Filter>Components\Controllers</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -86,9 +92,6 @@
       <Filter>Components</Filter>
     </ClInclude>
     <ClInclude Include="MovementComponent.h">
-      <Filter>Components</Filter>
-    </ClInclude>
-    <ClInclude Include="MyPlayerController.h">
       <Filter>Components</Filter>
     </ClInclude>
     <ClInclude Include="LevelParser.h">
@@ -137,7 +140,13 @@
       <Filter>Components\AnimationControllers</Filter>
     </ClInclude>
     <ClInclude Include="AIController.h">
-      <Filter>Components</Filter>
+      <Filter>Components\Controllers</Filter>
+    </ClInclude>
+    <ClInclude Include="MyPlayerController.h">
+      <Filter>Components\Controllers</Filter>
+    </ClInclude>
+    <ClInclude Include="BeanAIController.h">
+      <Filter>Components\Controllers</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

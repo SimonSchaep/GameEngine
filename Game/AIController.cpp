@@ -26,29 +26,17 @@ void AIController::Move(const glm::vec2& direction)
 
 void AIController::SetControlledObject(engine::GameObject* pControlledObject)
 {
-	m_pControlledMovementComponent = pControlledObject->GetComponent<MovementComponent>();
-	if (pControlledObject->HasTag("Enemy"))
+	m_pControlledGameObject = pControlledObject;
+	if (m_pControlledGameObject)
 	{
-		m_pControlledMovementComponent->SetIsEnemy(true);
-	}
+		m_pControlledMovementComponent = m_pControlledGameObject->GetComponent<MovementComponent>();
+		if (m_pControlledMovementComponent && m_pControlledGameObject->HasTag("Enemy"))
+		{
+			m_pControlledMovementComponent->SetIsEnemy(true);
+		}
+	}	
 }
 
 void AIController::ProcessAIDecisions()
 {
-	if (m_pControlledMovementComponent && m_pControlledMovementComponent->CanMoveUp())
-	{
-		MoveUp();
-	}
-	else if (m_pControlledMovementComponent && m_pControlledMovementComponent->CanMoveRight())
-	{
-		MoveRight();
-	}
-	else if (m_pControlledMovementComponent && m_pControlledMovementComponent->CanMoveLeft())
-	{
-		MoveLeft();
-	}
-	else if (m_pControlledMovementComponent && m_pControlledMovementComponent->CanMoveDown())
-	{
-		MoveDown();
-	}
 }

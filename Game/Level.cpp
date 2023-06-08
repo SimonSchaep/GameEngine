@@ -104,9 +104,23 @@ void Level::GetRowColOfPos(const glm::vec2& pos, int& row, int& col) const
 	}
 }
 
+int Level::GetIndexOfPos(const glm::vec2& pos) const
+{
+	int row, col;
+	GetRowColOfPos(pos, row, col);
+	return GetIndexFromRowCol(row, col);
+}
+
 glm::vec2 Level::GetCenterOfCell(int row, int col) const
 {
 	return m_LevelStartPos + glm::vec2{(col + 0.5f) * m_GridElementWidth, (row + 0.5f) * m_GridElementHeight };
+}
+
+glm::vec2 Level::GetCenterOfCell(int index) const
+{
+	int row, col;
+	GetRowColOfIndex(index, row, col);
+	return GetCenterOfCell(row, col);
 }
 
 void Level::BuildLevel()
@@ -144,7 +158,7 @@ void Level::BuildLevel()
 	{
 		for (int c{}; c < m_LevelWidth; ++c)
 		{
-			LevelElement levelElement{ levelElements[GetLevelElementsIndex(r, c)] };
+			LevelElement levelElement{ levelElements[GetIndexFromRowCol(r, c)] };
 
 			if (levelElement.eLevelElement == ELevelElement::empty && !levelElement.hasLadder) continue;
 
@@ -188,7 +202,7 @@ void Level::BuildLevel()
 				hasFoodAbove[c] = true;
 				CreateDarkPlatform(pRenderComponent, pLevelElementGameObject, levelElement.hasLadder);
 
-				if (c == 0 || levelElements[GetLevelElementsIndex(r, c - 1)].eLevelElement != ELevelElement::topbun) //if this is left most element
+				if (c == 0 || levelElements[GetIndexFromRowCol(r, c - 1)].eLevelElement != ELevelElement::topbun) //if this is left most element
 				{
 					SpawnFood(position + foodOffset, levelElements, r, c, ELevelElement::topbun, "topbun");
 				}
@@ -197,7 +211,7 @@ void Level::BuildLevel()
 				hasFoodAbove[c] = true;
 				CreateDarkPlatform(pRenderComponent, pLevelElementGameObject, levelElement.hasLadder);
 
-				if (c == 0 || levelElements[GetLevelElementsIndex(r, c - 1)].eLevelElement != ELevelElement::botbun) //if this is left most element
+				if (c == 0 || levelElements[GetIndexFromRowCol(r, c - 1)].eLevelElement != ELevelElement::botbun) //if this is left most element
 				{
 					SpawnFood(position + foodOffset, levelElements, r, c, ELevelElement::botbun, "botbun");
 				}
@@ -206,7 +220,7 @@ void Level::BuildLevel()
 				hasFoodAbove[c] = true;
 				CreateDarkPlatform(pRenderComponent, pLevelElementGameObject, levelElement.hasLadder);
 
-				if (c == 0 || levelElements[GetLevelElementsIndex(r, c - 1)].eLevelElement != ELevelElement::lettuce) //if this is left most element
+				if (c == 0 || levelElements[GetIndexFromRowCol(r, c - 1)].eLevelElement != ELevelElement::lettuce) //if this is left most element
 				{
 					SpawnFood(position + foodOffset, levelElements, r, c, ELevelElement::lettuce, "lettuce");
 				}
@@ -215,7 +229,7 @@ void Level::BuildLevel()
 				hasFoodAbove[c] = true;
 				CreateDarkPlatform(pRenderComponent, pLevelElementGameObject, levelElement.hasLadder);
 
-				if (c == 0 || levelElements[GetLevelElementsIndex(r, c - 1)].eLevelElement != ELevelElement::meat) //if this is left most element
+				if (c == 0 || levelElements[GetIndexFromRowCol(r, c - 1)].eLevelElement != ELevelElement::meat) //if this is left most element
 				{
 					SpawnFood(position + foodOffset, levelElements, r, c, ELevelElement::meat, "meat");
 				}
@@ -224,7 +238,7 @@ void Level::BuildLevel()
 				hasFoodAbove[c] = true;
 				CreateDarkPlatform(pRenderComponent, pLevelElementGameObject, levelElement.hasLadder);
 
-				if (c == 0 || levelElements[GetLevelElementsIndex(r, c - 1)].eLevelElement != ELevelElement::cheese) //if this is left most element
+				if (c == 0 || levelElements[GetIndexFromRowCol(r, c - 1)].eLevelElement != ELevelElement::cheese) //if this is left most element
 				{
 					SpawnFood(position + foodOffset, levelElements, r, c, ELevelElement::cheese, "cheese");
 				}
@@ -233,7 +247,7 @@ void Level::BuildLevel()
 				hasFoodAbove[c] = true;
 				CreateDarkPlatform(pRenderComponent, pLevelElementGameObject, levelElement.hasLadder);
 
-				if (c == 0 || levelElements[GetLevelElementsIndex(r, c - 1)].eLevelElement != ELevelElement::tomato) //if this is left most element
+				if (c == 0 || levelElements[GetIndexFromRowCol(r, c - 1)].eLevelElement != ELevelElement::tomato) //if this is left most element
 				{
 					SpawnFood(position + foodOffset, levelElements, r, c, ELevelElement::tomato, "tomato");
 				}
@@ -244,7 +258,7 @@ void Level::BuildLevel()
 				{
 					ServiceLocator::GetLogger().LogLine("Plate shouldn't have ladder", LogType::warning);
 				}
-				if (c == 0 || levelElements[GetLevelElementsIndex(r, c - 1)].eLevelElement != ELevelElement::plate) //if this is left most element
+				if (c == 0 || levelElements[GetIndexFromRowCol(r, c - 1)].eLevelElement != ELevelElement::plate) //if this is left most element
 				{
 					SpawnPlate(position, levelElements, r, c);
 				}
@@ -259,9 +273,43 @@ void Level::BuildLevel()
 	ServiceLocator::GetLogger().LogLine(("Building level took: " + std::to_string(duration) + "ms"), LogType::message);
 }
 
-int Level::GetLevelElementsIndex(int row, int col)
+int Level::GetIndexFromRowCol(int row, int col)const
 {
 	return row * m_LevelWidth + col;
+}
+
+void Level::GetRowColOfIndex(int index, int& row, int& col) const
+{
+	row = index / m_LevelWidth;
+	col = index % m_LevelWidth;
+}
+
+std::vector<int> Level::GetAdjacentNavigableTiles(int index, bool isEnemy) const
+{
+	std::vector<int> adjacentTiles{};
+	int row, col;
+	GetRowColOfIndex(index, row, col);
+	//Right
+	if (IsNavigable(row, col + 1, isEnemy))
+	{
+		adjacentTiles.emplace_back(GetIndexFromRowCol(row, col + 1));
+	}
+	//Left
+	if (IsNavigable(row, col - 1, isEnemy))
+	{
+		adjacentTiles.emplace_back(GetIndexFromRowCol(row, col - 1));
+	}
+	//Up
+	if (IsNavigable(row + 1, col, isEnemy))
+	{
+		adjacentTiles.emplace_back(GetIndexFromRowCol(row + 1, col));
+	}
+	//Down
+	if (IsNavigable(row - 1, col, isEnemy))
+	{
+		adjacentTiles.emplace_back(GetIndexFromRowCol(row - 1, col));
+	}
+	return adjacentTiles;
 }
 
 void Level::CreateDarkPlatform(TextureRenderComponent* pRenderComponent, GameObject* pLevelElementGameObject, bool hasLadder)
@@ -285,7 +333,7 @@ void Level::SpawnPlate(glm::vec2 pos, const std::vector<LevelElement>& levelElem
 	auto pScene = GetGameObject()->GetScene();
 	GameObject* pLevelElementGameObject{};
 	TextureRenderComponent* pRenderComponent{};
-	if (col == m_LevelWidth - 1 || levelElements[GetLevelElementsIndex(row, col + 1)].eLevelElement != ELevelElement::plate) //if this is right most element
+	if (col == m_LevelWidth - 1 || levelElements[GetIndexFromRowCol(row, col + 1)].eLevelElement != ELevelElement::plate) //if this is right most element
 	{
 		//put left and 
 		pLevelElementGameObject = pScene->CreateAndAddGameObject();
@@ -308,7 +356,7 @@ void Level::SpawnPlate(glm::vec2 pos, const std::vector<LevelElement>& levelElem
 		auto pBoxCollider = pLevelElementGameObject->CreateAndAddComponent<BoxCollider>();
 		pBoxCollider->SetShape({ 0,0,m_GridElementWidth, m_GridElementHeight/6 });
 
-		while (!(col == m_LevelWidth - 2 || levelElements[GetLevelElementsIndex(row, col + 2)].eLevelElement != ELevelElement::plate)) //while next element is not right most element
+		while (!(col == m_LevelWidth - 2 || levelElements[GetIndexFromRowCol(row, col + 2)].eLevelElement != ELevelElement::plate)) //while next element is not right most element
 		{
 			++col;
 			pos.x += m_GridElementWidth;
@@ -345,7 +393,7 @@ void Level::SpawnFood(glm::vec2 pos, const std::vector<LevelElement>& levelEleme
 	pParentCollider->SetShape({0,0,0,m_GridElementHeight});
 
 	//we know this is left most element
-	if (col == m_LevelWidth - 1 || levelElements[GetLevelElementsIndex(row, col + 1)].eLevelElement != eLevelElement) //if this is also right most element
+	if (col == m_LevelWidth - 1 || levelElements[GetIndexFromRowCol(row, col + 1)].eLevelElement != eLevelElement) //if this is also right most element
 	{
 		CreateFoodElement(pos, name + "left1.png", pFoodParentGameObject, pParentCollider);
 
@@ -359,7 +407,7 @@ void Level::SpawnFood(glm::vec2 pos, const std::vector<LevelElement>& levelEleme
 		pos.x += m_GridElementWidth / 2;
 		CreateFoodElement(pos, name + "left2.png", pFoodParentGameObject, pParentCollider);
 
-		while (!(col == m_LevelWidth - 2 || levelElements[GetLevelElementsIndex(row, col + 2)].eLevelElement != eLevelElement)) //while next element is not right most element
+		while (!(col == m_LevelWidth - 2 || levelElements[GetIndexFromRowCol(row, col + 2)].eLevelElement != eLevelElement)) //while next element is not right most element
 		{
 			++col;
 			pos.x += m_GridElementWidth / 2;
@@ -403,8 +451,8 @@ void Level::GenerateNavigableAreas(const std::vector<LevelElement>& levelElement
 		for (int c{}; c < m_LevelWidth; ++c)
 		{
 			//build navigation from bottom up, since that's how the level is built, levelelements are from bottom down, since that's how the file was read
-			int iLvl = GetLevelElementsIndex(m_LevelHeight - 1 - r, c);
-			int iNav = GetLevelElementsIndex(r, c);
+			int iLvl = GetIndexFromRowCol(m_LevelHeight - 1 - r, c);
+			int iNav = GetIndexFromRowCol(r, c);
 			if (levelElements[iLvl].hasLadder)
 			{
 				m_ChefNavigableArea[iNav] = true;

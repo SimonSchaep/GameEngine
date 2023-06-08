@@ -40,6 +40,24 @@ void engine::FileLogger::LogLine(const std::string& message, LogType logType)
 	if (logType == LogType::debug)return;
 #endif // _DEBUG
 
+	m_OfStream << GetTimeStamp();
+	switch (logType)
+	{
+	case engine::LogType::message:
+		m_OfStream << m_MessagePrefix;
+		break;
+	case engine::LogType::debug:
+		m_OfStream << m_DebugPrefix;
+		break;
+	case engine::LogType::warning:
+		m_OfStream << m_WarningPrefix;
+		break;
+	case engine::LogType::error:
+		m_OfStream << m_ErrorPrefix;
+		break;
+	default:
+		break;
+	}
 	LogText(message, logType);
 
 	m_OfStream << '\n';
@@ -50,16 +68,16 @@ void engine::FileLogger::LogText(const std::string& message, LogType logType)
 	switch (logType)
 	{
 	case engine::LogType::message:
-		m_OfStream << GetTimeStamp() << m_MessagePrefix << message;
+		m_OfStream << message;
 		break;
 	case engine::LogType::debug:
-		m_OfStream << GetTimeStamp() << m_DebugPrefix << message;
+		m_OfStream << message;
 		break;
 	case engine::LogType::warning:
-		m_OfStream << GetTimeStamp() << m_WarningPrefix << message;
+		m_OfStream << message;
 		break;
 	case engine::LogType::error:
-		m_OfStream << GetTimeStamp() << m_ErrorPrefix << message;
+		m_OfStream << message;
 		break;
 	}
 }

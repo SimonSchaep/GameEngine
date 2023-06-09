@@ -29,7 +29,7 @@ namespace engine
 		Transform* GetTransform()const;
 
 		void SetIsActive(bool isActive) { m_IsActive = isActive; }
-		bool IsActive() { return m_IsActive && GetGameObject()->IsActive(); }
+		bool IsActive();
 
 		virtual void OnSceneTransferred() {};
 

@@ -3,6 +3,8 @@
 #include "Structs.h"
 #include "Event.h"
 #include "ObservingPointer.h"
+#include "Observer.h"
+#include "Event.h"
 #include <vector>
 
 //todo: add circle collider
@@ -14,7 +16,7 @@
 
 namespace engine
 {
-	class Collider : public BaseComponent
+	class Collider : public BaseComponent, public Observer<Collider*>
 	{
 	public:
 		enum class TriggerType
@@ -38,8 +40,11 @@ namespace engine
 		virtual bool IsCircleInCollider(const structs::Circle& circle) = 0;
 		virtual void CheckTrigger(Collider* pCollider) = 0;
 
-		void AddCurrentTrigger(Collider* pCollider) { m_CurrentTriggers.emplace_back(pCollider); }
-		void RemoveCurrentTrigger(Collider* pCollider) { m_CurrentTriggers.erase(std::remove(m_CurrentTriggers.begin(), m_CurrentTriggers.end(), pCollider)); }
+		void AddCurrentTrigger(Collider* pCollider);
+		void RemoveCurrentTrigger(Collider* pCollider);
+
+		Event<Collider*>* GetOnDestroyEvent()const { return m_OnDestroyEvent.get(); }
+		virtual void Notify(Collider* pCollider)override;
 
 	protected:
 		std::vector<ObservingPointer<Collider>>& GetCurrentTriggers() { return m_CurrentTriggers; }
@@ -48,6 +53,8 @@ namespace engine
 		std::unique_ptr<Event<TriggerType, Collider*, Collider*>> m_OnTrigger{}; //enter, stay and exit
 
 		std::vector<ObservingPointer<Collider>> m_CurrentTriggers{};
+
+		std::unique_ptr<Event<Collider*>> m_OnDestroyEvent{};
 	};
 }
 

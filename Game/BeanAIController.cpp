@@ -50,7 +50,7 @@ void BeanAIController::SetControlledObject(engine::GameObject* pControlledObject
 void BeanAIController::ProcessAIDecisions()
 {
 	auto& ownPos = GetControlledGameObject()->GetTransform()->GetWorldPosition();
-	auto targetPos = m_pLevel->GetCenterOfCell(m_TargetTile);
+	auto targetTilePos = m_pLevel->GetCenterOfCell(m_TargetTile);
 
 	if (HasReachedTargetTile())
 	{
@@ -59,51 +59,22 @@ void BeanAIController::ProcessAIDecisions()
 
 	const float margin{1};
 
-	if (ownPos.x > targetPos.x + margin)
+	if (ownPos.x > targetTilePos.x + margin)
 	{
 		MoveLeft();
 	}
-	else if (ownPos.x < targetPos.x - margin)
+	else if (ownPos.x < targetTilePos.x - margin)
 	{
 		MoveRight();
 	}
-	if (ownPos.y > targetPos.y + margin)
+	if (ownPos.y > targetTilePos.y + margin)
 	{
 		MoveDown();
 	}
-	else if (ownPos.y < targetPos.y - margin)
+	else if (ownPos.y < targetTilePos.y - margin)
 	{
 		MoveUp();
 	}
-
-	////take ladder if possible
-	//if (m_CurrentDirection.y != -1 && CanMoveUp() && targetPos.y >= ownPos.y)
-	//{
-	//	MoveUp();
-	//	m_CurrentDirection = { 0,1 };
-	//	return;
-	//}
-	//if (m_CurrentDirection.y != 1 && CanMoveDown() && targetPos.y <= ownPos.y)
-	//{
-	//	MoveDown();
-	//	m_CurrentDirection = { 0,-1 };
-	//	return;
-	//}
-
-	//if (m_CurrentDirection.x != -1 && CanMoveRight() && targetPos.x >= ownPos.x)
-	//{
-	//	MoveRight();
-	//	m_CurrentDirection = { 1,0 };
-	//	return;
-	//}
-	//if (m_CurrentDirection.x != 1 && CanMoveLeft() && targetPos.x <= ownPos.x)
-	//{
-	//	MoveLeft();
-	//	m_CurrentDirection = { -1,0 };
-	//	return;
-	//}
-
-	//Move(m_CurrentDirection);
 }
 
 bool BeanAIController::HasReachedTargetTile()
@@ -113,7 +84,7 @@ bool BeanAIController::HasReachedTargetTile()
 		&& m_pLevel->IsInCenterOfElementX(currentPos, 1) && m_pLevel->IsInCenterOfElementY(currentPos, 1);
 }
 
-void BeanAIController::FindNewTargetTile()
+void BeanAIController::FindNewTargetTile() //target tile will be current tile in here, since it gets called after we reach target tile
 {
 	FindClosestTarget();
 	if (!m_CurrentTarget)
@@ -122,7 +93,58 @@ void BeanAIController::FindNewTargetTile()
 		return;
 	}
 
-	int newTargetTile = FindTargetTileAStar();
+	auto adjacentTiles = m_pLevel->GetAdjacentNavigableTiles(m_TargetTile, m_IsEnemy);
+
+	int newTargetTile{-1};
+
+	if (adjacentTiles.size() > 2) //if more than 2 options
+	{
+		//check if should give ladder priority
+		auto ownPos = m_pLevel->GetCenterOfCell(m_TargetTile); //make sure we take the centered pos
+		auto& targetPos = m_CurrentTarget->GetTransform()->GetWorldPosition();
+
+		for (auto tile : adjacentTiles)
+		{
+			if (tile == m_LastTile)continue;
+
+			constexpr float epsilon{ 0.001f };
+			if ((tile - m_TargetTile > 1 && targetPos.y > ownPos.y + epsilon) //if row above and chef above or equal
+				|| (tile - m_TargetTile < -1 && targetPos.y < ownPos.y - epsilon)) //or row below and chef below or equal
+			{
+				//take ladder
+				newTargetTile = tile;
+			}
+		}
+
+		if (newTargetTile == -1) //if no ladder priority given
+		{
+			//do A*
+			newTargetTile = FindTargetTileAStar();
+		}
+	}
+	else if(adjacentTiles.size() >= 1)
+	{
+		if (adjacentTiles.size() == 2) //2 options
+		{
+			//take the one that we don't come from
+			if (adjacentTiles[0] != m_LastTile)
+			{
+				newTargetTile = adjacentTiles[0];
+			}
+			else
+			{
+				newTargetTile = adjacentTiles[1];
+			}
+		}
+		else //only one option, so dead end, so can go back
+		{
+			newTargetTile = adjacentTiles[0];
+		}
+	}
+	else //no adjacent tiles, should not be possible
+	{
+		ServiceLocator::GetLogger().LogLine("No adjacent tiles, this shouldn't be possible", LogType::warning);
+	}
 
 	m_LastTile = m_TargetTile;
 	m_TargetTile = newTargetTile;
@@ -131,7 +153,7 @@ void BeanAIController::FindNewTargetTile()
 //Todo: Can probably still be optimized, but it works for now
 int BeanAIController::FindTargetTileAStar()
 {
-	ServiceLocator::GetLogger().LogLine("Find new path", LogType::debug);
+	//ServiceLocator::GetLogger().LogLine("Find new path", LogType::debug);
 
 	std::deque<std::unique_ptr<AStarTile>> openList{}; //deque so we can add adjacent tiles to front
 	std::vector<std::unique_ptr<AStarTile>> closedList{};
@@ -200,7 +222,7 @@ int BeanAIController::FindTargetTileAStar()
 
 	if (openList.empty())
 	{
-		ServiceLocator::GetLogger().LogLine("No path to current target for bean aicontroller found", LogType::debug);
+		ServiceLocator::GetLogger().LogLine("No path to current target for bean aicontroller found", LogType::warning);
 		return m_TargetTile;
 	}
 	else
@@ -209,9 +231,9 @@ int BeanAIController::FindTargetTileAStar()
 		while (currentTile && currentTile->pPrevTile && currentTile->pPrevTile->tile != m_TargetTile)
 		{
 			currentTile = currentTile->pPrevTile;
-			ServiceLocator::GetLogger().Log(std::to_string(currentTile->tile) + ", ", LogType::debug);
+			//ServiceLocator::GetLogger().Log(std::to_string(currentTile->tile) + ", ", LogType::debug);
 		}
-		ServiceLocator::GetLogger().Log("\n", LogType::debug);
+		//ServiceLocator::GetLogger().Log("\n", LogType::debug);
 		if (!currentTile)
 		{
 			return m_TargetTile;
@@ -225,14 +247,17 @@ int BeanAIController::FindTargetTileAStar()
 
 void BeanAIController::FindClosestTarget()
 {
+	//ServiceLocator::GetLogger().LogLine("Distance:", LogType::debug);
 	float closestDistanceSq{FLT_MAX};
 	for (auto pTarget : m_Targets)
 	{
-		auto distanceSq = utility::DistanceSquared(pTarget->GetTransform()->GetWorldPosition(), GetGameObject()->GetTransform()->GetWorldPosition());
+		auto distanceSq = utility::DistanceSquared(pTarget->GetTransform()->GetWorldPosition(), GetControlledGameObject()->GetTransform()->GetWorldPosition());
+		//ServiceLocator::GetLogger().LogLine(std::to_string(distanceSq), LogType::debug);
 		if (distanceSq < closestDistanceSq)
 		{
 			closestDistanceSq = distanceSq;
 			m_CurrentTarget = pTarget;
 		}
 	}
+	//ServiceLocator::GetLogger().LogLine("Closest distance: " + std::to_string(closestDistanceSq), LogType::debug);
 }

@@ -53,3 +53,8 @@ glm::vec2 engine::SpriteRenderComponent::GetSize()
 	if (m_Size != glm::vec2{ 0,0 }) return m_Size;
 	else return m_Sprite->GetTexture()->GetSize();
 }
+
+bool engine::SpriteRenderComponent::GetIsPaused()
+{
+	return m_Sprite && m_Sprite->GetIsPaused();
+}

@@ -22,6 +22,7 @@ namespace engine
 		void Render(const structs::Rect& dstRect)const;
 
 		void SetIsPaused(bool isPaused) { m_IsPaused = isPaused; }
+		bool GetIsPaused() { return m_IsPaused; }
 
 		void SetFlipX(bool flipX) { m_FlipX = flipX; }
 		void SetFlipY(bool flipY) { m_FlipY = flipY; }

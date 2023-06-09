@@ -26,6 +26,8 @@ namespace engine
 		void SetSize(const glm::vec2& size) { m_Size = size; }
 		glm::vec2 GetSize();
 
+		bool GetIsPaused();
+
 	private:
 		std::shared_ptr<Sprite> m_Sprite{};
 

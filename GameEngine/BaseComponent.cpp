@@ -4,6 +4,10 @@
 
 namespace engine
 {
+	BaseComponent::~BaseComponent()
+	{
+		OnDisable();
+	}
 	void BaseComponent::InitializeComponent()
 	{
 		if (m_IsInitialized) return;
@@ -33,6 +37,7 @@ namespace engine
 	BaseComponent::BaseComponent(GameObject* gameObject)
 		: m_pGameObject{ gameObject }
 	{
+		OnEnable();
 	}
 
 }

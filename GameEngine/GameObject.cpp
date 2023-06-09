@@ -7,8 +7,6 @@
 #include "UIRenderComponent.h"
 #include "SceneManager.h"
 #include <iostream>
-#include "ServiceLocator.h"
-#include "Logger.h"
 
 namespace engine
 {

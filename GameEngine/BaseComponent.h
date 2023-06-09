@@ -11,7 +11,7 @@ namespace engine
 	class BaseComponent : public ObservableObject
 	{
 	public:
-		virtual ~BaseComponent() = default;
+		virtual ~BaseComponent();
 		BaseComponent(const BaseComponent& other) = delete;
 		BaseComponent(BaseComponent&& other) = delete;
 		BaseComponent& operator=(const BaseComponent& other) = delete;

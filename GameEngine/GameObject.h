@@ -6,6 +6,8 @@
 #include "Transform.h"
 #include "BaseComponent.h"
 #include "ObservableObject.h"
+#include "ServiceLocator.h"
+#include "Logger.h"
 
 namespace engine
 {
@@ -136,7 +138,6 @@ namespace engine
 			}
 		}
 		//no Component of specified type was found
-		//todo: add log
 		return nullptr;
 	}
 

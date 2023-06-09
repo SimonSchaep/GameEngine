@@ -6,17 +6,24 @@ engine::Collider::Collider(GameObject* pGameObject)
 {
 	m_OnTrigger = std::make_unique<Event<TriggerType, Collider*, Collider*>>();
 
+	m_OnDestroy = std::make_unique<Event<Collider*>>();
+
 	pGameObject->RegisterCollider(this);
 }
 
 engine::Collider::~Collider()
 {
+	OnDisable(); //make sure it gets called before destroying
 	GetGameObject()->RemoveCollider(this);
-	m_OnDestroyEvent->NotifyObservers(this);
+	m_OnDestroy->NotifyObservers(this);
 }
 
 void engine::Collider::OnDisable()
 {
+	for (auto& trigger : m_CurrentTriggers)
+	{
+		trigger->GetOnDestroyEvent()->RemoveObserver(this);
+	}
 	m_CurrentTriggers.clear();
 }
 

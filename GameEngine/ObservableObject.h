@@ -19,8 +19,8 @@
 //biggest issue here is that almost all classes now derive from observableobject
 
 
-
 #include <vector>
+#include <list>
 #include "Observer.h"
 
 namespace engine
@@ -35,7 +35,7 @@ namespace engine
 		void RemoveObservingPointer(Observer<>* pObservingPointer) { m_ObservingPointers.erase(std::remove(m_ObservingPointers.begin(), m_ObservingPointers.end(), pObservingPointer)); }
 
 	private:
-		std::vector<Observer<>*> m_ObservingPointers{};
+		std::vector<Observer<>*> m_ObservingPointers{}; //list as container cause adding and removing elements needs to be fast
 	};
 }
 

@@ -25,7 +25,7 @@ namespace engine
 	void engine::BoxCollider::CheckTrigger(Collider* pOtherCollider)
 	{
 		auto& currentTriggers = GetCurrentTriggers();
-		//this find is very inefficient
+		//todo: this find is very costly, maybe find another way
 		if (std::find(currentTriggers.begin(), currentTriggers.end(), pOtherCollider) != currentTriggers.end()) //if we triggered previous frame
 		{
 			if (pOtherCollider->IsRectInCollider(GetShapeInWorld())) //and we are still triggering

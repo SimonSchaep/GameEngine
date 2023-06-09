@@ -23,8 +23,7 @@
 
 
 //todo: write unit tests for this
-//todo: right now the move constructor is too expensive, because doing std::find on a container of observingpointers is 4x (kinda, not measured) as slow as on a container of raw pointers
-//so it's currently not usable for the collision implementation
+//todo: right now adding and removing is expensive, cause there is an empla
 
 
 #include "Observer.h"
@@ -53,16 +52,6 @@ namespace engine
         T& operator*() { return *m_RawPointer; }
         T* operator->() { return m_RawPointer; }
         operator bool() const { return m_RawPointer; }
-
-        bool operator==(const ObservingPointer<T>& other)
-        {
-            return m_RawPointer == other.m_RawPointer;
-        }
-
-        bool operator!=(const ObservingPointer<T>& other)
-        {
-            return !(*this == other);
-        }
 
         T* Get()const;
 
@@ -119,13 +108,12 @@ namespace engine
 
     template<typename T>
     ObservingPointer<T>::ObservingPointer(ObservingPointer&& other) noexcept
-        :m_RawPointer{other.Get()}
+        :m_RawPointer{std::move(other.Get())}
     {
         if (m_RawPointer)
         {
             m_RawPointer->AddObservingPointer(this);
         }
-        other = nullptr; //this will call removeobservingpointer on other
     }
 
     template<typename T>
@@ -141,8 +129,7 @@ namespace engine
     template<typename T>
     ObservingPointer<T>& ObservingPointer<T>::operator=(ObservingPointer<T>&& other) noexcept
     {
-        *this = other.Get();
-        other = nullptr; //this will call removeobservingpointer on other
+        *this = std::move(other.Get());
         return *this;
     }
 
@@ -178,6 +165,61 @@ namespace engine
     void ObservingPointer<T>::Notify()
     {
         m_RawPointer = nullptr;
+    }
+
+    //Comparison operators, based on: https://en.cppreference.com/w/cpp/memory/shared_ptr/operator_cmp
+    template<typename T, typename U>
+    bool operator==(const ObservingPointer<T>& lhs, const ObservingPointer<U>& rhs) noexcept
+    {
+        return lhs.Get() == rhs.Get();
+    }
+    template<typename T, typename U>
+    bool operator!=(const ObservingPointer<T>& lhs, const ObservingPointer<U>& rhs) noexcept
+    {
+        return !(lhs == rhs);
+    }
+
+    template<typename T>
+    bool operator==(const ObservingPointer<T>& lhs, const T* rhs) noexcept
+    {
+        return lhs.Get() == rhs;
+    }
+    template<typename T>
+    bool operator!=(const ObservingPointer<T>& lhs, const T* rhs) noexcept
+    {
+        return !(lhs == rhs);
+    }
+
+    template<typename T>
+    bool operator==(const T* lhs, const ObservingPointer<T>& rhs) noexcept
+    {
+        return lhs == rhs.Get();
+    }
+    template<typename T>
+    bool operator!=(const T* lhs, const ObservingPointer<T>& rhs) noexcept
+    {
+        return !(lhs == rhs);
+    }
+
+    template<typename T>
+    bool operator==(const ObservingPointer<T>& lhs, std::nullptr_t) noexcept
+    {
+        return !lhs;
+    }
+    template<typename T>
+    bool operator==(std::nullptr_t, const ObservingPointer<T>& rhs) noexcept
+    {
+        return !rhs;
+    }
+    template<typename T>
+    bool operator!=(const ObservingPointer<T>& lhs, std::nullptr_t) noexcept
+    {
+        return (bool)lhs;
+    }
+    template<typename T>
+    bool operator!=(std::nullptr_t, const ObservingPointer<T>& rhs) noexcept
+    {
+        return (bool)rhs;
     }
 }
 

@@ -151,11 +151,31 @@ namespace engine
 	void GameObject::MarkForDeletion(bool includeChildren)
 	{
 		m_IsMarkedForDeletion = true;
+
 		if (includeChildren)
 		{
 			for (auto pChild : m_Children)
 			{
 				pChild->MarkForDeletion(includeChildren);
+			}
+		}
+	}
+
+	void GameObject::SetIsActive(bool isActive)
+	{
+		if (m_IsActive == isActive) return;
+
+		m_IsActive = isActive;
+
+		for (auto& component : m_Components)
+		{
+			if (isActive)
+			{
+				component->OnEnable();
+			}
+			else
+			{
+				component->OnDisable();
 			}
 		}
 	}

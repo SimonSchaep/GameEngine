@@ -38,8 +38,8 @@ namespace engine
 		void MarkForDeletion(bool includeChildren);
 		bool IsMarkedForDeletion() { return m_IsMarkedForDeletion; }
 
-		void SetIsActive(bool isActive) { m_IsActive = isActive; }
-		bool IsActive() { return m_IsActive && (!m_pParent || m_pParent->IsActive()); } //if all in hierarchy above is active, return true. Here it would be easier if a gameobject owns its children
+		void SetIsActive(bool isActive);
+		bool IsActive() { return m_IsActive && (!m_pParent || m_pParent->IsActive()); }
 
 		//PARENT/CHILDREN
 		void SetParent(GameObject* pParent, bool keepWorldPosition);

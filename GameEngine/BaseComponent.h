@@ -22,6 +22,8 @@ namespace engine
 		void InitializeComponent(); //calls Initialize
 		void UpdateComponent(); //calls Update
 		virtual void Reset() {};
+		virtual void OnEnable() {};
+		virtual void OnDisable() {};
 
 		GameObject* GetGameObject()const { return m_pGameObject; };
 		Transform* GetTransform()const;

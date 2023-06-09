@@ -13,3 +13,8 @@ engine::Collider::~Collider()
 {
 	GetGameObject()->RemoveCollider(this);
 }
+
+void engine::Collider::OnDisable()
+{
+	m_CurrentTriggers.clear();
+}

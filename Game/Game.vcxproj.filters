@@ -26,6 +26,9 @@
     <Filter Include="Components\Controllers">
       <UniqueIdentifier>{62ce2001-4562-4381-a622-43060ffe490f}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Components\Pepper">
+      <UniqueIdentifier>{58cb474d-86f7-4ab3-b591-060a3dd5f354}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="FPSCounter.cpp">
@@ -81,6 +84,15 @@
       <Filter>Components\Controllers</Filter>
     </ClCompile>
     <ClCompile Include="BeanAIController.cpp">
+      <Filter>Components\Controllers</Filter>
+    </ClCompile>
+    <ClCompile Include="ThrowPepperComponent.cpp">
+      <Filter>Components\Pepper</Filter>
+    </ClCompile>
+    <ClCompile Include="LifeTimer.cpp">
+      <Filter>Components</Filter>
+    </ClCompile>
+    <ClCompile Include="ChefPlayerController.cpp">
       <Filter>Components\Controllers</Filter>
     </ClCompile>
   </ItemGroup>
@@ -147,6 +159,18 @@
     </ClInclude>
     <ClInclude Include="BeanAIController.h">
       <Filter>Components\Controllers</Filter>
+    </ClInclude>
+    <ClInclude Include="ThrowPepperComponent.h">
+      <Filter>Components\Pepper</Filter>
+    </ClInclude>
+    <ClInclude Include="LifeTimer.h">
+      <Filter>Components</Filter>
+    </ClInclude>
+    <ClInclude Include="ChefPlayerController.h">
+      <Filter>Components\Controllers</Filter>
+    </ClInclude>
+    <ClInclude Include="ThrowPepperCommand.h">
+      <Filter>Commands</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

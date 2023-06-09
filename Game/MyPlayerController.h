@@ -16,7 +16,10 @@ public:
 
     void Move(const glm::vec2& direction);
 
-    void SetControlledObject(engine::GameObject* pControlledObject);
+    virtual void SetControlledObject(engine::GameObject* pControlledObject);
+
+protected:
+    MovementComponent* GetMovementComponent()const { return m_pControlledMovementComponent.Get(); }
 
 private:
     engine::ObservingPointer<MovementComponent> m_pControlledMovementComponent;

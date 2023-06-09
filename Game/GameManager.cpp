@@ -13,11 +13,13 @@
 #include "ChefSpriteController.h"
 #include <BoxCollider.h>
 #include "MyPlayerController.h"
+#include "ChefPlayerController.h"
 #include "AIController.h"
 #include "BeanAIController.h"
 #include "Level.h"
 #include "InputManager.h"
 #include "MenuCommands.h"
+#include "ThrowPepperComponent.h"
 
 using namespace engine;
 
@@ -102,14 +104,14 @@ Scene* GameManager::CreateLevel(int id)
 	pLevelObject->CreateAndAddComponent<Level>("Data/level" + std::to_string(id+1) + ".csv");
 
 	auto pChef1 = CreateChef(pScene);
-	auto pPlayerController = CreatePlayerController(pScene);
+	auto pPlayerController = CreateChefPlayerController(pScene);
 
 	pPlayerController->SetControlledObject(pChef1);
 	pPlayerController->UseKeyboard(true);
 	pPlayerController->UseController(1);
 
 	auto pChef2 = CreateChef(pScene);
-	pPlayerController = CreatePlayerController(pScene);
+	pPlayerController = CreateChefPlayerController(pScene);
 
 	pPlayerController->SetControlledObject(pChef2);
 	pPlayerController->UseKeyboard(false);
@@ -130,6 +132,7 @@ engine::GameObject* GameManager::CreateChef(engine::Scene* pScene)
 	auto pChef = pScene->CreateAndAddGameObject("Chef");
 	pChef->AddTag("Chef");
 	pChef->GetTransform()->SetLocalPosition({ 96,596 });
+	pChef->CreateAndAddComponent<ThrowPepperComponent>(5);
 	auto pMovementComponent = pChef->CreateAndAddComponent<MovementComponent>();
 	pMovementComponent->SetMoveSpeed(150);
 	auto pPlayerLives = pChef->CreateAndAddComponent<PlayerLives>();
@@ -179,10 +182,10 @@ engine::GameObject* GameManager::CreateBean(engine::Scene* pScene)
 	return pBean;
 }
 
-MyPlayerController* GameManager::CreatePlayerController(engine::Scene* pScene)
+ChefPlayerController* GameManager::CreateChefPlayerController(engine::Scene* pScene)
 {
 	auto pPlayerControllerObject = pScene->CreateAndAddGameObject();
-	auto pPlayerController = pPlayerControllerObject->CreateAndAddComponent<MyPlayerController>();
+	auto pPlayerController = pPlayerControllerObject->CreateAndAddComponent<ChefPlayerController>();
 	return pPlayerController;
 }
 

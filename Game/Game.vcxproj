@@ -189,6 +189,7 @@ xcopy "$(SolutionDir)Data\" "$(ProjectDir)Data\" /Y</Command>
   <ItemGroup>
     <ClCompile Include="AIController.cpp" />
     <ClCompile Include="BeanAIController.cpp" />
+    <ClCompile Include="ChefPlayerController.cpp" />
     <ClCompile Include="ChefSpriteController.cpp" />
     <ClCompile Include="ControlsDisplay.cpp" />
     <ClCompile Include="DestroyComponent.cpp" />
@@ -201,15 +202,18 @@ xcopy "$(SolutionDir)Data\" "$(ProjectDir)Data\" /Y</Command>
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="MovementComponent.cpp" />
     <ClCompile Include="MyPlayerController.cpp" />
+    <ClCompile Include="LifeTimer.cpp" />
     <ClCompile Include="PlayerLives.cpp" />
     <ClCompile Include="PlayerPoints.cpp" />
     <ClCompile Include="PointsDisplay.cpp" />
     <ClCompile Include="RotateComponent.cpp" />
+    <ClCompile Include="ThrowPepperComponent.cpp" />
     <ClCompile Include="TrashTheCacheComponent.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AIController.h" />
     <ClInclude Include="BeanAIController.h" />
+    <ClInclude Include="ChefPlayerController.h" />
     <ClInclude Include="ChefSpriteController.h" />
     <ClInclude Include="ControlsDisplay.h" />
     <ClInclude Include="DestroyComponent.h" />
@@ -224,10 +228,13 @@ xcopy "$(SolutionDir)Data\" "$(ProjectDir)Data\" /Y</Command>
     <ClInclude Include="MoveCommands.h" />
     <ClInclude Include="MovementComponent.h" />
     <ClInclude Include="MyPlayerController.h" />
+    <ClInclude Include="LifeTimer.h" />
     <ClInclude Include="PlayerLives.h" />
     <ClInclude Include="PlayerPoints.h" />
     <ClInclude Include="PointsDisplay.h" />
     <ClInclude Include="RotateComponent.h" />
+    <ClInclude Include="ThrowPepperCommand.h" />
+    <ClInclude Include="ThrowPepperComponent.h" />
     <ClInclude Include="TrashTheCacheComponent.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

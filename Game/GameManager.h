@@ -14,6 +14,7 @@ class GamePausedState;
 class LeaderboardState;
 
 class MyPlayerController;
+class ChefPlayerController;
 class AIController;
 class BeanAIController;
 
@@ -39,7 +40,7 @@ private:
 
 	engine::GameObject* CreateChef(engine::Scene* pScene);
 	engine::GameObject* CreateBean(engine::Scene* pScene);
-	MyPlayerController* CreatePlayerController(engine::Scene* pScene);
+	ChefPlayerController* CreateChefPlayerController(engine::Scene* pScene);
 	BeanAIController* CreateBeanAIController(engine::Scene* pScene);
 
 	std::unique_ptr<StartMenuState> m_StartMenuState{};

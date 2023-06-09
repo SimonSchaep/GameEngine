@@ -40,6 +40,12 @@ void engine::ConsoleLogger::LogLine(const std::string& message, LogType logType)
 	if (logType == LogType::debug)return;
 #endif // _DEBUG
 
+	if (message == "")
+	{
+		std::cout << '\n';
+		return;
+	}
+
 	HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
 
 	std::cout << GetTimeStamp();

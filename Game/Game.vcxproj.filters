@@ -29,6 +29,9 @@
     <Filter Include="Components\Pepper">
       <UniqueIdentifier>{58cb474d-86f7-4ab3-b591-060a3dd5f354}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Components\Enemies">
+      <UniqueIdentifier>{42c06ba6-543a-44b3-985b-77e9afa8c555}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="FPSCounter.cpp">
@@ -94,6 +97,21 @@
     </ClCompile>
     <ClCompile Include="ChefPlayerController.cpp">
       <Filter>Components\Controllers</Filter>
+    </ClCompile>
+    <ClCompile Include="EnemyLogic.cpp">
+      <Filter>Components\Enemies</Filter>
+    </ClCompile>
+    <ClCompile Include="EnemySpriteController.cpp">
+      <Filter>Components\AnimationControllers</Filter>
+    </ClCompile>
+    <ClCompile Include="BeanSpriteController.cpp">
+      <Filter>Components\AnimationControllers</Filter>
+    </ClCompile>
+    <ClCompile Include="PickleSpriteController.cpp">
+      <Filter>Components\AnimationControllers</Filter>
+    </ClCompile>
+    <ClCompile Include="EggSpriteController.cpp">
+      <Filter>Components\AnimationControllers</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -171,6 +189,21 @@
     </ClInclude>
     <ClInclude Include="ThrowPepperCommand.h">
       <Filter>Commands</Filter>
+    </ClInclude>
+    <ClInclude Include="EnemyLogic.h">
+      <Filter>Components\Enemies</Filter>
+    </ClInclude>
+    <ClInclude Include="EnemySpriteController.h">
+      <Filter>Components\AnimationControllers</Filter>
+    </ClInclude>
+    <ClInclude Include="BeanSpriteController.h">
+      <Filter>Components\AnimationControllers</Filter>
+    </ClInclude>
+    <ClInclude Include="EggSpriteController.h">
+      <Filter>Components\AnimationControllers</Filter>
+    </ClInclude>
+    <ClInclude Include="PickleSpriteController.h">
+      <Filter>Components\AnimationControllers</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

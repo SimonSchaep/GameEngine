@@ -35,6 +35,7 @@ void engine::SpriteStateMachineComponent::EvaluateStates()
 	auto newState = m_CurrentState->EvaluateConnections();
 	if (newState) //might be good to replace with a while loop to keep checking connections of newer states
 	{
+		//ServiceLocator::GetLogger().LogLine("Switch state", LogType::debug);
 		m_CurrentState = newState;
 		m_pSpriteRenderComponent->SetSprite(m_CurrentState->GetSprite());
 	}

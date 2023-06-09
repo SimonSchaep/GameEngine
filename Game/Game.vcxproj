@@ -189,10 +189,14 @@ xcopy "$(SolutionDir)Data\" "$(ProjectDir)Data\" /Y</Command>
   <ItemGroup>
     <ClCompile Include="AIController.cpp" />
     <ClCompile Include="BeanAIController.cpp" />
+    <ClCompile Include="BeanSpriteController.cpp" />
     <ClCompile Include="ChefPlayerController.cpp" />
     <ClCompile Include="ChefSpriteController.cpp" />
     <ClCompile Include="ControlsDisplay.cpp" />
     <ClCompile Include="DestroyComponent.cpp" />
+    <ClCompile Include="EggSpriteController.cpp" />
+    <ClCompile Include="EnemyLogic.cpp" />
+    <ClCompile Include="EnemySpriteController.cpp" />
     <ClCompile Include="FoodParent.cpp" />
     <ClCompile Include="FPSCounter.cpp" />
     <ClCompile Include="GameManager.cpp" />
@@ -203,6 +207,7 @@ xcopy "$(SolutionDir)Data\" "$(ProjectDir)Data\" /Y</Command>
     <ClCompile Include="MovementComponent.cpp" />
     <ClCompile Include="MyPlayerController.cpp" />
     <ClCompile Include="LifeTimer.cpp" />
+    <ClCompile Include="PickleSpriteController.cpp" />
     <ClCompile Include="PlayerLives.cpp" />
     <ClCompile Include="PlayerPoints.cpp" />
     <ClCompile Include="PointsDisplay.cpp" />
@@ -213,10 +218,14 @@ xcopy "$(SolutionDir)Data\" "$(ProjectDir)Data\" /Y</Command>
   <ItemGroup>
     <ClInclude Include="AIController.h" />
     <ClInclude Include="BeanAIController.h" />
+    <ClInclude Include="BeanSpriteController.h" />
     <ClInclude Include="ChefPlayerController.h" />
     <ClInclude Include="ChefSpriteController.h" />
     <ClInclude Include="ControlsDisplay.h" />
     <ClInclude Include="DestroyComponent.h" />
+    <ClInclude Include="EggSpriteController.h" />
+    <ClInclude Include="EnemyLogic.h" />
+    <ClInclude Include="EnemySpriteController.h" />
     <ClInclude Include="FoodParent.h" />
     <ClInclude Include="FPSCounter.h" />
     <ClInclude Include="GameManager.h" />
@@ -229,6 +238,7 @@ xcopy "$(SolutionDir)Data\" "$(ProjectDir)Data\" /Y</Command>
     <ClInclude Include="MovementComponent.h" />
     <ClInclude Include="MyPlayerController.h" />
     <ClInclude Include="LifeTimer.h" />
+    <ClInclude Include="PickleSpriteController.h" />
     <ClInclude Include="PlayerLives.h" />
     <ClInclude Include="PlayerPoints.h" />
     <ClInclude Include="PointsDisplay.h" />

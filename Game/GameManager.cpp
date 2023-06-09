@@ -20,6 +20,9 @@
 #include "InputManager.h"
 #include "MenuCommands.h"
 #include "ThrowPepperComponent.h"
+#include "BeanSpriteController.h"
+#include "EggSpriteController.h"
+#include "PickleSpriteController.h"
 
 using namespace engine;
 
@@ -167,13 +170,14 @@ engine::GameObject* GameManager::CreateBean(engine::Scene* pScene)
 
 	//visuals
 	auto pBeanVisuals = pScene->CreateAndAddGameObject("BeanVisuals", pBean);
-	auto pRenderComponent = pBeanVisuals->CreateAndAddComponent<TextureRenderComponent>();
-	pRenderComponent->SetTexture("bean.png");
+	auto pRenderComponent = pBeanVisuals->CreateAndAddComponent<SpriteRenderComponent>();
 	pRenderComponent->SetSize({ 28, 28 });
-	pRenderComponent->SetLayer(1);
-	auto width = float(pRenderComponent->GetSize().x);
-	auto height = float(pRenderComponent->GetSize().y);
-	pBeanVisuals->GetTransform()->SetLocalPosition({ -width / 2, -4 });
+
+	pBeanVisuals->CreateAndAddComponent<PickleSpriteController>();
+
+	float width = float(pRenderComponent->GetSize().x);
+	float height = float(pRenderComponent->GetSize().y);
+	pBeanVisuals->GetTransform()->SetLocalPosition({ -width / 2, -8 });
 
 	//collider
 	auto pBoxCollider = pBean->CreateAndAddComponent<BoxCollider>();

@@ -6,6 +6,7 @@ namespace engine
 {
 	class GameObject;
 	class Transform;
+	class Scene;
 
 	class BaseComponent : public ObservableObject
 	{
@@ -27,6 +28,7 @@ namespace engine
 
 		GameObject* GetGameObject()const { return m_pGameObject; };
 		Transform* GetTransform()const;
+		Scene* GetScene()const;
 
 		void SetIsActive(bool isActive) { m_IsActive = isActive; }
 		bool IsActive();

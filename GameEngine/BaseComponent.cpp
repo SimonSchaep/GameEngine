@@ -22,6 +22,10 @@ namespace engine
 	{
 		return GetGameObject()->GetTransform();
 	}
+	Scene* BaseComponent::GetScene() const
+	{
+		return GetGameObject()->GetScene();
+	}
 	bool BaseComponent::IsActive()
 	{
 		return m_IsActive && GetGameObject()->IsActive();

@@ -1,4 +1,4 @@
-#include "BeanAIController.h"
+#include "EnemyAIController.h"
 #include "GameObject.h"
 #include "Utility.h"
 #include "ServiceLocator.h"
@@ -9,7 +9,7 @@
 
 using namespace engine;
 
-void BeanAIController::SetTargets(std::vector<engine::GameObject*> targets)
+void EnemyAIController::SetTargets(std::vector<engine::GameObject*> targets)
 {
 	m_Targets.clear();
 	for (auto pTarget : targets)
@@ -18,12 +18,12 @@ void BeanAIController::SetTargets(std::vector<engine::GameObject*> targets)
 	}
 }
 
-void BeanAIController::AddTarget(engine::GameObject* pTarget)
+void EnemyAIController::AddTarget(engine::GameObject* pTarget)
 {
 	m_Targets.emplace_back(pTarget);
 }
 
-void BeanAIController::Initialize()
+void EnemyAIController::Initialize()
 {
 	m_pLevel = GetControlledGameObject()->GetScene()->FindGameObjectByName("Level")->GetComponent<Level>();
 	if (!m_pLevel)
@@ -35,7 +35,7 @@ void BeanAIController::Initialize()
 	m_TargetTile = m_pLevel->GetIndexOfPos(GetControlledGameObject()->GetTransform()->GetWorldPosition());
 }
 
-void BeanAIController::SetControlledObject(engine::GameObject* pControlledObject)
+void EnemyAIController::SetControlledObject(engine::GameObject* pControlledObject)
 {
 	AIController::SetControlledObject(pControlledObject);
 
@@ -47,7 +47,7 @@ void BeanAIController::SetControlledObject(engine::GameObject* pControlledObject
 	}
 }
 
-void BeanAIController::ProcessAIDecisions()
+void EnemyAIController::ProcessAIDecisions()
 {
 	auto& ownPos = GetControlledGameObject()->GetTransform()->GetWorldPosition();
 	auto targetTilePos = m_pLevel->GetCenterOfCell(m_TargetTile);
@@ -77,19 +77,19 @@ void BeanAIController::ProcessAIDecisions()
 	}
 }
 
-bool BeanAIController::HasReachedTargetTile()
+bool EnemyAIController::HasReachedTargetTile()
 {
 	auto& currentPos = GetControlledGameObject()->GetTransform()->GetWorldPosition();
 	return m_pLevel->GetIndexOfPos(currentPos) == m_TargetTile
 		&& m_pLevel->IsInCenterOfElementX(currentPos, 1) && m_pLevel->IsInCenterOfElementY(currentPos, 1);
 }
 
-void BeanAIController::FindNewTargetTile() //target tile will be current tile in here, since it gets called after we reach target tile
+void EnemyAIController::FindNewTargetTile() //target tile will be current tile in here, since it gets called after we reach target tile
 {
 	FindClosestTarget();
 	if (!m_CurrentTarget)
 	{
-		ServiceLocator::GetLogger().LogLine("No target assigned to beanaicontroller", LogType::debug);
+		ServiceLocator::GetLogger().LogLine("No target assigned to enemyaicontroller", LogType::debug);
 		return;
 	}
 
@@ -151,7 +151,7 @@ void BeanAIController::FindNewTargetTile() //target tile will be current tile in
 }
 
 //Todo: Can probably still be optimized, but it works for now
-int BeanAIController::FindTargetTileAStar()
+int EnemyAIController::FindTargetTileAStar()
 {
 	//ServiceLocator::GetLogger().LogLine("Find new path", LogType::debug);
 
@@ -222,7 +222,7 @@ int BeanAIController::FindTargetTileAStar()
 
 	if (openList.empty())
 	{
-		ServiceLocator::GetLogger().LogLine("No path to current target for bean aicontroller found", LogType::warning);
+		ServiceLocator::GetLogger().LogLine("No path to current target for enemy aicontroller found", LogType::warning);
 		return m_TargetTile;
 	}
 	else
@@ -245,7 +245,7 @@ int BeanAIController::FindTargetTileAStar()
 	}
 }
 
-void BeanAIController::FindClosestTarget()
+void EnemyAIController::FindClosestTarget()
 {
 	//ServiceLocator::GetLogger().LogLine("Distance:", LogType::debug);
 	float closestDistanceSq{FLT_MAX};

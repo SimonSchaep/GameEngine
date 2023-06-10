@@ -4,10 +4,10 @@
 
 
 
-class BeanAIController final : public AIController
+class EnemyAIController final : public AIController
 {
 public:
-	BeanAIController(engine::GameObject* pGameObject) : AIController(pGameObject) {};
+	EnemyAIController(engine::GameObject* pGameObject) : AIController(pGameObject) {};
 
 	void SetTargets(std::vector<engine::GameObject*> targets);
 	void AddTarget(engine::GameObject* pTarget);

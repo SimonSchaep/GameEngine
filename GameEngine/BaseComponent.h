@@ -1,6 +1,7 @@
 #pragma once
 #include <memory>
 #include "ObservableObject.h"
+#include <string>
 
 namespace engine
 {
@@ -31,6 +32,7 @@ namespace engine
 		GameObject* GetGameObject()const { return m_pGameObject; };
 		Transform* GetTransform()const;
 		Scene* GetScene()const;
+		bool HasTag(const std::string& tag)const;
 
 		void SetIsActive(bool isActive) { m_IsActive = isActive; }
 		bool IsActive();

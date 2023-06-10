@@ -15,14 +15,16 @@
 #include "MyPlayerController.h"
 #include "ChefPlayerController.h"
 #include "AIController.h"
-#include "BeanAIController.h"
+#include "EnemyAIController.h"
 #include "Level.h"
 #include "InputManager.h"
 #include "MenuCommands.h"
 #include "ThrowPepperComponent.h"
-#include "BeanSpriteController.h"
+#include "HotdogSpriteController.h"
 #include "EggSpriteController.h"
 #include "PickleSpriteController.h"
+#include "ChefLogic.h"
+#include "EnemyLogic.h"
 
 using namespace engine;
 
@@ -121,9 +123,9 @@ Scene* GameManager::CreateLevel(int id)
 	pPlayerController->UseController(0);
 
 
-	auto pBean = CreateBean(pScene);
-	auto pAIController = CreateBeanAIController(pScene);
-	pAIController->SetControlledObject(pBean);
+	auto pHotdog = CreateHotdog(pScene);
+	auto pAIController = CreateEnemyAIController(pScene);
+	pAIController->SetControlledObject(pHotdog);
 	pAIController->AddTarget(pChef1);
 	pAIController->AddTarget(pChef2);
 
@@ -141,6 +143,7 @@ engine::GameObject* GameManager::CreateChef(engine::Scene* pScene)
 	auto pPlayerLives = pChef->CreateAndAddComponent<PlayerLives>();
 	pPlayerLives->SetMaxLives(5);
 	pChef->CreateAndAddComponent<PlayerPoints>();
+	pChef->CreateAndAddComponent<ChefLogic>();
 
 	//visuals
 	auto pChefVisuals = pScene->CreateAndAddGameObject("ChefVisuals", pChef);
@@ -160,30 +163,31 @@ engine::GameObject* GameManager::CreateChef(engine::Scene* pScene)
 	return pChef;
 }
 
-engine::GameObject* GameManager::CreateBean(engine::Scene* pScene)
+engine::GameObject* GameManager::CreateHotdog(engine::Scene* pScene)
 {
-	auto pBean = pScene->CreateAndAddGameObject("Bean");
-	pBean->AddTag("Enemy");
-	pBean->GetTransform()->SetLocalPosition({ 288,76 });
-	auto pMovementComponent = pBean->CreateAndAddComponent<MovementComponent>();
+	auto pHotdog = pScene->CreateAndAddGameObject("Hotdog");
+	pHotdog->AddTag("Enemy");
+	pHotdog->GetTransform()->SetLocalPosition({ 288,76 });
+	auto pMovementComponent = pHotdog->CreateAndAddComponent<MovementComponent>();
 	pMovementComponent->SetMoveSpeed(100);
+	pHotdog->CreateAndAddComponent<EnemyLogic>();
 
 	//visuals
-	auto pBeanVisuals = pScene->CreateAndAddGameObject("BeanVisuals", pBean);
-	auto pRenderComponent = pBeanVisuals->CreateAndAddComponent<SpriteRenderComponent>();
+	auto pHotdogVisuals = pScene->CreateAndAddGameObject("HotdogVisuals", pHotdog);
+	auto pRenderComponent = pHotdogVisuals->CreateAndAddComponent<SpriteRenderComponent>();
 	pRenderComponent->SetSize({ 28, 28 });
 
-	pBeanVisuals->CreateAndAddComponent<PickleSpriteController>();
+	pHotdogVisuals->CreateAndAddComponent<PickleSpriteController>();
 
 	float width = float(pRenderComponent->GetSize().x);
 	float height = float(pRenderComponent->GetSize().y);
-	pBeanVisuals->GetTransform()->SetLocalPosition({ -width / 2, -8 });
+	pHotdogVisuals->GetTransform()->SetLocalPosition({ -width / 2, -8 });
 
 	//collider
-	auto pBoxCollider = pBean->CreateAndAddComponent<BoxCollider>();
+	auto pBoxCollider = pHotdog->CreateAndAddComponent<BoxCollider>();
 	pBoxCollider->SetShape({ -width / 2, -8, width, height });
 
-	return pBean;
+	return pHotdog;
 }
 
 ChefPlayerController* GameManager::CreateChefPlayerController(engine::Scene* pScene)
@@ -193,9 +197,9 @@ ChefPlayerController* GameManager::CreateChefPlayerController(engine::Scene* pSc
 	return pPlayerController;
 }
 
-BeanAIController* GameManager::CreateBeanAIController(engine::Scene* pScene)
+EnemyAIController* GameManager::CreateEnemyAIController(engine::Scene* pScene)
 {
 	auto pAIcontrollerObject = pScene->CreateAndAddGameObject();
-	auto pAIController = pAIcontrollerObject->CreateAndAddComponent<BeanAIController>();
+	auto pAIController = pAIcontrollerObject->CreateAndAddComponent<EnemyAIController>();
 	return pAIController;
 }

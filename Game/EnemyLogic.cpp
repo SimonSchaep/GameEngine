@@ -28,13 +28,12 @@ void EnemyLogic::Notify(engine::Collider::TriggerType triggerType, engine::Colli
 	case engine::Collider::TriggerType::stay:
 		HandleTriggerStay(pOriginCollider, pHitCollider);
 		break;
-	default:
-		break;
 	}
 }
 
 void EnemyLogic::HandleTriggerEnter(engine::Collider* /*pOriginCollider*/, engine::Collider* /*pHitCollider*/)
 {
+
 }
 
 void EnemyLogic::HandleTriggerExit(engine::Collider* /*pOriginCollider*/, engine::Collider* /*pHitCollider*/)

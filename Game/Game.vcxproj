@@ -188,8 +188,9 @@ xcopy "$(SolutionDir)Data\" "$(ProjectDir)Data\" /Y</Command>
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="AIController.cpp" />
-    <ClCompile Include="BeanAIController.cpp" />
-    <ClCompile Include="BeanSpriteController.cpp" />
+    <ClCompile Include="EnemyAIController.cpp" />
+    <ClCompile Include="HotdogSpriteController.cpp" />
+    <ClCompile Include="ChefLogic.cpp" />
     <ClCompile Include="ChefPlayerController.cpp" />
     <ClCompile Include="ChefSpriteController.cpp" />
     <ClCompile Include="ControlsDisplay.cpp" />
@@ -217,8 +218,9 @@ xcopy "$(SolutionDir)Data\" "$(ProjectDir)Data\" /Y</Command>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AIController.h" />
-    <ClInclude Include="BeanAIController.h" />
-    <ClInclude Include="BeanSpriteController.h" />
+    <ClInclude Include="EnemyAIController.h" />
+    <ClInclude Include="HotdogSpriteController.h" />
+    <ClInclude Include="ChefLogic.h" />
     <ClInclude Include="ChefPlayerController.h" />
     <ClInclude Include="ChefSpriteController.h" />
     <ClInclude Include="ControlsDisplay.h" />

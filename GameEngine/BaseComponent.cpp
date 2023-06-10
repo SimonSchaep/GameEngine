@@ -28,6 +28,10 @@ namespace engine
 	{
 		return GetGameObject()->GetScene();
 	}
+	bool BaseComponent::HasTag(const std::string& tag) const
+	{
+		return GetGameObject()->HasTag(tag);
+	}
 	bool BaseComponent::IsActive()
 	{
 		return m_IsActive && GetGameObject()->IsActive();

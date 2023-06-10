@@ -11,11 +11,11 @@ namespace engine
 	class BoxCollider;
 }
 
-class EnemyLogic final : public engine::BaseComponent, engine::Observer<engine::Collider::TriggerType, engine::Collider*, engine::Collider*>
+class ChefLogic final : public engine::BaseComponent, engine::Observer<engine::Collider::TriggerType, engine::Collider*, engine::Collider*>
 {
 public:
-	EnemyLogic(engine::GameObject* pGameObject);
-	virtual ~EnemyLogic() = default;
+	ChefLogic(engine::GameObject* pGameObject);
+	virtual ~ChefLogic() = default;
 
 	virtual void Initialize() override;
 	virtual void Update() override;
@@ -23,7 +23,6 @@ public:
 	virtual void Notify(engine::Collider::TriggerType triggerType, engine::Collider* pOriginCollider, engine::Collider* pHitCollider) override;
 
 	bool IsDead()const { return m_IsDead; }
-	bool IsStunned()const { return m_IsStunned; }
 
 private:
 	void HandleTriggerEnter(engine::Collider* pOriginCollider, engine::Collider* pHitCollider);
@@ -31,6 +30,7 @@ private:
 	void HandleTriggerStay(engine::Collider* pOriginCollider, engine::Collider* pHitCollider);
 
 	bool m_IsDead{};
-	bool m_IsStunned{};
+
+	std::unique_ptr<Event<engine::GameObject*>> m_DieEvent{};
 };
 

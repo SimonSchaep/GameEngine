@@ -16,7 +16,7 @@ class LeaderboardState;
 class MyPlayerController;
 class ChefPlayerController;
 class AIController;
-class BeanAIController;
+class EnemyAIController;
 
 class GameManager final : public engine::BaseComponent
 {
@@ -39,9 +39,9 @@ private:
 	engine::Scene* CreateLevel(int id);
 
 	engine::GameObject* CreateChef(engine::Scene* pScene);
-	engine::GameObject* CreateBean(engine::Scene* pScene);
+	engine::GameObject* CreateHotdog(engine::Scene* pScene);
 	ChefPlayerController* CreateChefPlayerController(engine::Scene* pScene);
-	BeanAIController* CreateBeanAIController(engine::Scene* pScene);
+	EnemyAIController* CreateEnemyAIController(engine::Scene* pScene);
 
 	std::unique_ptr<StartMenuState> m_StartMenuState{};
 	std::unique_ptr<GamePlayingState> m_GamePlayingState{};

@@ -1,6 +1,9 @@
 #pragma once
 #include <BaseComponent.h>
 #include <vector>
+#include "Event.h"
+#include "EventTypes.h"
+#include "Observer.h"
 
 namespace engine
 {
@@ -18,7 +21,9 @@ class ChefPlayerController;
 class AIController;
 class EnemyAIController;
 
-class GameManager final : public engine::BaseComponent
+class FoodParent;
+
+class GameManager final : public engine::BaseComponent, public engine::Observer<FoodParent*>
 {
 public:
 	GameManager(engine::GameObject* pGameObject);
@@ -27,6 +32,8 @@ public:
 	virtual void Initialize() override;
 	virtual void Update() override;
 
+	virtual void OnSceneTransferred()override;
+
 	void StartNextLevel();
 
 	StartMenuState* GetStartMenuState()const { return m_StartMenuState.get(); }
@@ -34,9 +41,14 @@ public:
 	GamePausedState* GetGamePausedState()const { return m_GamePausedState.get(); }
 	LeaderboardState* GetLeaderboardState()const { return m_LeaderboardState.get(); }
 
+	engine::Event<EventType>* GetOnChefWon()const { return m_OnChefWon.get(); }
+
+	virtual void Notify(FoodParent* pFood)override;
+
 private:
 	void InitializeUI();
 	engine::Scene* CreateLevel(int id);
+	void CheckIfChefWon();
 
 	engine::GameObject* CreateChef(engine::Scene* pScene);
 	engine::GameObject* CreateHotdog(engine::Scene* pScene);
@@ -52,5 +64,10 @@ private:
 
 	int m_NextLevelId{};
 	int m_MaxLevelId{2};
+
+	std::unique_ptr<engine::Event<EventType>> m_OnChefWon{};
+
+	bool m_FoodsNeedUpdate{};
+	std::vector<FoodParent*> m_FoodsLeftinLevel{};
 };
 

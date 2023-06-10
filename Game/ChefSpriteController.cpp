@@ -6,6 +6,9 @@
 #include "SpriteState.h"
 #include "MovementComponent.h"
 #include "ThrowPepperComponent.h"
+#include "Scene.h"
+#include "GameManager.h"
+#include "ChefLogic.h"
 
 using namespace engine;
 
@@ -16,6 +19,11 @@ ChefSpriteController::ChefSpriteController(engine::GameObject* pGameObject)
 
 void ChefSpriteController::Initialize()
 {
+	auto pGameManager = GetScene()->FindGameObjectByName("GameManager")->GetComponent<GameManager>();
+	pGameManager->GetOnChefWon()->AddObserver(this);
+
+	GetGameObject()->GetParent()->GetComponent<ChefLogic>()->GetOnDeath()->AddObserver(this);
+
 	m_pMovementComponent = GetGameObject()->GetParent()->GetComponent<MovementComponent>();
 	m_pThrowPepperComponent = GetGameObject()->GetParent()->GetComponent<ThrowPepperComponent>();
 
@@ -148,12 +156,6 @@ void ChefSpriteController::Initialize()
 			return pSpriteRenderer->GetIsPaused();
 		}
 		});
-
-	pDeath->AddConnection(SpriteConnection{ pIdleDown, [this]()
-		{
-			return !m_IsPlayerDead;
-		}
-		});
 }
 
 void ChefSpriteController::Update()
@@ -161,10 +163,16 @@ void ChefSpriteController::Update()
 	m_IsPlayerThrowing = m_pThrowPepperComponent->IsThrowing();
 }
 
-//todo: still need to bind this event to win, also make a death event
-void ChefSpriteController::Notify()
+void ChefSpriteController::Notify(EventType eventType)
 {
-	m_HasPlayerWon = true;
+	if (eventType == EventType::chefWon)
+	{
+		m_HasPlayerWon = true;
+	}
+	else if (eventType == EventType::chefDied)
+	{
+		m_IsPlayerDead = true;
+	}
 	m_pSpriteStateMachine->ForceStateEvaluation();
 }
 

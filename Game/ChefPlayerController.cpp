@@ -5,6 +5,7 @@
 #include "Logger.h"
 #include "MovementComponent.h"
 #include "ThrowPepperCommand.h"
+#include "ChefLogic.h"
 
 using namespace engine;
 
@@ -31,6 +32,14 @@ void ChefPlayerController::Update()
 	}
 }
 
+void ChefPlayerController::Move(const glm::vec2& direction)
+{
+	if (!m_IsDead)
+	{
+		MyPlayerController::Move(direction);
+	}
+}
+
 void ChefPlayerController::SetControlledObject(engine::GameObject* pControlledObject)
 {
 	MyPlayerController::SetControlledObject(pControlledObject);
@@ -40,12 +49,31 @@ void ChefPlayerController::SetControlledObject(engine::GameObject* pControlledOb
 	{
 		ServiceLocator::GetLogger().LogLine("no throw pepper component on chef", LogType::debug);
 	}
+
+	if (m_pChefLogic)
+	{
+		m_pChefLogic->GetOnDeath()->RemoveObserver(this);
+	}
+	m_pChefLogic = pControlledObject->GetComponent<ChefLogic>();
+	if (!m_pThrowPepperComponent)
+	{
+		ServiceLocator::GetLogger().LogLine("no chef logic component on chef", LogType::debug);
+	}
+	else
+	{
+		m_pChefLogic->GetOnDeath()->AddObserver(this);
+	}
 }
 
 void ChefPlayerController::ThrowPepper()
 {
-	if (m_pThrowPepperComponent)
+	if (m_pThrowPepperComponent && !m_IsDead)
 	{
 		m_pThrowPepperComponent->ThrowPepper(m_LastMovementDirection);
 	}
+}
+
+void ChefPlayerController::Notify(EventType)
+{
+	m_IsDead = true;
 }

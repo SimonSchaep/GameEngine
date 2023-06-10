@@ -14,7 +14,7 @@ public:
 
     virtual void Initialize() override;
 
-    void Move(const glm::vec2& direction);
+    virtual void Move(const glm::vec2& direction);
 
     virtual void SetControlledObject(engine::GameObject* pControlledObject);
 
@@ -23,6 +23,5 @@ protected:
 
 private:
     engine::ObservingPointer<MovementComponent> m_pControlledMovementComponent;
-
 };
 

@@ -211,5 +211,6 @@
     <ClInclude Include="ChefLogic.h">
       <Filter>Components\Logic</Filter>
     </ClInclude>
+    <ClInclude Include="EventTypes.h" />
   </ItemGroup>
 </Project>

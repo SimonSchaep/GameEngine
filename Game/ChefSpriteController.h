@@ -3,6 +3,7 @@
 #include "Observer.h"
 #include "ObservingPointer.h"
 #include <glm/glm.hpp>
+#include "EventTypes.h"
 
 namespace engine
 {
@@ -13,7 +14,7 @@ namespace engine
 class MovementComponent;
 class ThrowPepperComponent;
 
-class ChefSpriteController : public engine::BaseComponent, engine::Observer<>
+class ChefSpriteController : public engine::BaseComponent, engine::Observer<EventType>
 {
 public:
 	ChefSpriteController(engine::GameObject* pGameObject);
@@ -22,7 +23,7 @@ public:
 	virtual void Initialize() override;
 	virtual void Update() override;
 
-	virtual void Notify()override;
+	virtual void Notify(EventType eventType) override;
 
 private:
 	void AddIdleToLeft(engine::SpriteState* idleState, engine::SpriteState* runningState);

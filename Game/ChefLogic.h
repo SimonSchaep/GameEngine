@@ -3,6 +3,7 @@
 #include "Observer.h"
 #include "Collider.h"
 #include "Event.h"
+#include "EventTypes.h"
 
 namespace engine
 {
@@ -24,6 +25,8 @@ public:
 
 	bool IsDead()const { return m_IsDead; }
 
+	engine::Event<EventType>* GetOnDeath()const {return m_OnDeath.get(); }
+
 private:
 	void HandleTriggerEnter(engine::Collider* pOriginCollider, engine::Collider* pHitCollider);
 	void HandleTriggerExit(engine::Collider* pOriginCollider, engine::Collider* pHitCollider);
@@ -31,6 +34,6 @@ private:
 
 	bool m_IsDead{};
 
-	std::unique_ptr<Event<engine::GameObject*>> m_DieEvent{};
+	std::unique_ptr<engine::Event<EventType>> m_OnDeath{};
 };
 

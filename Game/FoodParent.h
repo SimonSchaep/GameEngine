@@ -26,9 +26,10 @@ public:
 	virtual void Notify(engine::Collider::TriggerType triggerType, engine::Collider* pOriginCollider, engine::Collider* pHitCollider) override;
 
 	bool IsFalling() { return m_IsFalling; }
-	bool ReachedPlate() { return m_ReachedPlate; }
+	bool HasReachedPlate() { return m_ReachedPlate; }
 
 	engine::Event<engine::GameObject*, bool>* GetFallEvent() { return m_FallEvent.get(); }
+	engine::Event<FoodParent*>* GetReachedPlateEvent() { return m_ReachedPlateEvent.get(); }
 
 private:
 	void HandleTriggerEnter(engine::Collider* pOriginCollider, engine::Collider* pHitCollider);
@@ -38,6 +39,7 @@ private:
 	void DropFoodElement(int elementId, bool skipDropLeftNeighbor, bool skipDropRightNeighbor);
 
 	void StopFall();
+	void ReachedPlate();
 
 	//this would be done in a rigidbody component if we had one
 	float m_FallVelocity{0};
@@ -50,6 +52,7 @@ private:
 	std::vector<bool> m_FoodElementStates{}; //true == fallen
 
 	std::unique_ptr<engine::Event<engine::GameObject*, bool>> m_FallEvent{};
+	std::unique_ptr<engine::Event<FoodParent*>> m_ReachedPlateEvent{};
 
 	bool m_IsFalling{};
 	bool m_ReachedPlate{};

@@ -25,12 +25,15 @@
 #include "PickleSpriteController.h"
 #include "ChefLogic.h"
 #include "EnemyLogic.h"
+#include "FoodParent.h"
 
 using namespace engine;
 
 GameManager::GameManager(engine::GameObject* pGameObject)
 	:BaseComponent(pGameObject)
-{}
+{
+	m_OnChefWon = std::make_unique<Event<EventType>>();
+}
 
 GameManager::~GameManager() = default;
 
@@ -55,6 +58,26 @@ void GameManager::Update()
 		pNewState->OnEnter();
 		m_pActiveGameState = pNewState;
 	}
+
+	if (m_FoodsNeedUpdate)
+	{
+		m_FoodsNeedUpdate = false;
+		m_FoodsLeftinLevel.clear();
+		auto pScene = GetScene();
+		pScene->GetName();
+		auto foodObjects = GetScene()->FindAllGameObjectsWithTag("foodparent");
+		for (auto pObject : foodObjects)
+		{
+			m_FoodsLeftinLevel.push_back(pObject->GetComponent<FoodParent>());
+			assert(m_FoodsLeftinLevel.back() != nullptr); //if this fails, some object has tag "foodparent" but no foodparent component
+			m_FoodsLeftinLevel.back()->GetReachedPlateEvent()->AddObserver(this);
+		}
+	}
+}
+
+void GameManager::OnSceneTransferred()
+{
+	m_FoodsNeedUpdate = true;
 }
 
 void GameManager::StartNextLevel()
@@ -62,6 +85,13 @@ void GameManager::StartNextLevel()
 	auto pLevel = CreateLevel(m_NextLevelId);
 	SceneManager::GetInstance().SetActiveScene(pLevel);
 	m_NextLevelId = (m_NextLevelId + 1) % m_MaxLevelId;
+}
+
+void GameManager::Notify(FoodParent* pFood)
+{
+	m_FoodsLeftinLevel.erase(std::remove(m_FoodsLeftinLevel.begin(), m_FoodsLeftinLevel.end(), pFood));
+
+	CheckIfChefWon();
 }
 
 void GameManager::InitializeUI()
@@ -132,6 +162,14 @@ Scene* GameManager::CreateLevel(int id)
 	return pScene;
 }
 
+void GameManager::CheckIfChefWon()
+{
+	if (m_FoodsLeftinLevel.size() == 0)
+	{
+		m_OnChefWon->NotifyObservers(EventType::chefWon);
+	}
+}
+
 engine::GameObject* GameManager::CreateChef(engine::Scene* pScene)
 {
 	auto pChef = pScene->CreateAndAddGameObject("Chef");
@@ -158,7 +196,7 @@ engine::GameObject* GameManager::CreateChef(engine::Scene* pScene)
 
 	//collider
 	auto pBoxCollider = pChef->CreateAndAddComponent<BoxCollider>();
-	pBoxCollider->SetShape({ -width / 2, -8, width, height });
+	pBoxCollider->SetShape({ -width / 4, -8, width/2, height/4 });
 
 	return pChef;
 }
@@ -185,7 +223,7 @@ engine::GameObject* GameManager::CreateHotdog(engine::Scene* pScene)
 
 	//collider
 	auto pBoxCollider = pHotdog->CreateAndAddComponent<BoxCollider>();
-	pBoxCollider->SetShape({ -width / 2, -8, width, height });
+	pBoxCollider->SetShape({ -width / 4, -8, width/2, height/4 });
 
 	return pHotdog;
 }

@@ -12,6 +12,7 @@ FoodParent::FoodParent(GameObject* pGameObject)
 	:BaseComponent(pGameObject)
 {
 	m_FallEvent = std::make_unique<Event<GameObject*, bool>>();
+	m_ReachedPlateEvent = std::make_unique<Event<FoodParent*>>();
 }
 
 void FoodParent::Initialize()
@@ -68,13 +69,12 @@ void FoodParent::HandleTriggerEnter(Collider* pOriginCollider, Collider* pHitCol
 			}
 			else if (pHitCollider->GetGameObject()->HasTag("plate"))
 			{
-				m_ReachedPlate = true;
-				StopFall();
+				ReachedPlate();
 			}
 			else if (pHitCollider->GetGameObject()->HasTag("foodparent"))
 			{
 				auto otherFoodParent = pHitCollider->GetGameObject()->GetComponent<FoodParent>();
-				if (!otherFoodParent->ReachedPlate())
+				if (!otherFoodParent->HasReachedPlate())
 				{
 					if (!otherFoodParent->IsFalling() && otherFoodParent->GetGameObject()->GetTransform()->GetWorldPosition().y < GetGameObject()->GetTransform()->GetWorldPosition().y)
 					{
@@ -84,8 +84,7 @@ void FoodParent::HandleTriggerEnter(Collider* pOriginCollider, Collider* pHitCol
 				}
 				else
 				{
-					m_ReachedPlate = true;
-					StopFall();
+					ReachedPlate();
 				}
 			}
 		}		
@@ -183,6 +182,15 @@ void FoodParent::StopFall()
 	m_FallVelocity = 0;
 	m_FallEvent->NotifyObservers(GetGameObject(), false);
 	m_IsFalling = false;
+}
+
+void FoodParent::ReachedPlate()
+{
+	if (m_ReachedPlate)return;
+
+	StopFall();
+	m_ReachedPlate = true;
+	m_ReachedPlateEvent->NotifyObservers(this);
 }
 
 void FoodParent::StartFall()

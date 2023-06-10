@@ -219,6 +219,7 @@ xcopy "$(SolutionDir)Data\" "$(ProjectDir)Data\" /Y</Command>
   <ItemGroup>
     <ClInclude Include="AIController.h" />
     <ClInclude Include="EnemyAIController.h" />
+    <ClInclude Include="EventTypes.h" />
     <ClInclude Include="HotdogSpriteController.h" />
     <ClInclude Include="ChefLogic.h" />
     <ClInclude Include="ChefPlayerController.h" />

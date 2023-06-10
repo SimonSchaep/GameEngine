@@ -90,8 +90,8 @@ namespace engine
 
 	void Scene::TransferGameObject(std::unique_ptr<GameObject> gameObject)
 	{
-		gameObject->OnSceneTransferred(this);
 		m_GameObjects.emplace_back(std::move(gameObject));
+		m_GameObjects.back()->OnSceneTransferred(this);
 	}
 
 	void Scene::Initialize()

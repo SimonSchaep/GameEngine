@@ -85,10 +85,13 @@ namespace engine
 		{
 			if (!m_GameObjects[i]->IsActive())continue;
 
-			m_GameObjects[i]->Update();
 			if (m_GameObjects[i]->IsMarkedForDeletion())
 			{
 				m_ToDeleteIndexes.emplace_back(i);
+			}
+			else
+			{
+				m_GameObjects[i]->Update();
 			}
 		}
 

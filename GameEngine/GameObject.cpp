@@ -35,6 +35,11 @@ namespace engine
 				GetChildren()[i]->SetParent(nullptr, true);
 			}
 		}
+		//maybe the user calls some important code in here (like saving maybe)
+		for (auto& component : m_Components)
+		{
+			component->OnDisable();
+		}
 	}
 
 	void GameObject::AddChild(GameObject* pGameObject)
@@ -80,10 +85,13 @@ namespace engine
 		{
 			if (!m_Components[i]->IsActive())continue;
 
-			m_Components[i]->UpdateComponent();
 			if (m_Components[i]->IsMarkedForDeletion())
 			{
 				m_ToDeleteIndexes.emplace_back(i);
+			}
+			else
+			{
+				m_Components[i]->UpdateComponent();
 			}
 		}
 

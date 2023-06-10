@@ -321,6 +321,9 @@
     <ClInclude Include="Utility.h">
       <Filter>Engine\Utility</Filter>
     </ClInclude>
+    <ClInclude Include="ObservingPointerBase.h">
+      <Filter>Engine\ObservingPointer</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Engine">

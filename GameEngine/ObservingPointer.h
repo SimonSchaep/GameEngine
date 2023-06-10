@@ -26,16 +26,15 @@
 //todo: right now adding and removing is expensive, cause there is an empla
 
 
-#include "Observer.h"
+#include "ObservingPointerBase.h"
 #include "ObservableObject.h"
 #include <type_traits>
 
 
 namespace engine
 {
-    //using pimpl here makes it so you can declare an observingpointer with an incomplete type
     template <typename T>
-    class ObservingPointer final : public Observer<>
+    class ObservingPointer final : public ObservingPointerBase //need to inherit from a base, cause we can't forward declare ObservingPointer with all possible template arguments in ObservableObject
     {
     public:
         ObservingPointer() = default;

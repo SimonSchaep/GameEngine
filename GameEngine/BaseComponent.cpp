@@ -4,10 +4,8 @@
 
 namespace engine
 {
-	BaseComponent::~BaseComponent()
-	{
-		OnDisable();
-	}
+	BaseComponent::~BaseComponent() = default;
+
 	void BaseComponent::InitializeComponent()
 	{
 		if (m_IsInitialized) return;

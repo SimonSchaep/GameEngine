@@ -2,6 +2,7 @@
 #include <vector>
 #include "Observer.h"
 #include "GameObject.h"
+#include "ObservingPointer.h"
 
 namespace engine
 {
@@ -18,7 +19,8 @@ namespace engine
 		void NotifyObservers(Args... args);
 
 	private:
-		std::vector<Observer<Args...>*> m_Observers;
+		std::vector<ObservingPointer<Observer<Args...>>> m_Observers;
+		std::vector<size_t> m_ToDeleteIndexes{};
 	};
 
 	template<typename ...Args>
@@ -36,10 +38,24 @@ namespace engine
 	template<typename ...Args>
 	inline void Event<Args...>::NotifyObservers(Args... args)
 	{
-		for (auto pObserver : m_Observers)
+		for (size_t i{}; i < m_Observers.size(); ++i)
 		{
-			pObserver->Notify(args...);
+			if (m_Observers[i])
+			{
+				m_Observers[i]->Notify(args...);
+			}
+			else
+			{
+				m_ToDeleteIndexes.emplace_back(i);
+			}
 		}
+
+		//Remove Observers that no longer exist
+		for (int i{ int(m_ToDeleteIndexes.size()) - 1 }; i >= 0; --i)
+		{
+			RemoveObserver(m_Observers[i].Get());
+		}
+		m_ToDeleteIndexes.clear();
 	}
 
 }

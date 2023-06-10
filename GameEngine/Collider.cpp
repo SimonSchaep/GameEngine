@@ -13,7 +13,6 @@ engine::Collider::Collider(GameObject* pGameObject)
 
 engine::Collider::~Collider()
 {
-	OnDisable(); //make sure it gets called before destroying
 	GetGameObject()->RemoveCollider(this);
 	m_OnDestroy->NotifyObservers(this);
 }
@@ -45,5 +44,6 @@ void engine::Collider::Notify(Collider* pCollider)
 	if (it != m_CurrentTriggers.end())
 	{
 		m_CurrentTriggers.erase(it);
+		m_OnTrigger->NotifyObservers(TriggerType::exit, this, pCollider);
 	}
 }

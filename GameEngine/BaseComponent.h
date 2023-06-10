@@ -8,7 +8,9 @@ namespace engine
 	class Transform;
 	class Scene;
 
-	class BaseComponent : public ObservableObject
+	class BaseComponent : public virtual ObservableObject 
+		//Has to be virtual inheritance, since otherwise there might be 2 definitions of observableobject in a component that inherits from observer and basecomponent
+		//https://www.sandordargo.com/blog/2020/12/23/virtual-inheritance
 	{
 	public:
 		virtual ~BaseComponent();

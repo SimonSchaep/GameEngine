@@ -20,8 +20,7 @@
 
 
 #include <vector>
-#include <list>
-#include "Observer.h"
+#include "ObservingPointerBase.h"
 
 namespace engine
 {
@@ -31,11 +30,11 @@ namespace engine
 		ObservableObject() = default;
 		virtual ~ObservableObject();
 
-		void AddObservingPointer(Observer<>* pObservingPointer) { m_ObservingPointers.emplace_back(pObservingPointer); }
-		void RemoveObservingPointer(Observer<>* pObservingPointer) { m_ObservingPointers.erase(std::remove(m_ObservingPointers.begin(), m_ObservingPointers.end(), pObservingPointer)); }
+		void AddObservingPointer(ObservingPointerBase* pObservingPointer) { m_ObservingPointers.emplace_back(pObservingPointer); }
+		void RemoveObservingPointer(ObservingPointerBase* pObservingPointer) { m_ObservingPointers.erase(std::remove(m_ObservingPointers.begin(), m_ObservingPointers.end(), pObservingPointer)); }
 
 	private:
-		std::vector<Observer<>*> m_ObservingPointers{}; //list as container cause adding and removing elements needs to be fast
+		std::vector<ObservingPointerBase*> m_ObservingPointers{};
 	};
 }
 

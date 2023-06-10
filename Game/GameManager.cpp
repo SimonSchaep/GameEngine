@@ -1,5 +1,9 @@
 #include "GameManager.h"
 #include "GameState.h"
+#include "GamePlayingState.h"
+#include "GamePausedState.h"
+#include "LeaderboardState.h"
+#include "StartMenuState.h"
 #include "GameObject.h"
 #include "Scene.h"
 #include "TextRenderComponent.h"
@@ -26,6 +30,7 @@
 #include "ChefLogic.h"
 #include "EnemyLogic.h"
 #include "FoodParent.h"
+#include "TimeManager.h"
 
 using namespace engine;
 
@@ -33,14 +38,14 @@ GameManager::GameManager(engine::GameObject* pGameObject)
 	:BaseComponent(pGameObject)
 {
 	m_OnChefWon = std::make_unique<Event<EventType>>();
+	m_OnChefDied = std::make_unique<Event<EventType, ChefLogic*>>();
+	m_OnRespawnCharacters = std::make_unique<Event<EventType>>();
 }
 
 GameManager::~GameManager() = default;
 
 void GameManager::Initialize()
 {
-	InputManager::GetInstance().BindKeyboardButtonToCommand(SDL_SCANCODE_F1, InputManager::KeyState::up, std::move(std::make_unique<NextLevelCommand>(this)));
-
 	InitializeUI();
 
 	m_pActiveGameState = GetStartMenuState();
@@ -73,6 +78,25 @@ void GameManager::Update()
 			m_FoodsLeftinLevel.back()->GetReachedPlateEvent()->AddObserver(this);
 		}
 	}
+
+	if (m_RespawnCharactersDelayTimer > 0)
+	{
+		m_RespawnCharactersDelayTimer -= TimeManager::GetInstance().GetUnPausedDeltaTime();
+
+		if (m_RespawnCharactersDelayTimer <= 0)
+		{
+			m_OnRespawnCharacters->NotifyObservers(EventType::respawnCharacters);
+		}
+	}
+	if (m_StartNextLevelDelayTimer > 0)
+	{
+		m_StartNextLevelDelayTimer -= TimeManager::GetInstance().GetUnPausedDeltaTime();
+
+		if (m_StartNextLevelDelayTimer <= 0)
+		{
+			StartNextLevel();
+		}
+	}
 }
 
 void GameManager::OnSceneTransferred()
@@ -85,6 +109,9 @@ void GameManager::StartNextLevel()
 	auto pLevel = CreateLevel(m_NextLevelId);
 	SceneManager::GetInstance().SetActiveScene(pLevel);
 	m_NextLevelId = (m_NextLevelId + 1) % m_MaxLevelId;
+
+	m_StartNextLevelDelayTimer = 0;
+	m_RespawnCharactersDelayTimer = 0;
 }
 
 void GameManager::Notify(FoodParent* pFood)
@@ -92,6 +119,15 @@ void GameManager::Notify(FoodParent* pFood)
 	m_FoodsLeftinLevel.erase(std::remove(m_FoodsLeftinLevel.begin(), m_FoodsLeftinLevel.end(), pFood));
 
 	CheckIfChefWon();
+}
+
+void GameManager::Notify(EventType eventType, ChefLogic* pChef)
+{
+	if (eventType == EventType::chefDied)
+	{
+		m_RespawnCharactersDelayTimer = m_RespawnCharactersDelay;
+		m_OnChefDied->NotifyObservers(eventType, pChef);
+	}
 }
 
 void GameManager::InitializeUI()
@@ -141,12 +177,16 @@ Scene* GameManager::CreateLevel(int id)
 	auto pChef1 = CreateChef(pScene);
 	auto pPlayerController = CreateChefPlayerController(pScene);
 
+	pChef1->GetComponent<ChefLogic>()->GetOnDeath()->AddObserver(this);
+
 	pPlayerController->SetControlledObject(pChef1);
 	pPlayerController->UseKeyboard(true);
 	pPlayerController->UseController(1);
 
 	auto pChef2 = CreateChef(pScene);
 	pPlayerController = CreateChefPlayerController(pScene);
+		
+	pChef2->GetComponent<ChefLogic>()->GetOnDeath()->AddObserver(this);
 
 	pPlayerController->SetControlledObject(pChef2);
 	pPlayerController->UseKeyboard(false);
@@ -156,8 +196,6 @@ Scene* GameManager::CreateLevel(int id)
 	auto pHotdog = CreateHotdog(pScene);
 	auto pAIController = CreateEnemyAIController(pScene);
 	pAIController->SetControlledObject(pHotdog);
-	pAIController->AddTarget(pChef1);
-	pAIController->AddTarget(pChef2);
 
 	return pScene;
 }
@@ -166,6 +204,7 @@ void GameManager::CheckIfChefWon()
 {
 	if (m_FoodsLeftinLevel.size() == 0)
 	{
+		m_StartNextLevelDelayTimer = m_StartNextLevelDelay;
 		m_OnChefWon->NotifyObservers(EventType::chefWon);
 	}
 }
@@ -178,10 +217,7 @@ engine::GameObject* GameManager::CreateChef(engine::Scene* pScene)
 	pChef->CreateAndAddComponent<ThrowPepperComponent>(5);
 	auto pMovementComponent = pChef->CreateAndAddComponent<MovementComponent>();
 	pMovementComponent->SetMoveSpeed(150);
-	auto pPlayerLives = pChef->CreateAndAddComponent<PlayerLives>();
-	pPlayerLives->SetMaxLives(5);
-	pChef->CreateAndAddComponent<PlayerPoints>();
-	pChef->CreateAndAddComponent<ChefLogic>();
+	pChef->CreateAndAddComponent<ChefLogic>(4);
 
 	//visuals
 	auto pChefVisuals = pScene->CreateAndAddGameObject("ChefVisuals", pChef);
@@ -238,6 +274,6 @@ ChefPlayerController* GameManager::CreateChefPlayerController(engine::Scene* pSc
 EnemyAIController* GameManager::CreateEnemyAIController(engine::Scene* pScene)
 {
 	auto pAIcontrollerObject = pScene->CreateAndAddGameObject();
-	auto pAIController = pAIcontrollerObject->CreateAndAddComponent<EnemyAIController>();
+	auto pAIController = pAIcontrollerObject->CreateAndAddComponent<EnemyAIController>(3.f);
 	return pAIController;
 }

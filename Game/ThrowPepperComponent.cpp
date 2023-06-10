@@ -65,6 +65,7 @@ void ThrowPepperComponent::CreatePepperObject(glm::vec2 direction)
 	pos += direction * m_ThrowDistance;
 
 	auto pepperObject = GetScene()->CreateAndAddGameObject("Pepper");
+	pepperObject->AddTag("Pepper");
 	pepperObject->GetTransform()->SetWorldPosition(pos);
 	pepperObject->CreateAndAddComponent<LifeTimer>(.6f);
 

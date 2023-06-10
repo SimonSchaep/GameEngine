@@ -22,8 +22,9 @@ class AIController;
 class EnemyAIController;
 
 class FoodParent;
+class ChefLogic;
 
-class GameManager final : public engine::BaseComponent, public engine::Observer<FoodParent*>
+class GameManager final : public engine::BaseComponent, public engine::Observer<FoodParent*>, public engine::Observer<EventType, ChefLogic*>
 {
 public:
 	GameManager(engine::GameObject* pGameObject);
@@ -42,8 +43,11 @@ public:
 	LeaderboardState* GetLeaderboardState()const { return m_LeaderboardState.get(); }
 
 	engine::Event<EventType>* GetOnChefWon()const { return m_OnChefWon.get(); }
+	engine::Event<EventType, ChefLogic*>* GetOnChefDied()const { return m_OnChefDied.get(); }
+	engine::Event<EventType>* GetOnRespawnCharacters()const { return m_OnRespawnCharacters.get(); }
 
 	virtual void Notify(FoodParent* pFood)override;
+	virtual void Notify(EventType, ChefLogic*)override;
 
 private:
 	void InitializeUI();
@@ -66,8 +70,17 @@ private:
 	int m_MaxLevelId{2};
 
 	std::unique_ptr<engine::Event<EventType>> m_OnChefWon{};
+	std::unique_ptr<engine::Event<EventType, ChefLogic*>> m_OnChefDied{};
+	std::unique_ptr<engine::Event<EventType>> m_OnRespawnCharacters{};
 
 	bool m_FoodsNeedUpdate{};
-	std::vector<FoodParent*> m_FoodsLeftinLevel{};
+	std::vector<engine::ObservingPointer<FoodParent>> m_FoodsLeftinLevel{};
+
+
+	float m_RespawnCharactersDelay{3.f};
+	float m_RespawnCharactersDelayTimer{};
+
+	float m_StartNextLevelDelay{ 3.f };
+	float m_StartNextLevelDelayTimer{};
 };
 

@@ -32,6 +32,9 @@
     <Filter Include="Components\Logic">
       <UniqueIdentifier>{42c06ba6-543a-44b3-985b-77e9afa8c555}</UniqueIdentifier>
     </Filter>
+    <Filter Include="GameManager\GameStates">
+      <UniqueIdentifier>{18b48e6b-e434-4e86-a3a3-4069da26dcdf}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="FPSCounter.cpp">
@@ -70,9 +73,6 @@
     </ClCompile>
     <ClCompile Include="TrashTheCacheComponent.cpp">
       <Filter>Components\Old</Filter>
-    </ClCompile>
-    <ClCompile Include="GameState.cpp">
-      <Filter>GameManager</Filter>
     </ClCompile>
     <ClCompile Include="GameManager.cpp">
       <Filter>GameManager</Filter>
@@ -115,6 +115,18 @@
     </ClCompile>
     <ClCompile Include="ChefLogic.cpp">
       <Filter>Components\Logic</Filter>
+    </ClCompile>
+    <ClCompile Include="StartMenuState.cpp">
+      <Filter>GameManager\GameStates</Filter>
+    </ClCompile>
+    <ClCompile Include="GamePlayingState.cpp">
+      <Filter>GameManager\GameStates</Filter>
+    </ClCompile>
+    <ClCompile Include="GamePausedState.cpp">
+      <Filter>GameManager\GameStates</Filter>
+    </ClCompile>
+    <ClCompile Include="LeaderboardState.cpp">
+      <Filter>GameManager\GameStates</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -212,5 +224,17 @@
       <Filter>Components\Logic</Filter>
     </ClInclude>
     <ClInclude Include="EventTypes.h" />
+    <ClInclude Include="StartMenuState.h">
+      <Filter>GameManager\GameStates</Filter>
+    </ClInclude>
+    <ClInclude Include="GamePlayingState.h">
+      <Filter>GameManager\GameStates</Filter>
+    </ClInclude>
+    <ClInclude Include="GamePausedState.h">
+      <Filter>GameManager\GameStates</Filter>
+    </ClInclude>
+    <ClInclude Include="LeaderboardState.h">
+      <Filter>GameManager\GameStates</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

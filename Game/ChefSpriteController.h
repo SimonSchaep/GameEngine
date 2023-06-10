@@ -13,8 +13,9 @@ namespace engine
 
 class MovementComponent;
 class ThrowPepperComponent;
+class ChefLogic;
 
-class ChefSpriteController : public engine::BaseComponent, engine::Observer<EventType>
+class ChefSpriteController : public engine::BaseComponent, public engine::Observer<EventType>, public engine::Observer<EventType, ChefLogic*>
 {
 public:
 	ChefSpriteController(engine::GameObject* pGameObject);
@@ -24,6 +25,7 @@ public:
 	virtual void Update() override;
 
 	virtual void Notify(EventType eventType) override;
+	virtual void Notify(EventType eventType, ChefLogic*) override;
 
 private:
 	void AddIdleToLeft(engine::SpriteState* idleState, engine::SpriteState* runningState);
@@ -40,8 +42,7 @@ private:
 
 	engine::ObservingPointer<MovementComponent> m_pMovementComponent;
 	engine::ObservingPointer<ThrowPepperComponent> m_pThrowPepperComponent;
+	engine::ObservingPointer<ChefLogic> m_ChefLogicComponent;
 
 	bool m_HasPlayerWon{};
-	bool m_IsPlayerDead{};
-	bool m_IsPlayerThrowing{};
 };

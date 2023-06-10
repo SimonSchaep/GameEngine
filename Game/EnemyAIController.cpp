@@ -4,27 +4,22 @@
 #include "ServiceLocator.h"
 #include "Logger.h"
 #include "Scene.h"
+#include "GameManager.h"
 #include "Level.h"
+#include "EnemyLogic.h"
+#include "TimeManager.h"
 #include <deque>
 
 using namespace engine;
 
-void EnemyAIController::SetTargets(std::vector<engine::GameObject*> targets)
-{
-	m_Targets.clear();
-	for (auto pTarget : targets)
-	{
-		AddTarget(pTarget);
-	}
-}
-
-void EnemyAIController::AddTarget(engine::GameObject* pTarget)
-{
-	m_Targets.emplace_back(pTarget);
-}
+EnemyAIController::EnemyAIController(engine::GameObject* pGameObject, float spawnDelay)
+	: AIController(pGameObject), m_SpawnDelay{ spawnDelay }, m_SpawnDelayTimer{ spawnDelay }
+{}
 
 void EnemyAIController::Initialize()
 {
+	AIController::Initialize();
+
 	m_pLevel = GetControlledGameObject()->GetScene()->FindGameObjectByName("Level")->GetComponent<Level>();
 	if (!m_pLevel)
 	{
@@ -33,22 +28,62 @@ void EnemyAIController::Initialize()
 	}
 
 	m_TargetTile = m_pLevel->GetIndexOfPos(GetControlledGameObject()->GetTransform()->GetWorldPosition());
+
+	auto pGameManager = GetScene()->FindGameObjectByName("GameManager")->GetComponent<GameManager>();
+	pGameManager->GetOnRespawnCharacters()->AddObserver(this);
+
+	UpdateTargets();
+}
+
+void EnemyAIController::Notify(EventType type)
+{
+	AIController::Notify(type);
+
+	if (type == EventType::respawnCharacters)
+	{
+		m_TargetTileIsInvalid = true;
+		UpdateTargets();
+		m_SpawnDelayTimer = m_SpawnDelay;
+	}
 }
 
 void EnemyAIController::SetControlledObject(engine::GameObject* pControlledObject)
 {
 	AIController::SetControlledObject(pControlledObject);
 
-	m_IsEnemy = GetControlledGameObject()->HasTag("Enemy");
-
 	if (m_pLevel)
 	{
 		m_TargetTile = m_pLevel->GetIndexOfPos(GetControlledGameObject()->GetTransform()->GetWorldPosition());
 	}
+
+	m_EnemyLogic = pControlledObject->GetComponent<EnemyLogic>();
 }
 
 void EnemyAIController::ProcessAIDecisions()
 {
+	if (m_EnemyLogic->IsDead() || m_EnemyLogic->IsFalling())
+	{
+		m_TargetTileIsInvalid = true;
+		return;
+	}
+	if (IsPaused() || m_EnemyLogic->IsStunned()) return;
+
+	if (m_SpawnDelayTimer > 0)
+	{
+		m_SpawnDelayTimer -= TimeManager::GetInstance().GetDeltaTime();
+		if (m_SpawnDelayTimer > 0)
+		{
+			return;
+		}
+	}
+
+	if (m_TargetTileIsInvalid)
+	{
+		m_TargetTile = m_pLevel->GetIndexOfPos(GetControlledGameObject()->GetTransform()->GetWorldPosition());
+		m_LastTile = m_TargetTile;
+		m_TargetTileIsInvalid = false;
+	}
+
 	auto& ownPos = GetControlledGameObject()->GetTransform()->GetWorldPosition();
 	auto targetTilePos = m_pLevel->GetCenterOfCell(m_TargetTile);
 
@@ -93,7 +128,7 @@ void EnemyAIController::FindNewTargetTile() //target tile will be current tile i
 		return;
 	}
 
-	auto adjacentTiles = m_pLevel->GetAdjacentNavigableTiles(m_TargetTile, m_IsEnemy);
+	auto adjacentTiles = m_pLevel->GetAdjacentNavigableTiles(m_TargetTile, true);
 
 	int newTargetTile{-1};
 
@@ -176,7 +211,7 @@ int EnemyAIController::FindTargetTileAStar()
 		}
 
 		//for each adjacent tile
-		auto adjacentTiles = m_pLevel->GetAdjacentNavigableTiles(currentTile->tile, m_IsEnemy);
+		auto adjacentTiles = m_pLevel->GetAdjacentNavigableTiles(currentTile->tile, true);
 		for (auto tile : adjacentTiles)
 		{
 			if (tile == m_LastTile)
@@ -242,6 +277,15 @@ int EnemyAIController::FindTargetTileAStar()
 		{
 			return currentTile->tile;
 		}
+	}
+}
+
+void EnemyAIController::UpdateTargets()
+{
+	m_Targets.clear();
+	for (auto pTarget : GetScene()->FindAllGameObjectsWithTag("Chef"))
+	{
+		m_Targets.emplace_back(pTarget);
 	}
 }
 

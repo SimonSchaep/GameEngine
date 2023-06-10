@@ -23,10 +23,10 @@ public:
 
 	void SetIsEnemy(bool isEnemy) { m_IsEnemy = isEnemy; }
 
-	bool CanMoveUp();
-	bool CanMoveDown();
-	bool CanMoveRight();
-	bool CanMoveLeft();
+	bool CanMoveUp()const;
+	bool CanMoveDown()const;
+	bool CanMoveRight()const;
+	bool CanMoveLeft()const;
 
 private:
 	void CheckMoveX();

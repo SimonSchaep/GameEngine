@@ -1,18 +1,19 @@
 #pragma once
 #include "AIController.h"
 #include "ObservingPointer.h"
+#include "Observer.h"
+#include "EventTypes.h"
 
-
+class EnemyLogic;
 
 class EnemyAIController final : public AIController
 {
 public:
-	EnemyAIController(engine::GameObject* pGameObject) : AIController(pGameObject) {};
-
-	void SetTargets(std::vector<engine::GameObject*> targets);
-	void AddTarget(engine::GameObject* pTarget);
+	EnemyAIController(engine::GameObject* pGameObject, float spawnDelay);
 
 	virtual void Initialize() override;
+
+	virtual void Notify(EventType type);
 
 	virtual void SetControlledObject(engine::GameObject* pControlledObject)override;
 
@@ -30,17 +31,23 @@ private:
 	};
 	int FindTargetTileAStar();
 
+	void UpdateTargets();
 	void FindClosestTarget();
 
 	//todo: instead, get player controllers, so we can check if they are dead. Add controlled object to myplayercontroller
 	std::vector<engine::ObservingPointer<engine::GameObject>> m_Targets{};
 	engine::ObservingPointer<engine::GameObject> m_CurrentTarget{};
+	engine::ObservingPointer<EnemyLogic> m_EnemyLogic{};
 
 	int m_LastTile{};
 	int m_TargetTile{};
 
-	bool m_IsEnemy{};
-
 	engine::ObservingPointer<Level> m_pLevel;
+
+	bool m_TargetTileIsInvalid{};
+
+
+	float m_SpawnDelay{};
+	float m_SpawnDelayTimer{};
 };
 

@@ -4,16 +4,19 @@
 #include "ObservingPointer.h"
 #include <glm/glm.hpp>
 #include <string>
+#include "EventTypes.h"
 
 namespace engine
 {
 	class SpriteStateMachineComponent;
 	class SpriteState;
+	class SpriteRenderComponent;
 }
 
 class MovementComponent;
+class EnemyLogic;
 
-class EnemySpriteController : public engine::BaseComponent, engine::Observer<>
+class EnemySpriteController : public engine::BaseComponent
 {
 public:
 	EnemySpriteController(engine::GameObject* pGameObject);
@@ -21,8 +24,6 @@ public:
 
 	virtual void Initialize() override;
 	virtual void Update() override;
-
-	virtual void Notify()override;
 
 protected:
 	void SetRunningSpriteName(const std::string& runningSpriteName) { m_RunningSpriteName = runningSpriteName; };
@@ -47,9 +48,8 @@ private:
 	std::string m_StunnedSpriteName{};
 
 	engine::ObservingPointer<engine::SpriteStateMachineComponent> m_pSpriteStateMachine;
+	engine::ObservingPointer<engine::SpriteRenderComponent> m_pSpriteRenderer;
 	engine::ObservingPointer<MovementComponent> m_pMovementComponent;
-
-	bool m_IsDead{};
-	bool m_IsStunned{};
+	engine::ObservingPointer<EnemyLogic> m_pEnemyLogic;
 
 };

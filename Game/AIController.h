@@ -4,10 +4,13 @@
 #include <glm/glm.hpp>
 #include <memory>
 #include "MovementComponent.h"
+#include "Observer.h"
+#include "EventTypes.h"
 
 class MoveCommand;
+class ChefLogic;
 
-class AIController : public engine::BaseComponent
+class AIController : public engine::BaseComponent, public engine::Observer<EventType>, public engine::Observer<EventType, ChefLogic*>
 {
 public:
     AIController(engine::GameObject* pGameObject);
@@ -16,6 +19,9 @@ public:
     virtual void Update() override;
 
     virtual void SetControlledObject(engine::GameObject* pControlledObject);
+
+    virtual void Notify(EventType type)override;
+    virtual void Notify(EventType type, ChefLogic*)override;
 
 protected:
     virtual void ProcessAIDecisions();
@@ -29,14 +35,18 @@ protected:
     void MoveUp() { Move({ 0,1 }); }
     void MoveDown() { Move({ 0,-1 }); }
 
-    bool CanMoveRight() { return m_pControlledMovementComponent->CanMoveRight(); }
-    bool CanMoveLeft() { return m_pControlledMovementComponent->CanMoveLeft(); }
-    bool CanMoveUp() { return m_pControlledMovementComponent->CanMoveUp(); }
-    bool CanMoveDown() { return m_pControlledMovementComponent->CanMoveDown(); }
+    bool CanMoveRight()const { return m_pControlledMovementComponent->CanMoveRight(); }
+    bool CanMoveLeft()const { return m_pControlledMovementComponent->CanMoveLeft(); }
+    bool CanMoveUp()const { return m_pControlledMovementComponent->CanMoveUp(); }
+    bool CanMoveDown()const { return m_pControlledMovementComponent->CanMoveDown(); }
+
+    bool IsPaused()const { return m_IsPaused; }
 
 
 private:
     engine::ObservingPointer<MovementComponent> m_pControlledMovementComponent;
     engine::ObservingPointer<engine::GameObject> m_pControlledGameObject;
+
+    bool m_IsPaused{};
 };
 

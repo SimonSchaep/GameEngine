@@ -8,7 +8,7 @@
 class ThrowPepperComponent;
 class ChefLogic;
 
-class ChefPlayerController : public MyPlayerController, engine::Observer<EventType>
+class ChefPlayerController : public MyPlayerController
 {
 public:
     ChefPlayerController(engine::GameObject* pGameObject);
@@ -20,17 +20,17 @@ public:
 
     virtual void SetControlledObject(engine::GameObject* pControlledObject)override;
 
-    void ThrowPepper();
+    virtual void Notify(EventType type)override;
 
-    virtual void Notify(EventType)override;
+    void ThrowPepper();
 
 private:
     engine::ObservingPointer<ThrowPepperComponent> m_pThrowPepperComponent{};
 
     engine::ObservingPointer<ChefLogic> m_pChefLogic{};
 
-    bool m_IsDead{};
-
     glm::vec2 m_LastMovementDirection{0,-1}; //for throwing while idle
+
+    bool m_HasWon{};
 };
 

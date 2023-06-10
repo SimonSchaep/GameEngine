@@ -188,7 +188,10 @@ xcopy "$(SolutionDir)Data\" "$(ProjectDir)Data\" /Y</Command>
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="AIController.cpp" />
+    <ClCompile Include="GamePlayingState.cpp" />
     <ClCompile Include="EnemyAIController.cpp" />
+    <ClCompile Include="GamePausedState.cpp" />
+    <ClCompile Include="LeaderboardState.cpp" />
     <ClCompile Include="HotdogSpriteController.cpp" />
     <ClCompile Include="ChefLogic.cpp" />
     <ClCompile Include="ChefPlayerController.cpp" />
@@ -201,7 +204,6 @@ xcopy "$(SolutionDir)Data\" "$(ProjectDir)Data\" /Y</Command>
     <ClCompile Include="FoodParent.cpp" />
     <ClCompile Include="FPSCounter.cpp" />
     <ClCompile Include="GameManager.cpp" />
-    <ClCompile Include="GameState.cpp" />
     <ClCompile Include="Level.cpp" />
     <ClCompile Include="LivesDisplay.cpp" />
     <ClCompile Include="Main.cpp" />
@@ -213,13 +215,17 @@ xcopy "$(SolutionDir)Data\" "$(ProjectDir)Data\" /Y</Command>
     <ClCompile Include="PlayerPoints.cpp" />
     <ClCompile Include="PointsDisplay.cpp" />
     <ClCompile Include="RotateComponent.cpp" />
+    <ClCompile Include="StartMenuState.cpp" />
     <ClCompile Include="ThrowPepperComponent.cpp" />
     <ClCompile Include="TrashTheCacheComponent.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AIController.h" />
+    <ClInclude Include="GamePlayingState.h" />
     <ClInclude Include="EnemyAIController.h" />
     <ClInclude Include="EventTypes.h" />
+    <ClInclude Include="GamePausedState.h" />
+    <ClInclude Include="LeaderboardState.h" />
     <ClInclude Include="HotdogSpriteController.h" />
     <ClInclude Include="ChefLogic.h" />
     <ClInclude Include="ChefPlayerController.h" />
@@ -246,6 +252,7 @@ xcopy "$(SolutionDir)Data\" "$(ProjectDir)Data\" /Y</Command>
     <ClInclude Include="PlayerPoints.h" />
     <ClInclude Include="PointsDisplay.h" />
     <ClInclude Include="RotateComponent.h" />
+    <ClInclude Include="StartMenuState.h" />
     <ClInclude Include="ThrowPepperCommand.h" />
     <ClInclude Include="ThrowPepperComponent.h" />
     <ClInclude Include="TrashTheCacheComponent.h" />

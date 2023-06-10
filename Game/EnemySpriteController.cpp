@@ -7,6 +7,9 @@
 #include "MovementComponent.h"
 #include "ServiceLocator.h"
 #include "Logger.h"
+#include "EnemyLogic.h"
+#include "GameManager.h"
+#include "Scene.h"
 
 using namespace engine;
 
@@ -18,9 +21,11 @@ EnemySpriteController::EnemySpriteController(engine::GameObject* pGameObject)
 void EnemySpriteController::Initialize()
 {
 	m_pMovementComponent = GetGameObject()->GetParent()->GetComponent<MovementComponent>();
+	m_pEnemyLogic = GetGameObject()->GetParent()->GetComponent<EnemyLogic>();
 
 	//create state machine
 	m_pSpriteStateMachine = GetGameObject()->CreateAndAddComponent<SpriteStateMachineComponent>();
+	m_pSpriteRenderer = GetGameObject()->GetComponent<SpriteRenderComponent>();
 
 	//states
 	auto pRunningLeft = m_pSpriteStateMachine->CreateAndAddState(std::move(ResourceManager::GetInstance().LoadSprite(m_RunningSpriteName, 2, 1, .15f, 0, 1, true, false)));
@@ -79,18 +84,26 @@ void EnemySpriteController::Initialize()
 
 void EnemySpriteController::Update()
 {
-
-}
-
-void EnemySpriteController::Notify()
-{
+	if (m_pEnemyLogic->IsFalling())
+	{
+		if (!m_pSpriteRenderer->GetIsPaused())
+		{
+			m_pSpriteRenderer->Pause();
+			//ServiceLocator::GetLogger().LogLine("pause");
+		}
+	}
+	else if (m_pSpriteRenderer->GetIsPaused())
+	{
+		m_pSpriteRenderer->Resume();
+		//ServiceLocator::GetLogger().LogLine("resume");
+	}
 }
 
 void EnemySpriteController::AddStateToLeft(engine::SpriteState* state, engine::SpriteState* runningState)
 {
 	state->AddConnection(SpriteConnection{ runningState, [this]()
 		{
-			return !m_IsDead && !m_IsStunned && m_pMovementComponent->GetCurrentMovementDirection().x < -0.01f;
+			return !m_pEnemyLogic->IsDead() && !m_pEnemyLogic->IsStunned() && m_pMovementComponent->GetCurrentMovementDirection().x < -0.01f;
 		}
 		});
 }
@@ -99,7 +112,7 @@ void EnemySpriteController::AddStateToRight(engine::SpriteState* state, engine::
 {
 	state->AddConnection(SpriteConnection{ runningState, [this]()
 		{
-			return !m_IsDead && !m_IsStunned && m_pMovementComponent->GetCurrentMovementDirection().x > 0.01f;
+			return !m_pEnemyLogic->IsDead() && !m_pEnemyLogic->IsStunned() && m_pMovementComponent->GetCurrentMovementDirection().x > 0.01f;
 		}
 		});
 }
@@ -108,7 +121,7 @@ void EnemySpriteController::AddStateToUp(engine::SpriteState* state, engine::Spr
 {
 	state->AddConnection(SpriteConnection{ runningState, [this]()
 		{
-			return !m_IsDead && !m_IsStunned && m_pMovementComponent->GetCurrentMovementDirection().y > 0.01f;
+			return !m_pEnemyLogic->IsDead() && !m_pEnemyLogic->IsStunned() && m_pMovementComponent->GetCurrentMovementDirection().y > 0.01f;
 		}
 		});
 }
@@ -117,7 +130,7 @@ void EnemySpriteController::AddStateToDown(engine::SpriteState* state, engine::S
 {
 	state->AddConnection(SpriteConnection{ runningState, [this]()
 		{
-			return !m_IsDead && !m_IsStunned && m_pMovementComponent->GetCurrentMovementDirection().y < -0.01f;
+			return !m_pEnemyLogic->IsDead() && !m_pEnemyLogic->IsStunned() && m_pMovementComponent->GetCurrentMovementDirection().y < -0.01f;
 		}
 		});
 }
@@ -126,7 +139,7 @@ void EnemySpriteController::AddStateToDeath(engine::SpriteState* state, engine::
 {
 	state->AddConnection(SpriteConnection{ deathState, [this]()
 		{
-			return m_IsDead;
+			return m_pEnemyLogic->IsDead();
 		}
 		});
 }
@@ -135,7 +148,7 @@ void EnemySpriteController::AddStateToStunned(engine::SpriteState* state, engine
 {
 	state->AddConnection(SpriteConnection{ stunnedState, [this]()
 		{
-			return m_IsStunned;
+			return m_pEnemyLogic->IsStunned();
 		}
 		});
 }

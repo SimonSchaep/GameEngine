@@ -22,6 +22,8 @@ public:
 	virtual void Update() override;
 
 	void StartFall();
+	void IncreaseFallExtraLevel() { m_FallExtraLevels++; }
+	void DecreaseFallExtraLevel() { m_FallExtraLevels--; }
 
 	virtual void Notify(engine::Collider::TriggerType triggerType, engine::Collider* pOriginCollider, engine::Collider* pHitCollider) override;
 
@@ -38,7 +40,7 @@ private:
 
 	void DropFoodElement(int elementId, bool skipDropLeftNeighbor, bool skipDropRightNeighbor);
 
-	void StopFall();
+	void StopFall(bool isForced);
 	void ReachedPlate();
 
 	//this would be done in a rigidbody component if we had one
@@ -58,5 +60,7 @@ private:
 	bool m_ReachedPlate{};
 
 	int m_DropSound{};
+
+	int m_FallExtraLevels{};
 };
 

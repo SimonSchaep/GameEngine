@@ -65,7 +65,8 @@ void FoodParent::HandleTriggerEnter(Collider* pOriginCollider, Collider* pHitCol
 		{
 			if (pHitCollider->GetGameObject()->HasTag("platform"))
 			{
-				StopFall();
+				StopFall(false);
+				//ServiceLocator::GetLogger().LogLine("stopfall");
 			}
 			else if (pHitCollider->GetGameObject()->HasTag("plate"))
 			{
@@ -76,7 +77,7 @@ void FoodParent::HandleTriggerEnter(Collider* pOriginCollider, Collider* pHitCol
 				auto otherFoodParent = pHitCollider->GetGameObject()->GetComponent<FoodParent>();
 				if (!otherFoodParent->HasReachedPlate())
 				{
-					if (!otherFoodParent->IsFalling() && otherFoodParent->GetGameObject()->GetTransform()->GetWorldPosition().y < GetGameObject()->GetTransform()->GetWorldPosition().y)
+					if (otherFoodParent->GetGameObject()->GetTransform()->GetWorldPosition().y < GetGameObject()->GetTransform()->GetWorldPosition().y)
 					{
 						otherFoodParent->StartFall();
 						m_FallVelocity = m_BounceVelocity;
@@ -173,13 +174,22 @@ void FoodParent::DropFoodElement(int elementId, bool skipDropLeftNeighbor, bool 
 	}
 }
 
-void FoodParent::StopFall()
+void FoodParent::StopFall(bool isForced)
 {
+	if (!isForced && m_FallExtraLevels > 0)
+	{
+		m_FallExtraLevels--;
+		m_FallVelocity = 0;
+		//ServiceLocator::GetLogger().LogLine("keepfalling");
+		return;
+	}
+	//ServiceLocator::GetLogger().LogLine("fall");
 	for (size_t i{}; i < m_FoodElementStates.size(); ++i)
 	{
 		m_FoodElementStates[i] = false;
 	}
 	m_FallVelocity = 0;
+	
 	m_FallEvent->NotifyObservers(GetGameObject(), false);
 	m_IsFalling = false;
 }
@@ -188,7 +198,7 @@ void FoodParent::ReachedPlate()
 {
 	if (m_ReachedPlate)return;
 
-	StopFall();
+	StopFall(true);
 	m_ReachedPlate = true;
 	m_ReachedPlateEvent->NotifyObservers(this);
 }

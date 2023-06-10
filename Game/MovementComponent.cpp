@@ -152,7 +152,7 @@ void MovementComponent::CheckMoveY()
 	}
 }
 
-bool MovementComponent::CanMoveUp()
+bool MovementComponent::CanMoveUp()const
 {
 	auto transform = GetGameObject()->GetTransform();
 	int row{};
@@ -167,7 +167,7 @@ bool MovementComponent::CanMoveUp()
 		&& m_pLevel->IsNavigable(row + 1, col, m_IsEnemy);
 }
 
-bool MovementComponent::CanMoveDown()
+bool MovementComponent::CanMoveDown()const
 {
 	auto transform = GetGameObject()->GetTransform();
 	int row{};
@@ -182,7 +182,7 @@ bool MovementComponent::CanMoveDown()
 		&& m_pLevel->IsNavigable(row - 1, col, m_IsEnemy);
 }
 
-bool MovementComponent::CanMoveRight()
+bool MovementComponent::CanMoveRight()const
 {
 	auto transform = GetGameObject()->GetTransform();
 	int row{};
@@ -197,7 +197,7 @@ bool MovementComponent::CanMoveRight()
 		&& m_pLevel->IsNavigable(row, col + 1, m_IsEnemy);
 }
 
-bool MovementComponent::CanMoveLeft()
+bool MovementComponent::CanMoveLeft()const
 {
 	auto transform = GetGameObject()->GetTransform();
 	int row{};

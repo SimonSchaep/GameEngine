@@ -22,10 +22,11 @@ void ChefSpriteController::Initialize()
 	auto pGameManager = GetScene()->FindGameObjectByName("GameManager")->GetComponent<GameManager>();
 	pGameManager->GetOnChefWon()->AddObserver(this);
 
-	GetGameObject()->GetParent()->GetComponent<ChefLogic>()->GetOnDeath()->AddObserver(this);
-
 	m_pMovementComponent = GetGameObject()->GetParent()->GetComponent<MovementComponent>();
 	m_pThrowPepperComponent = GetGameObject()->GetParent()->GetComponent<ThrowPepperComponent>();
+	m_ChefLogicComponent = GetGameObject()->GetParent()->GetComponent<ChefLogic>();
+
+	m_ChefLogicComponent->GetOnDeath()->AddObserver(this);
 
 	//create state machine
 	m_pSpriteStateMachine = GetGameObject()->CreateAndAddComponent<SpriteStateMachineComponent>();
@@ -111,22 +112,22 @@ void ChefSpriteController::Initialize()
 
 	pThrowLeft->AddConnection(SpriteConnection{ pIdleLeft, [this]()
 		{
-			return !m_IsPlayerThrowing;
+			return !m_pThrowPepperComponent->IsThrowing();
 		}
 		});
 	pThrowRight->AddConnection(SpriteConnection{ pIdleRight, [this]()
 		{
-			return !m_IsPlayerThrowing;
+			return !m_pThrowPepperComponent->IsThrowing();
 		}
 		});
 	pThrowUp->AddConnection(SpriteConnection{ pIdleUp, [this]()
 		{
-			return !m_IsPlayerThrowing;
+			return !m_pThrowPepperComponent->IsThrowing();
 		}
 		});
 	pThrowDown->AddConnection(SpriteConnection{ pIdleDown, [this]()
 		{
-			return !m_IsPlayerThrowing;
+			return !m_pThrowPepperComponent->IsThrowing();
 		}
 		});
 
@@ -156,11 +157,16 @@ void ChefSpriteController::Initialize()
 			return pSpriteRenderer->GetIsPaused();
 		}
 		});
+
+	pDeath->AddConnection(SpriteConnection{ pIdleDown, [this]()
+		{
+			return !m_ChefLogicComponent->IsDead();
+		}
+		});
 }
 
 void ChefSpriteController::Update()
 {
-	m_IsPlayerThrowing = m_pThrowPepperComponent->IsThrowing();
 }
 
 void ChefSpriteController::Notify(EventType eventType)
@@ -169,12 +175,17 @@ void ChefSpriteController::Notify(EventType eventType)
 	{
 		m_HasPlayerWon = true;
 		GetGameObject()->GetComponent<SpriteRenderComponent>()->SetUpdateWhenTimePaused(true);
+		m_pSpriteStateMachine->ForceStateEvaluation();
 	}
-	else if (eventType == EventType::chefDied)
+}
+
+void ChefSpriteController::Notify(EventType eventType, ChefLogic*)
+{
+	if (eventType == EventType::chefDied)
 	{
-		m_IsPlayerDead = true;
+		GetGameObject()->GetComponent<SpriteRenderComponent>()->SetUpdateWhenTimePaused(true);
+		m_pSpriteStateMachine->ForceStateEvaluation();
 	}
-	m_pSpriteStateMachine->ForceStateEvaluation();
 }
 
 void ChefSpriteController::AddIdleToLeft(engine::SpriteState* idleState, engine::SpriteState* runningState)
@@ -220,7 +231,7 @@ void ChefSpriteController::AddStateToThrow(engine::SpriteState* state, engine::S
 {
 	state->AddConnection(SpriteConnection{ throwState, [this]()
 		{
-			return m_IsPlayerThrowing;
+			return m_pThrowPepperComponent->IsThrowing();
 		}
 		});
 }
@@ -238,7 +249,7 @@ void ChefSpriteController::AddStateToDeath(engine::SpriteState* state, engine::S
 {
 	state->AddConnection(SpriteConnection{ deathState, [this]()
 		{
-			return m_IsPlayerDead;
+			return m_ChefLogicComponent->IsDead();
 		}
 		});
 }

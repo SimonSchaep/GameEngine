@@ -1,6 +1,9 @@
 #pragma once
 #include "BaseCommand.h"
 #include "GameState.h"
+#include "StartMenuState.h"
+#include "GamePlayingState.h"
+#include "GamePausedState.h"
 #include "ObservingPointer.h"
 
 class StartGameCommand : public engine::BaseCommand

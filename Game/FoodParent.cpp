@@ -38,24 +38,6 @@ void FoodParent::Update()
 	}	
 }
 
-void FoodParent::Notify(Collider::TriggerType triggerType, Collider* pOriginCollider, Collider* pHitCollider)
-{
-	switch (triggerType)
-	{
-	case engine::Collider::TriggerType::enter:
-		HandleTriggerEnter(pOriginCollider, pHitCollider);
-		break;
-	case engine::Collider::TriggerType::exit:
-		HandleTriggerExit(pOriginCollider, pHitCollider);
-		break;
-	case engine::Collider::TriggerType::stay:
-		HandleTriggerStay(pOriginCollider, pHitCollider);
-		break;
-	default:
-		break;
-	}
-}
-
 void FoodParent::HandleTriggerEnter(Collider* pOriginCollider, Collider* pHitCollider)
 {
 
@@ -124,14 +106,6 @@ void FoodParent::HandleTriggerEnter(Collider* pOriginCollider, Collider* pHitCol
 			DropFoodElement(id, false, false);
 		}		
 	}
-}
-
-void FoodParent::HandleTriggerExit(Collider* /*pOriginCollider*/, Collider* /*pHitCollider*/)
-{
-}
-
-void FoodParent::HandleTriggerStay(Collider* /*pOriginCollider*/, Collider* /*pHitCollider*/)
-{
 }
 
 void FoodParent::DropFoodElement(int elementId, bool skipDropLeftNeighbor, bool skipDropRightNeighbor)

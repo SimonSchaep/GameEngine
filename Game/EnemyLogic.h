@@ -4,6 +4,7 @@
 #include "Collider.h"
 #include "Event.h"
 #include "EventTypes.h"
+#include "CollisionEventReceiver.h"
 #include <glm/glm.hpp>
 
 namespace engine
@@ -14,7 +15,7 @@ namespace engine
 }
 
 class EnemyLogic final : public engine::BaseComponent
-	, public engine::Observer<engine::Collider::TriggerType, engine::Collider*, engine::Collider*>
+	, public engine::CollisionEventReceiver
 	, public engine::Observer<EventType>
 	, public engine::Observer<engine::GameObject*, bool>
 {
@@ -25,7 +26,6 @@ public:
 	virtual void Initialize() override;
 	virtual void Update() override;
 
-	virtual void Notify(engine::Collider::TriggerType triggerType, engine::Collider* pOriginCollider, engine::Collider* pHitCollider) override;
 	virtual void Notify(EventType) override;
 	virtual void Notify(engine::GameObject* pObject, bool isFalling) override;
 
@@ -38,9 +38,8 @@ public:
 private:
 	void Respawn();
 
-	void HandleTriggerEnter(engine::Collider* pOriginCollider, engine::Collider* pHitCollider);
-	void HandleTriggerExit(engine::Collider* pOriginCollider, engine::Collider* pHitCollider);
-	void HandleTriggerStay(engine::Collider* pOriginCollider, engine::Collider* pHitCollider);
+	virtual void HandleTriggerEnter(engine::Collider* pOriginCollider, engine::Collider* pHitCollider)override;
+	virtual void HandleTriggerExit(engine::Collider* pOriginCollider, engine::Collider* pHitCollider)override;
 
 	bool m_IsDead{};
 	bool m_IsStunned{};

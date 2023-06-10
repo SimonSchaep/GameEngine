@@ -148,6 +148,9 @@
     <ClCompile Include="ObservableObject.cpp">
       <Filter>Engine\ObservingPointer</Filter>
     </ClCompile>
+    <ClCompile Include="CollisionEventReceiver.cpp">
+      <Filter>Engine\Collisions</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Font.h">
@@ -323,6 +326,9 @@
     </ClInclude>
     <ClInclude Include="ObservingPointerBase.h">
       <Filter>Engine\ObservingPointer</Filter>
+    </ClInclude>
+    <ClInclude Include="CollisionEventReceiver.h">
+      <Filter>Engine\Collisions</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

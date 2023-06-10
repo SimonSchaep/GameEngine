@@ -226,6 +226,7 @@
     <ClInclude Include="CameraComponent.h" />
     <ClInclude Include="Collider.h" />
     <ClInclude Include="ColliderDebugRenderComponent.h" />
+    <ClInclude Include="CollisionEventReceiver.h" />
     <ClInclude Include="CollisionManager.h" />
     <ClInclude Include="ConsoleLogger.h" />
     <ClInclude Include="FileLogger.h" />
@@ -284,6 +285,7 @@
     <ClCompile Include="CameraComponent.cpp" />
     <ClCompile Include="Collider.cpp" />
     <ClCompile Include="ColliderDebugRenderComponent.cpp" />
+    <ClCompile Include="CollisionEventReceiver.cpp" />
     <ClCompile Include="CollisionManager.cpp" />
     <ClCompile Include="ConsoleLogger.cpp" />
     <ClCompile Include="FileLogger.cpp" />

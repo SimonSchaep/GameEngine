@@ -5,7 +5,7 @@
 class ThrowPepperComponent : public engine::BaseComponent
 {
 public:
-	ThrowPepperComponent(engine::GameObject* pGameObject, int startingPepper) : engine::BaseComponent(pGameObject), m_PepperLeft{ startingPepper*9999 } {}; //todo: remove 9999
+	ThrowPepperComponent(engine::GameObject* pGameObject, int startingPepper) : engine::BaseComponent(pGameObject), m_PepperLeft{ startingPepper } {};
 
 	virtual void Initialize() override {};
 	virtual void Update() override;

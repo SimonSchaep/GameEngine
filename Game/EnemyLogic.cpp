@@ -52,22 +52,6 @@ void EnemyLogic::Respawn()
 	m_IsStunned = false;
 }
 
-void EnemyLogic::Notify(engine::Collider::TriggerType triggerType, engine::Collider* pOriginCollider, engine::Collider* pHitCollider)
-{
-	switch (triggerType)
-	{
-	case engine::Collider::TriggerType::enter:
-		HandleTriggerEnter(pOriginCollider, pHitCollider);
-		break;
-	case engine::Collider::TriggerType::exit:
-		HandleTriggerExit(pOriginCollider, pHitCollider);
-		break;
-	case engine::Collider::TriggerType::stay:
-		HandleTriggerStay(pOriginCollider, pHitCollider);
-		break;
-	}
-}
-
 void EnemyLogic::Notify(EventType type)
 {
 	if (type == EventType::respawnCharacters)
@@ -127,8 +111,4 @@ void EnemyLogic::HandleTriggerExit(engine::Collider* /*pOriginCollider*/, engine
 			pFood->DecreaseFallExtraLevel();
 		}
 	}
-}
-
-void EnemyLogic::HandleTriggerStay(engine::Collider* /*pOriginCollider*/, engine::Collider* /*pHitCollider*/)
-{
 }

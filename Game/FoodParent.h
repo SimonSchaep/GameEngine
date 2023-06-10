@@ -1,6 +1,7 @@
 #pragma once
 #include "BaseComponent.h"
 #include "Observer.h"
+#include "CollisionEventReceiver.h"
 #include "Collider.h"
 #include "Event.h"
 #include <vector>
@@ -12,7 +13,7 @@ namespace engine
 	class BoxCollider;
 }
 
-class FoodParent : public engine::BaseComponent, engine::Observer<engine::Collider::TriggerType, engine::Collider*, engine::Collider*>
+class FoodParent : public engine::BaseComponent, public engine::CollisionEventReceiver
 {
 public:
 	FoodParent(engine::GameObject* pGameObject);
@@ -25,8 +26,6 @@ public:
 	void IncreaseFallExtraLevel() { m_FallExtraLevels++; }
 	void DecreaseFallExtraLevel() { m_FallExtraLevels--; }
 
-	virtual void Notify(engine::Collider::TriggerType triggerType, engine::Collider* pOriginCollider, engine::Collider* pHitCollider) override;
-
 	bool IsFalling() { return m_IsFalling; }
 	bool HasReachedPlate() { return m_ReachedPlate; }
 
@@ -34,9 +33,7 @@ public:
 	engine::Event<FoodParent*>* GetReachedPlateEvent() { return m_ReachedPlateEvent.get(); }
 
 private:
-	void HandleTriggerEnter(engine::Collider* pOriginCollider, engine::Collider* pHitCollider);
-	void HandleTriggerExit(engine::Collider* pOriginCollider, engine::Collider* pHitCollider);
-	void HandleTriggerStay(engine::Collider* pOriginCollider, engine::Collider* pHitCollider);
+	virtual void HandleTriggerEnter(engine::Collider* pOriginCollider, engine::Collider* pHitCollider)override;
 
 	void DropFoodElement(int elementId, bool skipDropLeftNeighbor, bool skipDropRightNeighbor);
 
@@ -48,7 +45,7 @@ private:
 	float m_FallAcceleration{-400};
 	float m_BounceVelocity{ 50 };
 
-	float m_YPosForFoodDown{-2}; //todo: maybe rename
+	float m_YPosForFoodDown{-2};
 	float m_MinYPosForFoodDown{-12};
 	std::vector<engine::GameObject*> m_FoodElements{};
 	std::vector<bool> m_FoodElementStates{}; //true == fallen

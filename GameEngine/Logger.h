@@ -17,8 +17,8 @@ namespace engine
 	public:
 		virtual ~Logger() = default;
 
-		virtual void Log(const std::string& message, LogType logType = LogType::message) = 0;
-		virtual void LogLine(const std::string& message, LogType logType = LogType::message) = 0;
+		virtual void Log(const std::string& message, LogType logType = LogType::debug) = 0;
+		virtual void LogLine(const std::string& message, LogType logType = LogType::debug) = 0;
 
 	protected:
 		Logger() = default;

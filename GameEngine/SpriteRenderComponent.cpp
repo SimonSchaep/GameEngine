@@ -35,17 +35,19 @@ void engine::SpriteRenderComponent::SetSprite(std::shared_ptr<Sprite> sprite)
 {
 	m_Sprite = sprite;
 	m_Sprite->Reset();
-	m_Sprite->SetIsPaused(false);
+	m_Sprite->SetIsPaused(m_IsPaused);
 	m_Sprite->SetUpdateWhenTimePaused(m_UpdateWhenTimePaused);
 }
 
 void engine::SpriteRenderComponent::Pause()
 {
+	m_IsPaused = true;
 	if (m_Sprite)m_Sprite->SetIsPaused(true);
 }
 
 void engine::SpriteRenderComponent::Resume()
 {
+	m_IsPaused = false;
 	if (m_Sprite)m_Sprite->SetIsPaused(false);
 }
 

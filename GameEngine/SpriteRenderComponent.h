@@ -38,5 +38,7 @@ namespace engine
 		float m_AnimationSpeed{1.f};
 
 		bool m_UpdateWhenTimePaused{};
+
+		bool m_IsPaused{};
 	};
 }

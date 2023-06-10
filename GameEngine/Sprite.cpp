@@ -21,6 +21,8 @@ engine::Sprite::Sprite(const std::string& fileName, int cols, int rows, float ti
 
 void engine::Sprite::Update(float speed)
 {
+	if (m_IsPaused)return;
+
 	if (m_UpdateWhenTimePaused)
 	{
 		m_Timer += TimeManager::GetInstance().GetUnPausedDeltaTime() * speed;

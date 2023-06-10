@@ -128,9 +128,15 @@ void EnemyAIController::FindNewTargetTile() //target tile will be current tile i
 		return;
 	}
 
-	auto adjacentTiles = m_pLevel->GetAdjacentNavigableTiles(m_TargetTile, true);
+	auto adjacentTiles = m_pLevel->GetAdjacentNavigableTiles(m_TargetTile, false);
 
 	int newTargetTile{-1};
+
+	if (adjacentTiles.size() == 0)
+	{
+		//include cheats so there is a path
+		adjacentTiles = m_pLevel->GetAdjacentNavigableTiles(m_TargetTile, true);
+	}
 
 	if (adjacentTiles.size() > 2) //if more than 2 options
 	{

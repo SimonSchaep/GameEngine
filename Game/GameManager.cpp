@@ -51,7 +51,7 @@ void GameManager::Initialize()
 	m_pActiveGameState = GetStartMenuState();
 	m_pActiveGameState->OnEnter();
 
-	StartNextLevel();
+	m_pNextLevel = CreateLevel(m_NextLevelId);
 }
 
 void GameManager::Update()
@@ -106,12 +106,24 @@ void GameManager::OnSceneTransferred()
 
 void GameManager::StartNextLevel()
 {
-	auto pLevel = CreateLevel(m_NextLevelId);
-	SceneManager::GetInstance().SetActiveScene(pLevel);
+	if (GetScene() == m_pNextLevel)
+	{
+		m_pNextLevel = CreateLevel(m_NextLevelId);
+	}
+
+	SceneManager::GetInstance().SetActiveScene(m_pNextLevel);
+	AssignControllers();
 	m_NextLevelId = (m_NextLevelId + 1) % m_MaxLevelId;
 
 	m_StartNextLevelDelayTimer = 0;
 	m_RespawnCharactersDelayTimer = 0;
+}
+
+void GameManager::StartGame(GameMode gameMode)
+{
+	m_GameMode = gameMode;
+	m_NextLevelId = 0;
+	StartNextLevel();
 }
 
 void GameManager::Notify(FoodParent* pFood)
@@ -140,7 +152,7 @@ void GameManager::InitializeUI()
 	auto pTextChild = pScene->CreateAndAddGameObject("Text", pStartMenu);
 	pTextChild->GetTransform()->SetLocalPosition(windowSize.x / 2 - 200, windowSize.y / 2 - 10);
 	auto pTextRenderer = pTextChild->CreateAndAddComponent<TextRenderComponent>();
-	pTextRenderer->SetText("PRESS SPACE TO START");
+	pTextRenderer->SetText("PRESS 1/2/3 TO START");
 	pTextRenderer->SetFont(ResourceManager::GetInstance().LoadFont("Lingua.otf", 40));
 	m_StartMenuState = std::make_unique<StartMenuState>(this, pStartMenu);
 
@@ -172,32 +184,78 @@ Scene* GameManager::CreateLevel(int id)
 
 	//Load level
 	auto pLevelObject = pScene->CreateAndAddGameObject("Level");
-	pLevelObject->CreateAndAddComponent<Level>("Data/level" + std::to_string(id+1) + ".csv");
+	auto pLevel = pLevelObject->CreateAndAddComponent<Level>("Data/level" + std::to_string(id+1) + ".csv");
 
-	auto pChef1 = CreateChef(pScene);
-	auto pPlayerController = CreateChefPlayerController(pScene);
+	pLevel->BuildLevel();
 
-	pChef1->GetComponent<ChefLogic>()->GetOnDeath()->AddObserver(this);
+	ServiceLocator::GetLogger().LogLine("creating level " + std::to_string(id));
 
-	pPlayerController->SetControlledObject(pChef1);
+	return pScene;
+}
+
+void GameManager::AssignControllers()
+{
+	auto pChef = m_pNextLevel->FindGameObjectByName("Chef");
+
+	auto pPlayerControllerObject = m_pNextLevel->CreateAndAddGameObject();
+	auto pPlayerController = pPlayerControllerObject->CreateAndAddComponent<ChefPlayerController>();
+
+	pChef->GetComponent<ChefLogic>()->GetOnDeath()->AddObserver(this);
+
+	pPlayerController->SetControlledObject(pChef);
 	pPlayerController->UseKeyboard(true);
 	pPlayerController->UseController(1);
 
-	auto pChef2 = CreateChef(pScene);
-	pPlayerController = CreateChefPlayerController(pScene);
+	if (m_GameMode == GameMode::coop)
+	{
+		auto pLevel = m_pNextLevel->FindGameObjectByName("Level")->GetComponent<Level>();
+
+		int index = pLevel->GetIndexOfPos(pChef->GetTransform()->GetWorldPosition());
+
+		auto adjacentTiles = pLevel->GetAdjacentNavigableTiles(index, false);
+
+		if (adjacentTiles.size() == 0)
+		{
+			ServiceLocator::GetLogger().LogLine("No adjacent tiles found next to chef", LogType::error);
+			return;
+		}
 		
-	pChef2->GetComponent<ChefLogic>()->GetOnDeath()->AddObserver(this);
+		auto pos = pLevel->GetCenterOfCell(adjacentTiles[0]);
 
-	pPlayerController->SetControlledObject(pChef2);
-	pPlayerController->UseKeyboard(false);
-	pPlayerController->UseController(0);
+		auto pChef2 = pLevel->SpawnChef(pos, true);
+
+		pPlayerControllerObject = m_pNextLevel->CreateAndAddGameObject();
+		pPlayerController = pPlayerControllerObject->CreateAndAddComponent<ChefPlayerController>();
+
+		pChef2->GetComponent<ChefLogic>()->GetOnDeath()->AddObserver(this);
+
+		pPlayerController->SetControlledObject(pChef2);
+		pPlayerController->UseKeyboard(false);
+		pPlayerController->UseController(0);
+	}
 
 
-	auto pHotdog = CreateHotdog(pScene);
-	auto pAIController = CreateEnemyAIController(pScene);
-	pAIController->SetControlledObject(pHotdog);
+	const float startDelay{1};
+	const float delayPerEnemy{2};
+	auto enemies = m_pNextLevel->FindAllGameObjectsWithTag("Enemy");
+	for (size_t i{}; i < enemies.size(); ++i)
+	{
+		if (i == 0 && m_GameMode == GameMode::versus)
+		{
+			/*auto pPlayerControllerObject = m_pNextLevel->CreateAndAddGameObject();
+			auto pPlayerController = pPlayerControllerObject->CreateAndAddComponent<EnemyPlayerController>();
 
-	return pScene;
+			pPlayerController->SetControlledObject(enemies[i]);
+			pPlayerController->UseKeyboard(false);
+			pPlayerController->UseController(0);*/
+		}
+		else
+		{
+			auto pEnemyControllerObject = m_pNextLevel->CreateAndAddGameObject();
+			auto pEnemyController = pEnemyControllerObject->CreateAndAddComponent<EnemyAIController>(startDelay + (i * delayPerEnemy));
+			pEnemyController->SetControlledObject(enemies[i]);
+		}
+	}
 }
 
 void GameManager::CheckIfChefWon()
@@ -206,62 +264,8 @@ void GameManager::CheckIfChefWon()
 	{
 		m_StartNextLevelDelayTimer = m_StartNextLevelDelay;
 		m_OnChefWon->NotifyObservers(EventType::chefWon);
+		m_pNextLevel = CreateLevel(m_NextLevelId); //todo: this could be put in a separate thread to mask that the level is loading
 	}
-}
-
-engine::GameObject* GameManager::CreateChef(engine::Scene* pScene)
-{
-	auto pChef = pScene->CreateAndAddGameObject("Chef");
-	pChef->AddTag("Chef");
-	pChef->GetTransform()->SetLocalPosition({ 96,596 });
-	pChef->CreateAndAddComponent<ThrowPepperComponent>(5);
-	auto pMovementComponent = pChef->CreateAndAddComponent<MovementComponent>();
-	pMovementComponent->SetMoveSpeed(150);
-	pChef->CreateAndAddComponent<ChefLogic>(4);
-
-	//visuals
-	auto pChefVisuals = pScene->CreateAndAddGameObject("ChefVisuals", pChef);
-	auto pSpriteRenderComponent = pChefVisuals->CreateAndAddComponent<SpriteRenderComponent>();
-	pSpriteRenderComponent->SetSize({ 28, 28 });
-
-	pChefVisuals->CreateAndAddComponent<ChefSpriteController>();
-
-	float width = float(pSpriteRenderComponent->GetSize().x);
-	float height = float(pSpriteRenderComponent->GetSize().y);
-	pChefVisuals->GetTransform()->SetLocalPosition({ -width / 2, -8 });
-
-	//collider
-	auto pBoxCollider = pChef->CreateAndAddComponent<BoxCollider>();
-	pBoxCollider->SetShape({ -width / 4, -8, width/2, height/4 });
-
-	return pChef;
-}
-
-engine::GameObject* GameManager::CreateHotdog(engine::Scene* pScene)
-{
-	auto pHotdog = pScene->CreateAndAddGameObject("Hotdog");
-	pHotdog->AddTag("Enemy");
-	pHotdog->GetTransform()->SetLocalPosition({ 288,76 });
-	auto pMovementComponent = pHotdog->CreateAndAddComponent<MovementComponent>();
-	pMovementComponent->SetMoveSpeed(100);
-	pHotdog->CreateAndAddComponent<EnemyLogic>();
-
-	//visuals
-	auto pHotdogVisuals = pScene->CreateAndAddGameObject("HotdogVisuals", pHotdog);
-	auto pRenderComponent = pHotdogVisuals->CreateAndAddComponent<SpriteRenderComponent>();
-	pRenderComponent->SetSize({ 28, 28 });
-
-	pHotdogVisuals->CreateAndAddComponent<PickleSpriteController>();
-
-	float width = float(pRenderComponent->GetSize().x);
-	float height = float(pRenderComponent->GetSize().y);
-	pHotdogVisuals->GetTransform()->SetLocalPosition({ -width / 2, -8 });
-
-	//collider
-	auto pBoxCollider = pHotdog->CreateAndAddComponent<BoxCollider>();
-	pBoxCollider->SetShape({ -width / 4, -8, width/2, height/4 });
-
-	return pHotdog;
 }
 
 ChefPlayerController* GameManager::CreateChefPlayerController(engine::Scene* pScene)

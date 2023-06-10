@@ -7,6 +7,15 @@
 #include "FoodParent.h"
 #include "ServiceLocator.h"
 #include "Logger.h"
+#include "ChefLogic.h"
+#include "ThrowPepperComponent.h"
+#include "MovementComponent.h"
+#include "SpriteRenderComponent.h"
+#include "ChefSpriteController.h"
+#include "EnemyLogic.h"
+#include "PickleSpriteController.h"
+#include "HotdogSpriteController.h"
+#include "EggSpriteController.h"
 
 using namespace engine;
 using namespace levelParser;
@@ -20,7 +29,6 @@ Level::~Level() = default;
 
 void Level::Initialize()
 {
-	BuildLevel();
 }
 
 bool Level::IsNavigable(int row, int col, bool isEnemy) const
@@ -123,6 +131,163 @@ glm::vec2 Level::GetCenterOfCell(int index) const
 	return GetCenterOfCell(row, col);
 }
 
+engine::GameObject* Level::SpawnChef(glm::vec2 pos, bool isAlreadyCentered)
+{
+	ServiceLocator::GetLogger().LogLine("creating chef in scene: " + GetScene()->GetName());
+
+	const float width{ 28 };
+	const float height{ 28 };
+	const float visualsHeightOffset{ -height / 3.5f };
+	
+	if (!isAlreadyCentered)
+	{
+		pos += glm::vec2{m_GridElementWidth - width, m_GridElementHeight - height};
+		pos.x += m_GridElementWidth / 2 - (m_GridElementWidth - width);
+		pos.y += m_GridElementHeight / 2 - (m_GridElementHeight - height);
+	}
+
+	auto pChef = GetScene()->CreateAndAddGameObject("Chef");
+	pChef->AddTag("Chef");
+	pChef->GetTransform()->SetLocalPosition(pos);
+	pChef->CreateAndAddComponent<ThrowPepperComponent>(5);
+	auto pMovementComponent = pChef->CreateAndAddComponent<MovementComponent>();
+	pMovementComponent->SetMoveSpeed(150);
+	pChef->CreateAndAddComponent<ChefLogic>(4);
+
+	//visuals
+	auto pChefVisuals = GetScene()->CreateAndAddGameObject("ChefVisuals", pChef);
+	auto pSpriteRenderComponent = pChefVisuals->CreateAndAddComponent<SpriteRenderComponent>();
+	pSpriteRenderComponent->SetSize({ width, height });
+	pSpriteRenderComponent->SetLayer(4);
+
+	pChefVisuals->CreateAndAddComponent<ChefSpriteController>();
+
+	pChefVisuals->GetTransform()->SetLocalPosition({ -width / 2, visualsHeightOffset });
+
+	//collider
+	auto pBoxCollider = pChef->CreateAndAddComponent<BoxCollider>();
+	pBoxCollider->SetShape({ -width / 4, visualsHeightOffset, width / 2, height / 4 });
+
+	return pChef;
+}
+
+void Level::SpawnHotdog(engine::TextureRenderComponent* pRenderComponent, engine::GameObject* pLevelElementGameObject, glm::vec2 pos)
+{
+	const float width{ 28 };
+	const float height{ 28 };
+	const float visualsHeightOffset{ -height / 3.5f };
+
+	pos += glm::vec2{m_GridElementWidth - width, m_GridElementHeight - height};
+	pos.x += m_GridElementWidth / 2 - (m_GridElementWidth - width);
+	pos.y += m_GridElementHeight / 2 - (m_GridElementHeight - height);
+
+	auto pHotdog = GetScene()->CreateAndAddGameObject("Hotdog");
+	pHotdog->AddTag("Enemy");
+	pHotdog->GetTransform()->SetLocalPosition(pos);
+	auto pMovementComponent = pHotdog->CreateAndAddComponent<MovementComponent>();
+	pMovementComponent->SetMoveSpeed(100);
+	pHotdog->CreateAndAddComponent<EnemyLogic>();
+
+	//visuals
+	auto pHotdogVisuals = GetScene()->CreateAndAddGameObject("HotdogVisuals", pHotdog);
+	auto pSpriteRenderComponent = pHotdogVisuals->CreateAndAddComponent<SpriteRenderComponent>();
+	pSpriteRenderComponent->SetSize({ width, height });
+	pSpriteRenderComponent->SetLayer(2);
+
+	pHotdogVisuals->CreateAndAddComponent<HotdogSpriteController>();
+
+	pHotdogVisuals->GetTransform()->SetLocalPosition({ -width / 2, visualsHeightOffset });
+
+	//black cover
+	pLevelElementGameObject->GetTransform()->SetWorldPosition(pHotdogVisuals->GetTransform()->GetWorldPosition());
+
+	pRenderComponent->SetTexture("black.png");
+	pRenderComponent->SetLayer(3);
+	pRenderComponent->SetSize({ width, height });
+
+	//collider
+	auto pBoxCollider = pHotdog->CreateAndAddComponent<BoxCollider>();
+	pBoxCollider->SetShape({ -width / 4, visualsHeightOffset, width / 2, height / 4 });
+}
+
+void Level::SpawnEgg(engine::TextureRenderComponent* pRenderComponent, engine::GameObject* pLevelElementGameObject, glm::vec2 pos)
+{
+	const float width{ 28 };
+	const float height{ 28 };
+	const float visualsHeightOffset{ -height / 3.5f };
+
+	pos += glm::vec2{m_GridElementWidth - width, m_GridElementHeight - height};
+	pos.x += m_GridElementWidth / 2 - (m_GridElementWidth - width);
+	pos.y += m_GridElementHeight / 2 - (m_GridElementHeight - height);
+
+	auto pEgg = GetScene()->CreateAndAddGameObject("Egg");
+	pEgg->AddTag("Enemy");
+	pEgg->GetTransform()->SetLocalPosition(pos);
+	auto pMovementComponent = pEgg->CreateAndAddComponent<MovementComponent>();
+	pMovementComponent->SetMoveSpeed(100);
+	pEgg->CreateAndAddComponent<EnemyLogic>();
+
+	//visuals
+	auto pEggVisuals = GetScene()->CreateAndAddGameObject("EggVisuals", pEgg);
+	auto pSpriteRenderComponent = pEggVisuals->CreateAndAddComponent<SpriteRenderComponent>();
+	pSpriteRenderComponent->SetSize({ width, height });
+	pSpriteRenderComponent->SetLayer(2);
+
+	pEggVisuals->CreateAndAddComponent<EggSpriteController>();
+
+	pEggVisuals->GetTransform()->SetLocalPosition({ -width / 2, visualsHeightOffset });
+
+	//black cover
+	pLevelElementGameObject->GetTransform()->SetWorldPosition(pEggVisuals->GetTransform()->GetWorldPosition());
+
+	pRenderComponent->SetTexture("black.png");
+	pRenderComponent->SetLayer(3);
+	pRenderComponent->SetSize({ width, height });
+
+	//collider
+	auto pBoxCollider = pEgg->CreateAndAddComponent<BoxCollider>();
+	pBoxCollider->SetShape({ -width / 4, visualsHeightOffset, width / 2, height / 4 });
+}
+
+void Level::SpawnPickle(engine::TextureRenderComponent* pRenderComponent, engine::GameObject* pLevelElementGameObject, glm::vec2 pos)
+{
+	const float width{ 28 };
+	const float height{ 28 };
+	const float visualsHeightOffset{ -height / 3.5f };
+
+	pos += glm::vec2{m_GridElementWidth - width, m_GridElementHeight - height};
+	pos.x += m_GridElementWidth / 2 - (m_GridElementWidth - width);
+	pos.y += m_GridElementHeight / 2 - (m_GridElementHeight - height);
+
+	auto pPickle = GetScene()->CreateAndAddGameObject("Pickle");
+	pPickle->AddTag("Enemy");
+	pPickle->GetTransform()->SetLocalPosition(pos);
+	auto pMovementComponent = pPickle->CreateAndAddComponent<MovementComponent>();
+	pMovementComponent->SetMoveSpeed(100);
+	pPickle->CreateAndAddComponent<EnemyLogic>();
+
+	//visuals
+	auto pPickleVisuals = GetScene()->CreateAndAddGameObject("PickleVisuals", pPickle);
+	auto pSpriteRenderComponent = pPickleVisuals->CreateAndAddComponent<SpriteRenderComponent>();
+	pSpriteRenderComponent->SetSize({ width, height });
+	pSpriteRenderComponent->SetLayer(2);
+
+	pPickleVisuals->CreateAndAddComponent<PickleSpriteController>();
+
+	pPickleVisuals->GetTransform()->SetLocalPosition({ -width / 2, visualsHeightOffset });
+
+	//black cover
+	pLevelElementGameObject->GetTransform()->SetWorldPosition(pPickleVisuals->GetTransform()->GetWorldPosition());
+
+	pRenderComponent->SetTexture("black.png");
+	pRenderComponent->SetLayer(3);
+	pRenderComponent->SetSize({ width, height });
+
+	//collider
+	auto pBoxCollider = pPickle->CreateAndAddComponent<BoxCollider>();
+	pBoxCollider->SetShape({ -width / 4, visualsHeightOffset, width / 2, height / 4 });
+}
+
 void Level::BuildLevel()
 {
 	auto start = std::chrono::high_resolution_clock::now();
@@ -160,7 +325,7 @@ void Level::BuildLevel()
 		{
 			LevelElement levelElement{ levelElements[GetIndexFromRowCol(r, c)] };
 
-			if (levelElement.eLevelElement == ELevelElement::empty && !levelElement.hasLadder) continue;
+			if ((levelElement.eLevelElement == ELevelElement::empty && !levelElement.hasLadder) || levelElement.eLevelElement == ELevelElement::enemyCheat) continue;
 
 			glm::vec2 position{ m_LevelStartPos };
 			position += glm::vec2{ c* m_GridElementWidth, (m_LevelHeight - 1 - r)* m_GridElementHeight };
@@ -263,6 +428,35 @@ void Level::BuildLevel()
 					SpawnPlate(position, levelElements, r, c);
 				}
 				break;
+			case ELevelElement::chef:
+				//spawn as if it was platform
+				if (hasFoodAbove[c])
+				{
+					CreateDarkPlatform(pRenderComponent, pLevelElementGameObject, levelElement.hasLadder);
+				}
+				else
+				{
+					if (levelElement.hasLadder)
+					{
+						pRenderComponent->SetTexture("platformladder.png");
+					}
+					else
+					{
+						pRenderComponent->SetTexture("platform.png");
+					}
+				}
+				//also spawn a chef
+				SpawnChef(position, false);
+				break;
+			case ELevelElement::hotdog:
+				SpawnHotdog(pRenderComponent, pLevelElementGameObject, position);
+				break;
+			case ELevelElement::egg:
+				SpawnEgg(pRenderComponent, pLevelElementGameObject, position);
+				break;
+			case ELevelElement::pickle:
+				SpawnPickle(pRenderComponent, pLevelElementGameObject,position);
+				break;
 			}
 		}
 	}
@@ -284,28 +478,28 @@ void Level::GetRowColOfIndex(int index, int& row, int& col) const
 	col = index % m_LevelWidth;
 }
 
-std::vector<int> Level::GetAdjacentNavigableTiles(int index, bool isEnemy) const
+std::vector<int> Level::GetAdjacentNavigableTiles(int index, bool includeCheats) const
 {
 	std::vector<int> adjacentTiles{};
 	int row, col;
 	GetRowColOfIndex(index, row, col);
 	//Right
-	if (IsNavigable(row, col + 1, isEnemy))
+	if (IsNavigable(row, col + 1, includeCheats))
 	{
 		adjacentTiles.emplace_back(GetIndexFromRowCol(row, col + 1));
 	}
 	//Left
-	if (IsNavigable(row, col - 1, isEnemy))
+	if (IsNavigable(row, col - 1, includeCheats))
 	{
 		adjacentTiles.emplace_back(GetIndexFromRowCol(row, col - 1));
 	}
 	//Up
-	if (IsNavigable(row + 1, col, isEnemy))
+	if (IsNavigable(row + 1, col, includeCheats))
 	{
 		adjacentTiles.emplace_back(GetIndexFromRowCol(row + 1, col));
 	}
 	//Down
-	if (IsNavigable(row - 1, col, isEnemy))
+	if (IsNavigable(row - 1, col, includeCheats))
 	{
 		adjacentTiles.emplace_back(GetIndexFromRowCol(row - 1, col));
 	}
@@ -425,7 +619,7 @@ void Level::SpawnFood(glm::vec2 pos, const std::vector<LevelElement>& levelEleme
 	}
 }
 
-void Level::CreateFoodElement(const glm::vec2 pos, const std::string& textureFileName, GameObject* pParent, BoxCollider* pParentCollider)
+void Level::CreateFoodElement(const glm::vec2& pos, const std::string& textureFileName, GameObject* pParent, BoxCollider* pParentCollider)
 {
 	auto pScene = GetGameObject()->GetScene();
 	auto pLevelElementGameObject = pScene->CreateAndAddGameObject("", pParent);
@@ -433,6 +627,7 @@ void Level::CreateFoodElement(const glm::vec2 pos, const std::string& textureFil
 	auto pRenderComponent = pLevelElementGameObject->CreateAndAddComponent<TextureRenderComponent>();
 	pRenderComponent->SetTexture(textureFileName);
 	pRenderComponent->SetSize({ m_GridElementWidth/2, m_GridElementHeight });
+	pRenderComponent->SetLayer(1);
 	auto pBoxCollider = pLevelElementGameObject->CreateAndAddComponent<BoxCollider>();
 	pBoxCollider->SetShape({ 0,0,m_GridElementWidth / 2, m_GridElementHeight });
 
@@ -461,7 +656,9 @@ void Level::GenerateNavigableAreas(const std::vector<LevelElement>& levelElement
 			else if (levelElements[iLvl].eLevelElement != ELevelElement::empty)
 			{
 				m_EnemyNavigableArea[iNav] = true;
-				if (levelElements[iLvl].eLevelElement != ELevelElement::plate && levelElements[iLvl].eLevelElement != ELevelElement::enemyCheat)
+				if (levelElements[iLvl].eLevelElement != ELevelElement::plate && levelElements[iLvl].eLevelElement != ELevelElement::enemyCheat
+					&& levelElements[iLvl].eLevelElement != ELevelElement::hotdog && levelElements[iLvl].eLevelElement != ELevelElement::egg
+					&& levelElements[iLvl].eLevelElement != ELevelElement::pickle)
 				{
 					m_ChefNavigableArea[iNav] = true;
 				}

@@ -8,9 +8,16 @@
 'C' == cheese
 'T' == tomato
 'PT' == plate
+'CH' == chef
+'HO' == mr. hotdog
+'EG' == mr. egg
+'PI' == mr. pickle
 
 add L for ladder
 
 eg.
 'L' == ladder
 'PL' == platform with ladder
+
+enemies don't have platforms or ladders under them
+their spawn will be hidden by a black square

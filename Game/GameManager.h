@@ -24,6 +24,13 @@ class EnemyAIController;
 class FoodParent;
 class ChefLogic;
 
+enum class GameMode
+{
+	singleplayer,
+	coop,
+	versus,
+};
+
 class GameManager final : public engine::BaseComponent, public engine::Observer<FoodParent*>, public engine::Observer<EventType, ChefLogic*>
 {
 public:
@@ -36,6 +43,7 @@ public:
 	virtual void OnSceneTransferred()override;
 
 	void StartNextLevel();
+	void StartGame(GameMode gameMode);
 
 	StartMenuState* GetStartMenuState()const { return m_StartMenuState.get(); }
 	GamePlayingState* GetGamePlayingState()const { return m_GamePlayingState.get(); }
@@ -52,10 +60,9 @@ public:
 private:
 	void InitializeUI();
 	engine::Scene* CreateLevel(int id);
+	void AssignControllers();
 	void CheckIfChefWon();
 
-	engine::GameObject* CreateChef(engine::Scene* pScene);
-	engine::GameObject* CreateHotdog(engine::Scene* pScene);
 	ChefPlayerController* CreateChefPlayerController(engine::Scene* pScene);
 	EnemyAIController* CreateEnemyAIController(engine::Scene* pScene);
 
@@ -66,8 +73,9 @@ private:
 
 	GameState* m_pActiveGameState{};
 
-	int m_NextLevelId{};
-	int m_MaxLevelId{2};
+	engine::Scene* m_pNextLevel{};
+	int m_NextLevelId{0};
+	int m_MaxLevelId{3}; //exclusive
 
 	std::unique_ptr<engine::Event<EventType>> m_OnChefWon{};
 	std::unique_ptr<engine::Event<EventType, ChefLogic*>> m_OnChefDied{};
@@ -82,5 +90,7 @@ private:
 
 	float m_StartNextLevelDelay{ 3.f };
 	float m_StartNextLevelDelayTimer{};
+
+	GameMode m_GameMode{GameMode::singleplayer};
 };
 

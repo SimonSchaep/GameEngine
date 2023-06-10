@@ -60,7 +60,7 @@ void load()
 	soundSystem->SetActualSoundSystem<SDLSoundSystem>();*/
 
 
-	auto pScene = SceneManager::GetInstance().CreateScene("Demo", true);
+	auto pScene = SceneManager::GetInstance().CreateScene("EmptyScene", true);
 	//background
 	//auto pGameObject = pScene->CreateAndAddGameObject("Background");
 	//auto pRenderComponent = pGameObject->CreateAndAddComponent<TextureRenderComponent>();

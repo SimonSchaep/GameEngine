@@ -5,12 +5,14 @@
 #include "GamePlayingState.h"
 #include "GamePausedState.h"
 #include "ObservingPointer.h"
+#include "GameManager.h"
 
 class StartGameCommand : public engine::BaseCommand
 {
 public:
-	StartGameCommand(StartMenuState* pStartMenuState)
+	StartGameCommand(StartMenuState* pStartMenuState, GameMode gameMode)
 		: m_pStartMenuState{ pStartMenuState }
+		, m_GameMode{ gameMode }
 	{
 	}
 
@@ -19,12 +21,13 @@ public:
 	virtual bool Execute() override
 	{
 		if (!m_pStartMenuState)return false;
-		m_pStartMenuState->StartGame();
+		m_pStartMenuState->StartGame(m_GameMode);
 		return true;
 	}
 
 private:
 	engine::ObservingPointer<StartMenuState> m_pStartMenuState;
+	GameMode m_GameMode;
 };
 
 

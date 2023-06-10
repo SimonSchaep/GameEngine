@@ -58,6 +58,10 @@ namespace levelParser
 		tomato,
 		plate,
 		enemyCheat,
+		hotdog,
+		egg,
+		pickle,
+		chef,
 	};
 
 	struct LevelElement
@@ -138,6 +142,22 @@ namespace levelParser
 				else if (element == "_")
 				{
 					levelElement.eLevelElement = ELevelElement::enemyCheat;
+				}
+				else if (element == "CH")
+				{
+					levelElement.eLevelElement = ELevelElement::chef;
+				}
+				else if (element == "HO")
+				{
+					levelElement.eLevelElement = ELevelElement::hotdog;
+				}
+				else if (element == "EG")
+				{
+					levelElement.eLevelElement = ELevelElement::egg;
+				}
+				else if (element == "PI")
+				{
+					levelElement.eLevelElement = ELevelElement::pickle;
 				}
 				else
 				{

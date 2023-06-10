@@ -102,7 +102,7 @@ void EnemyLogic::HandleTriggerEnter(engine::Collider* /*pOriginCollider*/, engin
 	{
 		auto pFood = pHitCollider->GetGameObject()->GetComponent<FoodParent>();
 		if (!pFood)return;
-		if (pFood->IsFalling())
+		if (pFood->IsFalling() && pHitCollider->GetTransform()->GetWorldPosition().y > GetTransform()->GetWorldPosition().y - 8)
 		{
 			m_IsDead = true;
 			m_RespawnDelayTimer = m_RespawnDelay;

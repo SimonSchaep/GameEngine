@@ -176,6 +176,8 @@ void FoodParent::DropFoodElement(int elementId, bool skipDropLeftNeighbor, bool 
 
 void FoodParent::StopFall(bool isForced)
 {
+	if (m_FallVelocity == 0)return; //prevent falling multiple times
+
 	if (!isForced && m_FallExtraLevels > 0)
 	{
 		m_FallExtraLevels--;

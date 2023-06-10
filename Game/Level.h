@@ -35,7 +35,7 @@ public:
 	int GetIndexFromRowCol(int row, int col)const;
 	void GetRowColOfIndex(int index, int& row, int& col)const;
 
-	std::vector<int> GetAdjacentNavigableTiles(int index, bool isEnemy)const;
+	std::vector<int> GetAdjacentNavigableTiles(int index, bool includeCheats)const;
 
 	bool IsInCenterOfElementX(const glm::vec2& pos, int margin)const;
 	bool IsInCenterOfElementY(const glm::vec2& pos, int margin)const;
@@ -52,13 +52,20 @@ public:
 	float GetCellHeight()const { return m_GridElementHeight; }
 	const glm::vec2& GetLevelPosition()const { return m_LevelStartPos; }
 
-private:
+
 	void BuildLevel();
+
+	engine::GameObject* SpawnChef(glm::vec2 pos, bool isAlreadyCentered);
+
+private:
+	void SpawnHotdog(engine::TextureRenderComponent* pRenderComponent, engine::GameObject* pLevelElementGameObject, glm::vec2 pos);
+	void SpawnEgg(engine::TextureRenderComponent* pRenderComponent, engine::GameObject* pLevelElementGameObject, glm::vec2 pos);
+	void SpawnPickle(engine::TextureRenderComponent* pRenderComponent, engine::GameObject* pLevelElementGameObject, glm::vec2 pos);
 
 	void CreateDarkPlatform(engine::TextureRenderComponent* pRenderComponent, engine::GameObject* pLevelElementGameObject, bool hasLadder);
 	void SpawnPlate(glm::vec2 pos, const std::vector<levelParser::LevelElement>& levelElements, int row, int col);
 	void SpawnFood(glm::vec2 pos, const std::vector<levelParser::LevelElement>& levelElements, int row, int col, levelParser::ELevelElement eLevelElement, const std::string& name);
-	void CreateFoodElement(const glm::vec2 pos, const std::string& textureFileName, engine::GameObject* pParent, engine::BoxCollider* pParentCollider);
+	void CreateFoodElement(const glm::vec2& pos, const std::string& textureFileName, engine::GameObject* pParent, engine::BoxCollider* pParentCollider);
 
 	void GenerateNavigableAreas(const std::vector<levelParser::LevelElement>& levelElements);
 	std::vector<bool> m_ChefNavigableArea{};

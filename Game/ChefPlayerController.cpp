@@ -21,6 +21,7 @@ void ChefPlayerController::Initialize()
 	MyPlayerController::Initialize();
 
 	BindKeyboardButtonToCommand(SDL_SCANCODE_SPACE, InputManager::KeyState::up, std::make_unique<ThrowPepperCommand>(this));
+	BindControllerButtonToCommand(InputController::ControllerButton::ButtonA, InputManager::KeyState::up, std::make_unique<ThrowPepperCommand>(this));
 
 	auto pGameManager = GetScene()->FindGameObjectByName("GameManager")->GetComponent<GameManager>();
 	pGameManager->GetOnChefWon()->AddObserver(this);

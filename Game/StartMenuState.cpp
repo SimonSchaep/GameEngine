@@ -14,6 +14,12 @@ StartMenuState::StartMenuState(GameManager* pGameManager, engine::GameObject* pM
 	m_pMenuGameObject->SetIsActive(false);
 }
 
+void StartMenuState::StartGame(GameMode gameMode)
+{
+	m_StartGame = true;
+	m_GameMode = gameMode;
+}
+
 GameState* StartMenuState::Update()
 {
 	if (m_StartGame)
@@ -25,7 +31,9 @@ GameState* StartMenuState::Update()
 
 void StartMenuState::OnEnter()
 {
-	m_Commands.emplace_back(InputManager::GetInstance().BindKeyboardButtonToCommand(SDL_SCANCODE_SPACE, InputManager::KeyState::up, std::make_unique<StartGameCommand>(this)));
+	m_Commands.emplace_back(InputManager::GetInstance().BindKeyboardButtonToCommand(SDL_SCANCODE_1, InputManager::KeyState::up, std::make_unique<StartGameCommand>(this, GameMode::singleplayer)));
+	m_Commands.emplace_back(InputManager::GetInstance().BindKeyboardButtonToCommand(SDL_SCANCODE_2, InputManager::KeyState::up, std::make_unique<StartGameCommand>(this, GameMode::coop)));
+	m_Commands.emplace_back(InputManager::GetInstance().BindKeyboardButtonToCommand(SDL_SCANCODE_3, InputManager::KeyState::up, std::make_unique<StartGameCommand>(this, GameMode::versus)));
 	m_StartGame = false;
 	m_pMenuGameObject->SetIsActive(true);
 	TimeManager::GetInstance().SetTimePaused(true);
@@ -39,4 +47,8 @@ void StartMenuState::OnExit()
 	}
 	m_Commands.clear();
 	m_pMenuGameObject->SetIsActive(false);
+	if (m_StartGame)
+	{
+		GetGameManager()->StartGame(m_GameMode);
+	}
 }

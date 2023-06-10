@@ -27,4 +27,7 @@ private:
 	bool m_PauseGame{};
 	bool m_CheckEndGame{};
 	std::vector<engine::BaseCommand*> m_Commands{};
+
+	float m_SpawnSpecialPickupInterval{15.f};
+	float m_SpawnSpecialPickupTimer{};
 };

@@ -216,6 +216,8 @@ xcopy "$(SolutionDir)Data\" "$(ProjectDir)Data\" /Y</Command>
     <ClCompile Include="PlayerPoints.cpp" />
     <ClCompile Include="PointsDisplay.cpp" />
     <ClCompile Include="RotateComponent.cpp" />
+    <ClCompile Include="ScoreManager.cpp" />
+    <ClCompile Include="SpecialPickupLogic.cpp" />
     <ClCompile Include="StartMenuState.cpp" />
     <ClCompile Include="ThrowPepperComponent.cpp" />
     <ClCompile Include="TrashTheCacheComponent.cpp" />
@@ -254,6 +256,8 @@ xcopy "$(SolutionDir)Data\" "$(ProjectDir)Data\" /Y</Command>
     <ClInclude Include="PlayerPoints.h" />
     <ClInclude Include="PointsDisplay.h" />
     <ClInclude Include="RotateComponent.h" />
+    <ClInclude Include="ScoreManager.h" />
+    <ClInclude Include="SpecialPickupLogic.h" />
     <ClInclude Include="StartMenuState.h" />
     <ClInclude Include="ThrowPepperCommand.h" />
     <ClInclude Include="ThrowPepperComponent.h" />

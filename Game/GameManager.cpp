@@ -32,6 +32,8 @@
 #include "FoodParent.h"
 #include "TimeManager.h"
 #include "EnemyPlayerController.h"
+#include "SpecialPickupLogic.h"
+#include "LifeTimer.h"
 
 using namespace engine;
 
@@ -125,6 +127,58 @@ void GameManager::StartGame(GameMode gameMode)
 	m_GameMode = gameMode;
 	m_NextLevelId = 0;
 	StartNextLevel();
+}
+
+void GameManager::SpawnSpecialPickup()
+{
+	const float width{24};
+	const float height{24};
+
+	auto pGameObject = GetScene()->CreateAndAddGameObject("SpecialPickup");
+	pGameObject->AddTag("SpecialPickup");
+
+	pGameObject->CreateAndAddComponent<SpecialPickupLogic>();
+	pGameObject->CreateAndAddComponent<LifeTimer>(10.f);
+	auto pCollider = pGameObject->CreateAndAddComponent<BoxCollider>();
+	pCollider->SetShape({ 0,0,width,height });
+	auto pRenderer = pGameObject->CreateAndAddComponent<TextureRenderComponent>();
+	pRenderer->SetLayer(3);
+	pRenderer->SetSize({width,height});
+	int randomValue = rand() % 3;
+	switch (randomValue)
+	{
+	case 0:
+		pRenderer->SetTexture("iceCream.png");
+		break;
+	case 1:
+		pRenderer->SetTexture("fries.png");
+		break;
+	case 2:
+		pRenderer->SetTexture("coffee.png");
+		break;
+	}
+
+	auto pLevel = GetScene()->FindGameObjectByName("Level")->GetComponent<Level>();
+
+	int randTileIndex{};
+	int row{}, col{};
+	const int maxTries{ 100 }; //to avoid (litterally) random lagspikes
+
+	for (int i{}; i < maxTries; ++i)
+	{
+		randTileIndex = rand() % (pLevel->GetLevelWidth() * pLevel->GetLevelHeight());
+		pLevel->GetRowColOfIndex(randTileIndex, row, col);
+		if (pLevel->IsNavigable(row, col, false))
+		{
+			break;
+		}
+	}
+
+	auto pos = pLevel->GetCenterOfCell(randTileIndex);
+	pos.x -= width / 2;
+	pos.y -= height / 2;
+
+	pGameObject->GetTransform()->SetWorldPosition(pos);
 }
 
 void GameManager::Notify(FoodParent* pFood)
@@ -267,18 +321,4 @@ void GameManager::CheckIfChefWon()
 		m_OnChefWon->NotifyObservers(EventType::chefWon);
 		m_pNextLevel = CreateLevel(m_NextLevelId); //todo: this could be put in a separate thread to mask that the level is loading
 	}
-}
-
-ChefPlayerController* GameManager::CreateChefPlayerController(engine::Scene* pScene)
-{
-	auto pPlayerControllerObject = pScene->CreateAndAddGameObject();
-	auto pPlayerController = pPlayerControllerObject->CreateAndAddComponent<ChefPlayerController>();
-	return pPlayerController;
-}
-
-EnemyAIController* GameManager::CreateEnemyAIController(engine::Scene* pScene)
-{
-	auto pAIcontrollerObject = pScene->CreateAndAddGameObject();
-	auto pAIController = pAIcontrollerObject->CreateAndAddComponent<EnemyAIController>(3.f);
-	return pAIController;
 }

@@ -45,6 +45,8 @@ public:
 	void StartNextLevel();
 	void StartGame(GameMode gameMode);
 
+	void SpawnSpecialPickup();
+
 	StartMenuState* GetStartMenuState()const { return m_StartMenuState.get(); }
 	GamePlayingState* GetGamePlayingState()const { return m_GamePlayingState.get(); }
 	GamePausedState* GetGamePausedState()const { return m_GamePausedState.get(); }
@@ -62,9 +64,6 @@ private:
 	engine::Scene* CreateLevel(int id);
 	void AssignControllers();
 	void CheckIfChefWon();
-
-	ChefPlayerController* CreateChefPlayerController(engine::Scene* pScene);
-	EnemyAIController* CreateEnemyAIController(engine::Scene* pScene);
 
 	std::unique_ptr<StartMenuState> m_StartMenuState{};
 	std::unique_ptr<GamePlayingState> m_GamePlayingState{};

@@ -35,6 +35,12 @@
     <Filter Include="GameManager\GameStates">
       <UniqueIdentifier>{18b48e6b-e434-4e86-a3a3-4069da26dcdf}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Components\specials">
+      <UniqueIdentifier>{9aa904b1-3581-4e86-990f-53ba4522fd6e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Scoring">
+      <UniqueIdentifier>{2a8fdfda-3972-4f23-abe0-3e9b6c88076c}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="FPSCounter.cpp">
@@ -130,6 +136,12 @@
     </ClCompile>
     <ClCompile Include="EnemyPlayerController.cpp">
       <Filter>Components\Controllers</Filter>
+    </ClCompile>
+    <ClCompile Include="SpecialPickupLogic.cpp">
+      <Filter>Components\specials</Filter>
+    </ClCompile>
+    <ClCompile Include="ScoreManager.cpp">
+      <Filter>Scoring</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -241,6 +253,12 @@
     </ClInclude>
     <ClInclude Include="EnemyPlayerController.h">
       <Filter>Components\Controllers</Filter>
+    </ClInclude>
+    <ClInclude Include="SpecialPickupLogic.h">
+      <Filter>Components\specials</Filter>
+    </ClInclude>
+    <ClInclude Include="ScoreManager.h">
+      <Filter>Scoring</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

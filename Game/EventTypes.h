@@ -3,5 +3,6 @@
 enum class EventType
 {
 	chefDied,
+	chefLost,
 	chefWon,
 };

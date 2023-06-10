@@ -23,6 +23,8 @@ namespace engine
 		void Pause();
 		void Resume();
 
+		void SetUpdateWhenTimePaused(bool updateWhenTimePaused);
+
 		void SetSize(const glm::vec2& size) { m_Size = size; }
 		glm::vec2 GetSize();
 
@@ -34,5 +36,7 @@ namespace engine
 		glm::vec2 m_Size{};
 
 		float m_AnimationSpeed{1.f};
+
+		bool m_UpdateWhenTimePaused{};
 	};
 }

@@ -23,6 +23,7 @@ namespace engine
 		float GetTimeScale()const { return m_TimeScale; }
 
 		float GetDeltaTime()const { return (m_TimePaused) ? 0.f : m_DeltaTime; }
+		float GetUnPausedDeltaTime()const { return m_DeltaTime; }
 		float GetTotalTime()const { return m_TotalTime; }
 	private:
 		friend class Singleton<TimeManager>;

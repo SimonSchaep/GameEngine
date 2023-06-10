@@ -36,6 +36,7 @@ void engine::SpriteRenderComponent::SetSprite(std::shared_ptr<Sprite> sprite)
 	m_Sprite = sprite;
 	m_Sprite->Reset();
 	m_Sprite->SetIsPaused(false);
+	m_Sprite->SetUpdateWhenTimePaused(m_UpdateWhenTimePaused);
 }
 
 void engine::SpriteRenderComponent::Pause()
@@ -46,6 +47,12 @@ void engine::SpriteRenderComponent::Pause()
 void engine::SpriteRenderComponent::Resume()
 {
 	if (m_Sprite)m_Sprite->SetIsPaused(false);
+}
+
+void engine::SpriteRenderComponent::SetUpdateWhenTimePaused(bool updateWhenTimePaused)
+{
+	m_UpdateWhenTimePaused = updateWhenTimePaused;
+	m_Sprite->SetUpdateWhenTimePaused(updateWhenTimePaused);
 }
 
 glm::vec2 engine::SpriteRenderComponent::GetSize()

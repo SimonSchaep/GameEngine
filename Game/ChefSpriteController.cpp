@@ -168,6 +168,7 @@ void ChefSpriteController::Notify(EventType eventType)
 	if (eventType == EventType::chefWon)
 	{
 		m_HasPlayerWon = true;
+		GetGameObject()->GetComponent<SpriteRenderComponent>()->SetUpdateWhenTimePaused(true);
 	}
 	else if (eventType == EventType::chefDied)
 	{

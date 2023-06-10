@@ -31,6 +31,7 @@ namespace engine
 
 		Texture2D* GetTexture()const { return m_Texture.get(); }
 
+		void SetUpdateWhenTimePaused(bool updateWhenTimePaused) { m_UpdateWhenTimePaused = updateWhenTimePaused; }
 
 	private:
 		std::unique_ptr<Texture2D> m_Texture{};
@@ -53,5 +54,7 @@ namespace engine
 
 		bool m_FlipX{};
 		bool m_FlipY{};
+
+		bool m_UpdateWhenTimePaused{};
 	};
 }

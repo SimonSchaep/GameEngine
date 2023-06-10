@@ -50,6 +50,7 @@ namespace engine
 
         T& operator*() { return *m_RawPointer; }
         T* operator->() { return m_RawPointer; }
+        T* operator->()const { return m_RawPointer; }
         operator bool() const { return m_RawPointer; }
 
         T* Get()const;

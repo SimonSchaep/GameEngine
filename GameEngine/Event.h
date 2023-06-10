@@ -20,7 +20,6 @@ namespace engine
 
 	private:
 		std::vector<ObservingPointer<Observer<Args...>>> m_Observers;
-		std::vector<size_t> m_ToDeleteIndexes{};
 	};
 
 	template<typename ...Args>
@@ -38,6 +37,7 @@ namespace engine
 	template<typename ...Args>
 	inline void Event<Args...>::NotifyObservers(Args... args)
 	{
+		bool containsNull{};
 		for (size_t i{}; i < m_Observers.size(); ++i)
 		{
 			if (m_Observers[i])
@@ -46,16 +46,14 @@ namespace engine
 			}
 			else
 			{
-				m_ToDeleteIndexes.emplace_back(i);
+				containsNull = true;
 			}
 		}
 
-		//Remove Observers that no longer exist
-		for (int i{ int(m_ToDeleteIndexes.size()) - 1 }; i >= 0; --i)
+		if (containsNull)
 		{
-			RemoveObserver(m_Observers[i].Get());
+			m_Observers.erase(std::remove(m_Observers.begin(), m_Observers.end(), nullptr));
 		}
-		m_ToDeleteIndexes.clear();
 	}
 
 }

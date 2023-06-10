@@ -35,6 +35,7 @@ namespace engine
 	{
 		for (auto& gameObject : m_GameObjects)
 		{
+			if (!gameObject->IsActive())continue;
 			if (gameObject->GetName() == name)
 			{
 				return gameObject.get();
@@ -48,6 +49,7 @@ namespace engine
 		std::vector<GameObject*> gameObjects{};
 		for (auto& gameObject : m_GameObjects)
 		{
+			if (!gameObject->IsActive())continue;
 			if (gameObject->GetName() == name)
 			{
 				gameObjects.emplace_back(gameObject.get());
@@ -61,6 +63,7 @@ namespace engine
 		std::vector<GameObject*> gameObjects{};
 		for (auto& gameObject : m_GameObjects)
 		{
+			if (!gameObject->IsActive())continue;
 			if (gameObject->HasTag(tag))
 			{
 				gameObjects.emplace_back(gameObject.get());

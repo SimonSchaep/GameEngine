@@ -6,7 +6,7 @@ engine::Collider::Collider(GameObject* pGameObject)
 {
 	m_OnTrigger = std::make_unique<Event<TriggerType, Collider*, Collider*>>();
 
-	m_OnDestroy = std::make_unique<Event<Collider*>>();
+	m_OnDisable = std::make_unique<Event<Collider*>>();
 
 	pGameObject->RegisterCollider(this);
 }
@@ -14,14 +14,14 @@ engine::Collider::Collider(GameObject* pGameObject)
 engine::Collider::~Collider()
 {
 	GetGameObject()->RemoveCollider(this);
-	m_OnDestroy->NotifyObservers(this);
 }
 
 void engine::Collider::OnDisable()
 {
+	m_OnDisable->NotifyObservers(this);
 	for (auto& trigger : m_CurrentTriggers)
 	{
-		trigger->GetOnDestroyEvent()->RemoveObserver(this);
+		trigger->GetOnDisableEvent()->RemoveObserver(this);
 	}
 	m_CurrentTriggers.clear();
 }
@@ -29,13 +29,13 @@ void engine::Collider::OnDisable()
 void engine::Collider::AddCurrentTrigger(Collider* pCollider)
 {
 	m_CurrentTriggers.emplace_back(pCollider);
-	pCollider->GetOnDestroyEvent()->AddObserver(this);
+	pCollider->GetOnDisableEvent()->AddObserver(this);
 }
 
 void engine::Collider::RemoveCurrentTrigger(Collider* pCollider)
 {
 	m_CurrentTriggers.erase(std::remove(m_CurrentTriggers.begin(), m_CurrentTriggers.end(), pCollider));
-	pCollider->GetOnDestroyEvent()->RemoveObserver(this);
+	pCollider->GetOnDisableEvent()->RemoveObserver(this);
 }
 
 void engine::Collider::Notify(Collider* pCollider)

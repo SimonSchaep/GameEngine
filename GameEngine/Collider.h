@@ -43,7 +43,7 @@ namespace engine
 		void AddCurrentTrigger(Collider* pCollider);
 		void RemoveCurrentTrigger(Collider* pCollider);
 
-		Event<Collider*>* GetOnDestroyEvent()const { return m_OnDestroy.get(); }
+		Event<Collider*>* GetOnDisableEvent()const { return m_OnDisable.get(); }
 		virtual void Notify(Collider* pCollider)override;
 
 	protected:
@@ -54,7 +54,7 @@ namespace engine
 
 		std::vector<ObservingPointer<Collider>> m_CurrentTriggers{};
 
-		std::unique_ptr<Event<Collider*>> m_OnDestroy{};
+		std::unique_ptr<Event<Collider*>> m_OnDisable{};
 	};
 }
 

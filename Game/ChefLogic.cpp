@@ -68,7 +68,7 @@ void ChefLogic::HandleTriggerEnter(engine::Collider* /*pOriginCollider*/, engine
 	if (pHitCollider->HasTag("Enemy"))
 	{
 		auto pEnemyLogic = pHitCollider->GetGameObject()->GetComponent<EnemyLogic>();
-		if (!pEnemyLogic->IsStunned() && !pEnemyLogic->IsDead())
+		if (!pEnemyLogic->IsStunned() && !pEnemyLogic->IsDead() && !pEnemyLogic->IsFalling())
 		{
 			m_IsDead = true;
 			m_LivesLeft--;

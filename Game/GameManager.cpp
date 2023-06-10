@@ -31,6 +31,7 @@
 #include "EnemyLogic.h"
 #include "FoodParent.h"
 #include "TimeManager.h"
+#include "EnemyPlayerController.h"
 
 using namespace engine;
 
@@ -242,12 +243,12 @@ void GameManager::AssignControllers()
 	{
 		if (i == 0 && m_GameMode == GameMode::versus)
 		{
-			/*auto pPlayerControllerObject = m_pNextLevel->CreateAndAddGameObject();
-			auto pPlayerController = pPlayerControllerObject->CreateAndAddComponent<EnemyPlayerController>();
+			auto pEnemyPlayerControllerObject = m_pNextLevel->CreateAndAddGameObject();
+			auto pEnemyPlayerController = pEnemyPlayerControllerObject->CreateAndAddComponent<EnemyPlayerController>();
 
-			pPlayerController->SetControlledObject(enemies[i]);
-			pPlayerController->UseKeyboard(false);
-			pPlayerController->UseController(0);*/
+			pEnemyPlayerController->SetControlledObject(enemies[i]);
+			pEnemyPlayerController->UseKeyboard(false);
+			pEnemyPlayerController->UseController(0);
 		}
 		else
 		{

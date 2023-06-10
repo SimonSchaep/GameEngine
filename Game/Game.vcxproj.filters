@@ -128,6 +128,9 @@
     <ClCompile Include="LeaderboardState.cpp">
       <Filter>GameManager\GameStates</Filter>
     </ClCompile>
+    <ClCompile Include="EnemyPlayerController.cpp">
+      <Filter>Components\Controllers</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="MoveCommands.h">
@@ -235,6 +238,9 @@
     </ClInclude>
     <ClInclude Include="LeaderboardState.h">
       <Filter>GameManager\GameStates</Filter>
+    </ClInclude>
+    <ClInclude Include="EnemyPlayerController.h">
+      <Filter>Components\Controllers</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

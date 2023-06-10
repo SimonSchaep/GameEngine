@@ -24,7 +24,7 @@ public:
 	~SDLSoundSystemImpl()
 	{
 		//todo: don't need this lock
-		//std::lock_guard<std::mutex> lock(m_SoundsToProcessMutex);
+		std::lock_guard<std::mutex> lock(m_SoundsToProcessMutex);
 		m_EndQueue = true;
 		m_DoesQueueNeedProcessing.notify_one();
 		Mix_CloseAudio();

@@ -13,6 +13,8 @@ namespace engine
 	public:
 		GameObject* CreateAndAddGameObject(const std::string& name = "DefaultName", GameObject* pParent = nullptr);
 		GameObject* FindGameObjectByName(const std::string& name);
+		std::vector<GameObject*> FindAllGameObjectsWithName(const std::string& name);
+		std::vector<GameObject*> FindAllGameObjectsWithTag(const std::string& tag);
 
 		void TransferSceneIndependantGameObjects(Scene* targetScene);
 		void TransferGameObject(std::unique_ptr<GameObject> gameObject);

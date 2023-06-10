@@ -43,6 +43,32 @@ namespace engine
 		return nullptr;
 	}
 
+	std::vector<GameObject*> Scene::FindAllGameObjectsWithName(const std::string& name)
+	{
+		std::vector<GameObject*> gameObjects{};
+		for (auto& gameObject : m_GameObjects)
+		{
+			if (gameObject->GetName() == name)
+			{
+				gameObjects.emplace_back(gameObject.get());
+			}
+		}
+		return gameObjects;
+	}
+
+	std::vector<GameObject*> Scene::FindAllGameObjectsWithTag(const std::string& tag)
+	{
+		std::vector<GameObject*> gameObjects{};
+		for (auto& gameObject : m_GameObjects)
+		{
+			if (gameObject->HasTag(tag))
+			{
+				gameObjects.emplace_back(gameObject.get());
+			}
+		}
+		return gameObjects;
+	}
+
 	void Scene::TransferSceneIndependantGameObjects(Scene* targetScene)
 	{
 		if(targetScene == this) return;

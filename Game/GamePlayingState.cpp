@@ -33,15 +33,9 @@ GameState* GamePlayingState::Update()
 	{
 		return GetGameManager()->GetGamePausedState();
 	}
-	if (m_CheckEndGame)
+	if (m_EndGame)
 	{
-		m_CheckEndGame = false;
-		auto chefs = GetGameManager()->GetScene()->FindAllGameObjectsWithTag("Chef");
-		//if no chefs left -> they are all dead
-		if (chefs.size() == 0)
-		{
-			return GetGameManager()->GetLeaderboardState();
-		}		
+		return GetGameManager()->GetLeaderboardState();
 	}
 	return nullptr;
 }
@@ -55,7 +49,7 @@ void GamePlayingState::OnEnter()
 	m_SpawnSpecialPickupTimer = m_SpawnSpecialPickupInterval;
 
 	m_PauseGame = false;
-	m_CheckEndGame = false;
+	m_EndGame = false;
 	TimeManager::GetInstance().SetTimePaused(false);
 
 	GetGameManager()->GetOnRespawnCharacters()->AddObserver(this);
@@ -76,6 +70,13 @@ void GamePlayingState::Notify(EventType type)
 {
 	if (type == EventType::respawnCharacters)
 	{
-		m_CheckEndGame = true;
+		if (m_LivesLeft > 0)
+		{
+			m_LivesLeft--;
+		}
+		else
+		{
+			m_EndGame = true;
+		}
 	}
 }

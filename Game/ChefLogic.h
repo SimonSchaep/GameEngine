@@ -16,7 +16,7 @@ namespace engine
 class ChefLogic final : public engine::BaseComponent, public engine::CollisionEventReceiver, public engine::Observer<EventType>
 {
 public:
-	ChefLogic(engine::GameObject* pGameObject, int lives);
+	ChefLogic(engine::GameObject* pGameObject);
 	virtual ~ChefLogic() = default;
 
 	virtual void Initialize() override;
@@ -24,8 +24,6 @@ public:
 	virtual void Notify(EventType) override;
 
 	bool IsDead()const { return m_IsDead; }
-
-	int GetLivesLeft() { return m_LivesLeft; }
 
 	engine::Event<EventType, ChefLogic*>* GetOnDeath()const {return m_OnDeath.get(); }
 
@@ -35,8 +33,6 @@ private:
 	virtual void HandleTriggerEnter(engine::Collider* pOriginCollider, engine::Collider* pHitCollider) override;
 
 	bool m_IsDead{};
-
-	int m_LivesLeft{};
 
 	glm::vec2 m_Startpos{};
 

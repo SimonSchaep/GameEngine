@@ -7,9 +7,8 @@
 
 using namespace engine;
 
-ChefLogic::ChefLogic(engine::GameObject* pGameObject, int lives)
+ChefLogic::ChefLogic(engine::GameObject* pGameObject)
 	:BaseComponent(pGameObject)
-	, m_LivesLeft{ lives }
 {
 	m_OnDeath = std::make_unique<Event<EventType, ChefLogic*>>();
 }
@@ -30,15 +29,8 @@ void ChefLogic::Notify(EventType)
 
 void ChefLogic::Respawn()
 {
-	if (m_LivesLeft > 0)
-	{
-		GetTransform()->SetWorldPosition(m_Startpos);
-		m_IsDead = false;
-	}
-	else
-	{
-		GetGameObject()->SetIsActive(false);
-	}
+	GetTransform()->SetWorldPosition(m_Startpos);
+	m_IsDead = false;
 }
 
 void ChefLogic::HandleTriggerEnter(engine::Collider* /*pOriginCollider*/, engine::Collider* pHitCollider)
@@ -51,7 +43,6 @@ void ChefLogic::HandleTriggerEnter(engine::Collider* /*pOriginCollider*/, engine
 		if (!pEnemyLogic->IsStunned() && !pEnemyLogic->IsDead() && !pEnemyLogic->IsFalling())
 		{
 			m_IsDead = true;
-			m_LivesLeft--;
 			m_OnDeath->NotifyObservers(EventType::chefDied, this);
 		}
 	}

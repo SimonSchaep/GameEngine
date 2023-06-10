@@ -15,7 +15,7 @@ public:
 	GamePlayingState(GameManager* pGameManager);
 
 	void PauseGame() { m_PauseGame = true; }
-	void EndGame() { m_CheckEndGame = true; }
+	void EndGame() { m_EndGame = true; }
 
 	virtual GameState* Update()override;
 	virtual void OnEnter()override;
@@ -25,9 +25,11 @@ public:
 
 private:
 	bool m_PauseGame{};
-	bool m_CheckEndGame{};
+	bool m_EndGame{};
 	std::vector<engine::BaseCommand*> m_Commands{};
 
 	float m_SpawnSpecialPickupInterval{15.f};
 	float m_SpawnSpecialPickupTimer{};
+
+	int m_LivesLeft{3};
 };

@@ -152,7 +152,7 @@ engine::GameObject* Level::SpawnChef(glm::vec2 pos, bool isAlreadyCentered)
 	pChef->CreateAndAddComponent<ThrowPepperComponent>(5);
 	auto pMovementComponent = pChef->CreateAndAddComponent<MovementComponent>();
 	pMovementComponent->SetMoveSpeed(150);
-	pChef->CreateAndAddComponent<ChefLogic>(4);
+	pChef->CreateAndAddComponent<ChefLogic>();
 
 	//visuals
 	auto pChefVisuals = GetScene()->CreateAndAddGameObject("ChefVisuals", pChef);

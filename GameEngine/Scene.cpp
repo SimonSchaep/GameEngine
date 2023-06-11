@@ -1,5 +1,6 @@
 #include "Scene.h"
 #include "RenderComponent.h"
+#include "UIRenderComponent.h"
 #include "CameraComponent.h"
 #include <algorithm>
 
@@ -174,16 +175,35 @@ namespace engine
 			{
 				int layer1{};
 				int layer2{};
-				RenderComponent* pRenderComponent{ obj1->GetComponent<RenderComponent>() };
-				if (pRenderComponent)
+
+				UIRenderComponent* pUIRenderComponent{ obj1->GetComponent<UIRenderComponent>() };
+				if (pUIRenderComponent)
 				{
-					layer1 = pRenderComponent->GetLayer();
+					layer1 = pUIRenderComponent->GetLayer();
 				}
-				pRenderComponent = obj2->GetComponent<RenderComponent>();
-				if (pRenderComponent)
+				else
 				{
-					layer2 = pRenderComponent->GetLayer();
+					RenderComponent* pRenderComponent{ obj1->GetComponent<RenderComponent>() };
+					if (pRenderComponent)
+					{
+						layer1 = pRenderComponent->GetLayer();
+					}
+				}				
+
+				pUIRenderComponent = obj2->GetComponent<UIRenderComponent>();
+				if (pUIRenderComponent)
+				{
+					layer2 = pUIRenderComponent->GetLayer();
 				}
+				else
+				{
+					RenderComponent* pRenderComponent{ obj2->GetComponent<RenderComponent>() };
+					if (pRenderComponent)
+					{
+						layer2 = pRenderComponent->GetLayer();
+					}
+				}
+
 				return (layer1 < layer2);
 			});
 	}

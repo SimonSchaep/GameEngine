@@ -22,12 +22,6 @@
     <ClCompile Include="BaseComponent.cpp">
       <Filter>Engine\Components</Filter>
     </ClCompile>
-    <ClCompile Include="TextureRenderComponent.cpp">
-      <Filter>Engine\Components</Filter>
-    </ClCompile>
-    <ClCompile Include="TextRenderComponent.cpp">
-      <Filter>Engine\Components</Filter>
-    </ClCompile>
     <ClCompile Include="TimeManager.cpp">
       <Filter>Engine\Singletons</Filter>
     </ClCompile>
@@ -61,9 +55,6 @@
     <ClCompile Include="..\3rdParty\imgui\imgui_widgets.cpp">
       <Filter>imgui</Filter>
     </ClCompile>
-    <ClCompile Include="RenderComponent.cpp">
-      <Filter>Engine\Components</Filter>
-    </ClCompile>
     <ClCompile Include="..\3rdParty\imgui\implot.cpp">
       <Filter>imgui</Filter>
     </ClCompile>
@@ -72,9 +63,6 @@
     </ClCompile>
     <ClCompile Include="..\3rdParty\imgui\implot_items.cpp">
       <Filter>imgui</Filter>
-    </ClCompile>
-    <ClCompile Include="UIRenderComponent.cpp">
-      <Filter>Engine\Components</Filter>
     </ClCompile>
     <ClCompile Include="InputManager.cpp">
       <Filter>Engine\Input</Filter>
@@ -154,6 +142,24 @@
     <ClCompile Include="..\3rdParty\imgui\imgui_stdlib.cpp">
       <Filter>imgui</Filter>
     </ClCompile>
+    <ClCompile Include="UIRenderComponent.cpp">
+      <Filter>Engine\Components\Rendering\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="UITextRenderComponent.cpp">
+      <Filter>Engine\Components\Rendering\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="UITextureRenderComponent.cpp">
+      <Filter>Engine\Components\Rendering\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="RenderComponent.cpp">
+      <Filter>Engine\Components\Rendering</Filter>
+    </ClCompile>
+    <ClCompile Include="TextRenderComponent.cpp">
+      <Filter>Engine\Components\Rendering</Filter>
+    </ClCompile>
+    <ClCompile Include="TextureRenderComponent.cpp">
+      <Filter>Engine\Components\Rendering</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Font.h">
@@ -175,12 +181,6 @@
       <Filter>Engine</Filter>
     </ClInclude>
     <ClInclude Include="BaseComponent.h">
-      <Filter>Engine\Components</Filter>
-    </ClInclude>
-    <ClInclude Include="TextureRenderComponent.h">
-      <Filter>Engine\Components</Filter>
-    </ClInclude>
-    <ClInclude Include="TextRenderComponent.h">
       <Filter>Engine\Components</Filter>
     </ClInclude>
     <ClInclude Include="TimeManager.h">
@@ -222,17 +222,11 @@
     <ClInclude Include="..\3rdParty\imgui\imstb_truetype.h">
       <Filter>imgui</Filter>
     </ClInclude>
-    <ClInclude Include="RenderComponent.h">
-      <Filter>Engine\Components</Filter>
-    </ClInclude>
     <ClInclude Include="..\3rdParty\imgui\implot.h">
       <Filter>imgui</Filter>
     </ClInclude>
     <ClInclude Include="..\3rdParty\imgui\implot_internal.h">
       <Filter>imgui</Filter>
-    </ClInclude>
-    <ClInclude Include="UIRenderComponent.h">
-      <Filter>Engine\Components</Filter>
     </ClInclude>
     <ClInclude Include="BaseCommand.h">
       <Filter>Engine\Input</Filter>
@@ -336,6 +330,24 @@
     <ClInclude Include="..\3rdParty\imgui\imgui_stdlib.h">
       <Filter>imgui</Filter>
     </ClInclude>
+    <ClInclude Include="UIRenderComponent.h">
+      <Filter>Engine\Components\Rendering\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="UITextRenderComponent.h">
+      <Filter>Engine\Components\Rendering\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="UITextureRenderComponent.h">
+      <Filter>Engine\Components\Rendering\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="RenderComponent.h">
+      <Filter>Engine\Components\Rendering</Filter>
+    </ClInclude>
+    <ClInclude Include="TextRenderComponent.h">
+      <Filter>Engine\Components\Rendering</Filter>
+    </ClInclude>
+    <ClInclude Include="TextureRenderComponent.h">
+      <Filter>Engine\Components\Rendering</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Engine">
@@ -376,6 +388,12 @@
     </Filter>
     <Filter Include="Engine\ObservingPointer">
       <UniqueIdentifier>{adeb5aa6-ea43-4cf6-9547-3e502a9b81ce}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\Components\Rendering">
+      <UniqueIdentifier>{cfff0f8e-e1bc-43f5-9e69-af78c13f9a15}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\Components\Rendering\UI">
+      <UniqueIdentifier>{e302de2a-b453-43e0-a877-f875e92a6465}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

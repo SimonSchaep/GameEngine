@@ -1,7 +1,7 @@
 #pragma once
 #include <string>
 #include <memory>
-#include "TextureRenderComponent.h"
+#include "UITextureRenderComponent.h"
 #include "Transform.h"
 #include <SDL_ttf.h>
 
@@ -10,7 +10,7 @@ namespace engine
 
 	class Font;
 
-	class TextRenderComponent : public TextureRenderComponent
+	class UITextRenderComponent : public UITextureRenderComponent
 	{
 	public:
 		enum class TextAlignment
@@ -21,15 +21,15 @@ namespace engine
 		};
 
 		void Update() override;
-		virtual void Render()const override;
+		virtual void RenderUI() override;
 
 		void SetText(const std::string& text);
 		void SetFont(const std::string& fileName, int fontSize);
 		void SetColor(SDL_Color color);
 		void SetTextAlignment(TextAlignment alignment) { m_Alignment = alignment; }
 
-		TextRenderComponent(GameObject* pGameObject);
-		virtual ~TextRenderComponent();
+		UITextRenderComponent(GameObject* pGameObject);
+		virtual ~UITextRenderComponent();
 	private:
 		bool m_NeedsUpdate{};
 		std::string m_Text{};

@@ -39,7 +39,7 @@ GameManager::~GameManager() = default;
 void GameManager::Initialize()
 {
 	m_WinSound = ServiceLocator::GetSoundSystem().AddClip("data/sounds/win.wav");
-	m_MusicSound = ServiceLocator::GetSoundSystem().AddClip("data/sounds/music.wav");
+	m_MusicSound = ServiceLocator::GetSoundSystem().AddClip("data/sounds/music.mp3");
 	m_StartGameSound = ServiceLocator::GetSoundSystem().AddClip("data/sounds/gamestart.wav");
 
 	InitializeStates();

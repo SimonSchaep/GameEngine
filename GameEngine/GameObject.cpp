@@ -1,12 +1,10 @@
-#include <string>
 #include "GameObject.h"
-#include "ResourceManager.h"
-#include "Renderer.h"
 #include "BaseComponent.h"
 #include "RenderComponent.h"
 #include "UIRenderComponent.h"
 #include "SceneManager.h"
-#include <iostream>
+#include "ServiceLocator.h"
+#include "Logger.h"
 
 namespace engine
 {

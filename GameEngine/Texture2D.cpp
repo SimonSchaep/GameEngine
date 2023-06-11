@@ -3,7 +3,6 @@
 
 namespace engine
 {
-
 	Texture2D::~Texture2D()
 	{
 		SDL_DestroyTexture(m_Texture);

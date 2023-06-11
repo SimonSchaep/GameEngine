@@ -1,14 +1,13 @@
-#include <stdexcept>
 #include "UITextRenderComponent.h"
 #include "Renderer.h"
 #include "Font.h"
 #include "Texture2D.h"
 #include "GameObject.h"
 #include "ResourceManager.h"
+#include <stdexcept>
 
 namespace engine
 {
-
 	UITextRenderComponent::UITextRenderComponent(GameObject* pGameObject)
 		: m_NeedsUpdate(true), m_Text(""), m_Color{ 255,255,255,255 }, UITextureRenderComponent(pGameObject)
 	{

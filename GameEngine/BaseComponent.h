@@ -1,7 +1,7 @@
 #pragma once
-#include <memory>
 #include "ObservableObject.h"
 #include <string>
+#include <memory>
 
 namespace engine
 {

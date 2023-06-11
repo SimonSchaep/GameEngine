@@ -3,8 +3,6 @@
 
 namespace engine
 {
-	class SoundClip;
-
 	class SoundSystem
 	{
 	public:

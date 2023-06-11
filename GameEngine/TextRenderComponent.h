@@ -1,13 +1,12 @@
 #pragma once
-#include <string>
-#include <memory>
 #include "TextureRenderComponent.h"
 #include "Transform.h"
 #include <SDL_ttf.h>
+#include <string>
+#include <memory>
 
 namespace engine
 {
-
 	class Font;
 
 	class TextRenderComponent : public TextureRenderComponent

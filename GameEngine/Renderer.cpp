@@ -1,4 +1,3 @@
-#include <stdexcept>
 #include "Renderer.h"
 #include "SceneManager.h"
 #include "Scene.h"
@@ -11,6 +10,7 @@
 #include "backends/imgui_impl_sdl2.h"
 #include "SDL_opengl.h"
 #include <iostream>
+#include <stdexcept>
 
 namespace engine
 {

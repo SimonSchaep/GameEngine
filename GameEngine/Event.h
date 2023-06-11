@@ -1,8 +1,8 @@
 #pragma once
-#include <vector>
 #include "Observer.h"
 #include "GameObject.h"
 #include "ObservingPointer.h"
+#include <vector>
 
 namespace engine
 {

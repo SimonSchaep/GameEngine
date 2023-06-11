@@ -1,8 +1,10 @@
 #pragma once
 #include "RenderComponent.h"
+#include "ObservingPointer.h"
 #include <vector>
 
-//might not be necessary anymore since the collisionmanager can now debug draw
+//use if you want to draw the colliders of a specific gameobject
+//for debug drawing all collisions, uncomment the code in Renderer
 
 namespace engine
 {
@@ -19,7 +21,7 @@ namespace engine
 		virtual void Render()const override;
 
 	private:
-		std::vector<Collider*> m_Colliders{};
+		std::vector<ObservingPointer<Collider>> m_Colliders{};
 	};
 
 }

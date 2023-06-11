@@ -49,12 +49,6 @@
     <ClCompile Include="PlayerController.cpp">
       <Filter>Engine\Components</Filter>
     </ClCompile>
-    <ClCompile Include="Observer.cpp">
-      <Filter>Engine\Observer</Filter>
-    </ClCompile>
-    <ClCompile Include="Event.cpp">
-      <Filter>Engine\Observer</Filter>
-    </ClCompile>
     <ClCompile Include="BoxCollider.cpp">
       <Filter>Engine\Collisions</Filter>
     </ClCompile>
@@ -62,9 +56,6 @@
       <Filter>Engine\Collisions</Filter>
     </ClCompile>
     <ClCompile Include="CollisionManager.cpp">
-      <Filter>Engine\Collisions</Filter>
-    </ClCompile>
-    <ClCompile Include="ColliderDebugRenderComponent.cpp">
       <Filter>Engine\Collisions</Filter>
     </ClCompile>
     <ClCompile Include="CameraComponent.cpp">
@@ -76,22 +67,13 @@
     <ClCompile Include="ConsoleLogger.cpp">
       <Filter>Engine\Services\Logger</Filter>
     </ClCompile>
-    <ClCompile Include="Logger.cpp">
-      <Filter>Engine\Services\Logger</Filter>
-    </ClCompile>
     <ClCompile Include="FileLogger.cpp">
       <Filter>Engine\Services\Logger</Filter>
-    </ClCompile>
-    <ClCompile Include="SoundSystem.cpp">
-      <Filter>Engine\Services\SoundSystem</Filter>
     </ClCompile>
     <ClCompile Include="SDLSoundSystem.cpp">
       <Filter>Engine\Services\SoundSystem</Filter>
     </ClCompile>
     <ClCompile Include="SDLSoundClip.cpp">
-      <Filter>Engine\Services\SoundSystem</Filter>
-    </ClCompile>
-    <ClCompile Include="SoundClip.cpp">
       <Filter>Engine\Services\SoundSystem</Filter>
     </ClCompile>
     <ClCompile Include="Sprite.cpp">
@@ -159,6 +141,9 @@
     </ClCompile>
     <ClCompile Include="Transform.cpp">
       <Filter>Engine\SceneGraph</Filter>
+    </ClCompile>
+    <ClCompile Include="ColliderDebugRenderComponent.cpp">
+      <Filter>Engine\Collisions</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -237,9 +222,6 @@
     <ClInclude Include="CollisionManager.h">
       <Filter>Engine\Collisions</Filter>
     </ClInclude>
-    <ClInclude Include="ColliderDebugRenderComponent.h">
-      <Filter>Engine\Collisions</Filter>
-    </ClInclude>
     <ClInclude Include="CameraComponent.h">
       <Filter>Engine\Components</Filter>
     </ClInclude>
@@ -265,9 +247,6 @@
       <Filter>Engine\Services\SoundSystem</Filter>
     </ClInclude>
     <ClInclude Include="SDLSoundClip.h">
-      <Filter>Engine\Services\SoundSystem</Filter>
-    </ClInclude>
-    <ClInclude Include="SoundClip.h">
       <Filter>Engine\Services\SoundSystem</Filter>
     </ClInclude>
     <ClInclude Include="NullSoundSystem.h">
@@ -347,6 +326,9 @@
     </ClInclude>
     <ClInclude Include="Transform.h">
       <Filter>Engine\SceneGraph</Filter>
+    </ClInclude>
+    <ClInclude Include="ColliderDebugRenderComponent.h">
+      <Filter>Engine\Collisions</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

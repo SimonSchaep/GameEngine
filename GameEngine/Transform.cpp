@@ -19,7 +19,7 @@ namespace engine
 		}
 	}
 
-	const glm::vec3& Transform::GetWorldPosition()
+	const glm::vec2& Transform::GetWorldPosition()
 	{
 		if (m_IsDirty)
 		{
@@ -36,50 +36,26 @@ namespace engine
 		return m_Worldposition;
 	}
 
-	void Transform::SetLocalPosition(const float x, const float y, const float z)
-	{
-		SetLocalPosition({ x,y,z });
-
-		SetDirty(true);
-	}
-
 	void Transform::SetLocalPosition(float x, float y)
 	{
-		SetLocalPosition({ x,y,0 });
+		SetLocalPosition({ x,y });
 
 		SetDirty(true);
 	}
 
 	void Transform::SetLocalPosition(const glm::vec2& pos)
 	{
-		SetLocalPosition({pos.x,pos.y,0});
-
-		SetDirty(true);
-	}
-
-	void Transform::SetLocalPosition(const glm::vec3& pos)
-	{
 		m_LocalPosition = pos;
 
 		SetDirty(true);
 	}
 
-	void Transform::SetWorldPosition(float x, float y, float z)
-	{
-		SetWorldPosition({ x,y,z });
-	}
-
 	void Transform::SetWorldPosition(float x, float y)
 	{
-		SetWorldPosition({ x,y,0 });
+		SetWorldPosition({ x,y });
 	}
 
 	void Transform::SetWorldPosition(const glm::vec2& pos)
-	{
-		SetWorldPosition({ pos.x,pos.y,0 });
-	}
-
-	void Transform::SetWorldPosition(const glm::vec3& pos)
 	{
 		if (m_pGameObject->GetParent())
 		{
@@ -93,29 +69,14 @@ namespace engine
 
 	void Transform::Translate(const glm::vec2& offset)
 	{
-		glm::vec3 temp{ offset.x, offset.y, 0 };
-		m_LocalPosition += temp;
+		m_LocalPosition += offset;
 
 		SetDirty(true);
 	}
 
 	void Transform::Translate(float x, float y)
 	{
-		m_LocalPosition += glm::vec3{ x,y,0 };
-
-		SetDirty(true);
-	}
-
-	void Transform::Translate(const glm::vec3& offset)
-	{
-		m_LocalPosition += offset;
-
-		SetDirty(true);
-	}
-
-	void Transform::Translate(float x, float y, float z)
-	{
-		m_LocalPosition += glm::vec3{x,y,z};
+		m_LocalPosition += glm::vec2{ x,y };
 
 		SetDirty(true);
 	}

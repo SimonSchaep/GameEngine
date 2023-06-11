@@ -27,8 +27,6 @@ namespace engine
 			glm::vec2 center;
 			float radius;
 
-			//this auto generates all comparison operators
-			//https://en.cppreference.com/w/cpp/language/operators
 			auto operator<=>(const Circle&) const = default;
 		};
 	}

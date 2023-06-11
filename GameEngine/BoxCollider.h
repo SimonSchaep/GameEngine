@@ -1,7 +1,6 @@
 #pragma once
 #include "Collider.h"
 #include "Structs.h"
-#include "Event.h"
 
 namespace engine
 {

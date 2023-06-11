@@ -1,12 +1,11 @@
-#include <SDL.h>
 #include "InputManager.h"
 #include "backends/imgui_impl_sdl2.h"
 #include "backends/imgui_impl_opengl2.h"
 #include "imgui.h"
+#include <SDL.h>
 
 namespace engine
 {
-
 	bool InputManager::ProcessInput()
 	{
 		ProcessControllerInput();

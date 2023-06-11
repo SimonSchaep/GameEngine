@@ -111,9 +111,13 @@ namespace engine
 			//TIME
 			time.Update(); //calculate deltatime, totaltime..., will sleep to cap fps when a cap is set
 
-			//UPDATE + RENDER
+			//UPDATE
 			sceneManager.Update();
+
+			//TRIGGERS
 			CollisionManager::GetInstance().CheckTriggers();
+
+			//RENDER
 			renderer.Render();
 		}
 	}

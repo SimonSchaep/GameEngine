@@ -5,10 +5,7 @@
 #include "Renderer.h"
 #include "ServiceLocator.h"
 #include "Logger.h"
-#include <iostream>
 #include <SDL_opengl.h>
-
-//todo: check the code of this, refactor if necessary
 
 namespace engine
 {
@@ -18,7 +15,6 @@ namespace engine
 	{
 		SetScale(m_Scale); //to set camerabox correctly
 
-		//todo: do this, implement ==
 		if (m_LevelBoundaries == structs::Rect{})
 		{
 			ServiceLocator::GetLogger().LogLine("no levelboundaries set", LogType::error);

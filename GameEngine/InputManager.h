@@ -3,7 +3,7 @@
 #include "InputController.h"
 #include "BaseCommand.h"
 #include "BaseAxisCommand.h"
-#include <SDL_scancode.h> //for sdl scancodes
+#include <SDL_scancode.h> //for sdl scancodes, all files that use inputmanager will need this
 #include <unordered_map>
 #include <map>
 #include <vector>

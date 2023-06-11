@@ -76,10 +76,10 @@ namespace engine
 		XINPUT_STATE m_PreviousState{};
 		XINPUT_STATE m_CurrentState{};
 
-		WORD m_ButtonsPressedThisFrame;
-		WORD m_ButtonsReleasedThisFrame;
+		WORD m_ButtonsPressedThisFrame{};
+		WORD m_ButtonsReleasedThisFrame{};
 
-		int m_ControllerIndex;
+		int m_ControllerIndex{};
 	};
 
 	void InputController::Update()

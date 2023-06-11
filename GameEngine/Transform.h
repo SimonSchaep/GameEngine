@@ -15,26 +15,20 @@ namespace engine
 
 		void SetDirty(bool dirty);
 
-		const glm::vec3& GetLocalPosition() const { return m_LocalPosition; }
-		const glm::vec3& GetWorldPosition();
-		void SetLocalPosition(float x, float y, float z);
+		const glm::vec2& GetLocalPosition() const { return m_LocalPosition; }
+		const glm::vec2& GetWorldPosition();
 		void SetLocalPosition(float x, float y);
 		void SetLocalPosition(const glm::vec2& pos);
-		void SetLocalPosition(const glm::vec3& pos);
-		void SetWorldPosition(float x, float y, float z);
 		void SetWorldPosition(float x, float y);
 		void SetWorldPosition(const glm::vec2& pos);
-		void SetWorldPosition(const glm::vec3& pos);
 		void Translate(const glm::vec2& offset);
 		void Translate(float x, float y);
-		void Translate(const glm::vec3& offset);
-		void Translate(float x, float y, float z);
 
 	private:
 		GameObject* m_pGameObject{};
 
-		glm::vec3 m_LocalPosition{};
-		glm::vec3 m_Worldposition{};
+		glm::vec2 m_LocalPosition{};
+		glm::vec2 m_Worldposition{};
 
 		bool m_IsDirty{};
 	};

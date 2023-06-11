@@ -19,8 +19,8 @@
 //an issue here is that almost all classes now derive from observableobject
 
 
-#include <vector>
 #include "ObservingPointerBase.h"
+#include <vector>
 
 namespace engine
 {

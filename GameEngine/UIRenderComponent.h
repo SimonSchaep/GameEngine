@@ -3,7 +3,6 @@
 
 namespace engine
 {
-
 	class UIRenderComponent : public BaseComponent
 	{
 	public:

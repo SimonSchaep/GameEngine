@@ -3,7 +3,6 @@
 #include "LevelParser.h"
 #include "TextureRenderComponent.h"
 #include "BoxCollider.h"
-#include "ColliderDebugRenderComponent.h"
 #include "FoodParent.h"
 #include "ServiceLocator.h"
 #include "Logger.h"

@@ -1,6 +1,5 @@
 #include "BaseComponent.h"
 #include "GameObject.h"
-#include <iostream>
 
 namespace engine
 {

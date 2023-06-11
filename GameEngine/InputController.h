@@ -3,7 +3,6 @@
 
 namespace engine
 {
-
 	class InputController final
 	{
 	public:

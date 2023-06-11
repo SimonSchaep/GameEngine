@@ -250,7 +250,6 @@
     <ClInclude Include="SDLSoundSystem.h" />
     <ClInclude Include="ServiceLocator.h" />
     <ClInclude Include="SDLSoundClip.h" />
-    <ClInclude Include="SoundClip.h" />
     <ClInclude Include="SoundSystem.h" />
     <ClInclude Include="Sprite.h" />
     <ClInclude Include="SpriteRenderComponent.h" />
@@ -293,12 +292,9 @@
     <ClCompile Include="CollisionManager.cpp" />
     <ClCompile Include="ConsoleLogger.cpp" />
     <ClCompile Include="FileLogger.cpp" />
-    <ClCompile Include="Logger.cpp" />
-    <ClCompile Include="Event.cpp" />
     <ClCompile Include="InputController.cpp" />
     <ClCompile Include="LoggingSoundSystem.cpp" />
     <ClCompile Include="ObservableObject.cpp" />
-    <ClCompile Include="Observer.cpp" />
     <ClCompile Include="PlayerController.cpp" />
     <ClCompile Include="Font.cpp" />
     <ClCompile Include="GameEngine.cpp" />
@@ -308,8 +304,6 @@
     <ClCompile Include="SDLSoundSystem.cpp" />
     <ClCompile Include="ServiceLocator.cpp" />
     <ClCompile Include="SDLSoundClip.cpp" />
-    <ClCompile Include="SoundClip.cpp" />
-    <ClCompile Include="SoundSystem.cpp" />
     <ClCompile Include="Sprite.cpp" />
     <ClCompile Include="SpriteRenderComponent.cpp" />
     <ClCompile Include="SpriteState.cpp" />

@@ -16,5 +16,5 @@ engine::SpriteState* engine::SpriteState::EvaluateConnections()
 		}
 	}
 
-	return nullptr; //no change needed
+	return nullptr; //means no state change needed
 }

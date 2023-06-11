@@ -2,9 +2,6 @@
 
 namespace engine
 {
-
-	class BaseComponent;
-
 	class BaseCommand
 	{
 	public:

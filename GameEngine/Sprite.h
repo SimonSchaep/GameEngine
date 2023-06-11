@@ -1,7 +1,7 @@
 #pragma once
+#include "Structs.h"
 #include <memory>
 #include <string>
-#include "Structs.h"
 
 namespace engine
 {

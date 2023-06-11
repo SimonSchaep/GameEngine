@@ -6,7 +6,6 @@
 
 namespace engine
 {
-
 	TextureRenderComponent::TextureRenderComponent(GameObject* pGameObject)
 		:RenderComponent(pGameObject)
 	{

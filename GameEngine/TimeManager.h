@@ -3,7 +3,6 @@
 
 namespace engine
 {
-
 	//Class for all time-related logic
 	class TimeManager final : public Singleton<TimeManager>
 	{
@@ -36,7 +35,7 @@ namespace engine
 		float m_FixedTimeStep{ 1 / 60.f };
 		float m_TimeScale{ 1 };
 		bool m_TimePaused{ false };
-		int m_FrameRateCap{ 24000 }; //-1 for no cap
+		int m_FrameRateCap{ 200 }; //-1 for no cap
 	};
 
 }

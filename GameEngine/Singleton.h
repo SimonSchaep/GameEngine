@@ -1,10 +1,7 @@
 #pragma once
 
-//todo: maybe return ptr instead of ref?
-
 namespace engine
 {
-
 	template <typename T>
 	class Singleton
 	{

@@ -4,7 +4,6 @@
 
 namespace engine
 {
-
 	class PlayerController : public BaseComponent
 	{
 	public:

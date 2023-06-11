@@ -6,25 +6,29 @@
 #include "Renderer.h"
 #include <iostream>
 
-engine::ColliderDebugRenderComponent::ColliderDebugRenderComponent(GameObject* pGameObject) :RenderComponent(pGameObject)
+engine::ColliderDebugRenderComponent::ColliderDebugRenderComponent(GameObject* pGameObject)
+	:RenderComponent(pGameObject)
 {
 }
 
-engine::ColliderDebugRenderComponent::~ColliderDebugRenderComponent()
-{
-}
+engine::ColliderDebugRenderComponent::~ColliderDebugRenderComponent() = default;
 
 void engine::ColliderDebugRenderComponent::Initialize()
 {
-	m_Colliders = GetGameObject()->GetAllComponentsOfType<Collider>();
+	//direct copy doesn't work with observingpointers
+	auto colliders = GetGameObject()->GetAllComponentsOfType<Collider>();
+	for (auto& pCollider : colliders)
+	{
+		m_Colliders.emplace_back(pCollider);
+	}
 }
 
 void engine::ColliderDebugRenderComponent::Render() const
 {
 	//draw colliders
-	for (Collider* pCollider : m_Colliders)
+	for (engine::ObservingPointer<Collider> collider : m_Colliders)
 	{
-		BoxCollider* pBox = dynamic_cast<BoxCollider*>(pCollider);
+		BoxCollider* pBox = dynamic_cast<BoxCollider*>(collider.Get());
 		if (pBox)
 		{
 			auto shape = pBox->GetShape();

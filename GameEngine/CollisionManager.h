@@ -1,6 +1,5 @@
 #pragma once
 #include "Singleton.h"
-#include <vector>
 
 //only does triggers for now
 //todo: Can be upgraded to physics manager in the future

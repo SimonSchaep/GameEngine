@@ -35,7 +35,7 @@ void FoodParent::Update()
 	if (m_IsFalling)
 	{
 		m_FallVelocity += m_FallAcceleration * TimeManager::GetInstance().GetDeltaTime();
-		GetGameObject()->GetTransform()->Translate(0, m_FallVelocity * TimeManager::GetInstance().GetDeltaTime(), 0);
+		GetGameObject()->GetTransform()->Translate(0, m_FallVelocity * TimeManager::GetInstance().GetDeltaTime());
 	}	
 }
 

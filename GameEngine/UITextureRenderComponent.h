@@ -1,8 +1,8 @@
 #pragma once
+#include "UIRenderComponent.h"
+#include <glm/glm.hpp>
 #include <memory>
 #include <string>
-#include "UIRenderComponent.h"
-#include "glm/glm.hpp"
 
 //todo: add color modifier, for example to modify transparency
 

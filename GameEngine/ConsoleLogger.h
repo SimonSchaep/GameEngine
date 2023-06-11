@@ -1,9 +1,6 @@
 #pragma once
 #include "Logger.h"
 
-//todo: add color 
-//colorizing text: https://stackoverflow.com/questions/4053837/colorizing-text-in-the-console-with-c
-
 namespace engine
 {
 	class ConsoleLogger final : public Logger

@@ -31,6 +31,8 @@
 #include "SpecialPickupLogic.h"
 #include "LifeTimer.h"
 #include "LayersEnum.h"
+#include "ServiceLocator.h"
+#include "Logger.h"
 #include "SoundSystem.h"
 
 using namespace engine;

@@ -1,13 +1,11 @@
 #pragma once
+#include "Transform.h"
+#include "BaseComponent.h"
+#include "ObservableObject.h"
 #include <memory>
 #include <vector>
 #include <unordered_map>
 #include <string>
-#include "Transform.h"
-#include "BaseComponent.h"
-#include "ObservableObject.h"
-#include "ServiceLocator.h"
-#include "Logger.h"
 
 namespace engine
 {

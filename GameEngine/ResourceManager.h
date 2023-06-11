@@ -1,7 +1,7 @@
 #pragma once
+#include "Singleton.h"
 #include <string>
 #include <memory>
-#include "Singleton.h"
 
 namespace engine
 {

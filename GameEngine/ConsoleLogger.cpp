@@ -1,5 +1,6 @@
 #include "ConsoleLogger.h"
-#include <windows.h>
+#define WIN32_LEAN_AND_MEAN
+#include <windows.h> //for coloring console
 #include <iostream>
 #include <chrono>
 

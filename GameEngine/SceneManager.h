@@ -1,8 +1,8 @@
 #pragma once
+#include "Singleton.h"
 #include <vector>
 #include <string>
 #include <memory>
-#include "Singleton.h"
 
 //todo: implement scene reloading
 

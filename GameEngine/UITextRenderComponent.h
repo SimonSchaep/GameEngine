@@ -1,9 +1,9 @@
 #pragma once
-#include <string>
-#include <memory>
 #include "UITextureRenderComponent.h"
 #include "Transform.h"
 #include <SDL_ttf.h>
+#include <string>
+#include <memory>
 
 namespace engine
 {

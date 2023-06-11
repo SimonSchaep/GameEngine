@@ -1,7 +1,4 @@
 #include "BoxCollider.h"
-#include <iostream>
-
-//todo: implement other collision functions
 
 namespace engine
 {
@@ -11,13 +8,15 @@ namespace engine
 			GetShapeInWorld().bottomLeft.y + GetShapeInWorld().height > rect.bottomLeft.y && GetShapeInWorld().bottomLeft.y < rect.bottomLeft.y + rect.height);
 	}
 
-	bool engine::BoxCollider::IsPointInCollider(const glm::vec2& /*point*/)
+	bool engine::BoxCollider::IsPointInCollider(const glm::vec2&)
 	{
+		//todo: implement
 		return false;
 	}
 
-	bool engine::BoxCollider::IsCircleInCollider(const structs::Circle& /*circle*/)
+	bool engine::BoxCollider::IsCircleInCollider(const structs::Circle&)
 	{
+		//todo: implement
 		return false;
 	}
 

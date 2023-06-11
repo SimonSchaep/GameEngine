@@ -6,7 +6,8 @@
 #include "TimeManager.h"
 #include "Renderer.h"
 #include "Scene.h"
-#include "TextRenderComponent.h"
+#include "UITextRenderComponent.h"
+#include "UITextureRenderComponent.h"
 #include "LayersEnum.h"
 
 using namespace engine;
@@ -22,7 +23,7 @@ GamePausedState::GamePausedState(GameManager* pGameManager)
 	//Background
 	auto pChild = pScene->CreateAndAddGameObject("Background", m_pPauseMenuGameObject);
 	pChild->GetTransform()->SetLocalPosition(0, 0);
-	auto pTextureRenderer = pChild->CreateAndAddComponent<TextureRenderComponent>();
+	auto pTextureRenderer = pChild->CreateAndAddComponent<UITextureRenderComponent>();
 	pTextureRenderer->SetTexture("blackHalfAlpha.png");
 	pTextureRenderer->SetSize(windowSize);
 	pTextureRenderer->SetLayer(Layer::uiBackground);
@@ -30,28 +31,28 @@ GamePausedState::GamePausedState(GameManager* pGameManager)
 	//Text
 	pChild = pScene->CreateAndAddGameObject("Text", m_pPauseMenuGameObject);
 	pChild->GetTransform()->SetLocalPosition(windowSize.x / 2, windowSize.y / 2 + 100);
-	auto pTextRenderer = pChild->CreateAndAddComponent<TextRenderComponent>();
+	auto pTextRenderer = pChild->CreateAndAddComponent<UITextRenderComponent>();
 	pTextRenderer->SetText("PAUSED");
 	pTextRenderer->SetFont("fonts/super-burger-time.ttf", 30);
 	pTextRenderer->SetLayer(Layer::uiText);
-	pTextRenderer->SetTextAlignment(TextRenderComponent::TextAlignment::center);
+	pTextRenderer->SetTextAlignment(UITextRenderComponent::TextAlignment::center);
 
 	//Instructions
 	pChild = pScene->CreateAndAddGameObject("Text", m_pPauseMenuGameObject);
 	pChild->GetTransform()->SetLocalPosition(windowSize.x / 2, windowSize.y / 2);
-	pTextRenderer = pChild->CreateAndAddComponent<TextRenderComponent>();
+	pTextRenderer = pChild->CreateAndAddComponent<UITextRenderComponent>();
 	pTextRenderer->SetText("P - RESUME");
 	pTextRenderer->SetFont("fonts/super-burger-time.ttf", 20);
 	pTextRenderer->SetLayer(Layer::uiText);
-	pTextRenderer->SetTextAlignment(TextRenderComponent::TextAlignment::center);
+	pTextRenderer->SetTextAlignment(UITextRenderComponent::TextAlignment::center);
 
 	pChild = pScene->CreateAndAddGameObject("Text", m_pPauseMenuGameObject);
 	pChild->GetTransform()->SetLocalPosition(windowSize.x / 2, windowSize.y / 2 - 50);
-	pTextRenderer = pChild->CreateAndAddComponent<TextRenderComponent>();
+	pTextRenderer = pChild->CreateAndAddComponent<UITextRenderComponent>();
 	pTextRenderer->SetText("ESCAPE - BACK TO MENU");
 	pTextRenderer->SetFont("fonts/super-burger-time.ttf", 20);
 	pTextRenderer->SetLayer(Layer::uiText);
-	pTextRenderer->SetTextAlignment(TextRenderComponent::TextAlignment::center);
+	pTextRenderer->SetTextAlignment(UITextRenderComponent::TextAlignment::center);
 
 	m_pPauseMenuGameObject->SetIsActive(false);
 }

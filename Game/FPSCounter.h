@@ -8,7 +8,7 @@
 
 namespace engine
 {
-	class TextRenderComponent;
+	class UITextRenderComponent;
 }
 
 class FPSCounter : public engine::BaseComponent
@@ -21,5 +21,5 @@ public:
 	virtual void Update() override;
 
 private:
-	engine::ObservingPointer<engine::TextRenderComponent> m_pTextRenderComponent{};
+	engine::ObservingPointer<engine::UITextRenderComponent> m_UITextRenderComponent{};
 };

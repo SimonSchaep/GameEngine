@@ -9,6 +9,8 @@
 #include "ChefLogic.h"
 #include "SoundSystem.h"
 #include "ServiceLocator.h"
+#include "UITextRenderComponent.h"
+#include "UITextureRenderComponent.h"
 
 using namespace engine;
 

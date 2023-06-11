@@ -17,6 +17,7 @@
 #include "HotdogSpriteController.h"
 #include "EggSpriteController.h"
 #include "LayersEnum.h"
+#include "CameraComponent.h"
 
 using namespace engine;
 using namespace levelParser;
@@ -168,6 +169,14 @@ engine::GameObject* Level::SpawnChef(glm::vec2 pos, bool isAlreadyCentered)
 	//collider
 	auto pBoxCollider = pChef->CreateAndAddComponent<BoxCollider>();
 	pBoxCollider->SetShape({ -width / 4, visualsHeightOffset, width / 2, height / 4 });
+
+	//camera
+	//camera is not set up to work correctly in this game
+	//cause it can only follow 1 player
+	//uncomment the following lines if you want to see the camera in action
+	/*auto pCamera = pChef->CreateAndAddComponent<CameraComponent>();
+	GetScene()->SetActiveCamera(pCamera);
+	pCamera->SetLevelBoundaries({ GetLevelPosition().x,GetLevelPosition().y,float(GetLevelWidth() * GetCellWidth()),float((GetLevelHeight() + 1) * GetCellHeight()) });*/
 
 	return pChef;
 }

@@ -11,7 +11,7 @@
 #include "GameEngine.h"
 #include "SceneManager.h"
 #include "ResourceManager.h"
-#include "TextRenderComponent.h"
+#include "UITextRenderComponent.h"
 #include "Scene.h"
 #include "GameObject.h"
 #include "TextureRenderComponent.h"
@@ -57,9 +57,9 @@ void load()
 	/*auto logger = ServiceLocator::RegisterLogger<FileLogger>();
 	logger->SetActualLogger<ConsoleLogger>();*/
 
-	//ServiceLocator::RegisterSoundSystem<SDLSoundSystem>();
-	auto soundSystem = ServiceLocator::RegisterSoundSystem<LoggingSoundSystem>();
-	soundSystem->SetActualSoundSystem<SDLSoundSystem>();
+	ServiceLocator::RegisterSoundSystem<SDLSoundSystem>();
+	/*auto soundSystem = ServiceLocator::RegisterSoundSystem<LoggingSoundSystem>();
+	soundSystem->SetActualSoundSystem<SDLSoundSystem>();*/
 
 
 	auto pScene = SceneManager::GetInstance().CreateScene("EmptyScene", true);
@@ -92,7 +92,7 @@ void load()
 	//fps counter gameobject
 	auto pGameObject = pScene->CreateAndAddGameObject("Fps");
 	pGameObject->MarkAsSceneIndependant();
-	auto pTextRenderComponent = pGameObject->CreateAndAddComponent<TextRenderComponent>();
+	auto pTextRenderComponent = pGameObject->CreateAndAddComponent<UITextRenderComponent>();
 	pTextRenderComponent->SetText("FPS:");
 	pTextRenderComponent->SetFont("fonts/super-burger-time.ttf", 12);
 	pGameObject->CreateAndAddComponent<FPSCounter>();

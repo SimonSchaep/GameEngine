@@ -18,8 +18,12 @@ namespace engine
 		virtual void Stop(int clipId) override;
 		virtual void Pause(int clipId) override;
 		virtual void Resume(int clipId) override;
+		virtual void SetVolume(int clipId, int volume) override;
 
-		virtual void StopAll();
+		virtual void Mute()override;
+		virtual void UnMute()override;
+		virtual void SetGlobalVolume(int volume)override;
+		virtual void StopAll()override;
 
 	private:
 		std::unique_ptr<SoundSystem> m_ActualSoundSystem{};

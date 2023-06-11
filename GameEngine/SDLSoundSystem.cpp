@@ -7,6 +7,12 @@
 
 class engine::SDLSoundSystem::SDLSoundSystemImpl
 {
+	struct SoundToProcess
+	{
+		SDLSoundClip* pSoundClip{};
+		SoundAction soundAction{};
+		int volume{};
+	};
 public:
 	SDLSoundSystemImpl()
 		:m_SoundClips{}
@@ -23,7 +29,6 @@ public:
 	}
 	~SDLSoundSystemImpl()
 	{
-		//todo: don't need this lock
 		std::lock_guard<std::mutex> lock(m_SoundsToProcessMutex);
 		m_EndQueue = true;
 		m_DoesQueueNeedProcessing.notify_one();
@@ -33,6 +38,7 @@ public:
 	int AddClip(const std::string& fileName)
 	{
 		m_SoundClips.emplace_back(std::make_unique<SDLSoundClip>(fileName));
+		
 		return int(m_SoundClips.size() - 1);
 	}
 
@@ -41,7 +47,7 @@ public:
 		assert(clipId < int(m_SoundClips.size()));
 
 		std::lock_guard<std::mutex> lock(m_SoundsToProcessMutex);
-		m_SoundsToProcess.emplace_back(std::pair<SDLSoundClip*, SoundAction>{ m_SoundClips[clipId].get(), SoundAction::play });
+		m_SoundsToProcess.emplace_back(SoundToProcess{ m_SoundClips[clipId].get(), SoundAction::play });
 		m_DoesQueueNeedProcessing.notify_one();
 	}
 
@@ -50,7 +56,7 @@ public:
 		assert(clipId < int(m_SoundClips.size()));
 
 		std::lock_guard<std::mutex> lock(m_SoundsToProcessMutex);
-		m_SoundsToProcess.emplace_back(std::pair<SDLSoundClip*, SoundAction>{ m_SoundClips[clipId].get(), SoundAction::stop });
+		m_SoundsToProcess.emplace_back(SoundToProcess{ m_SoundClips[clipId].get(), SoundAction::stop });
 		m_DoesQueueNeedProcessing.notify_one();
 	}
 
@@ -59,7 +65,7 @@ public:
 		assert(clipId < int(m_SoundClips.size()));
 
 		std::lock_guard<std::mutex> lock(m_SoundsToProcessMutex);
-		m_SoundsToProcess.emplace_back(std::pair<SDLSoundClip*, SoundAction>{ m_SoundClips[clipId].get(), SoundAction::pause });
+		m_SoundsToProcess.emplace_back(SoundToProcess{ m_SoundClips[clipId].get(), SoundAction::pause });
 		m_DoesQueueNeedProcessing.notify_one();
 	}
 
@@ -68,13 +74,47 @@ public:
 		assert(clipId < int(m_SoundClips.size()));
 
 		std::lock_guard<std::mutex> lock(m_SoundsToProcessMutex);
-		m_SoundsToProcess.emplace_back(std::pair<SDLSoundClip*, SoundAction>{ m_SoundClips[clipId].get(), SoundAction::resume });
+		m_SoundsToProcess.emplace_back(SoundToProcess{ m_SoundClips[clipId].get(), SoundAction::resume });
+		m_DoesQueueNeedProcessing.notify_one();
+	}
+
+	void SetVolume(int clipId, int volume)
+	{
+		assert(clipId < int(m_SoundClips.size()));
+
+		std::lock_guard<std::mutex> lock(m_SoundsToProcessMutex);
+		m_SoundsToProcess.emplace_back(SoundToProcess{ m_SoundClips[clipId].get(), SoundAction::setvolume, volume });
+		m_DoesQueueNeedProcessing.notify_one();
+	}
+
+	void Mute()
+	{
+		SetGlobalVolume(0);
+	}
+
+	void UnMute()
+	{
+		SetGlobalVolume(m_MasterVolume);
+	}
+
+	void SetGlobalVolume(int volume)
+	{
+		if (volume != 0) //make sure we don't overwrite mastervolume when muting, since than we wouldn't be able to unmute
+		{
+			m_MasterVolume = volume;
+		}
+
+		std::lock_guard<std::mutex> lock(m_SoundsToProcessMutex);
+		m_SoundsToProcess.emplace_back(SoundToProcess{ nullptr, SoundAction::setglobalvolume, volume });
 		m_DoesQueueNeedProcessing.notify_one();
 	}
 
 	void StopAll()
 	{
-		Mix_HaltChannel(-1);
+		if (m_SoundClips.size() == 0)return;
+		std::lock_guard<std::mutex> lock(m_SoundsToProcessMutex);
+		m_SoundsToProcess.emplace_back(SoundToProcess{ nullptr, SoundAction::stopall});
+		m_DoesQueueNeedProcessing.notify_one();
 	}
 
 
@@ -91,8 +131,9 @@ private:
 				break;
 			}
 
-			auto soundClip = m_SoundsToProcess[0].first;
-			auto soundAction = m_SoundsToProcess[0].second;
+			auto pSoundClip = m_SoundsToProcess[0].pSoundClip;
+			auto soundAction = m_SoundsToProcess[0].soundAction;
+			int volume = m_SoundsToProcess[0].volume;
 
 			m_SoundsToProcess.erase(m_SoundsToProcess.begin());
 
@@ -101,20 +142,29 @@ private:
 			switch (soundAction)
 			{
 			case SoundAction::play:
-				if (!soundClip->IsLoaded())
+				if (!pSoundClip->IsLoaded())
 				{
-					soundClip->Load();
+					pSoundClip->Load();
 				}
-				soundClip->Play();
+				pSoundClip->Play();
 				break;
 			case SoundAction::stop:
-				soundClip->Stop();
+				pSoundClip->Stop();
 				break;
 			case SoundAction::pause:
-				soundClip->Pause();
+				pSoundClip->Pause();
 				break;
 			case SoundAction::resume:
-				soundClip->Resume();
+				pSoundClip->Resume();
+				break;
+			case SoundAction::setvolume:
+				pSoundClip->SetVolume(volume);
+				break;
+			case SoundAction::setglobalvolume:
+				Mix_MasterVolume(volume);
+				break;
+			case SoundAction::stopall:
+				Mix_HaltChannel(-1);
 				break;
 			}
 		}
@@ -122,7 +172,7 @@ private:
 
 	std::vector<std::unique_ptr<SDLSoundClip>> m_SoundClips;
 
-	std::vector<std::pair<SDLSoundClip*, SoundAction>> m_SoundsToProcess{};
+	std::vector<SoundToProcess> m_SoundsToProcess{};
 
 	int m_ChannelCount{ 8 };
 
@@ -131,6 +181,8 @@ private:
 	std::mutex m_SoundsToProcessMutex{};
 
 	bool m_EndQueue{};
+
+	int m_MasterVolume{};
 };
 
 engine::SDLSoundSystem::SDLSoundSystem()
@@ -163,6 +215,26 @@ void engine::SDLSoundSystem::Pause(int clipId)
 void engine::SDLSoundSystem::Resume(int clipId)
 {
 	m_Impl->Resume(clipId);
+}
+
+void engine::SDLSoundSystem::SetVolume(int clipId, int volume)
+{
+	m_Impl->SetVolume(clipId, volume);
+}
+
+void engine::SDLSoundSystem::Mute()
+{
+	m_Impl->Mute();
+}
+
+void engine::SDLSoundSystem::UnMute()
+{
+	m_Impl->UnMute();
+}
+
+void engine::SDLSoundSystem::SetGlobalVolume(int volume)
+{
+	m_Impl->SetGlobalVolume(volume);
 }
 
 void engine::SDLSoundSystem::StopAll()

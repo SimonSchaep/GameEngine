@@ -46,8 +46,32 @@ void engine::LoggingSoundSystem::Resume(int clipId)
 	m_ActualSoundSystem->Resume(clipId);
 }
 
+void engine::LoggingSoundSystem::SetVolume(int clipId, int volume)
+{
+	ServiceLocator::GetLogger().LogLine("Setting volume of clip " + std::to_string(clipId) + " to " + std::to_string(volume), LogType::message);
+	m_ActualSoundSystem->SetVolume(clipId, volume);
+}
+
+void engine::LoggingSoundSystem::Mute()
+{
+	ServiceLocator::GetLogger().LogLine("Muting sound system", LogType::message);
+	m_ActualSoundSystem->Mute();
+}
+
+void engine::LoggingSoundSystem::UnMute()
+{
+	ServiceLocator::GetLogger().LogLine("Unmuting sound system", LogType::message);
+	m_ActualSoundSystem->UnMute();
+}
+
+void engine::LoggingSoundSystem::SetGlobalVolume(int volume)
+{
+	ServiceLocator::GetLogger().LogLine("Setting global volume to " + std::to_string(volume), LogType::message);
+	m_ActualSoundSystem->SetGlobalVolume(volume);
+}
+
 void engine::LoggingSoundSystem::StopAll()
 {
-	ServiceLocator::GetLogger().LogLine("Stopping all clips ", LogType::message);
+	ServiceLocator::GetLogger().LogLine("Stopping all clips", LogType::message);
 	m_ActualSoundSystem->StopAll();
 }

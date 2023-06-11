@@ -12,7 +12,11 @@ namespace engine
 		virtual void Stop(int)override {}
 		virtual void Pause(int)override {}
 		virtual void Resume(int)override {}
+		virtual void SetVolume(int, int)override {}
 
+		virtual void Mute()override {}
+		virtual void UnMute()override {}
+		virtual void SetGlobalVolume(int)override {}
 		virtual void StopAll()override {}
 
 	};

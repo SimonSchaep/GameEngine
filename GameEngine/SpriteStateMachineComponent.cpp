@@ -30,7 +30,7 @@ void engine::SpriteStateMachineComponent::SetSpriteRenderComponent(SpriteRenderC
 
 void engine::SpriteStateMachineComponent::EvaluateStates()
 {
-	if (!m_pSpriteRenderComponent || !m_CurrentState)return;
+	if (!m_pSpriteRenderComponent || !m_CurrentState || TimeManager::GetInstance().GetTimePaused())return;
 
 	auto newState = m_CurrentState->EvaluateConnections();
 	if (newState) //might be good to replace with a while loop to keep checking connections of newer states

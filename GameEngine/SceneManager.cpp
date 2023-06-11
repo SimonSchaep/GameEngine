@@ -31,7 +31,7 @@ namespace engine
 
 	void SceneManager::Render()const
 	{
-		if (m_pActiveScene)
+		if (m_pActiveScene && !m_pDesiredActiveScene) //don't render old scene anymore when new one was requested
 		{
 			m_pActiveScene->Render();
 		}
@@ -39,7 +39,7 @@ namespace engine
 
 	void SceneManager::RenderUI()
 	{
-		if (m_pActiveScene)
+		if (m_pActiveScene && !m_pDesiredActiveScene) //don't render old scene anymore when new one was requested
 		{
 			m_pActiveScene->RenderUI();
 		}

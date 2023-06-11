@@ -52,15 +52,19 @@ void engine::ConsoleLogger::LogLine(const std::string& message, LogType logType)
 	switch (logType)
 	{
 	case engine::LogType::message:
+		SetConsoleTextAttribute(hConsole, m_MessageColor);
 		std::cout << m_MessagePrefix;
 		break;
 	case engine::LogType::debug:
+		SetConsoleTextAttribute(hConsole, m_DebugColor);
 		std::cout << m_DebugPrefix;
 		break;
 	case engine::LogType::warning:
+		SetConsoleTextAttribute(hConsole, m_WarningColor);
 		std::cout << m_WarningPrefix;
 		break;
 	case engine::LogType::error:
+		SetConsoleTextAttribute(hConsole, m_ErrorColor);
 		std::cout << m_ErrorPrefix;
 		break;
 	default:

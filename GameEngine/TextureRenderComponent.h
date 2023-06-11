@@ -4,6 +4,8 @@
 #include "RenderComponent.h"
 #include "glm/glm.hpp"
 
+//todo: add color modifier, for example to modify transparency
+
 namespace engine
 {
 

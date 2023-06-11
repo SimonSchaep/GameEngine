@@ -4,6 +4,8 @@
 #include "Scene.h"
 #include "GameManager.h"
 #include "EnemyLogic.h"
+#include "ServiceLocator.h"
+#include "SoundSystem.h"
 
 using namespace engine;
 
@@ -20,6 +22,8 @@ void ChefLogic::Initialize()
 	GetScene()->FindGameObjectByName("GameManager")->GetComponent<GameManager>()->GetOnRespawnCharacters()->AddObserver(this);
 
 	GetGameObject()->GetComponent<BoxCollider>()->GetOnTriggerEvent()->AddObserver(this);
+
+	m_DeathSound = ServiceLocator::GetSoundSystem().AddClip("data/sounds/death.wav");
 }
 
 void ChefLogic::Notify(EventType)
@@ -43,6 +47,7 @@ void ChefLogic::HandleTriggerEnter(engine::Collider* /*pOriginCollider*/, engine
 		if (!pEnemyLogic->IsStunned() && !pEnemyLogic->IsDead() && !pEnemyLogic->IsFalling())
 		{
 			m_IsDead = true;
+			ServiceLocator::GetSoundSystem().Play(m_DeathSound);
 			m_OnDeath->NotifyObservers(EventType::chefDied, this);
 		}
 	}

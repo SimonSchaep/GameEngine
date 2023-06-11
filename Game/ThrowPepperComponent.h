@@ -31,5 +31,7 @@ private:
 	float m_ThrowDurationTimer{};
 
 	engine::ObservingPointer<GamePlayingState> m_GamePlayingState{};
+
+	int m_ThrowPepperSound{};
 };
 

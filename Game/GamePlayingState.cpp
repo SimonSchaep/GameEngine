@@ -7,12 +7,15 @@
 #include "TimeManager.h"
 #include "Scene.h"
 #include "ChefLogic.h"
+#include "SoundSystem.h"
+#include "ServiceLocator.h"
 
 using namespace engine;
 
 GamePlayingState::GamePlayingState(GameManager* pGameManager)
 	:GameState(pGameManager)
 {
+
 }
 
 GameState* GamePlayingState::Update()

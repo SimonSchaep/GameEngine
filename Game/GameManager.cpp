@@ -33,6 +33,7 @@
 #include "SpecialPickupLogic.h"
 #include "LifeTimer.h"
 #include "LayersEnum.h"
+#include "SoundSystem.h"
 
 using namespace engine;
 
@@ -50,6 +51,10 @@ GameManager::~GameManager() = default;
 
 void GameManager::Initialize()
 {
+	m_WinSound = ServiceLocator::GetSoundSystem().AddClip("data/sounds/win.wav");
+	m_MusicSound = ServiceLocator::GetSoundSystem().AddClip("data/sounds/music.wav");
+	m_StartGameSound = ServiceLocator::GetSoundSystem().AddClip("data/sounds/gamestart.wav");
+
 	InitializeStates();
 
 	m_pActiveGameState = GetStartMenuState();
@@ -85,6 +90,15 @@ void GameManager::Update()
 		m_OnStartNextLevel->NotifyObservers(EventType::startNextLevel);
 	}
 
+	if (m_StartGameSoundDurationTimer > 0)
+	{
+		m_StartGameSoundDurationTimer -= TimeManager::GetInstance().GetUnPausedDeltaTime();
+
+		if (m_StartGameSoundDurationTimer <= 0)
+		{
+			PlayMusic();
+		}
+	}
 	if (m_RespawnCharactersDelayTimer > 0)
 	{
 		m_RespawnCharactersDelayTimer -= TimeManager::GetInstance().GetUnPausedDeltaTime();
@@ -92,6 +106,7 @@ void GameManager::Update()
 		if (m_RespawnCharactersDelayTimer <= 0)
 		{
 			m_OnRespawnCharacters->NotifyObservers(EventType::respawnCharacters);
+			PlayStartGameSound();
 		}
 	}
 	if (m_StartNextLevelDelayTimer > 0)
@@ -209,6 +224,22 @@ void GameManager::Notify(EventType eventType, ChefLogic* pChef)
 	}
 }
 
+void GameManager::PlayMusic()
+{
+	ServiceLocator::GetSoundSystem().Play(m_MusicSound, -1);
+}
+
+void GameManager::StopMusic()
+{
+	ServiceLocator::GetSoundSystem().Stop(m_MusicSound);
+}
+
+void GameManager::PlayStartGameSound()
+{
+	ServiceLocator::GetSoundSystem().Play(m_StartGameSound);
+	m_StartGameSoundDurationTimer = m_StartGameSoundDuration;
+}
+
 void GameManager::InitializeStates()
 {
 	//Startmenu state
@@ -234,7 +265,7 @@ Scene* GameManager::CreateLevel(int id)
 
 	pLevel->BuildLevel();
 
-	ServiceLocator::GetLogger().LogLine("creating level " + std::to_string(id));
+	//ServiceLocator::GetLogger().LogLine("creating level " + std::to_string(id));
 
 	return pScene;
 }
@@ -309,6 +340,7 @@ void GameManager::CheckIfChefWon()
 	if (m_FoodsLeftinLevel.size() == 0)
 	{
 		m_StartNextLevelDelayTimer = m_StartNextLevelDelay;
+		ServiceLocator::GetSoundSystem().Play(m_WinSound);
 		m_OnChefWon->NotifyObservers(EventType::chefWon);
 		m_pNextLevel = CreateLevel(m_NextLevelId); //todo: this could be put in a separate thread to mask that the level is loading
 	}

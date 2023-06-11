@@ -57,12 +57,14 @@ void load()
 	/*auto logger = ServiceLocator::RegisterLogger<FileLogger>();
 	logger->SetActualLogger<ConsoleLogger>();*/
 
-	ServiceLocator::RegisterSoundSystem<SDLSoundSystem>();
-	/*auto soundSystem = ServiceLocator::RegisterSoundSystem<LoggingSoundSystem>();
-	soundSystem->SetActualSoundSystem<SDLSoundSystem>();*/
+	//ServiceLocator::RegisterSoundSystem<SDLSoundSystem>();
+	auto soundSystem = ServiceLocator::RegisterSoundSystem<LoggingSoundSystem>();
+	soundSystem->SetActualSoundSystem<SDLSoundSystem>();
 
 
 	auto pScene = SceneManager::GetInstance().CreateScene("EmptyScene", true);
+
+	ServiceLocator::GetSoundSystem().SetGlobalVolume(10);
 
 	//mute button
 	InputManager::GetInstance().BindKeyboardButtonToCommand(SDL_SCANCODE_M, InputManager::KeyState::up, std::make_unique<MuteCommand>());

@@ -116,7 +116,7 @@ bool EnemyAIController::HasReachedTargetTile()
 {
 	auto& currentPos = GetControlledGameObject()->GetTransform()->GetWorldPosition();
 	return m_pLevel->GetIndexOfPos(currentPos) == m_TargetTile
-		&& m_pLevel->IsInCenterOfElementX(currentPos, 1) && m_pLevel->IsInCenterOfElementY(currentPos, 1);
+		&& m_pLevel->IsInCenterOfElementX(currentPos, 2) && m_pLevel->IsInCenterOfElementY(currentPos, 2);
 }
 
 void EnemyAIController::FindNewTargetTile() //target tile will be current tile in here, since it gets called after we reach target tile

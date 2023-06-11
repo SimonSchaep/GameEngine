@@ -34,6 +34,8 @@ private:
 
 	bool m_IsDead{};
 
+	int m_DeathSound{};
+
 	glm::vec2 m_Startpos{};
 
 	std::unique_ptr<engine::Event<EventType, ChefLogic*>> m_OnDeath{};

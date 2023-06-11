@@ -30,4 +30,6 @@ private:
 
 	std::unique_ptr<engine::Event<EventType, SpecialPickupLogic*>> m_OnPickup{};
 	EventType m_PickupType{};
+
+	int m_PickupSound{};
 };

@@ -146,9 +146,7 @@
     <ClCompile Include="AutoMoveComponent.cpp">
       <Filter>Components</Filter>
     </ClCompile>
-    <ClCompile Include="NameInputBox.cpp">
-      <Filter>Scoring</Filter>
-    </ClCompile>
+    <ClCompile Include="NameInputBox.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="MoveCommands.h">
@@ -269,12 +267,10 @@
     <ClInclude Include="AutoMoveComponent.h">
       <Filter>Components</Filter>
     </ClInclude>
-    <ClInclude Include="NameInputBox.h">
-      <Filter>Scoring</Filter>
-    </ClInclude>
     <ClInclude Include="LayersEnum.h" />
     <ClInclude Include="MuteCommand.h">
       <Filter>Commands</Filter>
     </ClInclude>
+    <ClInclude Include="NameInputBox.h" />
   </ItemGroup>
 </Project>

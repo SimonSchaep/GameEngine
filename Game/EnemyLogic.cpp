@@ -5,6 +5,8 @@
 #include "BoxCollider.h"
 #include "TimeManager.h"
 #include "FoodParent.h"
+#include "ServiceLocator.h"
+#include "SoundSystem.h"
 
 using namespace engine;
 
@@ -21,6 +23,9 @@ void EnemyLogic::Initialize()
 	GetScene()->FindGameObjectByName("GameManager")->GetComponent<GameManager>()->GetOnRespawnCharacters()->AddObserver(this);
 
 	GetGameObject()->GetComponent<BoxCollider>()->GetOnTriggerEvent()->AddObserver(this);
+
+	m_FallSound = ServiceLocator::GetSoundSystem().AddClip("data/sounds/enemyfall.wav");
+	m_DeathSound = ServiceLocator::GetSoundSystem().AddClip("data/sounds/bonuspoints.wav");
 }
 
 void EnemyLogic::Update()
@@ -68,6 +73,7 @@ void EnemyLogic::Notify(engine::GameObject* pObject, EventType type)
 	{
 		GetGameObject()->SetParent(pObject, true);
 		m_IsFalling = true;
+		ServiceLocator::GetSoundSystem().Play(m_FallSound);
 	}
 	else if(type == EventType::foodStopFall)
 	{
@@ -91,6 +97,7 @@ void EnemyLogic::HandleTriggerEnter(engine::Collider* /*pOriginCollider*/, engin
 		{
 			m_IsDead = true;
 			m_RespawnDelayTimer = m_RespawnDelay;
+			ServiceLocator::GetSoundSystem().Play(m_DeathSound);
 			m_OnDeath->NotifyObservers(EventType::enemyDied, this);
 		}
 		else
@@ -116,7 +123,7 @@ void EnemyLogic::HandleTriggerExit(engine::Collider* /*pOriginCollider*/, engine
 		{
 			auto pObject = pHitCollider->GetGameObject();
 			auto pFood = pObject->GetComponent<FoodParent>();
-			if (pFood)
+			if (pFood == m_Food)
 			{
 				pFood->GetFallEvent()->RemoveObserver(this);
 				pFood->EnemyLeft();

@@ -60,6 +60,7 @@ private:
 	bool m_ReachedPlate{};
 
 	int m_DropSound{};
+	int m_BounceSound{};
 
 	int m_FallExtraLevels{};
 	int m_EnemiesOnTop{}; //purely for scoring

@@ -7,12 +7,16 @@
 #include "BoxCollider.h"
 #include "GamePlayingState.h"
 #include "GameManager.h"
+#include "ServiceLocator.h"
+#include "SoundSystem.h"
 
 using namespace engine;
 
 void ThrowPepperComponent::Initialize()
 {
 	m_GamePlayingState = GetScene()->FindGameObjectByName("GameManager")->GetComponent<GameManager>()->GetGamePlayingState();
+
+	m_ThrowPepperSound = ServiceLocator::GetSoundSystem().AddClip("data/sounds/pepper.wav");
 }
 
 void ThrowPepperComponent::Update()
@@ -35,6 +39,8 @@ void ThrowPepperComponent::ThrowPepper(const glm::vec2& direction)
 		m_ThrowCooldownTimer = m_ThrowCooldown;
 
 		m_GamePlayingState->AddPepper(-1);
+
+		ServiceLocator::GetSoundSystem().Play(m_ThrowPepperSound);
 
 		CreatePepperObject(direction);
 	}
@@ -109,5 +115,5 @@ void ThrowPepperComponent::CreatePepperObject(glm::vec2 direction)
 
 	//collider
 	auto collider = pepperObject->CreateAndAddComponent<BoxCollider>();
-	collider->SetShape({ -width / 2, -8, width, height });
+	collider->SetShape({ -width / 2 - 2, -10, width + 4, height + 4 });
 }

@@ -27,6 +27,7 @@ void FoodParent::Initialize()
 	}
 
 	m_DropSound = ServiceLocator::GetSoundSystem().AddClip("data/sounds/ingredientwalk.wav");
+	m_BounceSound = ServiceLocator::GetSoundSystem().AddClip("data/sounds/bounce.wav");
 }
 
 void FoodParent::Update()
@@ -63,6 +64,7 @@ void FoodParent::HandleTriggerEnter(Collider* pOriginCollider, Collider* pHitCol
 					{
 						otherFoodParent->StartFall();
 						m_FallVelocity = m_BounceVelocity;
+						ServiceLocator::GetSoundSystem().Play(m_BounceSound);
 					}					
 				}
 				else

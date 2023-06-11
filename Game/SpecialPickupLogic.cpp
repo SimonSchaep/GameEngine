@@ -4,6 +4,8 @@
 #include "ThrowPepperComponent.h"
 #include "GameManager.h"
 #include "Scene.h"
+#include "ServiceLocator.h"
+#include "SoundSystem.h"
 
 using namespace engine;
 
@@ -19,6 +21,8 @@ void SpecialPickupLogic::Initialize()
 	GetScene()->FindGameObjectByName("GameManager")->GetComponent<GameManager>()->GetOnRespawnCharacters()->AddObserver(this);
 
 	GetGameObject()->GetComponent<BoxCollider>()->GetOnTriggerEvent()->AddObserver(this);
+
+	m_PickupSound = ServiceLocator::GetSoundSystem().AddClip("data/sounds/bonuspoints.wav");
 }
 
 void SpecialPickupLogic::Notify(EventType type)
@@ -41,5 +45,6 @@ void SpecialPickupLogic::HandleTriggerEnter(engine::Collider* /*pOriginCollider*
 			m_OnPickup->NotifyObservers(m_PickupType, this);
 			GetGameObject()->MarkForDeletion(true);
 		}
+		ServiceLocator::GetSoundSystem().Play(m_PickupSound);
 	}
 }

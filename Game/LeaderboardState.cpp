@@ -68,6 +68,9 @@ GameState* LeaderboardState::Update()
 
 void LeaderboardState::OnEnter()
 {
+	GetGameManager()->StopMusic();
+	GetGameManager()->PlayMusic();
+
 	m_pLeaderboardGameObject->SetIsActive(true);
 	m_pNameInputBox->SetIsActive(true);
 	m_pHighScoresGameObject->SetIsActive(false);

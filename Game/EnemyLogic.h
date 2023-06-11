@@ -59,5 +59,8 @@ private:
 	std::unique_ptr<engine::Event<EventType, EnemyLogic*>> m_OnDeath{};
 
 	engine::ObservingPointer<FoodParent> m_Food{};
+
+	int m_FallSound{};
+	int m_DeathSound{};
 };
 

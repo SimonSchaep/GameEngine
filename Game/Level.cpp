@@ -134,7 +134,7 @@ glm::vec2 Level::GetCenterOfCell(int index) const
 
 engine::GameObject* Level::SpawnChef(glm::vec2 pos, bool isAlreadyCentered)
 {
-	ServiceLocator::GetLogger().LogLine("creating chef in scene: " + GetScene()->GetName());
+	//ServiceLocator::GetLogger().LogLine("creating chef in scene: " + GetScene()->GetName());
 
 	const float width{ 28 };
 	const float height{ 28 };

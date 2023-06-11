@@ -71,7 +71,7 @@ void ScoreManager::Notify(engine::GameObject* pObject, EventType type)
 		}
 		else
 		{
-			ServiceLocator::GetLogger().LogLine("enemy count: " + std::to_string(enemyCount));
+			//ServiceLocator::GetLogger().LogLine("enemy count: " + std::to_string(enemyCount));
 			AddScore(int(pow(2, enemyCount-2)*1000), pObject->GetTransform()->GetWorldPosition());
 		}
 	}
@@ -195,8 +195,8 @@ void ScoreManager::AddScore(int amount, const glm::vec2& position)
 	pText->SetFont("fonts/super-burger-time.ttf", 15);
 	pText->SetText(std::to_string(amount));
 
-	ServiceLocator::GetLogger().LogLine("");
-	ServiceLocator::GetLogger().LogLine("Added: " + std::to_string(amount));
-	ServiceLocator::GetLogger().LogLine("Score: " + std::to_string(m_Score));
-	ServiceLocator::GetLogger().LogLine("");
+	//ServiceLocator::GetLogger().LogLine("");
+	//ServiceLocator::GetLogger().LogLine("Added: " + std::to_string(amount));
+	//ServiceLocator::GetLogger().LogLine("Score: " + std::to_string(m_Score));
+	//ServiceLocator::GetLogger().LogLine("");
 }

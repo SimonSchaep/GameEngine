@@ -62,6 +62,10 @@ public:
 	virtual void Notify(FoodParent* pFood)override;
 	virtual void Notify(EventType, ChefLogic*)override;
 
+	void PlayMusic();
+	void StopMusic();
+	void PlayStartGameSound();
+
 private:
 	void InitializeStates();
 	engine::Scene* CreateLevel(int id);
@@ -96,5 +100,12 @@ private:
 	float m_StartNextLevelDelayTimer{};
 
 	GameMode m_GameMode{GameMode::singleplayer};
+
+	int m_WinSound{};
+	int m_MusicSound{};
+	int m_StartGameSound{};
+
+	float m_StartGameSoundDuration{ 3.f };
+	float m_StartGameSoundDurationTimer{};
 };
 

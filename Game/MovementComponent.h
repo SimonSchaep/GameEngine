@@ -42,7 +42,7 @@ private:
 
 	glm::vec2 m_CurrentMovementDirection{}; //only used for animation, maybe there's a better way to do it, something like using velocity
 
-	int m_CenterMargin{ 1 };
+	int m_CenterMargin{ 2 };
 
 	engine::ObservingPointer<Level> m_pLevel;
 };

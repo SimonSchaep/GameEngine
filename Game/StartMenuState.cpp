@@ -100,6 +100,9 @@ GameState* StartMenuState::Update()
 
 void StartMenuState::OnEnter()
 {
+	GetGameManager()->StopMusic();
+	GetGameManager()->PlayMusic();
+
 	m_Commands.emplace_back(InputManager::GetInstance().BindKeyboardButtonToCommand(SDL_SCANCODE_1, InputManager::KeyState::up, std::make_unique<StartGameCommand>(this, GameMode::singleplayer)));
 	m_Commands.emplace_back(InputManager::GetInstance().BindKeyboardButtonToCommand(SDL_SCANCODE_2, InputManager::KeyState::up, std::make_unique<StartGameCommand>(this, GameMode::coop)));
 	m_Commands.emplace_back(InputManager::GetInstance().BindKeyboardButtonToCommand(SDL_SCANCODE_3, InputManager::KeyState::up, std::make_unique<StartGameCommand>(this, GameMode::versus)));
@@ -121,5 +124,8 @@ void StartMenuState::OnExit()
 	{
 		GetGameManager()->StartGame(m_GameMode);
 	}
-	m_pMenuGameObject->SetIsActive(false);	
+	m_pMenuGameObject->SetIsActive(false);
+
+	GetGameManager()->StopMusic();
+	GetGameManager()->PlayStartGameSound();
 }

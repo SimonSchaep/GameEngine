@@ -26,7 +26,7 @@ public:
 	virtual void OnEnter()override;
 	virtual void OnExit()override;
 
-	void AddLife() { m_LivesLeft++; }
+	void AddLife();
 
 	int GetPepperLeft() { return m_PepperLeft; }
 	void AddPepper(int amount);

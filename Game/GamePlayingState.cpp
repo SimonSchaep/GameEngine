@@ -131,6 +131,12 @@ void GamePlayingState::OnExit()
 	GetGameManager()->GetOnStartNextLevel()->RemoveObserver(this);
 }
 
+void GamePlayingState::AddLife()
+{
+	m_LivesLeft++;
+	UpdateDynamicHUD();
+}
+
 void GamePlayingState::AddPepper(int amount)
 {
 	m_PepperLeft += amount;

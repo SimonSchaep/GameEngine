@@ -4,6 +4,7 @@
 #include "StartMenuState.h"
 #include "GamePlayingState.h"
 #include "GamePausedState.h"
+#include "LeaderboardState.h"
 #include "ObservingPointer.h"
 #include "GameManager.h"
 
@@ -72,6 +73,50 @@ public:
 
 private:
 	engine::ObservingPointer<GamePausedState> m_pGamePausedState;
+};
+
+
+class PauseToMenuCommand : public engine::BaseCommand
+{
+public:
+	PauseToMenuCommand(GamePausedState* pGamePausedState)
+		: m_pGamePausedState{ pGamePausedState }
+	{
+	}
+
+	virtual ~PauseToMenuCommand() = default;
+
+	virtual bool Execute() override
+	{
+		if (!m_pGamePausedState)return false;
+		m_pGamePausedState->BackToMenu();
+		return true;
+	}
+
+private:
+	engine::ObservingPointer<GamePausedState> m_pGamePausedState;
+};
+
+
+class LeaderboardToMenuCommand : public engine::BaseCommand
+{
+public:
+	LeaderboardToMenuCommand(LeaderboardState* pLeaderboardState)
+		: m_LeaderboardState{ pLeaderboardState }
+	{
+	}
+
+	virtual ~LeaderboardToMenuCommand() = default;
+
+	virtual bool Execute() override
+	{
+		if (!m_LeaderboardState)return false;
+		m_LeaderboardState->BackToMenu();
+		return true;
+	}
+
+private:
+	engine::ObservingPointer<LeaderboardState> m_LeaderboardState;
 };
 
 

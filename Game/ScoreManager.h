@@ -22,7 +22,6 @@ public:
 	virtual ~ScoreManager();
 
 	virtual void Initialize() override;
-	virtual void Reset() override;
 
 	virtual void Notify(EventType type)override;
 	virtual void Notify(engine::GameObject*, EventType type)override;

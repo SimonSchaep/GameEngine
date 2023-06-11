@@ -32,12 +32,6 @@ void ScoreManager::Initialize()
 	m_GameManager->GetOnStartNextLevel()->AddObserver(this);
 }
 
-void ScoreManager::Reset()
-{
-	m_LivesAdded = 0;
-	m_Score = 0;
-}
-
 void ScoreManager::Notify(EventType type)
 {
 	if (type == EventType::startNextLevel)
@@ -160,6 +154,7 @@ void ScoreManager::SaveHighScore(const std::string& name)
 
 	m_Highscores.emplace_back(std::pair<int, std::string>{ m_Score, name });
 	m_Score = 0;
+	m_LivesAdded = 0;
 
 	std::sort(m_Highscores.begin(), m_Highscores.end(), [](const std::pair<int, std::string>& pair1, const std::pair<int, std::string>& pair2)
 		{

@@ -13,7 +13,6 @@ using namespace engine;
 GamePlayingState::GamePlayingState(GameManager* pGameManager)
 	:GameState(pGameManager)
 {
-	Reset();
 }
 
 GameState* GamePlayingState::Update()
@@ -42,7 +41,6 @@ GameState* GamePlayingState::Update()
 
 void GamePlayingState::OnEnter()
 {
-	m_Commands.emplace_back(InputManager::GetInstance().BindKeyboardButtonToCommand(SDL_SCANCODE_ESCAPE, InputManager::KeyState::up, std::make_unique<PauseGameCommand>(this)));
 	m_Commands.emplace_back(InputManager::GetInstance().BindKeyboardButtonToCommand(SDL_SCANCODE_P, InputManager::KeyState::up, std::make_unique<PauseGameCommand>(this)));
 	m_Commands.emplace_back(InputManager::GetInstance().BindKeyboardButtonToCommand(SDL_SCANCODE_F1, InputManager::KeyState::up, std::make_unique<NextLevelCommand>(GetGameManager())));
 	m_Commands.emplace_back(InputManager::GetInstance().BindKeyboardButtonToCommand(SDL_SCANCODE_G, InputManager::KeyState::up, std::make_unique<EndGameCommand>(this)));

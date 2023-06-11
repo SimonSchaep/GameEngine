@@ -172,43 +172,43 @@ engine::GameObject* Level::SpawnChef(glm::vec2 pos, bool isAlreadyCentered)
 	return pChef;
 }
 
-void Level::SpawnHotdog(engine::TextureRenderComponent* /*pRenderComponent*/, engine::GameObject* /*pLevelElementGameObject*/, glm::vec2 /*pos*/)
+void Level::SpawnHotdog(engine::TextureRenderComponent* pRenderComponent, engine::GameObject* pLevelElementGameObject, glm::vec2 pos)
 {
-	//const float width{ 28 };
-	//const float height{ 28 };
-	//const float visualsHeightOffset{ -height / 3.5f };
+	const float width{ 28 };
+	const float height{ 28 };
+	const float visualsHeightOffset{ -height / 3.5f };
 
-	//pos += glm::vec2{m_GridElementWidth - width, m_GridElementHeight - height};
-	//pos.x += m_GridElementWidth / 2 - (m_GridElementWidth - width);
-	//pos.y += m_GridElementHeight / 2 - (m_GridElementHeight - height);
+	pos += glm::vec2{m_GridElementWidth - width, m_GridElementHeight - height};
+	pos.x += m_GridElementWidth / 2 - (m_GridElementWidth - width);
+	pos.y += m_GridElementHeight / 2 - (m_GridElementHeight - height);
 
-	//auto pHotdog = GetScene()->CreateAndAddGameObject("Hotdog");
-	//pHotdog->AddTag("Enemy");
-	//pHotdog->GetTransform()->SetLocalPosition(pos);
-	//auto pMovementComponent = pHotdog->CreateAndAddComponent<MovementComponent>();
-	//pMovementComponent->SetMoveSpeed(m_EnemySpeed);
-	//pHotdog->CreateAndAddComponent<EnemyLogic>();
+	auto pHotdog = GetScene()->CreateAndAddGameObject("Hotdog");
+	pHotdog->AddTag("Enemy");
+	pHotdog->GetTransform()->SetLocalPosition(pos);
+	auto pMovementComponent = pHotdog->CreateAndAddComponent<MovementComponent>();
+	pMovementComponent->SetMoveSpeed(m_EnemySpeed);
+	pHotdog->CreateAndAddComponent<EnemyLogic>();
 
-	////visuals
-	//auto pHotdogVisuals = GetScene()->CreateAndAddGameObject("HotdogVisuals", pHotdog);
-	//auto pSpriteRenderComponent = pHotdogVisuals->CreateAndAddComponent<SpriteRenderComponent>();
-	//pSpriteRenderComponent->SetSize({ width, height });
-	//pSpriteRenderComponent->SetLayer(Layer::enemy);
+	//visuals
+	auto pHotdogVisuals = GetScene()->CreateAndAddGameObject("HotdogVisuals", pHotdog);
+	auto pSpriteRenderComponent = pHotdogVisuals->CreateAndAddComponent<SpriteRenderComponent>();
+	pSpriteRenderComponent->SetSize({ width, height });
+	pSpriteRenderComponent->SetLayer(Layer::enemy);
 
-	//pHotdogVisuals->CreateAndAddComponent<HotdogSpriteController>();
+	pHotdogVisuals->CreateAndAddComponent<HotdogSpriteController>();
 
-	//pHotdogVisuals->GetTransform()->SetLocalPosition({ -width / 2, visualsHeightOffset });
+	pHotdogVisuals->GetTransform()->SetLocalPosition({ -width / 2, visualsHeightOffset });
 
-	////black cover
-	//pLevelElementGameObject->GetTransform()->SetWorldPosition(pHotdogVisuals->GetTransform()->GetWorldPosition());
+	//black cover
+	pLevelElementGameObject->GetTransform()->SetWorldPosition(pHotdogVisuals->GetTransform()->GetWorldPosition());
 
-	//pRenderComponent->SetTexture("black.png");
-	//pRenderComponent->SetLayer(Layer::enemyCover);
-	//pRenderComponent->SetSize({ width, height });
+	pRenderComponent->SetTexture("black.png");
+	pRenderComponent->SetLayer(Layer::enemyCover);
+	pRenderComponent->SetSize({ width, height });
 
-	////collider
-	//auto pBoxCollider = pHotdog->CreateAndAddComponent<BoxCollider>();
-	//pBoxCollider->SetShape({ -width / 4, visualsHeightOffset, width / 2, height / 4 });
+	//collider
+	auto pBoxCollider = pHotdog->CreateAndAddComponent<BoxCollider>();
+	pBoxCollider->SetShape({ -width / 4, visualsHeightOffset, width / 2, height / 4 });
 }
 
 void Level::SpawnEgg(engine::TextureRenderComponent* pRenderComponent, engine::GameObject* pLevelElementGameObject, glm::vec2 pos)
@@ -537,8 +537,9 @@ void Level::SpawnPlate(glm::vec2 pos, const std::vector<LevelElement>& levelElem
 		pRenderComponent = pLevelElementGameObject->CreateAndAddComponent<TextureRenderComponent>();
 		pRenderComponent->SetTexture("platesingle.png");
 		pRenderComponent->SetSize({ m_GridElementWidth, m_GridElementHeight });
+		pRenderComponent->SetLayer(Layer::plate);
 		auto pBoxCollider = pLevelElementGameObject->CreateAndAddComponent<BoxCollider>();
-		pBoxCollider->SetShape({ 0,0,m_GridElementWidth, m_GridElementHeight/6 });
+		pBoxCollider->SetShape({ 0,0,m_GridElementWidth, m_GridElementHeight * 0.2f });
 	}
 	else
 	{
@@ -548,8 +549,9 @@ void Level::SpawnPlate(glm::vec2 pos, const std::vector<LevelElement>& levelElem
 		pRenderComponent = pLevelElementGameObject->CreateAndAddComponent<TextureRenderComponent>();
 		pRenderComponent->SetTexture("plateleft.png");
 		pRenderComponent->SetSize({ m_GridElementWidth, m_GridElementHeight });
+		pRenderComponent->SetLayer(Layer::plate);
 		auto pBoxCollider = pLevelElementGameObject->CreateAndAddComponent<BoxCollider>();
-		pBoxCollider->SetShape({ 0,0,m_GridElementWidth, m_GridElementHeight/6 });
+		pBoxCollider->SetShape({ 0,0,m_GridElementWidth, m_GridElementHeight * 0.2f });
 
 		while (!(col == m_LevelWidth - 2 || levelElements[GetIndexFromRowCol(row, col + 2)].eLevelElement != ELevelElement::plate)) //while next element is not right most element
 		{
@@ -561,8 +563,9 @@ void Level::SpawnPlate(glm::vec2 pos, const std::vector<LevelElement>& levelElem
 			pRenderComponent = pLevelElementGameObject->CreateAndAddComponent<TextureRenderComponent>();
 			pRenderComponent->SetTexture("platemiddle.png");
 			pRenderComponent->SetSize({ m_GridElementWidth, m_GridElementHeight });
+			pRenderComponent->SetLayer(Layer::plate);
 			pBoxCollider = pLevelElementGameObject->CreateAndAddComponent<BoxCollider>();
-			pBoxCollider->SetShape({ 0,0,m_GridElementWidth, m_GridElementHeight/6 });
+			pBoxCollider->SetShape({ 0,0,m_GridElementWidth, m_GridElementHeight * 0.2f });
 		}
 
 		pos.x += m_GridElementWidth;
@@ -572,8 +575,9 @@ void Level::SpawnPlate(glm::vec2 pos, const std::vector<LevelElement>& levelElem
 		pRenderComponent = pLevelElementGameObject->CreateAndAddComponent<TextureRenderComponent>();
 		pRenderComponent->SetTexture("plateright.png");
 		pRenderComponent->SetSize({ m_GridElementWidth, m_GridElementHeight });
+		pRenderComponent->SetLayer(Layer::plate);
 		pBoxCollider = pLevelElementGameObject->CreateAndAddComponent<BoxCollider>();
-		pBoxCollider->SetShape({ 0,0,m_GridElementWidth, m_GridElementHeight/6 });
+		pBoxCollider->SetShape({ 0,0,m_GridElementWidth, m_GridElementHeight*0.2f });
 	}
 }
 

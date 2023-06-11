@@ -3,6 +3,7 @@
 #include "GameObject.h"
 #include "InputManager.h"
 #include "MenuCommands.h"
+#include "InputManager.h"
 #include "TimeManager.h"
 #include "ScoreManager.h"
 #include "Renderer.h"
@@ -37,6 +38,14 @@ LeaderboardState::LeaderboardState(GameManager* pGameManager)
 	pTextRenderer->SetFont("super-burger-time.ttf", 30);
 	pTextRenderer->SetLayer(Layer::uiText);
 
+	pChild = pScene->CreateAndAddGameObject("Text", m_pLeaderboardGameObject);
+	pChild->GetTransform()->SetLocalPosition(windowSize.x / 2, windowSize.y * 0.15f);
+	pTextRenderer = pChild->CreateAndAddComponent<TextRenderComponent>();
+	pTextRenderer->SetText("ESCAPE - BACK TO MENU");
+	pTextRenderer->SetFont("super-burger-time.ttf", 10);
+	pTextRenderer->SetLayer(Layer::uiText);
+	pTextRenderer->SetTextAlignment(TextRenderComponent::TextAlignment::center);
+
 	//Name input
 	pChild = pScene->CreateAndAddGameObject("Name Input", m_pLeaderboardGameObject);
 	pChild->GetTransform()->SetLocalPosition(windowSize.x / 2 - 150, windowSize.y / 2 + 100);
@@ -50,6 +59,10 @@ LeaderboardState::LeaderboardState(GameManager* pGameManager)
 
 GameState* LeaderboardState::Update()
 {
+	if (m_BackToMenu)
+	{
+		return GetGameManager()->GetStartMenuState();
+	}
 	return nullptr;
 }
 
@@ -59,13 +72,23 @@ void LeaderboardState::OnEnter()
 	m_pNameInputBox->SetIsActive(true);
 	m_pHighScoresGameObject->SetIsActive(false);
 
+	m_Commands.emplace_back(InputManager::GetInstance().BindKeyboardButtonToCommand(SDL_SCANCODE_ESCAPE, InputManager::KeyState::up, std::make_unique<LeaderboardToMenuCommand>(this)));
+
 	TimeManager::GetInstance().SetTimePaused(true);
+
+	m_BackToMenu = false;
 
 	m_pNameInputBox->GetOnNameEntered()->AddObserver(this);
 }
 
 void LeaderboardState::OnExit()
 {
+	for (auto& command : m_Commands)
+	{
+		InputManager::GetInstance().RemoveCommand(command);
+	}
+	m_Commands.clear();
+
 	m_pLeaderboardGameObject->SetIsActive(false);
 
 	m_pNameInputBox->GetOnNameEntered()->RemoveObserver(this);

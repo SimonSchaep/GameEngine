@@ -18,12 +18,67 @@ StartMenuState::StartMenuState(GameManager* pGameManager)
 	auto windowSize = Renderer::GetInstance().GetWindowSize();
 
 	m_pMenuGameObject = pScene->CreateAndAddGameObject("StartMenu", GetGameManager()->GetGameObject());
-	auto pTextChild = pScene->CreateAndAddGameObject("Text", m_pMenuGameObject);
-	pTextChild->GetTransform()->SetLocalPosition(windowSize.x / 2 - 200, windowSize.y / 2 - 10);
-	auto pTextRenderer = pTextChild->CreateAndAddComponent<TextRenderComponent>();
+
+	//Background
+	auto pChild = pScene->CreateAndAddGameObject("Background", m_pMenuGameObject);
+	pChild->GetTransform()->SetLocalPosition(0, 0);
+	auto pTextureRenderer = pChild->CreateAndAddComponent<TextureRenderComponent>();
+	pTextureRenderer->SetTexture("black.png");
+	pTextureRenderer->SetSize(windowSize);
+	pTextureRenderer->SetLayer(Layer::uiBackground);
+
+	//Text
+	pChild = pScene->CreateAndAddGameObject("Text", m_pMenuGameObject);
+	pChild->GetTransform()->SetLocalPosition(windowSize.x / 2, windowSize.y * 0.8f);
+	auto pTextRenderer = pChild->CreateAndAddComponent<TextRenderComponent>();
 	pTextRenderer->SetText("PRESS 1/2/3 TO START");
-	pTextRenderer->SetFont("super-burger-time.ttf", 40);
+	pTextRenderer->SetFont("super-burger-time.ttf", 30);
 	pTextRenderer->SetLayer(Layer::uiText);
+	pTextRenderer->SetTextAlignment(TextRenderComponent::TextAlignment::center);
+
+	//single player
+	pChild = pScene->CreateAndAddGameObject("Text", m_pMenuGameObject);
+	pChild->GetTransform()->SetLocalPosition(windowSize.x / 2 - 300, windowSize.y * 0.6f);
+	pTextRenderer = pChild->CreateAndAddComponent<TextRenderComponent>();
+	pTextRenderer->SetText("1. SINGLE PLAYER");
+	pTextRenderer->SetFont("super-burger-time.ttf", 20);
+	pTextRenderer->SetLayer(Layer::uiText);
+	pTextRenderer->SetTextAlignment(TextRenderComponent::TextAlignment::left);
+
+	//co-op
+	pChild = pScene->CreateAndAddGameObject("Text", m_pMenuGameObject);
+	pChild->GetTransform()->SetLocalPosition(windowSize.x / 2 - 300, windowSize.y * 0.5f);
+	pTextRenderer = pChild->CreateAndAddComponent<TextRenderComponent>();
+	pTextRenderer->SetText("2. CO-OP");
+	pTextRenderer->SetFont("super-burger-time.ttf", 20);
+	pTextRenderer->SetLayer(Layer::uiText);
+	pTextRenderer->SetTextAlignment(TextRenderComponent::TextAlignment::left);
+
+	//versus
+	pChild = pScene->CreateAndAddGameObject("Text", m_pMenuGameObject);
+	pChild->GetTransform()->SetLocalPosition(windowSize.x / 2 - 300, windowSize.y * 0.4f);
+	pTextRenderer = pChild->CreateAndAddComponent<TextRenderComponent>();
+	pTextRenderer->SetText("3. VERSUS");
+	pTextRenderer->SetFont("super-burger-time.ttf", 20);
+	pTextRenderer->SetLayer(Layer::uiText);
+	pTextRenderer->SetTextAlignment(TextRenderComponent::TextAlignment::left);
+
+	//instructions
+	pChild = pScene->CreateAndAddGameObject("Text", m_pMenuGameObject);
+	pChild->GetTransform()->SetLocalPosition(windowSize.x / 2 - 220, windowSize.y * 0.25f);
+	pTextRenderer = pChild->CreateAndAddComponent<TextRenderComponent>();
+	pTextRenderer->SetText("MOVE - WASD/LEFT THUMB");
+	pTextRenderer->SetFont("super-burger-time.ttf", 14);
+	pTextRenderer->SetLayer(Layer::uiText);
+	pTextRenderer->SetTextAlignment(TextRenderComponent::TextAlignment::center);
+
+	pChild = pScene->CreateAndAddGameObject("Text", m_pMenuGameObject);
+	pChild->GetTransform()->SetLocalPosition(windowSize.x / 2 + 220, windowSize.y * 0.25f);
+	pTextRenderer = pChild->CreateAndAddComponent<TextRenderComponent>();
+	pTextRenderer->SetText("PEPPER - SPACE/CONTROLLER A");
+	pTextRenderer->SetFont("super-burger-time.ttf", 14);
+	pTextRenderer->SetLayer(Layer::uiText);
+	pTextRenderer->SetTextAlignment(TextRenderComponent::TextAlignment::center);
 
 	m_pMenuGameObject->SetIsActive(false);
 }
@@ -51,6 +106,8 @@ void StartMenuState::OnEnter()
 	m_StartGame = false;
 	m_pMenuGameObject->SetIsActive(true);
 	TimeManager::GetInstance().SetTimePaused(true);
+
+	GetGameManager()->GetGamePlayingState()->Reset();
 }
 
 void StartMenuState::OnExit()
@@ -60,9 +117,9 @@ void StartMenuState::OnExit()
 		InputManager::GetInstance().RemoveCommand(command);
 	}
 	m_Commands.clear();
-	m_pMenuGameObject->SetIsActive(false);
 	if (m_StartGame)
 	{
 		GetGameManager()->StartGame(m_GameMode);
 	}
+	m_pMenuGameObject->SetIsActive(false);	
 }

@@ -3,6 +3,7 @@ enum Layer : int
 {
 	level,
 	food,
+	plate,
 	pickup,
 	enemy,
 	chef,

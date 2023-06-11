@@ -24,8 +24,8 @@ public:
 	virtual void Update() override;
 
 	void StartFall();
-	void IncreaseFallExtraLevel();
-	void DecreaseFallExtraLevel();
+	void EnemyEntered();
+	void EnemyLeft();
 
 	int GetEnemiesOnTopCount() { return m_EnemiesOnTop; }
 

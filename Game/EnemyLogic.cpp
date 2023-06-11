@@ -50,14 +50,6 @@ void EnemyLogic::Respawn()
 	m_IsFalling = false;
 	m_IsDead = false;
 	m_IsStunned = false;
-
-	if (m_Food)
-	{
-		//cleanup previous food
-		m_Food->GetFallEvent()->RemoveObserver(this);
-		m_Food->DecreaseFallExtraLevel();
-		m_Food = nullptr;
-	}
 }
 
 void EnemyLogic::Notify(EventType type)
@@ -107,10 +99,10 @@ void EnemyLogic::HandleTriggerEnter(engine::Collider* /*pOriginCollider*/, engin
 			{
 				//cleanup previous food
 				m_Food->GetFallEvent()->RemoveObserver(this);
-				m_Food->DecreaseFallExtraLevel();
+				m_Food->EnemyLeft();
 			}
 			m_Food = pFood;
-			m_Food->IncreaseFallExtraLevel();
+			m_Food->EnemyEntered();
 			m_Food->GetFallEvent()->AddObserver(this);
 		}
 	}
@@ -127,7 +119,7 @@ void EnemyLogic::HandleTriggerExit(engine::Collider* /*pOriginCollider*/, engine
 			if (pFood)
 			{
 				pFood->GetFallEvent()->RemoveObserver(this);
-				pFood->DecreaseFallExtraLevel();
+				pFood->EnemyLeft();
 				GetGameObject()->SetParent(nullptr, true);
 				m_IsFalling = false;
 				m_Food = nullptr;

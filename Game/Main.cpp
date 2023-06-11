@@ -86,7 +86,7 @@ void load()
 	pGameObject->MarkAsSceneIndependant();
 	auto pTextRenderComponent = pGameObject->CreateAndAddComponent<TextRenderComponent>();
 	pTextRenderComponent->SetText("FPS:");
-	pTextRenderComponent->SetFont("super-burger-time.ttf", 12);
+	pTextRenderComponent->SetFont("fonts/super-burger-time.ttf", 12);
 	pGameObject->CreateAndAddComponent<FPSCounter>();
 	pGameObject->GetTransform()->SetLocalPosition(20, 20, 0);
 

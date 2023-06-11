@@ -32,7 +32,7 @@ GamePausedState::GamePausedState(GameManager* pGameManager)
 	pChild->GetTransform()->SetLocalPosition(windowSize.x / 2, windowSize.y / 2 + 100);
 	auto pTextRenderer = pChild->CreateAndAddComponent<TextRenderComponent>();
 	pTextRenderer->SetText("PAUSED");
-	pTextRenderer->SetFont("super-burger-time.ttf", 30);
+	pTextRenderer->SetFont("fonts/super-burger-time.ttf", 30);
 	pTextRenderer->SetLayer(Layer::uiText);
 	pTextRenderer->SetTextAlignment(TextRenderComponent::TextAlignment::center);
 
@@ -41,7 +41,7 @@ GamePausedState::GamePausedState(GameManager* pGameManager)
 	pChild->GetTransform()->SetLocalPosition(windowSize.x / 2, windowSize.y / 2);
 	pTextRenderer = pChild->CreateAndAddComponent<TextRenderComponent>();
 	pTextRenderer->SetText("P - RESUME");
-	pTextRenderer->SetFont("super-burger-time.ttf", 20);
+	pTextRenderer->SetFont("fonts/super-burger-time.ttf", 20);
 	pTextRenderer->SetLayer(Layer::uiText);
 	pTextRenderer->SetTextAlignment(TextRenderComponent::TextAlignment::center);
 
@@ -49,7 +49,7 @@ GamePausedState::GamePausedState(GameManager* pGameManager)
 	pChild->GetTransform()->SetLocalPosition(windowSize.x / 2, windowSize.y / 2 - 50);
 	pTextRenderer = pChild->CreateAndAddComponent<TextRenderComponent>();
 	pTextRenderer->SetText("ESCAPE - BACK TO MENU");
-	pTextRenderer->SetFont("super-burger-time.ttf", 20);
+	pTextRenderer->SetFont("fonts/super-burger-time.ttf", 20);
 	pTextRenderer->SetLayer(Layer::uiText);
 	pTextRenderer->SetTextAlignment(TextRenderComponent::TextAlignment::center);
 

@@ -123,8 +123,6 @@ void GameManager::StartNextLevel()
 
 	m_StartNextLevelDelayTimer = 0;
 	m_RespawnCharactersDelayTimer = 0;
-
-
 }
 
 void GameManager::StartGame(GameMode gameMode)
@@ -232,7 +230,7 @@ Scene* GameManager::CreateLevel(int id)
 
 	//Load level
 	auto pLevelObject = pScene->CreateAndAddGameObject("Level");
-	auto pLevel = pLevelObject->CreateAndAddComponent<Level>("Data/level" + std::to_string(id+1) + ".csv");
+	auto pLevel = pLevelObject->CreateAndAddComponent<Level>("Data/levels/level" + std::to_string(id+1) + ".csv");
 
 	pLevel->BuildLevel();
 

@@ -168,6 +168,8 @@ void FoodParent::StopFall(bool isForced)
 	
 	m_FallEvent->NotifyObservers(GetGameObject(), EventType::foodStopFall);
 	m_IsFalling = false;
+
+	m_FallExtraLevels = m_EnemiesOnTop;
 }
 
 void FoodParent::ReachedPlate()
@@ -195,18 +197,16 @@ void FoodParent::StartFall()
 
 	m_FallEvent->NotifyObservers(GetGameObject(), EventType::foodStartFall);
 	m_IsFalling = true;
-
-	m_EnemiesOnTop = m_FallExtraLevels;
 }
 
-void FoodParent::IncreaseFallExtraLevel()
+void FoodParent::EnemyEntered()
 {
 	m_FallExtraLevels++;
-	ServiceLocator::GetLogger().LogLine("increase fall level");
+	m_EnemiesOnTop++;
 }
 
-void FoodParent::DecreaseFallExtraLevel()
+void FoodParent::EnemyLeft()
 {
 	m_FallExtraLevels--;
-	ServiceLocator::GetLogger().LogLine("decrease fall level");
+	m_EnemiesOnTop--;
 }

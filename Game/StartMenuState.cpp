@@ -112,6 +112,7 @@ void StartMenuState::OnEnter()
 	TimeManager::GetInstance().SetTimePaused(true);
 
 	GetGameManager()->GetGamePlayingState()->Reset();
+	GetGameManager()->GetGamePlayingState()->HideHud();
 }
 
 void StartMenuState::OnExit()

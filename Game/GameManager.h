@@ -66,6 +66,8 @@ public:
 	void StopMusic();
 	void PlayStartGameSound();
 
+	int GetNextLevelId()const { return m_NextLevelId; };
+
 private:
 	void InitializeStates();
 	engine::Scene* CreateLevel(int id);

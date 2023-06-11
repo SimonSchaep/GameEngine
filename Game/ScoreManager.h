@@ -31,6 +31,8 @@ public:
 	std::vector<std::pair<int, std::string>> GetHighscores();
 	void SaveHighScore(const std::string& name);
 
+	int GetScore()const { return m_Score; }
+
 private:
 	void AddScore(int amount, const glm::vec2& position);
 

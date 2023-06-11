@@ -97,6 +97,7 @@ void GameManager::Update()
 		if (m_StartGameSoundDurationTimer <= 0)
 		{
 			PlayMusic();
+			m_StartGameSoundDurationTimer = -1;
 		}
 	}
 	if (m_RespawnCharactersDelayTimer > 0)
@@ -107,6 +108,7 @@ void GameManager::Update()
 		{
 			m_OnRespawnCharacters->NotifyObservers(EventType::respawnCharacters);
 			PlayStartGameSound();
+			m_RespawnCharactersDelayTimer = -1;
 		}
 	}
 	if (m_StartNextLevelDelayTimer > 0)
@@ -116,6 +118,7 @@ void GameManager::Update()
 		if (m_StartNextLevelDelayTimer <= 0)
 		{
 			StartNextLevel();
+			m_StartNextLevelDelayTimer = -1;
 		}
 	}
 }

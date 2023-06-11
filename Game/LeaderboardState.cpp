@@ -83,6 +83,8 @@ void LeaderboardState::OnEnter()
 	m_BackToMenu = false;
 
 	m_pNameInputBox->GetOnNameEntered()->AddObserver(this);
+
+	GetGameManager()->GetGamePlayingState()->HideHud();
 }
 
 void LeaderboardState::OnExit()

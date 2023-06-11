@@ -16,6 +16,7 @@ class engine::SDLSoundSystem::SDLSoundSystemImpl
 public:
 	SDLSoundSystemImpl()
 		:m_SoundClips{}
+		,m_MasterVolume{40}
 	{
 		if (Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, m_ChannelCount, 2048) < 0)
 		{
@@ -26,6 +27,8 @@ public:
 		Mix_AllocateChannels(m_ChannelCount);
 
 		m_SoundThread = std::jthread(&SDLSoundSystemImpl::ProcessSounds, this);
+
+		UnMute(); //will set master volume
 	}
 	~SDLSoundSystemImpl()
 	{

@@ -1,0 +1,12 @@
+simon:8100
+name:2800
+dddddddddddddddddddwww:1100
+simon:700
+simon:150
+dddddddddddddddddddd:150
+name:100
+:100
+simon:100
+sim:50
+ddddddddddddddddddd:50
+ddddddddddddddddddddw:50

@@ -4,13 +4,27 @@
 #include "InputManager.h"
 #include "MenuCommands.h"
 #include "TimeManager.h"
+#include "Renderer.h"
+#include "Scene.h"
+#include "TextRenderComponent.h"
+#include "LayersEnum.h"
 
 using namespace engine;
 
-GamePausedState::GamePausedState(GameManager* pGameManager, engine::GameObject* pPauseMenuGameObject)
+GamePausedState::GamePausedState(GameManager* pGameManager)
 	:GameState(pGameManager)
-	, m_pPauseMenuGameObject{ pPauseMenuGameObject }
 {
+	auto pScene = GetGameManager()->GetGameObject()->GetScene();
+	auto windowSize = Renderer::GetInstance().GetWindowSize();
+
+	m_pPauseMenuGameObject = pScene->CreateAndAddGameObject("PauseMenu", GetGameManager()->GetGameObject());
+	auto pTextChild = pScene->CreateAndAddGameObject("Text", m_pPauseMenuGameObject);
+	pTextChild->GetTransform()->SetLocalPosition(windowSize.x / 2 - 50, windowSize.y / 2 - 10);
+	auto pTextRenderer = pTextChild->CreateAndAddComponent<TextRenderComponent>();
+	pTextRenderer->SetText("PAUSED");
+	pTextRenderer->SetFont("super-burger-time.ttf", 40);
+	pTextRenderer->SetLayer(Layer::uiText);
+
 	m_pPauseMenuGameObject->SetIsActive(false);
 }
 

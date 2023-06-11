@@ -7,8 +7,6 @@
 #include "GameObject.h"
 #include "Scene.h"
 #include "TextRenderComponent.h"
-#include "ResourceManager.h"
-#include "Font.h"
 #include "Renderer.h"
 #include "MovementComponent.h"
 #include "PlayerLives.h"
@@ -34,22 +32,25 @@
 #include "EnemyPlayerController.h"
 #include "SpecialPickupLogic.h"
 #include "LifeTimer.h"
+#include "LayersEnum.h"
 
 using namespace engine;
 
 GameManager::GameManager(engine::GameObject* pGameObject)
 	:BaseComponent(pGameObject)
 {
+	m_OnStartNextLevel = std::make_unique<Event<EventType>>();
 	m_OnChefWon = std::make_unique<Event<EventType>>();
 	m_OnChefDied = std::make_unique<Event<EventType, ChefLogic*>>();
 	m_OnRespawnCharacters = std::make_unique<Event<EventType>>();
+	m_OnSpawnPickup = std::make_unique<Event<EventType, SpecialPickupLogic*>>();
 }
 
 GameManager::~GameManager() = default;
 
 void GameManager::Initialize()
 {
-	InitializeUI();
+	InitializeStates();
 
 	m_pActiveGameState = GetStartMenuState();
 	m_pActiveGameState->OnEnter();
@@ -67,7 +68,8 @@ void GameManager::Update()
 		m_pActiveGameState = pNewState;
 	}
 
-	if (m_FoodsNeedUpdate)
+	if (m_FoodsNeedUpdate) //update here, cause scene doesn't switch immediately on setactive, and ontransfer will be in the middle of switching scenes
+		//todo: maybe make ontransfer happen all at once, after switching scenes
 	{
 		m_FoodsNeedUpdate = false;
 		m_FoodsLeftinLevel.clear();
@@ -80,6 +82,7 @@ void GameManager::Update()
 			assert(m_FoodsLeftinLevel.back() != nullptr); //if this fails, some object has tag "foodparent" but no foodparent component
 			m_FoodsLeftinLevel.back()->GetReachedPlateEvent()->AddObserver(this);
 		}
+		m_OnStartNextLevel->NotifyObservers(EventType::startNextLevel);
 	}
 
 	if (m_RespawnCharactersDelayTimer > 0)
@@ -120,6 +123,8 @@ void GameManager::StartNextLevel()
 
 	m_StartNextLevelDelayTimer = 0;
 	m_RespawnCharactersDelayTimer = 0;
+
+
 }
 
 void GameManager::StartGame(GameMode gameMode)
@@ -137,26 +142,32 @@ void GameManager::SpawnSpecialPickup()
 	auto pGameObject = GetScene()->CreateAndAddGameObject("SpecialPickup");
 	pGameObject->AddTag("SpecialPickup");
 
-	pGameObject->CreateAndAddComponent<SpecialPickupLogic>();
 	pGameObject->CreateAndAddComponent<LifeTimer>(10.f);
 	auto pCollider = pGameObject->CreateAndAddComponent<BoxCollider>();
 	pCollider->SetShape({ 0,0,width,height });
 	auto pRenderer = pGameObject->CreateAndAddComponent<TextureRenderComponent>();
-	pRenderer->SetLayer(3);
+	pRenderer->SetLayer(Layer::pickup);
 	pRenderer->SetSize({width,height});
+
+	EventType pickupType{};
 	int randomValue = rand() % 3;
 	switch (randomValue)
 	{
 	case 0:
 		pRenderer->SetTexture("iceCream.png");
+		pickupType = EventType::iceCreamPickedUp;
 		break;
 	case 1:
 		pRenderer->SetTexture("fries.png");
+		pickupType = EventType::friesPickedUp;
 		break;
 	case 2:
 		pRenderer->SetTexture("coffee.png");
+		pickupType = EventType::coffeePickedUp;
 		break;
 	}
+
+	auto pPickupLogic = pGameObject->CreateAndAddComponent<SpecialPickupLogic>(pickupType);
 
 	auto pLevel = GetScene()->FindGameObjectByName("Level")->GetComponent<Level>();
 
@@ -179,6 +190,9 @@ void GameManager::SpawnSpecialPickup()
 	pos.y -= height / 2;
 
 	pGameObject->GetTransform()->SetWorldPosition(pos);
+
+
+	m_OnSpawnPickup->NotifyObservers(EventType::spawnedPickup, pPickupLogic);
 }
 
 void GameManager::Notify(FoodParent* pFood)
@@ -197,40 +211,19 @@ void GameManager::Notify(EventType eventType, ChefLogic* pChef)
 	}
 }
 
-void GameManager::InitializeUI()
+void GameManager::InitializeStates()
 {
-	auto pScene = GetGameObject()->GetScene();
-	auto windowSize = Renderer::GetInstance().GetWindowSize();
-
-	//Startmenu state	
-	auto pStartMenu = pScene->CreateAndAddGameObject("StartMenu", GetGameObject());
-	auto pTextChild = pScene->CreateAndAddGameObject("Text", pStartMenu);
-	pTextChild->GetTransform()->SetLocalPosition(windowSize.x / 2 - 200, windowSize.y / 2 - 10);
-	auto pTextRenderer = pTextChild->CreateAndAddComponent<TextRenderComponent>();
-	pTextRenderer->SetText("PRESS 1/2/3 TO START");
-	pTextRenderer->SetFont(ResourceManager::GetInstance().LoadFont("Lingua.otf", 40));
-	m_StartMenuState = std::make_unique<StartMenuState>(this, pStartMenu);
+	//Startmenu state
+	m_StartMenuState = std::make_unique<StartMenuState>(this);
 
 	//Game playing state
 	m_GamePlayingState = std::make_unique<GamePlayingState>(this);
 
-	//Game paused state
-	auto pPauseMenu = pScene->CreateAndAddGameObject("PauseMenu", GetGameObject());
-	pTextChild = pScene->CreateAndAddGameObject("Text", pPauseMenu);
-	pTextChild->GetTransform()->SetLocalPosition(windowSize.x / 2 - 50, windowSize.y / 2 - 10);
-	pTextRenderer = pTextChild->CreateAndAddComponent<TextRenderComponent>();
-	pTextRenderer->SetText("PAUSED");
-	pTextRenderer->SetFont(ResourceManager::GetInstance().LoadFont("Lingua.otf", 40));
-	m_GamePausedState = std::make_unique<GamePausedState>(this, pPauseMenu);
+	//Game paused state	
+	m_GamePausedState = std::make_unique<GamePausedState>(this);
 
-	//Leaderboard state
-	auto pLeaderboardMenu = pScene->CreateAndAddGameObject("LeaderboardMenu", GetGameObject());
-	pTextChild = pScene->CreateAndAddGameObject("Text", pLeaderboardMenu);
-	pTextChild->GetTransform()->SetLocalPosition(windowSize.x / 2 - 50, windowSize.y / 2 - 10);
-	pTextRenderer = pTextChild->CreateAndAddComponent<TextRenderComponent>();
-	pTextRenderer->SetText("LEADERBOARD");
-	pTextRenderer->SetFont(ResourceManager::GetInstance().LoadFont("Lingua.otf", 40));
-	m_LeaderboardState = std::make_unique<LeaderboardState>(this, pLeaderboardMenu);
+	//Leaderboard state	
+	m_LeaderboardState = std::make_unique<LeaderboardState>(this);
 }
 
 Scene* GameManager::CreateLevel(int id)

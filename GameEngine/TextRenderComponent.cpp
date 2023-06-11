@@ -52,7 +52,15 @@ namespace engine
 	{
 		if (GetTexture() != nullptr)
 		{
-			const auto& pos = GetGameObject()->GetTransform()->GetWorldPosition();
+			auto pos = GetGameObject()->GetTransform()->GetWorldPosition();
+			if (m_Alignment == TextAlignment::center)
+			{
+				pos.x -= GetTexture()->GetSize().x / 2;
+			}
+			else if (m_Alignment == TextAlignment::right)
+			{
+				pos.x -= GetTexture()->GetSize().x;
+			}
 			Renderer::GetInstance().RenderTexture(*GetTexture(), pos.x, pos.y);
 		}
 	}

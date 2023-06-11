@@ -7,4 +7,12 @@ enum class EventType
 	chefLost,
 	chefWon,
 	enemyDied,
+	spawnedPickup,
+	coffeePickedUp,
+	friesPickedUp,
+	iceCreamPickedUp,
+	foodStartFall,
+	foodStopFall,
+	startNextLevel,
+	nameEntered,
 };

@@ -209,8 +209,10 @@ xcopy "$(SolutionDir)Data\" "$(ProjectDir)Data\" /Y</Command>
     <ClCompile Include="LivesDisplay.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="MovementComponent.cpp" />
+    <ClCompile Include="AutoMoveComponent.cpp" />
     <ClCompile Include="MyPlayerController.cpp" />
     <ClCompile Include="LifeTimer.cpp" />
+    <ClCompile Include="NameInputBox.cpp" />
     <ClCompile Include="PickleSpriteController.cpp" />
     <ClCompile Include="PlayerLives.cpp" />
     <ClCompile Include="PlayerPoints.cpp" />
@@ -229,6 +231,7 @@ xcopy "$(SolutionDir)Data\" "$(ProjectDir)Data\" /Y</Command>
     <ClInclude Include="EnemyAIController.h" />
     <ClInclude Include="EventTypes.h" />
     <ClInclude Include="GamePausedState.h" />
+    <ClInclude Include="LayersEnum.h" />
     <ClInclude Include="LeaderboardState.h" />
     <ClInclude Include="HotdogSpriteController.h" />
     <ClInclude Include="ChefLogic.h" />
@@ -249,8 +252,10 @@ xcopy "$(SolutionDir)Data\" "$(ProjectDir)Data\" /Y</Command>
     <ClInclude Include="MenuCommands.h" />
     <ClInclude Include="MoveCommands.h" />
     <ClInclude Include="MovementComponent.h" />
+    <ClInclude Include="AutoMoveComponent.h" />
     <ClInclude Include="MyPlayerController.h" />
     <ClInclude Include="LifeTimer.h" />
+    <ClInclude Include="NameInputBox.h" />
     <ClInclude Include="PickleSpriteController.h" />
     <ClInclude Include="PlayerLives.h" />
     <ClInclude Include="PlayerPoints.h" />

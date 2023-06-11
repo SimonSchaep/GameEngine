@@ -7,9 +7,11 @@
 
 using namespace engine;
 
-SpecialPickupLogic::SpecialPickupLogic(engine::GameObject* pGameObject)
+SpecialPickupLogic::SpecialPickupLogic(engine::GameObject* pGameObject, EventType pickupType)
 	:BaseComponent(pGameObject)
+	, m_PickupType{pickupType}
 {
+	m_OnPickup = std::make_unique<Event<EventType, SpecialPickupLogic*>>();
 }
 
 void SpecialPickupLogic::Initialize()
@@ -36,6 +38,7 @@ void SpecialPickupLogic::HandleTriggerEnter(engine::Collider* /*pOriginCollider*
 		if (pPepper)
 		{
 			pPepper->AddPepper(1);
+			m_OnPickup->NotifyObservers(m_PickupType, this);
 			GetGameObject()->MarkForDeletion(true);
 		}
 	}

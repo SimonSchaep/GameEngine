@@ -21,6 +21,13 @@ public:
 	virtual void OnEnter()override;
 	virtual void OnExit()override;
 
+	void AddLife() { m_LivesLeft++; }
+
+	int GetPepperLeft() { return m_PepperLeft; }
+	void AddPepper(int amount) { m_PepperLeft += amount; }
+
+	void Reset();
+
 	virtual void Notify(EventType type)override;
 
 private:
@@ -32,4 +39,5 @@ private:
 	float m_SpawnSpecialPickupTimer{};
 
 	int m_LivesLeft{3};
+	int m_PepperLeft{ 5 }; //just holds the global count, doesn't do anything with it
 };

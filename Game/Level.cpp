@@ -16,6 +16,7 @@
 #include "PickleSpriteController.h"
 #include "HotdogSpriteController.h"
 #include "EggSpriteController.h"
+#include "LayersEnum.h"
 
 using namespace engine;
 using namespace levelParser;
@@ -149,16 +150,16 @@ engine::GameObject* Level::SpawnChef(glm::vec2 pos, bool isAlreadyCentered)
 	auto pChef = GetScene()->CreateAndAddGameObject("Chef");
 	pChef->AddTag("Chef");
 	pChef->GetTransform()->SetLocalPosition(pos);
-	pChef->CreateAndAddComponent<ThrowPepperComponent>(5);
+	pChef->CreateAndAddComponent<ThrowPepperComponent>();
 	auto pMovementComponent = pChef->CreateAndAddComponent<MovementComponent>();
-	pMovementComponent->SetMoveSpeed(150);
+	pMovementComponent->SetMoveSpeed(m_ChefSpeed);
 	pChef->CreateAndAddComponent<ChefLogic>();
 
 	//visuals
 	auto pChefVisuals = GetScene()->CreateAndAddGameObject("ChefVisuals", pChef);
 	auto pSpriteRenderComponent = pChefVisuals->CreateAndAddComponent<SpriteRenderComponent>();
 	pSpriteRenderComponent->SetSize({ width, height });
-	pSpriteRenderComponent->SetLayer(4);
+	pSpriteRenderComponent->SetLayer(Layer::chef);
 
 	pChefVisuals->CreateAndAddComponent<ChefSpriteController>();
 
@@ -171,43 +172,43 @@ engine::GameObject* Level::SpawnChef(glm::vec2 pos, bool isAlreadyCentered)
 	return pChef;
 }
 
-void Level::SpawnHotdog(engine::TextureRenderComponent* pRenderComponent, engine::GameObject* pLevelElementGameObject, glm::vec2 pos)
+void Level::SpawnHotdog(engine::TextureRenderComponent* /*pRenderComponent*/, engine::GameObject* /*pLevelElementGameObject*/, glm::vec2 /*pos*/)
 {
-	const float width{ 28 };
-	const float height{ 28 };
-	const float visualsHeightOffset{ -height / 3.5f };
+	//const float width{ 28 };
+	//const float height{ 28 };
+	//const float visualsHeightOffset{ -height / 3.5f };
 
-	pos += glm::vec2{m_GridElementWidth - width, m_GridElementHeight - height};
-	pos.x += m_GridElementWidth / 2 - (m_GridElementWidth - width);
-	pos.y += m_GridElementHeight / 2 - (m_GridElementHeight - height);
+	//pos += glm::vec2{m_GridElementWidth - width, m_GridElementHeight - height};
+	//pos.x += m_GridElementWidth / 2 - (m_GridElementWidth - width);
+	//pos.y += m_GridElementHeight / 2 - (m_GridElementHeight - height);
 
-	auto pHotdog = GetScene()->CreateAndAddGameObject("Hotdog");
-	pHotdog->AddTag("Enemy");
-	pHotdog->GetTransform()->SetLocalPosition(pos);
-	auto pMovementComponent = pHotdog->CreateAndAddComponent<MovementComponent>();
-	pMovementComponent->SetMoveSpeed(100);
-	pHotdog->CreateAndAddComponent<EnemyLogic>();
+	//auto pHotdog = GetScene()->CreateAndAddGameObject("Hotdog");
+	//pHotdog->AddTag("Enemy");
+	//pHotdog->GetTransform()->SetLocalPosition(pos);
+	//auto pMovementComponent = pHotdog->CreateAndAddComponent<MovementComponent>();
+	//pMovementComponent->SetMoveSpeed(m_EnemySpeed);
+	//pHotdog->CreateAndAddComponent<EnemyLogic>();
 
-	//visuals
-	auto pHotdogVisuals = GetScene()->CreateAndAddGameObject("HotdogVisuals", pHotdog);
-	auto pSpriteRenderComponent = pHotdogVisuals->CreateAndAddComponent<SpriteRenderComponent>();
-	pSpriteRenderComponent->SetSize({ width, height });
-	pSpriteRenderComponent->SetLayer(2);
+	////visuals
+	//auto pHotdogVisuals = GetScene()->CreateAndAddGameObject("HotdogVisuals", pHotdog);
+	//auto pSpriteRenderComponent = pHotdogVisuals->CreateAndAddComponent<SpriteRenderComponent>();
+	//pSpriteRenderComponent->SetSize({ width, height });
+	//pSpriteRenderComponent->SetLayer(Layer::enemy);
 
-	pHotdogVisuals->CreateAndAddComponent<HotdogSpriteController>();
+	//pHotdogVisuals->CreateAndAddComponent<HotdogSpriteController>();
 
-	pHotdogVisuals->GetTransform()->SetLocalPosition({ -width / 2, visualsHeightOffset });
+	//pHotdogVisuals->GetTransform()->SetLocalPosition({ -width / 2, visualsHeightOffset });
 
-	//black cover
-	pLevelElementGameObject->GetTransform()->SetWorldPosition(pHotdogVisuals->GetTransform()->GetWorldPosition());
+	////black cover
+	//pLevelElementGameObject->GetTransform()->SetWorldPosition(pHotdogVisuals->GetTransform()->GetWorldPosition());
 
-	pRenderComponent->SetTexture("black.png");
-	pRenderComponent->SetLayer(3);
-	pRenderComponent->SetSize({ width, height });
+	//pRenderComponent->SetTexture("black.png");
+	//pRenderComponent->SetLayer(Layer::enemyCover);
+	//pRenderComponent->SetSize({ width, height });
 
-	//collider
-	auto pBoxCollider = pHotdog->CreateAndAddComponent<BoxCollider>();
-	pBoxCollider->SetShape({ -width / 4, visualsHeightOffset, width / 2, height / 4 });
+	////collider
+	//auto pBoxCollider = pHotdog->CreateAndAddComponent<BoxCollider>();
+	//pBoxCollider->SetShape({ -width / 4, visualsHeightOffset, width / 2, height / 4 });
 }
 
 void Level::SpawnEgg(engine::TextureRenderComponent* pRenderComponent, engine::GameObject* pLevelElementGameObject, glm::vec2 pos)
@@ -224,14 +225,14 @@ void Level::SpawnEgg(engine::TextureRenderComponent* pRenderComponent, engine::G
 	pEgg->AddTag("Enemy");
 	pEgg->GetTransform()->SetLocalPosition(pos);
 	auto pMovementComponent = pEgg->CreateAndAddComponent<MovementComponent>();
-	pMovementComponent->SetMoveSpeed(100);
+	pMovementComponent->SetMoveSpeed(m_EnemySpeed);
 	pEgg->CreateAndAddComponent<EnemyLogic>();
 
 	//visuals
 	auto pEggVisuals = GetScene()->CreateAndAddGameObject("EggVisuals", pEgg);
 	auto pSpriteRenderComponent = pEggVisuals->CreateAndAddComponent<SpriteRenderComponent>();
 	pSpriteRenderComponent->SetSize({ width, height });
-	pSpriteRenderComponent->SetLayer(2);
+	pSpriteRenderComponent->SetLayer(Layer::enemy);
 
 	pEggVisuals->CreateAndAddComponent<EggSpriteController>();
 
@@ -241,7 +242,7 @@ void Level::SpawnEgg(engine::TextureRenderComponent* pRenderComponent, engine::G
 	pLevelElementGameObject->GetTransform()->SetWorldPosition(pEggVisuals->GetTransform()->GetWorldPosition());
 
 	pRenderComponent->SetTexture("black.png");
-	pRenderComponent->SetLayer(3);
+	pRenderComponent->SetLayer(Layer::enemyCover);
 	pRenderComponent->SetSize({ width, height });
 
 	//collider
@@ -263,14 +264,14 @@ void Level::SpawnPickle(engine::TextureRenderComponent* pRenderComponent, engine
 	pPickle->AddTag("Enemy");
 	pPickle->GetTransform()->SetLocalPosition(pos);
 	auto pMovementComponent = pPickle->CreateAndAddComponent<MovementComponent>();
-	pMovementComponent->SetMoveSpeed(100);
+	pMovementComponent->SetMoveSpeed(m_EnemySpeed);
 	pPickle->CreateAndAddComponent<EnemyLogic>();
 
 	//visuals
 	auto pPickleVisuals = GetScene()->CreateAndAddGameObject("PickleVisuals", pPickle);
 	auto pSpriteRenderComponent = pPickleVisuals->CreateAndAddComponent<SpriteRenderComponent>();
 	pSpriteRenderComponent->SetSize({ width, height });
-	pSpriteRenderComponent->SetLayer(2);
+	pSpriteRenderComponent->SetLayer(Layer::enemy);
 
 	pPickleVisuals->CreateAndAddComponent<PickleSpriteController>();
 
@@ -280,7 +281,7 @@ void Level::SpawnPickle(engine::TextureRenderComponent* pRenderComponent, engine
 	pLevelElementGameObject->GetTransform()->SetWorldPosition(pPickleVisuals->GetTransform()->GetWorldPosition());
 
 	pRenderComponent->SetTexture("black.png");
-	pRenderComponent->SetLayer(3);
+	pRenderComponent->SetLayer(Layer::enemyCover);
 	pRenderComponent->SetSize({ width, height });
 
 	//collider
@@ -337,7 +338,7 @@ void Level::BuildLevel()
 				pLevelElementGameObject = pScene->CreateAndAddGameObject();
 				pLevelElementGameObject->GetTransform()->SetLocalPosition(position);
 				pRenderComponent = pLevelElementGameObject->CreateAndAddComponent<TextureRenderComponent>();
-				pRenderComponent->SetLayer(-1);
+				pRenderComponent->SetLayer(Layer::level);
 				pRenderComponent->SetSize({ m_GridElementWidth, m_GridElementHeight });
 			}
 
@@ -627,7 +628,7 @@ void Level::CreateFoodElement(const glm::vec2& pos, const std::string& textureFi
 	auto pRenderComponent = pLevelElementGameObject->CreateAndAddComponent<TextureRenderComponent>();
 	pRenderComponent->SetTexture(textureFileName);
 	pRenderComponent->SetSize({ m_GridElementWidth/2, m_GridElementHeight });
-	pRenderComponent->SetLayer(1);
+	pRenderComponent->SetLayer(Layer::food);
 	auto pBoxCollider = pLevelElementGameObject->CreateAndAddComponent<BoxCollider>();
 	pBoxCollider->SetShape({ 0,0,m_GridElementWidth / 2, m_GridElementHeight });
 

@@ -4,6 +4,7 @@
 #include "CollisionEventReceiver.h"
 #include "Collider.h"
 #include "Event.h"
+#include "EventTypes.h"
 #include <vector>
 
 namespace engine
@@ -23,13 +24,15 @@ public:
 	virtual void Update() override;
 
 	void StartFall();
-	void IncreaseFallExtraLevel() { m_FallExtraLevels++; }
-	void DecreaseFallExtraLevel() { m_FallExtraLevels--; }
+	void IncreaseFallExtraLevel();
+	void DecreaseFallExtraLevel();
+
+	int GetEnemiesOnTopCount() { return m_EnemiesOnTop; }
 
 	bool IsFalling() { return m_IsFalling; }
 	bool HasReachedPlate() { return m_ReachedPlate; }
 
-	engine::Event<engine::GameObject*, bool>* GetFallEvent() { return m_FallEvent.get(); }
+	engine::Event<engine::GameObject*, EventType>* GetFallEvent() { return m_FallEvent.get(); }
 	engine::Event<FoodParent*>* GetReachedPlateEvent() { return m_ReachedPlateEvent.get(); }
 
 private:
@@ -50,7 +53,7 @@ private:
 	std::vector<engine::GameObject*> m_FoodElements{};
 	std::vector<bool> m_FoodElementStates{}; //true == fallen
 
-	std::unique_ptr<engine::Event<engine::GameObject*, bool>> m_FallEvent{};
+	std::unique_ptr<engine::Event<engine::GameObject*, EventType>> m_FallEvent{};
 	std::unique_ptr<engine::Event<FoodParent*>> m_ReachedPlateEvent{};
 
 	bool m_IsFalling{};
@@ -59,5 +62,6 @@ private:
 	int m_DropSound{};
 
 	int m_FallExtraLevels{};
+	int m_EnemiesOnTop{}; //purely for scoring
 };
 

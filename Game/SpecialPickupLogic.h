@@ -16,13 +16,18 @@ namespace engine
 class SpecialPickupLogic final : public engine::BaseComponent, public engine::CollisionEventReceiver, public engine::Observer<EventType>
 {
 public:
-	SpecialPickupLogic(engine::GameObject* pGameObject);
+	SpecialPickupLogic(engine::GameObject* pGameObject, EventType pickedUpType);
 	virtual ~SpecialPickupLogic() = default;
 
 	virtual void Initialize() override;
 
 	virtual void Notify(EventType) override;
 
+	engine::Event<EventType, SpecialPickupLogic*>* GetOnPickup()const { return m_OnPickup.get(); }
+
 private:
 	virtual void HandleTriggerEnter(engine::Collider* pOriginCollider, engine::Collider* pHitCollider)override;
+
+	std::unique_ptr<engine::Event<EventType, SpecialPickupLogic*>> m_OnPickup{};
+	EventType m_PickupType{};
 };

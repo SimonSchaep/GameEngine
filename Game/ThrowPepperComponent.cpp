@@ -5,8 +5,15 @@
 #include "SpriteRenderComponent.h"
 #include "ResourceManager.h"
 #include "BoxCollider.h"
+#include "GamePlayingState.h"
+#include "GameManager.h"
 
 using namespace engine;
+
+void ThrowPepperComponent::Initialize()
+{
+	m_GamePlayingState = GetScene()->FindGameObjectByName("GameManager")->GetComponent<GameManager>()->GetGamePlayingState();
+}
 
 void ThrowPepperComponent::Update()
 {
@@ -22,15 +29,20 @@ void ThrowPepperComponent::Update()
 
 void ThrowPepperComponent::ThrowPepper(const glm::vec2& direction)
 {
-	if (m_ThrowCooldownTimer <= 0 && m_PepperLeft > 0)
+	if (m_ThrowCooldownTimer <= 0 && m_GamePlayingState->GetPepperLeft() > 0)
 	{
 		m_ThrowDurationTimer = m_ThrowDuration;
 		m_ThrowCooldownTimer = m_ThrowCooldown;
 
-		m_PepperLeft--;
+		m_GamePlayingState->AddPepper(-1);
 
 		CreatePepperObject(direction);
 	}
+}
+
+void ThrowPepperComponent::AddPepper(int amount)
+{
+	m_GamePlayingState->AddPepper(amount);
 }
 
 void ThrowPepperComponent::CreatePepperObject(glm::vec2 direction)

@@ -15,7 +15,7 @@ enum class GameMode;
 class StartMenuState : public GameState
 {
 public:
-	StartMenuState(GameManager* pGameManager, engine::GameObject* pMenuGameObject);
+	StartMenuState(GameManager* pGameManager);
 
 	void StartGame(GameMode gameMode);
 

@@ -11,7 +11,7 @@ using namespace engine;
 FoodParent::FoodParent(GameObject* pGameObject)
 	:BaseComponent(pGameObject)
 {
-	m_FallEvent = std::make_unique<Event<GameObject*, bool>>();
+	m_FallEvent = std::make_unique<Event<GameObject*, EventType>>();
 	m_ReachedPlateEvent = std::make_unique<Event<FoodParent*>>();
 }
 
@@ -166,7 +166,7 @@ void FoodParent::StopFall(bool isForced)
 	}
 	m_FallVelocity = 0;
 	
-	m_FallEvent->NotifyObservers(GetGameObject(), false);
+	m_FallEvent->NotifyObservers(GetGameObject(), EventType::foodStopFall);
 	m_IsFalling = false;
 }
 
@@ -193,6 +193,20 @@ void FoodParent::StartFall()
 		m_FoodElementStates[i] = true;
 	}
 
-	m_FallEvent->NotifyObservers(GetGameObject(), true);
+	m_FallEvent->NotifyObservers(GetGameObject(), EventType::foodStartFall);
 	m_IsFalling = true;
+
+	m_EnemiesOnTop = m_FallExtraLevels;
+}
+
+void FoodParent::IncreaseFallExtraLevel()
+{
+	m_FallExtraLevels++;
+	ServiceLocator::GetLogger().LogLine("increase fall level");
+}
+
+void FoodParent::DecreaseFallExtraLevel()
+{
+	m_FallExtraLevels--;
+	ServiceLocator::GetLogger().LogLine("decrease fall level");
 }

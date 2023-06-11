@@ -23,6 +23,7 @@ class EnemyAIController;
 
 class FoodParent;
 class ChefLogic;
+class SpecialPickupLogic;
 
 enum class GameMode
 {
@@ -52,15 +53,17 @@ public:
 	GamePausedState* GetGamePausedState()const { return m_GamePausedState.get(); }
 	LeaderboardState* GetLeaderboardState()const { return m_LeaderboardState.get(); }
 
+	engine::Event<EventType>* GetOnStartNextLevel()const { return m_OnStartNextLevel.get(); }
 	engine::Event<EventType>* GetOnChefWon()const { return m_OnChefWon.get(); }
 	engine::Event<EventType, ChefLogic*>* GetOnChefDied()const { return m_OnChefDied.get(); }
 	engine::Event<EventType>* GetOnRespawnCharacters()const { return m_OnRespawnCharacters.get(); }
+	engine::Event<EventType, SpecialPickupLogic*>* GetOnSpawnPickup()const { return m_OnSpawnPickup.get(); }
 
 	virtual void Notify(FoodParent* pFood)override;
 	virtual void Notify(EventType, ChefLogic*)override;
 
 private:
-	void InitializeUI();
+	void InitializeStates();
 	engine::Scene* CreateLevel(int id);
 	void AssignControllers();
 	void CheckIfChefWon();
@@ -76,9 +79,11 @@ private:
 	int m_NextLevelId{0};
 	int m_MaxLevelId{3}; //exclusive
 
+	std::unique_ptr<engine::Event<EventType>> m_OnStartNextLevel{};
 	std::unique_ptr<engine::Event<EventType>> m_OnChefWon{};
 	std::unique_ptr<engine::Event<EventType, ChefLogic*>> m_OnChefDied{};
 	std::unique_ptr<engine::Event<EventType>> m_OnRespawnCharacters{};
+	std::unique_ptr<engine::Event<EventType, SpecialPickupLogic*>> m_OnSpawnPickup{};
 
 	bool m_FoodsNeedUpdate{};
 	std::vector<engine::ObservingPointer<FoodParent>> m_FoodsLeftinLevel{};

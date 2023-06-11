@@ -13,7 +13,7 @@ namespace engine
 class GamePausedState : public GameState
 {
 public:
-	GamePausedState(GameManager* pGameManager, engine::GameObject* pPauseMenuGameObject);
+	GamePausedState(GameManager* pGameManager);
 
 	void ResumeGame() { m_ResumeGame = true; }
 

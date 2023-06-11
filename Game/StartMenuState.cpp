@@ -4,13 +4,27 @@
 #include "InputManager.h"
 #include "MenuCommands.h"
 #include "TimeManager.h"
+#include "Scene.h"
+#include "Renderer.h"
+#include "TextRenderComponent.h"
+#include "LayersEnum.h"
 
 using namespace engine;
 
-StartMenuState::StartMenuState(GameManager* pGameManager, engine::GameObject* pMenuGameObject)
+StartMenuState::StartMenuState(GameManager* pGameManager)
 	:GameState(pGameManager)
-	, m_pMenuGameObject{ pMenuGameObject }
 {
+	auto pScene = GetGameManager()->GetGameObject()->GetScene();
+	auto windowSize = Renderer::GetInstance().GetWindowSize();
+
+	m_pMenuGameObject = pScene->CreateAndAddGameObject("StartMenu", GetGameManager()->GetGameObject());
+	auto pTextChild = pScene->CreateAndAddGameObject("Text", m_pMenuGameObject);
+	pTextChild->GetTransform()->SetLocalPosition(windowSize.x / 2 - 200, windowSize.y / 2 - 10);
+	auto pTextRenderer = pTextChild->CreateAndAddComponent<TextRenderComponent>();
+	pTextRenderer->SetText("PRESS 1/2/3 TO START");
+	pTextRenderer->SetFont("super-burger-time.ttf", 40);
+	pTextRenderer->SetLayer(Layer::uiText);
+
 	m_pMenuGameObject->SetIsActive(false);
 }
 

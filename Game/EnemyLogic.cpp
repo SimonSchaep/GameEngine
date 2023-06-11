@@ -50,6 +50,14 @@ void EnemyLogic::Respawn()
 	m_IsFalling = false;
 	m_IsDead = false;
 	m_IsStunned = false;
+
+	if (m_Food)
+	{
+		//cleanup previous food
+		m_Food->GetFallEvent()->RemoveObserver(this);
+		m_Food->DecreaseFallExtraLevel();
+		m_Food = nullptr;
+	}
 }
 
 void EnemyLogic::Notify(EventType type)
@@ -60,15 +68,16 @@ void EnemyLogic::Notify(EventType type)
 	}
 }
 
-void EnemyLogic::Notify(engine::GameObject* pObject, bool isFalling)
+void EnemyLogic::Notify(engine::GameObject* pObject, EventType type)
 {
 	if (m_IsDead)return;
-	if (isFalling)
+
+	if (type == EventType::foodStartFall)
 	{
 		GetGameObject()->SetParent(pObject, true);
 		m_IsFalling = true;
 	}
-	else
+	else if(type == EventType::foodStopFall)
 	{
 		GetGameObject()->SetParent(nullptr, true);
 		m_IsFalling = false;
@@ -90,12 +99,20 @@ void EnemyLogic::HandleTriggerEnter(engine::Collider* /*pOriginCollider*/, engin
 		{
 			m_IsDead = true;
 			m_RespawnDelayTimer = m_RespawnDelay;
+			m_OnDeath->NotifyObservers(EventType::enemyDied, this);
 		}
 		else
 		{
-			pFood->IncreaseFallExtraLevel();
+			if (m_Food)
+			{
+				//cleanup previous food
+				m_Food->GetFallEvent()->RemoveObserver(this);
+				m_Food->DecreaseFallExtraLevel();
+			}
+			m_Food = pFood;
+			m_Food->IncreaseFallExtraLevel();
+			m_Food->GetFallEvent()->AddObserver(this);
 		}
-		pFood->GetFallEvent()->AddObserver(this);
 	}
 }
 
@@ -103,12 +120,18 @@ void EnemyLogic::HandleTriggerExit(engine::Collider* /*pOriginCollider*/, engine
 {
 	if (pHitCollider->HasTag("foodparent"))
 	{
-		auto pObject = pHitCollider->GetGameObject();
-		auto pFood = pObject->GetComponent<FoodParent>();
-		if (pFood)
+		if (m_Food)
 		{
-			pFood->GetFallEvent()->RemoveObserver(this);
-			pFood->DecreaseFallExtraLevel();
-		}
+			auto pObject = pHitCollider->GetGameObject();
+			auto pFood = pObject->GetComponent<FoodParent>();
+			if (pFood)
+			{
+				pFood->GetFallEvent()->RemoveObserver(this);
+				pFood->DecreaseFallExtraLevel();
+				GetGameObject()->SetParent(nullptr, true);
+				m_IsFalling = false;
+				m_Food = nullptr;
+			}
+		}		
 	}
 }

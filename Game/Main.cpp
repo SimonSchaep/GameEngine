@@ -44,6 +44,7 @@
 #include "LoggingSoundSystem.h"
 #include "GameManager.h"
 #include "ChefSpriteController.h"
+#include "ScoreManager.h"
 
 using namespace engine;
 
@@ -85,7 +86,7 @@ void load()
 	pGameObject->MarkAsSceneIndependant();
 	auto pTextRenderComponent = pGameObject->CreateAndAddComponent<TextRenderComponent>();
 	pTextRenderComponent->SetText("FPS:");
-	pTextRenderComponent->SetFont(ResourceManager::GetInstance().LoadFont("Lingua.otf", 12));
+	pTextRenderComponent->SetFont("super-burger-time.ttf", 12);
 	pGameObject->CreateAndAddComponent<FPSCounter>();
 	pGameObject->GetTransform()->SetLocalPosition(20, 20, 0);
 
@@ -210,6 +211,7 @@ void load()
 	auto pGameManager = pScene->CreateAndAddGameObject("GameManager");
 	pGameManager->MarkAsSceneIndependant();
 	pGameManager->CreateAndAddComponent<GameManager>();
+	pGameManager->CreateAndAddComponent<ScoreManager>("score/scores.txt");
 }
 
 int main(int, char* [])

@@ -185,6 +185,8 @@ void FoodParent::ReachedPlate()
 
 void FoodParent::StartFall()
 {
+	m_FallVelocity = 0;
+
 	for (auto& foodElement : m_FoodElements)
 	{
 		auto newPos = foodElement->GetTransform()->GetLocalPosition();

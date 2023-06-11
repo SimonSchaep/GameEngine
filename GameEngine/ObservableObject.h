@@ -16,7 +16,7 @@
 //there might be a better way to do this, maybe shared pointers are better after all?
 //I couldn't find much help online, most people suggested using shared or weak pointers
 
-//biggest issue here is that almost all classes now derive from observableobject
+//an issue here is that almost all classes now derive from observableobject
 
 
 #include <vector>

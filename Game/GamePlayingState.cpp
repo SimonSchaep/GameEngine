@@ -32,9 +32,9 @@ GamePlayingState::GamePlayingState(GameManager* pGameManager)
 	m_pLivesParentObject = pScene->CreateAndAddGameObject("LivesHud", m_pHudGameObject);
 	m_pPepperParentObject = pScene->CreateAndAddGameObject("PepperHud", m_pHudGameObject);
 
-	m_pLevelParentObject->GetTransform()->SetWorldPosition({ windowSize.x * 0.95f, windowSize.y * 0.05f });
+	m_pLevelParentObject->GetTransform()->SetWorldPosition({ windowSize.x * 0.9f, windowSize.y * 0.05f });
 	m_pLivesParentObject->GetTransform()->SetWorldPosition({ windowSize.x * 0.05f, windowSize.y * 0.05f });
-	m_pPepperParentObject->GetTransform()->SetWorldPosition({ windowSize.x * 0.95f, windowSize.y * 0.95f });
+	m_pPepperParentObject->GetTransform()->SetWorldPosition({ windowSize.x * 0.9f, windowSize.y * 0.95f });
 
 	//score
 	auto pChild = pScene->CreateAndAddGameObject("Text", m_pHudGameObject);
@@ -107,7 +107,7 @@ void GamePlayingState::OnEnter()
 
 	m_Commands.emplace_back(InputManager::GetInstance().BindKeyboardButtonToCommand(SDL_SCANCODE_P, InputManager::KeyState::up, std::make_unique<PauseGameCommand>(this)));
 	m_Commands.emplace_back(InputManager::GetInstance().BindKeyboardButtonToCommand(SDL_SCANCODE_F1, InputManager::KeyState::up, std::make_unique<NextLevelCommand>(GetGameManager())));
-	m_Commands.emplace_back(InputManager::GetInstance().BindKeyboardButtonToCommand(SDL_SCANCODE_G, InputManager::KeyState::up, std::make_unique<EndGameCommand>(this)));
+	m_Commands.emplace_back(InputManager::GetInstance().BindKeyboardButtonToCommand(SDL_SCANCODE_F2, InputManager::KeyState::up, std::make_unique<EndGameCommand>(this)));
 
 	m_SpawnSpecialPickupTimer = m_SpawnSpecialPickupInterval;
 

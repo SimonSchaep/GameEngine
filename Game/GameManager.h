@@ -65,6 +65,7 @@ public:
 	void PlayMusic();
 	void StopMusic();
 	void PlayStartGameSound();
+	void StopStartGameSound();
 
 	int GetNextLevelId()const { return m_NextLevelId; };
 

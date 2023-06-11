@@ -198,7 +198,6 @@ xcopy "$(SolutionDir)Data\" "$(ProjectDir)Data\" /Y /E</Command>
     <ClCompile Include="ChefPlayerController.cpp" />
     <ClCompile Include="ChefSpriteController.cpp" />
     <ClCompile Include="ControlsDisplay.cpp" />
-    <ClCompile Include="DestroyComponent.cpp" />
     <ClCompile Include="EggSpriteController.cpp" />
     <ClCompile Include="EnemyLogic.cpp" />
     <ClCompile Include="EnemySpriteController.cpp" />
@@ -206,7 +205,6 @@ xcopy "$(SolutionDir)Data\" "$(ProjectDir)Data\" /Y /E</Command>
     <ClCompile Include="FPSCounter.cpp" />
     <ClCompile Include="GameManager.cpp" />
     <ClCompile Include="Level.cpp" />
-    <ClCompile Include="LivesDisplay.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="MovementComponent.cpp" />
     <ClCompile Include="AutoMoveComponent.cpp" />
@@ -214,15 +212,10 @@ xcopy "$(SolutionDir)Data\" "$(ProjectDir)Data\" /Y /E</Command>
     <ClCompile Include="LifeTimer.cpp" />
     <ClCompile Include="NameInputBox.cpp" />
     <ClCompile Include="PickleSpriteController.cpp" />
-    <ClCompile Include="PlayerLives.cpp" />
-    <ClCompile Include="PlayerPoints.cpp" />
-    <ClCompile Include="PointsDisplay.cpp" />
-    <ClCompile Include="RotateComponent.cpp" />
     <ClCompile Include="ScoreManager.cpp" />
     <ClCompile Include="SpecialPickupLogic.cpp" />
     <ClCompile Include="StartMenuState.cpp" />
     <ClCompile Include="ThrowPepperComponent.cpp" />
-    <ClCompile Include="TrashTheCacheComponent.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AIController.h" />
@@ -238,7 +231,6 @@ xcopy "$(SolutionDir)Data\" "$(ProjectDir)Data\" /Y /E</Command>
     <ClInclude Include="ChefPlayerController.h" />
     <ClInclude Include="ChefSpriteController.h" />
     <ClInclude Include="ControlsDisplay.h" />
-    <ClInclude Include="DestroyComponent.h" />
     <ClInclude Include="EggSpriteController.h" />
     <ClInclude Include="EnemyLogic.h" />
     <ClInclude Include="EnemySpriteController.h" />
@@ -248,7 +240,6 @@ xcopy "$(SolutionDir)Data\" "$(ProjectDir)Data\" /Y /E</Command>
     <ClInclude Include="GameState.h" />
     <ClInclude Include="Level.h" />
     <ClInclude Include="LevelParser.h" />
-    <ClInclude Include="LivesDisplay.h" />
     <ClInclude Include="MenuCommands.h" />
     <ClInclude Include="MoveCommands.h" />
     <ClInclude Include="MovementComponent.h" />
@@ -258,16 +249,11 @@ xcopy "$(SolutionDir)Data\" "$(ProjectDir)Data\" /Y /E</Command>
     <ClInclude Include="LifeTimer.h" />
     <ClInclude Include="NameInputBox.h" />
     <ClInclude Include="PickleSpriteController.h" />
-    <ClInclude Include="PlayerLives.h" />
-    <ClInclude Include="PlayerPoints.h" />
-    <ClInclude Include="PointsDisplay.h" />
-    <ClInclude Include="RotateComponent.h" />
     <ClInclude Include="ScoreManager.h" />
     <ClInclude Include="SpecialPickupLogic.h" />
     <ClInclude Include="StartMenuState.h" />
     <ClInclude Include="ThrowPepperCommand.h" />
     <ClInclude Include="ThrowPepperComponent.h" />
-    <ClInclude Include="TrashTheCacheComponent.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

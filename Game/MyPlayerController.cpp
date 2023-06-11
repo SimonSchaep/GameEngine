@@ -2,8 +2,6 @@
 #include "MoveCommands.h"
 #include "GameObject.h"
 #include "MovementComponent.h"
-#include "PlayerLives.h"
-#include "PlayerPoints.h"
 #include "SceneManager.h"
 #include "Scene.h"
 #include "GameManager.h"

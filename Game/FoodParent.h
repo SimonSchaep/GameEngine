@@ -46,7 +46,7 @@ private:
 	//this would be done in a rigidbody component if we had one
 	float m_FallVelocity{0};
 	float m_FallAcceleration{-400};
-	float m_BounceVelocity{ 50 };
+	float m_BounceVelocity{ 40 };
 
 	float m_YPosForFoodDown{-2};
 	float m_MinYPosForFoodDown{-12};

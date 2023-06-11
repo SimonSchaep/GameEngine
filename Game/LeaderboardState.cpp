@@ -35,15 +35,15 @@ LeaderboardState::LeaderboardState(GameManager* pGameManager)
 	pChild = pScene->CreateAndAddGameObject("Text", m_pLeaderboardGameObject);
 	pChild->GetTransform()->SetLocalPosition(windowSize.x / 2 - 200, windowSize.y * 0.8f);
 	auto pTextRenderer = pChild->CreateAndAddComponent<UITextRenderComponent>();
-	pTextRenderer->SetText("HIGHEST SCORES");
-	pTextRenderer->SetFont("super-burger-time.ttf", 30);
+	pTextRenderer->SetText("LEADERBOARD");
+	pTextRenderer->SetFont("fonts/super-burger-time.ttf", 30);
 	pTextRenderer->SetLayer(Layer::uiText);
 
 	pChild = pScene->CreateAndAddGameObject("Text", m_pLeaderboardGameObject);
 	pChild->GetTransform()->SetLocalPosition(windowSize.x / 2, windowSize.y * 0.15f);
 	pTextRenderer = pChild->CreateAndAddComponent<UITextRenderComponent>();
 	pTextRenderer->SetText("ESCAPE - BACK TO MENU");
-	pTextRenderer->SetFont("super-burger-time.ttf", 10);
+	pTextRenderer->SetFont("fonts/super-burger-time.ttf", 10);
 	pTextRenderer->SetLayer(Layer::uiText);
 	pTextRenderer->SetTextAlignment(UITextRenderComponent::TextAlignment::center);
 
@@ -70,6 +70,7 @@ GameState* LeaderboardState::Update()
 void LeaderboardState::OnEnter()
 {
 	GetGameManager()->StopMusic();
+	GetGameManager()->StopStartGameSound();
 	GetGameManager()->PlayMusic();
 
 	m_pLeaderboardGameObject->SetIsActive(true);
@@ -127,7 +128,7 @@ void LeaderboardState::Notify(EventType type, const std::string& name)
 			auto pChild = pScene->CreateAndAddGameObject("Text", m_pHighScoresGameObject);
 			pChild->GetTransform()->SetLocalPosition(windowSize.x / 2 - 250, windowSize.y * 0.7f - i * distanceBetweenScores);
 			auto pTextRenderer = pChild->CreateAndAddComponent<UITextRenderComponent>();
-			pTextRenderer->SetFont("super-burger-time.ttf", 14);
+			pTextRenderer->SetFont("fonts/super-burger-time.ttf", 14);
 			pTextRenderer->SetLayer(Layer::uiText);
 			//limit name size
 			if (highScores[i].second.size() > maxNameSize)
@@ -139,7 +140,7 @@ void LeaderboardState::Notify(EventType type, const std::string& name)
 			pChild = pScene->CreateAndAddGameObject("Text", m_pHighScoresGameObject);
 			pChild->GetTransform()->SetLocalPosition(windowSize.x / 2 + 250, windowSize.y * 0.7f - i * distanceBetweenScores);
 			pTextRenderer = pChild->CreateAndAddComponent<UITextRenderComponent>();
-			pTextRenderer->SetFont("super-burger-time.ttf", 14);
+			pTextRenderer->SetFont("fonts/super-burger-time.ttf", 14);
 			pTextRenderer->SetLayer(Layer::uiText);
 			pTextRenderer->SetTextAlignment(UITextRenderComponent::TextAlignment::right);
 			pTextRenderer->SetText(std::to_string(highScores[i].first) + " PTS");

@@ -21,16 +21,9 @@
 #include "Sprite.h"
 #include "Font.h"
 #include "FPSCounter.h"
-#include "RotateComponent.h"
-#include "DestroyComponent.h"
-#include "TrashTheCacheComponent.h"
 #include "MovementComponent.h"
 #include "PlayerController.h"
 #include "MyPlayerController.h"
-#include "PlayerLives.h"
-#include "LivesDisplay.h"
-#include "PlayerPoints.h"
-#include "PointsDisplay.h"
 #include "ControlsDisplay.h"
 #include "Level.h"
 #include "Texture2D.h"
@@ -67,7 +60,7 @@ void load()
 	ServiceLocator::GetSoundSystem().SetGlobalVolume(10);
 
 	//mute button
-	InputManager::GetInstance().BindKeyboardButtonToCommand(SDL_SCANCODE_M, InputManager::KeyState::up, std::make_unique<MuteCommand>());
+	InputManager::GetInstance().BindKeyboardButtonToCommand(SDL_SCANCODE_F3, InputManager::KeyState::up, std::make_unique<MuteCommand>());
 
 
 	//background

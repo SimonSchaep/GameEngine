@@ -14,9 +14,6 @@
     <Filter Include="Components\Food">
       <UniqueIdentifier>{3c800bc6-85a3-4c7b-b092-9ab81e6044f4}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Components\Old">
-      <UniqueIdentifier>{1fcef0c9-3791-4e44-8c87-ad3ba8bbd515}</UniqueIdentifier>
-    </Filter>
     <Filter Include="GameManager">
       <UniqueIdentifier>{182c5289-d4c7-48f4-a074-f76bd4ac637a}</UniqueIdentifier>
     </Filter>
@@ -38,47 +35,23 @@
     <Filter Include="Components\specials">
       <UniqueIdentifier>{9aa904b1-3581-4e86-990f-53ba4522fd6e}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Scoring">
+    <Filter Include="Components\Other">
+      <UniqueIdentifier>{f3ee225c-fb57-4ce2-94b9-e1425df14e90}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameManager\Scoring">
       <UniqueIdentifier>{2a8fdfda-3972-4f23-abe0-3e9b6c88076c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Components\UI">
+      <UniqueIdentifier>{db4ccb8d-f0e6-4e5d-bdad-b14a268d9c38}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="FPSCounter.cpp">
-      <Filter>Components</Filter>
-    </ClCompile>
-    <ClCompile Include="MovementComponent.cpp">
-      <Filter>Components</Filter>
-    </ClCompile>
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="Level.cpp">
       <Filter>Level</Filter>
     </ClCompile>
     <ClCompile Include="FoodParent.cpp">
       <Filter>Components\Food</Filter>
-    </ClCompile>
-    <ClCompile Include="ControlsDisplay.cpp">
-      <Filter>Components\Old</Filter>
-    </ClCompile>
-    <ClCompile Include="DestroyComponent.cpp">
-      <Filter>Components\Old</Filter>
-    </ClCompile>
-    <ClCompile Include="LivesDisplay.cpp">
-      <Filter>Components\Old</Filter>
-    </ClCompile>
-    <ClCompile Include="PlayerLives.cpp">
-      <Filter>Components\Old</Filter>
-    </ClCompile>
-    <ClCompile Include="PlayerPoints.cpp">
-      <Filter>Components\Old</Filter>
-    </ClCompile>
-    <ClCompile Include="PointsDisplay.cpp">
-      <Filter>Components\Old</Filter>
-    </ClCompile>
-    <ClCompile Include="RotateComponent.cpp">
-      <Filter>Components\Old</Filter>
-    </ClCompile>
-    <ClCompile Include="TrashTheCacheComponent.cpp">
-      <Filter>Components\Old</Filter>
     </ClCompile>
     <ClCompile Include="GameManager.cpp">
       <Filter>GameManager</Filter>
@@ -97,9 +70,6 @@
     </ClCompile>
     <ClCompile Include="ThrowPepperComponent.cpp">
       <Filter>Components\Pepper</Filter>
-    </ClCompile>
-    <ClCompile Include="LifeTimer.cpp">
-      <Filter>Components</Filter>
     </ClCompile>
     <ClCompile Include="ChefPlayerController.cpp">
       <Filter>Components\Controllers</Filter>
@@ -141,22 +111,30 @@
       <Filter>Components\specials</Filter>
     </ClCompile>
     <ClCompile Include="ScoreManager.cpp">
-      <Filter>Scoring</Filter>
+      <Filter>GameManager\Scoring</Filter>
     </ClCompile>
     <ClCompile Include="AutoMoveComponent.cpp">
-      <Filter>Components</Filter>
+      <Filter>Components\Other</Filter>
     </ClCompile>
-    <ClCompile Include="NameInputBox.cpp" />
+    <ClCompile Include="ControlsDisplay.cpp">
+      <Filter>Components\Other</Filter>
+    </ClCompile>
+    <ClCompile Include="FPSCounter.cpp">
+      <Filter>Components\Other</Filter>
+    </ClCompile>
+    <ClCompile Include="LifeTimer.cpp">
+      <Filter>Components\Other</Filter>
+    </ClCompile>
+    <ClCompile Include="MovementComponent.cpp">
+      <Filter>Components\Other</Filter>
+    </ClCompile>
+    <ClCompile Include="NameInputBox.cpp">
+      <Filter>Components\UI</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="MoveCommands.h">
       <Filter>Commands</Filter>
-    </ClInclude>
-    <ClInclude Include="FPSCounter.h">
-      <Filter>Components</Filter>
-    </ClInclude>
-    <ClInclude Include="MovementComponent.h">
-      <Filter>Components</Filter>
     </ClInclude>
     <ClInclude Include="LevelParser.h">
       <Filter>Level</Filter>
@@ -166,33 +144,6 @@
     </ClInclude>
     <ClInclude Include="FoodParent.h">
       <Filter>Components\Food</Filter>
-    </ClInclude>
-    <ClInclude Include="ControlsDisplay.h">
-      <Filter>Components\Old</Filter>
-    </ClInclude>
-    <ClInclude Include="DestroyComponent.h">
-      <Filter>Components\Old</Filter>
-    </ClInclude>
-    <ClInclude Include="LivesDisplay.h">
-      <Filter>Components\Old</Filter>
-    </ClInclude>
-    <ClInclude Include="PlayerLives.h">
-      <Filter>Components\Old</Filter>
-    </ClInclude>
-    <ClInclude Include="PlayerPoints.h">
-      <Filter>Components\Old</Filter>
-    </ClInclude>
-    <ClInclude Include="PointsDisplay.h">
-      <Filter>Components\Old</Filter>
-    </ClInclude>
-    <ClInclude Include="RotateComponent.h">
-      <Filter>Components\Old</Filter>
-    </ClInclude>
-    <ClInclude Include="TrashTheCacheComponent.h">
-      <Filter>Components\Old</Filter>
-    </ClInclude>
-    <ClInclude Include="GameState.h">
-      <Filter>GameManager</Filter>
     </ClInclude>
     <ClInclude Include="GameManager.h">
       <Filter>GameManager</Filter>
@@ -214,9 +165,6 @@
     </ClInclude>
     <ClInclude Include="ThrowPepperComponent.h">
       <Filter>Components\Pepper</Filter>
-    </ClInclude>
-    <ClInclude Include="LifeTimer.h">
-      <Filter>Components</Filter>
     </ClInclude>
     <ClInclude Include="ChefPlayerController.h">
       <Filter>Components\Controllers</Filter>
@@ -262,15 +210,32 @@
       <Filter>Components\specials</Filter>
     </ClInclude>
     <ClInclude Include="ScoreManager.h">
-      <Filter>Scoring</Filter>
-    </ClInclude>
-    <ClInclude Include="AutoMoveComponent.h">
-      <Filter>Components</Filter>
+      <Filter>GameManager\Scoring</Filter>
     </ClInclude>
     <ClInclude Include="LayersEnum.h" />
     <ClInclude Include="MuteCommand.h">
       <Filter>Commands</Filter>
     </ClInclude>
-    <ClInclude Include="NameInputBox.h" />
+    <ClInclude Include="AutoMoveComponent.h">
+      <Filter>Components\Other</Filter>
+    </ClInclude>
+    <ClInclude Include="ControlsDisplay.h">
+      <Filter>Components\Other</Filter>
+    </ClInclude>
+    <ClInclude Include="FPSCounter.h">
+      <Filter>Components\Other</Filter>
+    </ClInclude>
+    <ClInclude Include="LifeTimer.h">
+      <Filter>Components\Other</Filter>
+    </ClInclude>
+    <ClInclude Include="MovementComponent.h">
+      <Filter>Components\Other</Filter>
+    </ClInclude>
+    <ClInclude Include="GameState.h">
+      <Filter>GameManager\GameStates</Filter>
+    </ClInclude>
+    <ClInclude Include="NameInputBox.h">
+      <Filter>Components\UI</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

@@ -1,37 +1,13 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <ClCompile Include="Font.cpp">
-      <Filter>Engine</Filter>
-    </ClCompile>
     <ClCompile Include="GameEngine.cpp">
       <Filter>Engine</Filter>
-    </ClCompile>
-    <ClCompile Include="GameObject.cpp">
-      <Filter>Engine</Filter>
-    </ClCompile>
-    <ClCompile Include="Scene.cpp">
-      <Filter>Engine</Filter>
-    </ClCompile>
-    <ClCompile Include="Texture2D.cpp">
-      <Filter>Engine</Filter>
-    </ClCompile>
-    <ClCompile Include="Transform.cpp">
-      <Filter>Engine</Filter>
-    </ClCompile>
-    <ClCompile Include="BaseComponent.cpp">
-      <Filter>Engine\Components</Filter>
     </ClCompile>
     <ClCompile Include="TimeManager.cpp">
       <Filter>Engine\Singletons</Filter>
     </ClCompile>
-    <ClCompile Include="SceneManager.cpp">
-      <Filter>Engine\Singletons</Filter>
-    </ClCompile>
     <ClCompile Include="ResourceManager.cpp">
-      <Filter>Engine\Singletons</Filter>
-    </ClCompile>
-    <ClCompile Include="Renderer.cpp">
       <Filter>Engine\Singletons</Filter>
     </ClCompile>
     <ClCompile Include="..\3rdParty\imgui\backends\imgui_impl_opengl2.cpp">
@@ -143,45 +119,51 @@
       <Filter>imgui</Filter>
     </ClCompile>
     <ClCompile Include="UIRenderComponent.cpp">
-      <Filter>Engine\Components\Rendering\UI</Filter>
+      <Filter>Engine\Rendering\Components\UI</Filter>
     </ClCompile>
     <ClCompile Include="UITextRenderComponent.cpp">
-      <Filter>Engine\Components\Rendering\UI</Filter>
+      <Filter>Engine\Rendering\Components\UI</Filter>
     </ClCompile>
     <ClCompile Include="UITextureRenderComponent.cpp">
-      <Filter>Engine\Components\Rendering\UI</Filter>
+      <Filter>Engine\Rendering\Components\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="Renderer.cpp">
+      <Filter>Engine\Rendering</Filter>
     </ClCompile>
     <ClCompile Include="RenderComponent.cpp">
-      <Filter>Engine\Components\Rendering</Filter>
+      <Filter>Engine\Rendering\Components</Filter>
     </ClCompile>
     <ClCompile Include="TextRenderComponent.cpp">
-      <Filter>Engine\Components\Rendering</Filter>
+      <Filter>Engine\Rendering\Components</Filter>
     </ClCompile>
     <ClCompile Include="TextureRenderComponent.cpp">
-      <Filter>Engine\Components\Rendering</Filter>
+      <Filter>Engine\Rendering\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="SceneManager.cpp">
+      <Filter>Engine\SceneGraph</Filter>
+    </ClCompile>
+    <ClCompile Include="GameObject.cpp">
+      <Filter>Engine\SceneGraph</Filter>
+    </ClCompile>
+    <ClCompile Include="Scene.cpp">
+      <Filter>Engine\SceneGraph</Filter>
+    </ClCompile>
+    <ClCompile Include="BaseComponent.cpp">
+      <Filter>Engine\SceneGraph</Filter>
+    </ClCompile>
+    <ClCompile Include="Font.cpp">
+      <Filter>Engine\Rendering</Filter>
+    </ClCompile>
+    <ClCompile Include="Texture2D.cpp">
+      <Filter>Engine\Rendering</Filter>
+    </ClCompile>
+    <ClCompile Include="Transform.cpp">
+      <Filter>Engine\SceneGraph</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Font.h">
-      <Filter>Engine</Filter>
-    </ClInclude>
     <ClInclude Include="GameEngine.h">
       <Filter>Engine</Filter>
-    </ClInclude>
-    <ClInclude Include="GameObject.h">
-      <Filter>Engine</Filter>
-    </ClInclude>
-    <ClInclude Include="Scene.h">
-      <Filter>Engine</Filter>
-    </ClInclude>
-    <ClInclude Include="Texture2D.h">
-      <Filter>Engine</Filter>
-    </ClInclude>
-    <ClInclude Include="Transform.h">
-      <Filter>Engine</Filter>
-    </ClInclude>
-    <ClInclude Include="BaseComponent.h">
-      <Filter>Engine\Components</Filter>
     </ClInclude>
     <ClInclude Include="TimeManager.h">
       <Filter>Engine\Singletons</Filter>
@@ -189,13 +171,7 @@
     <ClInclude Include="Singleton.h">
       <Filter>Engine\Singletons</Filter>
     </ClInclude>
-    <ClInclude Include="SceneManager.h">
-      <Filter>Engine\Singletons</Filter>
-    </ClInclude>
     <ClInclude Include="ResourceManager.h">
-      <Filter>Engine\Singletons</Filter>
-    </ClInclude>
-    <ClInclude Include="Renderer.h">
       <Filter>Engine\Singletons</Filter>
     </ClInclude>
     <ClInclude Include="..\3rdParty\imgui\backends\imgui_impl_opengl2.h">
@@ -331,22 +307,46 @@
       <Filter>imgui</Filter>
     </ClInclude>
     <ClInclude Include="UIRenderComponent.h">
-      <Filter>Engine\Components\Rendering\UI</Filter>
+      <Filter>Engine\Rendering\Components\UI</Filter>
     </ClInclude>
     <ClInclude Include="UITextRenderComponent.h">
-      <Filter>Engine\Components\Rendering\UI</Filter>
+      <Filter>Engine\Rendering\Components\UI</Filter>
     </ClInclude>
     <ClInclude Include="UITextureRenderComponent.h">
-      <Filter>Engine\Components\Rendering\UI</Filter>
+      <Filter>Engine\Rendering\Components\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="Renderer.h">
+      <Filter>Engine\Rendering</Filter>
     </ClInclude>
     <ClInclude Include="RenderComponent.h">
-      <Filter>Engine\Components\Rendering</Filter>
+      <Filter>Engine\Rendering\Components</Filter>
     </ClInclude>
     <ClInclude Include="TextRenderComponent.h">
-      <Filter>Engine\Components\Rendering</Filter>
+      <Filter>Engine\Rendering\Components</Filter>
     </ClInclude>
     <ClInclude Include="TextureRenderComponent.h">
-      <Filter>Engine\Components\Rendering</Filter>
+      <Filter>Engine\Rendering\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="SceneManager.h">
+      <Filter>Engine\SceneGraph</Filter>
+    </ClInclude>
+    <ClInclude Include="GameObject.h">
+      <Filter>Engine\SceneGraph</Filter>
+    </ClInclude>
+    <ClInclude Include="Scene.h">
+      <Filter>Engine\SceneGraph</Filter>
+    </ClInclude>
+    <ClInclude Include="BaseComponent.h">
+      <Filter>Engine\SceneGraph</Filter>
+    </ClInclude>
+    <ClInclude Include="Font.h">
+      <Filter>Engine\Rendering</Filter>
+    </ClInclude>
+    <ClInclude Include="Texture2D.h">
+      <Filter>Engine\Rendering</Filter>
+    </ClInclude>
+    <ClInclude Include="Transform.h">
+      <Filter>Engine\SceneGraph</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -389,11 +389,17 @@
     <Filter Include="Engine\ObservingPointer">
       <UniqueIdentifier>{adeb5aa6-ea43-4cf6-9547-3e502a9b81ce}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Engine\Components\Rendering">
+    <Filter Include="Engine\Rendering">
       <UniqueIdentifier>{cfff0f8e-e1bc-43f5-9e69-af78c13f9a15}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Engine\Components\Rendering\UI">
+    <Filter Include="Engine\Rendering\Components">
+      <UniqueIdentifier>{13d86763-5cc0-4cac-89e3-90cee6fcdeee}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\Rendering\Components\UI">
       <UniqueIdentifier>{e302de2a-b453-43e0-a877-f875e92a6465}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\SceneGraph">
+      <UniqueIdentifier>{488811de-c73d-4560-b2e3-a6941456d7a9}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

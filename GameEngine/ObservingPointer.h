@@ -23,7 +23,6 @@
 
 
 //todo: write unit tests for this
-//todo: right now adding and removing is expensive, cause there is an empla
 
 
 #include "ObservingPointerBase.h"

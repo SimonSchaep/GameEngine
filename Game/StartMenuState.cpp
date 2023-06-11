@@ -102,6 +102,7 @@ GameState* StartMenuState::Update()
 void StartMenuState::OnEnter()
 {
 	GetGameManager()->StopMusic();
+	GetGameManager()->StopStartGameSound();
 	GetGameManager()->PlayMusic();
 
 	m_Commands.emplace_back(InputManager::GetInstance().BindKeyboardButtonToCommand(SDL_SCANCODE_1, InputManager::KeyState::up, std::make_unique<StartGameCommand>(this, GameMode::singleplayer)));

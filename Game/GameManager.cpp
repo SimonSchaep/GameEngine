@@ -9,8 +9,6 @@
 #include "TextRenderComponent.h"
 #include "Renderer.h"
 #include "MovementComponent.h"
-#include "PlayerLives.h"
-#include "PlayerPoints.h"
 #include <SpriteRenderComponent.h>
 #include "ChefSpriteController.h"
 #include <BoxCollider.h>
@@ -107,6 +105,8 @@ void GameManager::Update()
 		if (m_RespawnCharactersDelayTimer <= 0)
 		{
 			m_OnRespawnCharacters->NotifyObservers(EventType::respawnCharacters);
+			StopMusic();
+			StopStartGameSound();
 			PlayStartGameSound();
 			m_RespawnCharactersDelayTimer = -1;
 		}
@@ -243,6 +243,12 @@ void GameManager::PlayStartGameSound()
 	m_StartGameSoundDurationTimer = m_StartGameSoundDuration;
 }
 
+void GameManager::StopStartGameSound()
+{
+	ServiceLocator::GetSoundSystem().Stop(m_StartGameSound);
+	m_StartGameSoundDurationTimer = -1;
+}
+
 void GameManager::InitializeStates()
 {
 	//Startmenu state
@@ -284,7 +290,7 @@ void GameManager::AssignControllers()
 
 	pPlayerController->SetControlledObject(pChef);
 	pPlayerController->UseKeyboard(true);
-	pPlayerController->UseController(1);
+	pPlayerController->UseController((m_GameMode == GameMode::singleplayer) ? 0 : 1);
 
 	if (m_GameMode == GameMode::coop)
 	{

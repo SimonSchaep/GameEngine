@@ -135,8 +135,6 @@ glm::vec2 Level::GetCenterOfCell(int index) const
 
 engine::GameObject* Level::SpawnChef(glm::vec2 pos, bool isAlreadyCentered)
 {
-	//ServiceLocator::GetLogger().LogLine("creating chef in scene: " + GetScene()->GetName());
-
 	const float width{ 28 };
 	const float height{ 28 };
 	const float visualsHeightOffset{ -height / 3.5f };
@@ -474,7 +472,7 @@ void Level::BuildLevel()
 	GenerateNavigableAreas(levelElements);
 
 	auto duration = std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::high_resolution_clock::now() - start).count();
-	ServiceLocator::GetLogger().LogLine(("Building level took: " + std::to_string(duration) + "ms"), LogType::message);
+	//ServiceLocator::GetLogger().LogLine(("Building level took: " + std::to_string(duration) + "ms"), LogType::message);
 }
 
 int Level::GetIndexFromRowCol(int row, int col)const

@@ -89,13 +89,11 @@ void EnemySpriteController::Update()
 		if (!m_pSpriteRenderer->GetIsPaused())
 		{
 			m_pSpriteRenderer->Pause();
-			//ServiceLocator::GetLogger().LogLine("pause");
 		}
 	}
 	else if (m_pSpriteRenderer->GetIsPaused())
 	{
 		m_pSpriteRenderer->Resume();
-		//ServiceLocator::GetLogger().LogLine("resume");
 	}
 }
 

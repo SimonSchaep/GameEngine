@@ -57,7 +57,7 @@ void ChefPlayerController::SetControlledObject(engine::GameObject* pControlledOb
 	}
 
 	m_pChefLogic = pControlledObject->GetComponent<ChefLogic>();
-	if (!m_pThrowPepperComponent)
+	if (!m_pChefLogic)
 	{
 		ServiceLocator::GetLogger().LogLine("no chef logic component on chef", LogType::debug);
 	}

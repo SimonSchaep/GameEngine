@@ -194,8 +194,6 @@ void EnemyAIController::FindNewTargetTile() //target tile will be current tile i
 //Todo: Can probably still be optimized, but it works for now
 int EnemyAIController::FindTargetTileAStar()
 {
-	//ServiceLocator::GetLogger().LogLine("Find new path", LogType::debug);
-
 	std::deque<std::unique_ptr<AStarTile>> openList{}; //deque so we can add adjacent tiles to front
 	std::vector<std::unique_ptr<AStarTile>> closedList{};
 
@@ -263,7 +261,6 @@ int EnemyAIController::FindTargetTileAStar()
 
 	if (openList.empty())
 	{
-		ServiceLocator::GetLogger().LogLine("No path to current target for enemy aicontroller found", LogType::warning);
 		return m_TargetTile;
 	}
 	else
@@ -272,9 +269,7 @@ int EnemyAIController::FindTargetTileAStar()
 		while (currentTile && currentTile->pPrevTile && currentTile->pPrevTile->tile != m_TargetTile)
 		{
 			currentTile = currentTile->pPrevTile;
-			//ServiceLocator::GetLogger().Log(std::to_string(currentTile->tile) + ", ", LogType::debug);
 		}
-		//ServiceLocator::GetLogger().Log("\n", LogType::debug);
 		if (!currentTile)
 		{
 			return m_TargetTile;
@@ -297,17 +292,14 @@ void EnemyAIController::UpdateTargets()
 
 void EnemyAIController::FindClosestTarget()
 {
-	//ServiceLocator::GetLogger().LogLine("Distance:", LogType::debug);
 	float closestDistanceSq{FLT_MAX};
 	for (auto pTarget : m_Targets)
 	{
 		auto distanceSq = utility::DistanceSquared(pTarget->GetTransform()->GetWorldPosition(), GetControlledGameObject()->GetTransform()->GetWorldPosition());
-		//ServiceLocator::GetLogger().LogLine(std::to_string(distanceSq), LogType::debug);
 		if (distanceSq < closestDistanceSq)
 		{
 			closestDistanceSq = distanceSq;
 			m_CurrentTarget = pTarget;
 		}
 	}
-	//ServiceLocator::GetLogger().LogLine("Closest distance: " + std::to_string(closestDistanceSq), LogType::debug);
 }

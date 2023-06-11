@@ -49,7 +49,6 @@ void FoodParent::HandleTriggerEnter(Collider* pOriginCollider, Collider* pHitCol
 			if (pHitCollider->GetGameObject()->HasTag("platform"))
 			{
 				StopFall(false);
-				//ServiceLocator::GetLogger().LogLine("stopfall");
 			}
 			else if (pHitCollider->GetGameObject()->HasTag("plate"))
 			{
@@ -92,7 +91,6 @@ void FoodParent::HandleTriggerEnter(Collider* pOriginCollider, Collider* pHitCol
 
 		m_FoodElementStates[id] = true;
 
-		//ServiceLocator::GetLogger().LogLine("drop food element");
 		ServiceLocator::GetSoundSystem().Play(m_DropSound);
 
 		if (std::find(m_FoodElementStates.begin(), m_FoodElementStates.end(), false) == m_FoodElementStates.end()) //if all elements are dropped
@@ -101,10 +99,6 @@ void FoodParent::HandleTriggerEnter(Collider* pOriginCollider, Collider* pHitCol
 		}
 		else
 		{
-			//glm::vec3 newPos = pOriginCollider->GetGameObject()->GetTransform()->GetLocalPosition();
-			//newPos.y = m_YPosForFoodDown;
-			//pOriginCollider->GetGameObject()->GetTransform()->SetLocalPosition(newPos);
-
 			DropFoodElement(id, false, false);
 		}		
 	}
@@ -158,10 +152,8 @@ void FoodParent::StopFall(bool isForced)
 	{
 		m_FallExtraLevels--;
 		m_FallVelocity = 0;
-		//ServiceLocator::GetLogger().LogLine("keepfalling");
 		return;
 	}
-	//ServiceLocator::GetLogger().LogLine("fall");
 	for (size_t i{}; i < m_FoodElementStates.size(); ++i)
 	{
 		m_FoodElementStates[i] = false;

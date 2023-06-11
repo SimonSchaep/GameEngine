@@ -274,8 +274,6 @@ Scene* GameManager::CreateLevel(int id)
 
 	pLevel->BuildLevel();
 
-	//ServiceLocator::GetLogger().LogLine("creating level " + std::to_string(id));
-
 	return pScene;
 }
 
@@ -302,7 +300,8 @@ void GameManager::AssignControllers()
 
 		if (adjacentTiles.size() == 0)
 		{
-			ServiceLocator::GetLogger().LogLine("No adjacent tiles found next to chef", LogType::error);
+			
+			"No adjacent tiles found next to chef", LogType::error);
 			return;
 		}
 		

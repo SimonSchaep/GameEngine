@@ -253,6 +253,7 @@ xcopy "$(SolutionDir)Data\" "$(ProjectDir)Data\" /Y /E</Command>
     <ClInclude Include="MoveCommands.h" />
     <ClInclude Include="MovementComponent.h" />
     <ClInclude Include="AutoMoveComponent.h" />
+    <ClInclude Include="MuteCommand.h" />
     <ClInclude Include="MyPlayerController.h" />
     <ClInclude Include="LifeTimer.h" />
     <ClInclude Include="NameInputBox.h" />

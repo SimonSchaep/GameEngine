@@ -8,7 +8,7 @@
 #include "ObservingPointer.h"
 #include "GameManager.h"
 
-class StartGameCommand : public engine::BaseCommand
+class StartGameCommand final : public engine::BaseCommand
 {
 public:
 	StartGameCommand(StartMenuState* pStartMenuState, GameMode gameMode)
@@ -32,7 +32,7 @@ private:
 };
 
 
-class PauseGameCommand : public engine::BaseCommand
+class PauseGameCommand final : public engine::BaseCommand
 {
 public:
 	PauseGameCommand(GamePlayingState* pGamePlayingState)
@@ -54,7 +54,7 @@ private:
 };
 
 
-class ResumeGameCommand : public engine::BaseCommand
+class ResumeGameCommand final : public engine::BaseCommand
 {
 public:
 	ResumeGameCommand(GamePausedState* pGamePausedState)
@@ -76,7 +76,7 @@ private:
 };
 
 
-class PauseToMenuCommand : public engine::BaseCommand
+class PauseToMenuCommand final : public engine::BaseCommand
 {
 public:
 	PauseToMenuCommand(GamePausedState* pGamePausedState)
@@ -98,7 +98,7 @@ private:
 };
 
 
-class LeaderboardToMenuCommand : public engine::BaseCommand
+class LeaderboardToMenuCommand final : public engine::BaseCommand
 {
 public:
 	LeaderboardToMenuCommand(LeaderboardState* pLeaderboardState)
@@ -120,7 +120,7 @@ private:
 };
 
 
-class EndGameCommand : public engine::BaseCommand
+class EndGameCommand final : public engine::BaseCommand
 {
 public:
 	EndGameCommand(GamePlayingState* pGamePlayingState)
@@ -142,7 +142,7 @@ private:
 };
 
 
-class NextLevelCommand : public engine::BaseCommand
+class NextLevelCommand final : public engine::BaseCommand
 {
 public:
 	NextLevelCommand(GameManager* pGameManager)

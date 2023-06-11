@@ -45,6 +45,7 @@
 #include "GameManager.h"
 #include "ChefSpriteController.h"
 #include "ScoreManager.h"
+#include "MuteCommand.h"
 
 using namespace engine;
 
@@ -62,6 +63,11 @@ void load()
 
 
 	auto pScene = SceneManager::GetInstance().CreateScene("EmptyScene", true);
+
+	//mute button
+	InputManager::GetInstance().BindKeyboardButtonToCommand(SDL_SCANCODE_M, InputManager::KeyState::up, std::make_unique<MuteCommand>());
+
+
 	//background
 	//auto pGameObject = pScene->CreateAndAddGameObject("Background");
 	//auto pRenderComponent = pGameObject->CreateAndAddComponent<TextureRenderComponent>();

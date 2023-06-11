@@ -3,7 +3,7 @@
 #include "ChefPlayerController.h"
 #include "ObservingPointer.h"
 
-class ThrowPepperCommand : public engine::BaseCommand
+class ThrowPepperCommand final : public engine::BaseCommand
 {
 public:
 	ThrowPepperCommand(ChefPlayerController* pChefPlayerController)

@@ -4,7 +4,7 @@
 #include "MyPlayerController.h"
 #include "ObservingPointer.h"
 
-class MoveCommand : public engine::BaseCommand
+class MoveCommand final : public engine::BaseCommand
 {
 public:
 	MoveCommand(MyPlayerController* pMyPlayerController, const glm::vec2& direction)
@@ -28,7 +28,7 @@ private:
 
 
 
-class MoveAxisCommand : public engine::BaseAxisCommand
+class MoveAxisCommand final : public engine::BaseAxisCommand
 {
 public:
 	MoveAxisCommand(MyPlayerController* pMyPlayerController, const glm::vec2& direction)

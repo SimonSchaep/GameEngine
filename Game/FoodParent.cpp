@@ -26,7 +26,7 @@ void FoodParent::Initialize()
 		pChild->GetComponent<BoxCollider>()->GetOnTriggerEvent()->AddObserver(this);
 	}
 
-	m_DropSound = ServiceLocator::GetSoundSystem().AddClip("data/foodelementdrop.wav");
+	m_DropSound = ServiceLocator::GetSoundSystem().AddClip("data/sounds/ingredientwalk.wav");
 }
 
 void FoodParent::Update()

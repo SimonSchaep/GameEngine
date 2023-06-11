@@ -78,8 +78,8 @@ private:
 	float m_GridElementHeight{ 24 };
 	glm::vec2 m_LevelStartPos{ 80,80 };
 
-	const float m_ChefSpeed{150};
-	const float m_EnemySpeed{50};
+	const float m_ChefSpeed{ 80 };
+	const float m_EnemySpeed{ 50 };
 
 	std::string m_LevelFileName{};
 };

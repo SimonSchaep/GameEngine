@@ -273,5 +273,8 @@
       <Filter>Scoring</Filter>
     </ClInclude>
     <ClInclude Include="LayersEnum.h" />
+    <ClInclude Include="MuteCommand.h">
+      <Filter>Commands</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

@@ -13,6 +13,7 @@ namespace engine
 		virtual void Pause(int)override {}
 		virtual void Resume(int)override {}
 		virtual void SetVolume(int, int)override {}
+		virtual bool IsPlaying(int)override { return false; };
 
 		virtual void Mute()override {}
 		virtual void UnMute()override {}

@@ -104,6 +104,13 @@ public:
 		m_DoesQueueNeedProcessing.notify_one();
 	}
 
+	bool IsPlaying(int clipId)
+	{
+		assert(clipId < int(m_SoundClips.size()));
+
+		return m_SoundClips[clipId]->IsPlaying();
+	}
+
 	void Mute()
 	{
 		SetGlobalVolume(0);
@@ -238,6 +245,11 @@ void engine::SDLSoundSystem::Resume(int clipId)
 void engine::SDLSoundSystem::SetVolume(int clipId, int volume)
 {
 	m_Impl->SetVolume(clipId, volume);
+}
+
+bool engine::SDLSoundSystem::IsPlaying(int clipId)
+{
+	return m_Impl->IsPlaying(clipId);
 }
 
 void engine::SDLSoundSystem::Mute()

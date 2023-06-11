@@ -16,6 +16,7 @@ namespace engine
 		virtual void Pause(int clipId) = 0;
 		virtual void Resume(int clipId) = 0;
 		virtual void SetVolume(int clipId, int volume) = 0;
+		virtual bool IsPlaying(int clipId) = 0;
 
 		virtual void Mute() = 0;
 		virtual void UnMute() = 0;

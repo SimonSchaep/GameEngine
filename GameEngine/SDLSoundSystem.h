@@ -31,6 +31,7 @@ namespace engine
 		virtual void Pause(int clipId)override;
 		virtual void Resume(int clipId)override;
 		virtual void SetVolume(int clipId, int volume)override;
+		virtual bool IsPlaying(int clipId)override;
 
 		virtual void Mute()override;
 		virtual void UnMute()override;

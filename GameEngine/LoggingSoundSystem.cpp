@@ -24,7 +24,7 @@ int engine::LoggingSoundSystem::AddClip(const std::string& fileName)
 
 void engine::LoggingSoundSystem::Play(int clipId, int loops)
 {
-	ServiceLocator::GetLogger().LogLine("Playing clip " + std::to_string(clipId) + ", " + std::to_string(loops) + " times", LogType::message);
+	ServiceLocator::GetLogger().LogLine("Playing clip " + std::to_string(clipId) + ", with " + std::to_string(loops) + " loops", LogType::message);
 	m_ActualSoundSystem->Play(clipId, loops);
 }
 
@@ -50,6 +50,12 @@ void engine::LoggingSoundSystem::SetVolume(int clipId, int volume)
 {
 	ServiceLocator::GetLogger().LogLine("Setting volume of clip " + std::to_string(clipId) + " to " + std::to_string(volume), LogType::message);
 	m_ActualSoundSystem->SetVolume(clipId, volume);
+}
+
+bool engine::LoggingSoundSystem::IsPlaying(int clipId)
+{
+	ServiceLocator::GetLogger().LogLine("Returning if clip " + std::to_string(clipId) + " is playing", LogType::message);
+	return m_ActualSoundSystem->IsPlaying(clipId);
 }
 
 void engine::LoggingSoundSystem::Mute()

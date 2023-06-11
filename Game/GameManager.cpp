@@ -300,8 +300,7 @@ void GameManager::AssignControllers()
 
 		if (adjacentTiles.size() == 0)
 		{
-			
-			"No adjacent tiles found next to chef", LogType::error);
+			ServiceLocator::GetLogger().LogLine("No adjacent tiles found next to chef", LogType::error);
 			return;
 		}
 		

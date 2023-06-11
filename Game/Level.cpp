@@ -298,7 +298,7 @@ void Level::SpawnPickle(engine::TextureRenderComponent* pRenderComponent, engine
 
 void Level::BuildLevel()
 {
-	auto start = std::chrono::high_resolution_clock::now();
+	//auto start = std::chrono::high_resolution_clock::now();
 
 	const glm::vec2 foodOffset{0, -2};
 
@@ -471,7 +471,7 @@ void Level::BuildLevel()
 
 	GenerateNavigableAreas(levelElements);
 
-	auto duration = std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::high_resolution_clock::now() - start).count();
+	//auto duration = std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::high_resolution_clock::now() - start).count();
 	//ServiceLocator::GetLogger().LogLine(("Building level took: " + std::to_string(duration) + "ms"), LogType::message);
 }
 

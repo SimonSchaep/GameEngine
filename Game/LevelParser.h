@@ -72,7 +72,7 @@ namespace levelParser
 
 	void ParseCsv(const std::string& fileName, std::vector<LevelElement>& levelElements, int& levelWidth, int& levelHeight)
 	{
-		auto start = std::chrono::high_resolution_clock::now();
+		//auto start = std::chrono::high_resolution_clock::now();
 
 		std::ifstream ifstream{ fileName };
 
@@ -171,7 +171,7 @@ namespace levelParser
 		}
 
 
-		auto duration = std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::high_resolution_clock::now() - start).count();
+		//auto duration = std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::high_resolution_clock::now() - start).count();
 		//engine::ServiceLocator::GetLogger().LogLine("Parsing level file took: " + std::to_string(duration) + "ms", engine::LogType::message);
 	}
 }

@@ -35,9 +35,9 @@ private:
 	bool m_EndGame{};
 	std::vector<engine::BaseCommand*> m_Commands{};
 
-	float m_SpawnSpecialPickupInterval{15.f};
+	float m_SpawnSpecialPickupInterval{30.f};
 	float m_SpawnSpecialPickupTimer{};
 
-	int m_LivesLeft{3};
+	int m_LivesLeft{ 3 };
 	int m_PepperLeft{ 5 }; //just holds the global count, doesn't do anything with it
 };

@@ -26,7 +26,7 @@ namespace engine
 		virtual ~SDLSoundSystem();
 				
 		virtual int AddClip(const std::string& fileName) override;
-		virtual void Play(int clipId)override;
+		virtual void Play(int clipId, int loops = 0)override;
 		virtual void Stop(int clipId)override;
 		virtual void Pause(int clipId)override;
 		virtual void Resume(int clipId)override;

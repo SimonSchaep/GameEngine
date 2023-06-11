@@ -11,7 +11,7 @@ namespace engine
 		virtual ~SoundSystem() = default;
 
 		virtual int AddClip(const std::string& fileName) = 0; //returns clipId, -1 if not valid
-		virtual void Play(int clipId) = 0;
+		virtual void Play(int clipId, int loops = 0) = 0;
 		virtual void Stop(int clipId) = 0;
 		virtual void Pause(int clipId) = 0;
 		virtual void Resume(int clipId) = 0;

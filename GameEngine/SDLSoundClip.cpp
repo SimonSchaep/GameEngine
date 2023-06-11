@@ -28,11 +28,11 @@ void engine::SDLSoundClip::Load()
 	}
 }
 
-void engine::SDLSoundClip::Play()
+void engine::SDLSoundClip::Play(int loops)
 {
 	if (IsLoaded())
 	{
-		m_CurrentChannel = Mix_PlayChannel(m_DesiredChannel, m_pMixChunk, 0); //set active channel to channel it was played on
+		m_CurrentChannel = Mix_PlayChannel(m_DesiredChannel, m_pMixChunk, loops); //set active channel to channel it was played on
 	}	
 }
 

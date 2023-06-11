@@ -12,6 +12,7 @@ class engine::SDLSoundSystem::SDLSoundSystemImpl
 		SDLSoundClip* pSoundClip{};
 		SoundAction soundAction{};
 		int volume{};
+		int loops{};
 	};
 public:
 	SDLSoundSystemImpl()
@@ -45,12 +46,12 @@ public:
 		return int(m_SoundClips.size() - 1);
 	}
 
-	void Play(int clipId)
+	void Play(int clipId, int loops)
 	{
 		assert(clipId < int(m_SoundClips.size()));
 
 		std::lock_guard<std::mutex> lock(m_SoundsToProcessMutex);
-		m_SoundsToProcess.emplace_back(SoundToProcess{ m_SoundClips[clipId].get(), SoundAction::play });
+		m_SoundsToProcess.emplace_back(SoundToProcess{ m_SoundClips[clipId].get(), SoundAction::play, 0, loops });
 		m_DoesQueueNeedProcessing.notify_one();
 	}
 
@@ -137,6 +138,7 @@ private:
 			auto pSoundClip = m_SoundsToProcess[0].pSoundClip;
 			auto soundAction = m_SoundsToProcess[0].soundAction;
 			int volume = m_SoundsToProcess[0].volume;
+			int loops = m_SoundsToProcess[0].loops;
 
 			m_SoundsToProcess.erase(m_SoundsToProcess.begin());
 
@@ -149,7 +151,7 @@ private:
 				{
 					pSoundClip->Load();
 				}
-				pSoundClip->Play();
+				pSoundClip->Play(loops);
 				break;
 			case SoundAction::stop:
 				pSoundClip->Stop();
@@ -200,9 +202,9 @@ int engine::SDLSoundSystem::AddClip(const std::string& fileName)
 	return m_Impl->AddClip(fileName);
 }
 
-void engine::SDLSoundSystem::Play(int clipId)
+void engine::SDLSoundSystem::Play(int clipId, int loops)
 {
-	m_Impl->Play(clipId);
+	m_Impl->Play(clipId, loops);
 }
 
 void engine::SDLSoundSystem::Stop(int clipId)

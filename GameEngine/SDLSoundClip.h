@@ -17,7 +17,7 @@ namespace engine
 
 		bool IsLoaded() const;
 		void Load();
-		void Play();
+		void Play(int loops);
 		void Stop();
 		bool IsPlaying()const;
 		void Pause();

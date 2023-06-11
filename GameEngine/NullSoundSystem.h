@@ -8,7 +8,7 @@ namespace engine
 	public:
 		NullSoundSystem() = default;
 		virtual int AddClip(const std::string&) override { return -1; }
-		virtual void Play(int)override {}
+		virtual void Play(int, int)override {}
 		virtual void Stop(int)override {}
 		virtual void Pause(int)override {}
 		virtual void Resume(int)override {}

@@ -22,10 +22,10 @@ int engine::LoggingSoundSystem::AddClip(const std::string& fileName)
 	return clipId;
 }
 
-void engine::LoggingSoundSystem::Play(int clipId)
+void engine::LoggingSoundSystem::Play(int clipId, int loops)
 {
-	ServiceLocator::GetLogger().LogLine("Playing clip " + std::to_string(clipId), LogType::message);
-	m_ActualSoundSystem->Play(clipId);
+	ServiceLocator::GetLogger().LogLine("Playing clip " + std::to_string(clipId) + ", " + std::to_string(loops) + " times", LogType::message);
+	m_ActualSoundSystem->Play(clipId, loops);
 }
 
 void engine::LoggingSoundSystem::Stop(int clipId)

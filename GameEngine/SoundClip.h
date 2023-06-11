@@ -12,7 +12,7 @@ namespace engine
 
 		virtual bool IsLoaded() const = 0;
 		virtual void Load() = 0;
-		virtual void Play() = 0;
+		virtual void Play(int loops) = 0;
 		virtual void Stop() = 0;
 		virtual bool IsPlaying()const = 0;
 		virtual void Pause() = 0;

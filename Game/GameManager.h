@@ -1,9 +1,9 @@
 #pragma once
-#include <BaseComponent.h>
-#include <vector>
+#include "BaseComponent.h"
 #include "Event.h"
 #include "EventTypes.h"
 #include "Observer.h"
+#include <vector>
 
 namespace engine
 {

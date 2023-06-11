@@ -5,7 +5,7 @@
 
 class Level;
 
-class MovementComponent : public engine::BaseComponent
+class MovementComponent final : public engine::BaseComponent
 {
 public:
 	MovementComponent(engine::GameObject* pGameObject);

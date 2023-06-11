@@ -1,11 +1,11 @@
 #pragma once
-#include <BaseComponent.h>
-#include <ObservingPointer.h>
-#include <glm/glm.hpp>
-#include <memory>
+#include "BaseComponent.h"
+#include "ObservingPointer.h"
 #include "MovementComponent.h"
 #include "Observer.h"
 #include "EventTypes.h"
+#include <glm/glm.hpp>
+#include <memory>
 
 class MoveCommand;
 class ChefLogic;

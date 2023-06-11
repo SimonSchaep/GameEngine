@@ -1,6 +1,6 @@
 #pragma once
 #include "BaseComponent.h"
-#include "glm/glm.hpp"
+#include <glm/glm.hpp>
 #include <string>
 #include <vector>
 
@@ -19,9 +19,9 @@ namespace levelParser
 	enum class ELevelElement;
 }
 
-//todo: should somehow be able to set cell size, and level pos
+//todo: should be able to set cell size, and level pos from outside class
 
-class Level : public engine::BaseComponent
+class Level final : public engine::BaseComponent
 {
 public:
 	Level(engine::GameObject* pGameObject, const std::string& levelFileName);

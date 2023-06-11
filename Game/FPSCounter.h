@@ -2,16 +2,14 @@
 #include "BaseComponent.h"
 #include "ObservingPointer.h"
 
-
 //todo: add avg fps
-
 
 namespace engine
 {
 	class UITextRenderComponent;
 }
 
-class FPSCounter : public engine::BaseComponent
+class FPSCounter final : public engine::BaseComponent
 {
 public:
 	FPSCounter(engine::GameObject* pGameObject) :BaseComponent(pGameObject) {};

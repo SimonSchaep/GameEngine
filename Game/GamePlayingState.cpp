@@ -43,7 +43,7 @@ GamePlayingState::GamePlayingState(GameManager* pGameManager)
 	pTextRenderer->SetText("SCORE");
 	pTextRenderer->SetColor({255,0,0,255});
 	pTextRenderer->SetFont("fonts/super-burger-time.ttf", 20);
-	pTextRenderer->SetLayer(Layer::uiText);
+	pTextRenderer->SetLayer(Layer::eUIText);
 	pTextRenderer->SetTextAlignment(UITextRenderComponent::TextAlignment::left);
 
 	pChild = pScene->CreateAndAddGameObject("Text", m_pHudGameObject);
@@ -51,7 +51,7 @@ GamePlayingState::GamePlayingState(GameManager* pGameManager)
 	m_pScoreText = pChild->CreateAndAddComponent<UITextRenderComponent>();
 	m_pScoreText->SetText("0");
 	m_pScoreText->SetFont("fonts/super-burger-time.ttf", 20);
-	m_pScoreText->SetLayer(Layer::uiText);
+	m_pScoreText->SetLayer(Layer::eUIText);
 	m_pScoreText->SetTextAlignment(UITextRenderComponent::TextAlignment::left);
 
 	//highscore
@@ -61,7 +61,7 @@ GamePlayingState::GamePlayingState(GameManager* pGameManager)
 	pTextRenderer->SetText("HIGHSCORE");
 	pTextRenderer->SetColor({ 255,0,0,255 });
 	pTextRenderer->SetFont("fonts/super-burger-time.ttf", 20);
-	pTextRenderer->SetLayer(Layer::uiText);
+	pTextRenderer->SetLayer(Layer::eUIText);
 	pTextRenderer->SetTextAlignment(UITextRenderComponent::TextAlignment::left);
 
 	pChild = pScene->CreateAndAddGameObject("Text", m_pHudGameObject);
@@ -69,7 +69,7 @@ GamePlayingState::GamePlayingState(GameManager* pGameManager)
 	m_pHighScoreText = pChild->CreateAndAddComponent<UITextRenderComponent>();
 	m_pHighScoreText->SetText("0");
 	m_pHighScoreText->SetFont("fonts/super-burger-time.ttf", 20);
-	m_pHighScoreText->SetLayer(Layer::uiText);
+	m_pHighScoreText->SetLayer(Layer::eUIText);
 	m_pHighScoreText->SetTextAlignment(UITextRenderComponent::TextAlignment::left);
 
 	m_pHudGameObject->SetIsActive(false);
@@ -223,7 +223,7 @@ void GamePlayingState::UpdateDynamicHUD()
 			pTextureRenderer->SetTexture("lvlIcon.png");
 		}
 		pTextureRenderer->SetSize({ 28,28 });
-		pTextureRenderer->SetLayer(Layer::hud);
+		pTextureRenderer->SetLayer(Layer::eHud);
 	}
 
 	//lives
@@ -235,7 +235,7 @@ void GamePlayingState::UpdateDynamicHUD()
 		auto pTextureRenderer = pChild->CreateAndAddComponent<UITextureRenderComponent>();
 		pTextureRenderer->SetTexture("lifeIcon.png");
 		pTextureRenderer->SetSize({ 28,28 });
-		pTextureRenderer->SetLayer(Layer::hud);
+		pTextureRenderer->SetLayer(Layer::eHud);
 	}
 
 
@@ -248,6 +248,6 @@ void GamePlayingState::UpdateDynamicHUD()
 		auto pTextureRenderer = pChild->CreateAndAddComponent<UITextureRenderComponent>();
 		pTextureRenderer->SetTexture("pepperIcon.png");
 		pTextureRenderer->SetSize({ 28,28 });
-		pTextureRenderer->SetLayer(Layer::hud);
+		pTextureRenderer->SetLayer(Layer::eHud);
 	}
 }

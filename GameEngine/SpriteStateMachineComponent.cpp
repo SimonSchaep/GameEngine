@@ -14,6 +14,7 @@ engine::SpriteStateMachineComponent::SpriteStateMachineComponent(GameObject* pGa
 
 engine::SpriteStateMachineComponent::~SpriteStateMachineComponent() = default;
 
+//todo: use resourcemanager in here instead of expecting users to use it when calling this function
 engine::SpriteState* engine::SpriteStateMachineComponent::CreateAndAddState(std::shared_ptr<Sprite> sprite)
 {
 	auto state = std::make_unique<SpriteState>(sprite);

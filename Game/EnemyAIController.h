@@ -34,7 +34,6 @@ private:
 	void UpdateTargets();
 	void FindClosestTarget();
 
-	//todo: instead, get player controllers, so we can check if they are dead. Add controlled object to myplayercontroller
 	std::vector<engine::ObservingPointer<engine::GameObject>> m_Targets{};
 	engine::ObservingPointer<engine::GameObject> m_CurrentTarget{};
 	engine::ObservingPointer<EnemyLogic> m_EnemyLogic{};

@@ -1,5 +1,5 @@
 #pragma once
-#include <BaseComponent.h>
+#include "BaseComponent.h"
 #include "Observer.h"
 #include "ObservingPointer.h"
 #include "Collider.h"

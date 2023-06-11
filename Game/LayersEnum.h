@@ -1,14 +1,14 @@
 #pragma once
 enum Layer : int
 {
-	level,
-	food,
-	plate,
-	pickup,
-	enemy,
-	chef,
-	enemyCover,
-	hud,
-	uiBackground,
-	uiText,
+	eLevel,
+	eFood,
+	ePlate,
+	ePickup,
+	eEnemy,
+	eChef,
+	eEnemyCover,
+	eHud,
+	eUIBackground,
+	eUIText,
 };

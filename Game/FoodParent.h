@@ -14,7 +14,7 @@ namespace engine
 	class BoxCollider;
 }
 
-class FoodParent : public engine::BaseComponent, public engine::CollisionEventReceiver
+class FoodParent final : public engine::BaseComponent, public engine::CollisionEventReceiver
 {
 public:
 	FoodParent(engine::GameObject* pGameObject);

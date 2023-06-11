@@ -5,7 +5,7 @@
 
 class GamePlayingState;
 
-class ThrowPepperComponent : public engine::BaseComponent
+class ThrowPepperComponent final : public engine::BaseComponent
 {
 public:
 	ThrowPepperComponent(engine::GameObject* pGameObject) : engine::BaseComponent(pGameObject) {};

@@ -1,13 +1,13 @@
 #pragma once
 #include "MyPlayerController.h"
 #include "ObservingPointer.h"
-#include <glm/glm.hpp>
 #include "Observer.h"
 #include "EventTypes.h"
+#include <glm/glm.hpp>
 
 class EnemyLogic;
 
-class EnemyPlayerController : public MyPlayerController
+class EnemyPlayerController final : public MyPlayerController
 {
 public:
     EnemyPlayerController(engine::GameObject* pGameObject);

@@ -1,9 +1,9 @@
 #pragma once
-#include <BaseComponent.h>
-#include "glm/glm.hpp"
+#include "BaseComponent.h"
+#include <glm/glm.hpp>
 
 
-class AutoMoveComponent : public engine::BaseComponent
+class AutoMoveComponent final : public engine::BaseComponent
 {
 public:
 	AutoMoveComponent(engine::GameObject* pGameObject, float speed, const glm::vec2& direction) 

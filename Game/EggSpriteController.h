@@ -1,6 +1,7 @@
 #pragma once
 #include "EnemySpriteController.h"
-class EggSpriteController : public EnemySpriteController
+
+class EggSpriteController final : public EnemySpriteController
 {
 public:
 	EggSpriteController(engine::GameObject* pGameObject) :EnemySpriteController(pGameObject) {};

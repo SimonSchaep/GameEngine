@@ -1,14 +1,14 @@
 #pragma once
 #include "MyPlayerController.h"
 #include "ObservingPointer.h"
-#include <glm/glm.hpp>
 #include "Observer.h"
 #include "EventTypes.h"
+#include <glm/glm.hpp>
 
 class ThrowPepperComponent;
 class ChefLogic;
 
-class ChefPlayerController : public MyPlayerController
+class ChefPlayerController final : public MyPlayerController
 {
 public:
     ChefPlayerController(engine::GameObject* pGameObject);

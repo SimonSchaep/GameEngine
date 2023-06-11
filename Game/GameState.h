@@ -1,9 +1,6 @@
 #pragma once
-#include <memory>
 #include "ObservableObject.h"
-
-//todo: add going back to menu from pause and leaderboard
-//add restarting game from pause menu
+#include <memory>
 
 class GameManager;
 

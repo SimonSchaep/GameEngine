@@ -7,37 +7,24 @@
 #endif
 #endif
 
-#include <iostream>
 #include "GameEngine.h"
 #include "SceneManager.h"
 #include "ResourceManager.h"
 #include "UITextRenderComponent.h"
 #include "Scene.h"
 #include "GameObject.h"
-#include "TextureRenderComponent.h"
-#include "SpriteRenderComponent.h"
-#include "SpriteStateMachineComponent.h"
-#include "SpriteState.h"
-#include "Sprite.h"
 #include "Font.h"
 #include "FPSCounter.h"
-#include "MovementComponent.h"
-#include "PlayerController.h"
-#include "MyPlayerController.h"
-#include "ControlsDisplay.h"
-#include "Level.h"
-#include "Texture2D.h"
-#include "BoxCollider.h"
-#include <CameraComponent.h>
 #include "ServiceLocator.h"
 #include "ConsoleLogger.h"
 #include "FileLogger.h"
 #include "SDLSoundSystem.h"
 #include "LoggingSoundSystem.h"
 #include "GameManager.h"
-#include "ChefSpriteController.h"
 #include "ScoreManager.h"
 #include "MuteCommand.h"
+#include "InputManager.h"
+#include "ControlsDisplay.h"
 
 using namespace engine;
 

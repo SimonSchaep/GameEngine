@@ -190,7 +190,7 @@ void ScoreManager::AddScore(int amount, const glm::vec2& position)
 	pScoreObject->CreateAndAddComponent<LifeTimer>(2.f);
 	pScoreObject->CreateAndAddComponent<AutoMoveComponent>(10.f, glm::vec2{0,1});
 	auto pText = pScoreObject->CreateAndAddComponent<TextRenderComponent>();
-	pText->SetLayer(Layer::hud);
+	pText->SetLayer(Layer::eHud);
 	pText->SetFont("fonts/super-burger-time.ttf", 15);
 	pText->SetText(std::to_string(amount));
 }

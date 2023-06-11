@@ -26,7 +26,7 @@ StartMenuState::StartMenuState(GameManager* pGameManager)
 	auto pTextureRenderer = pChild->CreateAndAddComponent<UITextureRenderComponent>();
 	pTextureRenderer->SetTexture("black.png");
 	pTextureRenderer->SetSize(windowSize);
-	pTextureRenderer->SetLayer(Layer::uiBackground);
+	pTextureRenderer->SetLayer(Layer::eUIBackground);
 
 	//Text
 	pChild = pScene->CreateAndAddGameObject("Text", m_pMenuGameObject);
@@ -34,7 +34,7 @@ StartMenuState::StartMenuState(GameManager* pGameManager)
 	auto pTextRenderer = pChild->CreateAndAddComponent<UITextRenderComponent>();
 	pTextRenderer->SetText("PRESS 1/2/3 TO START");
 	pTextRenderer->SetFont("fonts/super-burger-time.ttf", 30);
-	pTextRenderer->SetLayer(Layer::uiText);
+	pTextRenderer->SetLayer(Layer::eUIText);
 	pTextRenderer->SetTextAlignment(UITextRenderComponent::TextAlignment::center);
 
 	//single player
@@ -43,7 +43,7 @@ StartMenuState::StartMenuState(GameManager* pGameManager)
 	pTextRenderer = pChild->CreateAndAddComponent<UITextRenderComponent>();
 	pTextRenderer->SetText("1. SINGLE PLAYER");
 	pTextRenderer->SetFont("fonts/super-burger-time.ttf", 20);
-	pTextRenderer->SetLayer(Layer::uiText);
+	pTextRenderer->SetLayer(Layer::eUIText);
 	pTextRenderer->SetTextAlignment(UITextRenderComponent::TextAlignment::left);
 
 	//co-op
@@ -52,7 +52,7 @@ StartMenuState::StartMenuState(GameManager* pGameManager)
 	pTextRenderer = pChild->CreateAndAddComponent<UITextRenderComponent>();
 	pTextRenderer->SetText("2. CO-OP");
 	pTextRenderer->SetFont("fonts/super-burger-time.ttf", 20);
-	pTextRenderer->SetLayer(Layer::uiText);
+	pTextRenderer->SetLayer(Layer::eUIText);
 	pTextRenderer->SetTextAlignment(UITextRenderComponent::TextAlignment::left);
 
 	//versus
@@ -61,7 +61,7 @@ StartMenuState::StartMenuState(GameManager* pGameManager)
 	pTextRenderer = pChild->CreateAndAddComponent<UITextRenderComponent>();
 	pTextRenderer->SetText("3. VERSUS");
 	pTextRenderer->SetFont("fonts/super-burger-time.ttf", 20);
-	pTextRenderer->SetLayer(Layer::uiText);
+	pTextRenderer->SetLayer(Layer::eUIText);
 	pTextRenderer->SetTextAlignment(UITextRenderComponent::TextAlignment::left);
 
 	//instructions
@@ -70,7 +70,7 @@ StartMenuState::StartMenuState(GameManager* pGameManager)
 	pTextRenderer = pChild->CreateAndAddComponent<UITextRenderComponent>();
 	pTextRenderer->SetText("MOVE - WASD/LEFT THUMB");
 	pTextRenderer->SetFont("fonts/super-burger-time.ttf", 14);
-	pTextRenderer->SetLayer(Layer::uiText);
+	pTextRenderer->SetLayer(Layer::eUIText);
 	pTextRenderer->SetTextAlignment(UITextRenderComponent::TextAlignment::center);
 
 	pChild = pScene->CreateAndAddGameObject("Text", m_pMenuGameObject);
@@ -78,7 +78,7 @@ StartMenuState::StartMenuState(GameManager* pGameManager)
 	pTextRenderer = pChild->CreateAndAddComponent<UITextRenderComponent>();
 	pTextRenderer->SetText("PEPPER - SPACE/CONTROLLER A");
 	pTextRenderer->SetFont("fonts/super-burger-time.ttf", 14);
-	pTextRenderer->SetLayer(Layer::uiText);
+	pTextRenderer->SetLayer(Layer::eUIText);
 	pTextRenderer->SetTextAlignment(UITextRenderComponent::TextAlignment::center);
 
 	m_pMenuGameObject->SetIsActive(false);

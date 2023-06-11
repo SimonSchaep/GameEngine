@@ -10,9 +10,6 @@
 #include "ServiceLocator.h"
 #include "Logger.h"
 #include "ObservingPointer.h"
-#include <iostream>
-
-//todo: fix jittering when moving left/right when we can't
 
 using namespace engine;
 

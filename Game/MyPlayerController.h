@@ -3,7 +3,7 @@
 #include "ObservingPointer.h"
 #include "Observer.h"
 #include "EventTypes.h"
-#include "glm/glm.hpp"
+#include <glm/glm.hpp>
 
 class MovementComponent;
 class PlayerLives;

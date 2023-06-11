@@ -1,9 +1,7 @@
 #pragma once
-#include <BaseComponent.h>
+#include "BaseComponent.h"
 
-
-
-class LifeTimer : public engine::BaseComponent
+class LifeTimer final : public engine::BaseComponent
 {
 public:
 	LifeTimer(engine::GameObject* pGameObject, float lifeTime) : engine::BaseComponent(pGameObject), m_LifeTimer{ lifeTime } {};
@@ -14,7 +12,7 @@ public:
 	void SetLifeTime(float lifeTime) { m_LifeTimer = lifeTime; }
 
 private:
-	float m_LifeTimer{ 1.f };
+	float m_LifeTimer{};
 
 };
 

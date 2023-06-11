@@ -1,9 +1,9 @@
 #pragma once
-#include <BaseComponent.h>
+#include "BaseComponent.h"
 #include "Observer.h"
 #include "ObservingPointer.h"
-#include <glm/glm.hpp>
 #include "EventTypes.h"
+#include <glm/glm.hpp>
 
 namespace engine
 {
@@ -15,7 +15,7 @@ class MovementComponent;
 class ThrowPepperComponent;
 class ChefLogic;
 
-class ChefSpriteController : public engine::BaseComponent, public engine::Observer<EventType>, public engine::Observer<EventType, ChefLogic*>
+class ChefSpriteController final : public engine::BaseComponent, public engine::Observer<EventType>, public engine::Observer<EventType, ChefLogic*>
 {
 public:
 	ChefSpriteController(engine::GameObject* pGameObject);

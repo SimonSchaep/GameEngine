@@ -5,7 +5,7 @@
 #include <string>
 #include <memory>
 
-class NameInputBox : public engine::UIRenderComponent
+class NameInputBox final : public engine::UIRenderComponent
 {
 public:
 	NameInputBox(engine::GameObject* pGameObject);

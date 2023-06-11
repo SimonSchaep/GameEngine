@@ -1,9 +1,9 @@
 #pragma once
 #include "GameState.h"
 #include "Observer.h"
-#include <vector>
 #include "EventTypes.h"
 #include "ObservingPointer.h"
+#include <vector>
 
 namespace engine
 {

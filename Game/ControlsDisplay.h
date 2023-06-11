@@ -1,7 +1,7 @@
 #pragma once
 #include "UIRenderComponent.h"
 
-class ControlsDisplay : public engine::UIRenderComponent
+class ControlsDisplay final : public engine::UIRenderComponent
 {
 public:
 	ControlsDisplay(engine::GameObject* pGameObject) : UIRenderComponent(pGameObject) {};

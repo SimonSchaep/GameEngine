@@ -4,36 +4,23 @@
 #include "GamePausedState.h"
 #include "LeaderboardState.h"
 #include "StartMenuState.h"
-#include "GameObject.h"
 #include "Scene.h"
-#include "TextRenderComponent.h"
-#include "Renderer.h"
-#include "MovementComponent.h"
-#include <SpriteRenderComponent.h>
-#include "ChefSpriteController.h"
-#include <BoxCollider.h>
-#include "MyPlayerController.h"
-#include "ChefPlayerController.h"
-#include "AIController.h"
-#include "EnemyAIController.h"
-#include "Level.h"
-#include "InputManager.h"
-#include "MenuCommands.h"
-#include "ThrowPepperComponent.h"
-#include "HotdogSpriteController.h"
-#include "EggSpriteController.h"
-#include "PickleSpriteController.h"
-#include "ChefLogic.h"
-#include "EnemyLogic.h"
-#include "FoodParent.h"
-#include "TimeManager.h"
-#include "EnemyPlayerController.h"
-#include "SpecialPickupLogic.h"
-#include "LifeTimer.h"
 #include "LayersEnum.h"
 #include "ServiceLocator.h"
 #include "Logger.h"
 #include "SoundSystem.h"
+#include "FoodParent.h"
+#include "TimeManager.h"
+#include "GameObject.h"
+#include "ChefPlayerController.h"
+#include "EnemyPlayerController.h"
+#include "EnemyAIController.h"
+#include "LifeTimer.h"
+#include "TextureRenderComponent.h"
+#include "BoxCollider.h"
+#include "Level.h"
+#include "ChefLogic.h"
+#include "SpecialPickupLogic.h"
 
 using namespace engine;
 
@@ -164,7 +151,7 @@ void GameManager::SpawnSpecialPickup()
 	auto pCollider = pGameObject->CreateAndAddComponent<BoxCollider>();
 	pCollider->SetShape({ 0,0,width,height });
 	auto pRenderer = pGameObject->CreateAndAddComponent<TextureRenderComponent>();
-	pRenderer->SetLayer(Layer::pickup);
+	pRenderer->SetLayer(Layer::ePickup);
 	pRenderer->SetSize({width,height});
 
 	EventType pickupType{};

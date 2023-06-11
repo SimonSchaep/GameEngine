@@ -1,10 +1,10 @@
 #pragma once
-#include <BaseComponent.h>
+#include "BaseComponent.h"
 #include "Observer.h"
 #include "ObservingPointer.h"
+#include "EventTypes.h"
 #include <glm/glm.hpp>
 #include <string>
-#include "EventTypes.h"
 
 namespace engine
 {

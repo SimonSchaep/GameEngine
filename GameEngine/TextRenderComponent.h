@@ -17,7 +17,7 @@ namespace engine
 		virtual void Render()const override;
 
 		void SetText(const std::string& text);
-		void SetFont(std::unique_ptr<Font> font);
+		void SetFont(const std::string& fileName, int fontSize);
 		void SetColor(SDL_Color color);
 
 		TextRenderComponent(GameObject* pGameObject);

@@ -4,6 +4,7 @@
 #include "Font.h"
 #include "Texture2D.h"
 #include "GameObject.h"
+#include "ResourceManager.h"
 
 namespace engine
 {
@@ -63,9 +64,9 @@ namespace engine
 		m_NeedsUpdate = true;
 	}
 
-	void TextRenderComponent::SetFont(std::unique_ptr<Font> font)
+	void TextRenderComponent::SetFont(const std::string& fileName, int fontSize)
 	{
-		m_Font = std::move(font);
+		m_Font = ResourceManager::GetInstance().LoadFont(fileName, fontSize);
 		m_NeedsUpdate = true;
 	}
 

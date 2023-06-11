@@ -151,6 +151,9 @@
     <ClCompile Include="CollisionEventReceiver.cpp">
       <Filter>Engine\Collisions</Filter>
     </ClCompile>
+    <ClCompile Include="..\3rdParty\imgui\imgui_stdlib.cpp">
+      <Filter>imgui</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Font.h">
@@ -329,6 +332,9 @@
     </ClInclude>
     <ClInclude Include="CollisionEventReceiver.h">
       <Filter>Engine\Collisions</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdParty\imgui\imgui_stdlib.h">
+      <Filter>imgui</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

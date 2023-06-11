@@ -41,9 +41,22 @@ public:
 
 	int AddClip(const std::string& fileName)
 	{
-		m_SoundClips.emplace_back(std::make_unique<SDLSoundClip>(fileName));
-		
-		return int(m_SoundClips.size() - 1);
+		//if clip already exists
+		auto it = std::find_if(m_SoundClips.begin(), m_SoundClips.end(), [fileName](const std::unique_ptr<SDLSoundClip>& clip)
+			{
+				return clip->GetFileName() == fileName;
+			});
+		if (it != m_SoundClips.end())
+		{ 
+			//return index of iterator of found sound		
+			return int(it - m_SoundClips.begin());
+		}
+		else
+		{
+			//create new sound and return index to it
+			m_SoundClips.emplace_back(std::make_unique<SDLSoundClip>(fileName));
+			return int(m_SoundClips.size() - 1);
+		}		
 	}
 
 	void Play(int clipId, int loops)

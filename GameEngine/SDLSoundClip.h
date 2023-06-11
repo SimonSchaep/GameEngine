@@ -25,6 +25,8 @@ namespace engine
 		void SetVolume(int volume);
 		int GetVolume()const;
 
+		const std::string& GetFileName()const { return m_FileName; }
+
 	private:
 		Mix_Chunk* m_pMixChunk{};
 		std::string m_FileName{};

@@ -1,5 +1,7 @@
 <h1>GameEngine</h1>
 
+Also includes Burgertime as a game made in the engine.
+
 GameEngine started from the minigin framework: https://github.com/avadae/minigin
 
 There are triggers, but no actual collisions/physics.
